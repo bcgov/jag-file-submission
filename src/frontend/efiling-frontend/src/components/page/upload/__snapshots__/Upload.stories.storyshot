@@ -55,14 +55,14 @@ exports[`Storyshots Upload Default 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="cancel-upload-btn"
+          data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-upload-btn"
+          data-test-id="continue-upload-btn"
           disabled=""
           type="button"
         >
@@ -257,14 +257,14 @@ exports[`Storyshots Upload Mobile 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="cancel-upload-btn"
+          data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-upload-btn"
+          data-test-id="continue-upload-btn"
           disabled=""
           type="button"
         >

@@ -28,7 +28,7 @@ exports[`Storyshots SubmissionHistory Default 1`] = `
       />
       <button
         class="bcgov-button bcgov-normal-blue btn search-btn"
-        data-testid=""
+        data-test-id=""
         type="button"
       >
         Search

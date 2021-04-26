@@ -219,14 +219,14 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
+          data-test-id="continue-btn"
           type="button"
         >
           Continue to Payment
@@ -639,14 +639,14 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
+          data-test-id="continue-btn"
           type="button"
         >
           Continue to Payment
@@ -864,14 +864,14 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="cancel-upload-btn"
+          data-test-id="cancel-upload-btn"
           type="button"
         >
           Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-upload-btn"
+          data-test-id="continue-upload-btn"
           disabled=""
           type="button"
         >
@@ -1253,7 +1253,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           &lt; Back
@@ -1263,14 +1263,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <button
             class="bcgov-button bcgov-normal-white btn"
-            data-testid="main-cancel-btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
             class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
-            data-testid=""
+            data-test-id=""
             disabled=""
             type="button"
           >
@@ -1724,14 +1724,14 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
+          data-test-id="continue-btn"
           type="button"
         >
           Continue to Payment
@@ -2136,7 +2136,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           &lt; Back
@@ -2146,14 +2146,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <button
             class="bcgov-button bcgov-normal-white btn"
-            data-testid="main-cancel-btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
             class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
-            data-testid=""
+            data-test-id=""
             disabled=""
             type="button"
           >

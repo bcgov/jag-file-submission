@@ -920,14 +920,14 @@ exports[`Home Component matches the snapshot when user cso account does not exis
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="create-cso-btn"
+          data-test-id="create-cso-btn"
           disabled=""
           type="button"
         >
@@ -1232,14 +1232,14 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
+          data-test-id="continue-btn"
           type="button"
         >
           Continue to Payment
@@ -2236,14 +2236,14 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="create-cso-btn"
+          data-test-id="create-cso-btn"
           disabled=""
           type="button"
         >

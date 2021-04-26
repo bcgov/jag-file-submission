@@ -820,14 +820,14 @@ exports[`Storyshots CSOAccount Default 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="create-cso-btn"
+          data-test-id="create-cso-btn"
           disabled=""
           type="button"
         >
@@ -1733,14 +1733,14 @@ exports[`Storyshots CSOAccount Mobile 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-test-id="main-cancel-btn"
           type="button"
         >
           Cancel
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="create-cso-btn"
+          data-test-id="create-cso-btn"
           disabled=""
           type="button"
         >

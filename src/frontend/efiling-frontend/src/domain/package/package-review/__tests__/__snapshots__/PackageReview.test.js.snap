@@ -621,7 +621,7 @@ Duis aute irure dolor.
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           Return to Parent App
@@ -1342,7 +1342,7 @@ exports[`PackageReview Component Reload 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           Return to Parent App
@@ -2063,7 +2063,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           Return to Parent App

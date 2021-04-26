@@ -242,7 +242,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           &lt; Back
@@ -252,14 +252,14 @@ package and am prepared to submit them for filing. I agree that all fees for thi
         >
           <button
             class="bcgov-button bcgov-normal-white btn"
-            data-testid="main-cancel-btn"
+            data-test-id="main-cancel-btn"
             type="button"
           >
             Cancel
           </button>
           <button
             class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
-            data-testid=""
+            data-test-id=""
             disabled=""
             type="button"
           >
@@ -856,14 +856,14 @@ you feel are necessary.
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           Cancel Request
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid=""
+          data-test-id=""
           type="button"
         >
           Submit Request
