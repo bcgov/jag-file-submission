@@ -1,11 +1,26 @@
 package ca.bc.gov.open.jag.aireviewermockapi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class DocumentReady {
+    @JsonProperty
     private BigDecimal documentId;
+    @JsonProperty
     private String documentType;
+    @JsonProperty
     private String returnUri;
+
+    public DocumentReady() {}
+
+    public DocumentReady(@JsonProperty("documentId") BigDecimal documentId,
+                         @JsonProperty("documentType") String documentType,
+                         @JsonProperty("returnUri") String returnUri) {
+        this.documentId = documentId;
+        this.documentType = documentType;
+        this.returnUri = returnUri;
+    }
 
     public BigDecimal getDocumentId() {
         return documentId;
