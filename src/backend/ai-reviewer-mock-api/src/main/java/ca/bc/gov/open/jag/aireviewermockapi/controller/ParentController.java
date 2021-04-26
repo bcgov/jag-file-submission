@@ -29,7 +29,7 @@ public class ParentController {
         logger.info("Document {} of type {} is ready", documentReady.getDocumentId(), documentReady.getDocumentType());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Transaction-Id", "1d4e38ba-0c88-4c92-8367-c8eada8cca19");
+        headers.add("X-Transaction-Id", UUID.randomUUID().toString());
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
