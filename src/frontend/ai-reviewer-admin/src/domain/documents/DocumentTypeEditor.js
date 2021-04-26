@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import { Button } from "shared-components";
 import {
   getDocumentTypeConfigurations,
-  submitDocumentTypeConfigurations,
+  submitNewDocumentTypeConfigurations,
   submitUpdatedDocumentTypeConfigurations,
 } from "domain/documents/DocumentService";
 import { isValidJSON } from "utils/JsonUtils";
