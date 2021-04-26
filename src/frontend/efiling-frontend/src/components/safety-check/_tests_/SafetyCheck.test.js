@@ -19,7 +19,7 @@ describe("SafefyCheck Component Testsuite", () => {
     await waitFor(() => {});
 
     // assert the popup is open
-    const modalTitle = screen.getByTestId("help-title");
+    let modalTitle = screen.getByTestId("help-title");
     expect(modalTitle).toBeInTheDocument();
 
     // close popup
@@ -30,6 +30,7 @@ describe("SafefyCheck Component Testsuite", () => {
     await waitFor(() => {});
 
     // assert the popup is closed
-    expect(screen.queryByTestId("help-title")).toBeNull();
+    modalTitle = screen.queryByTestId("help-title");
+    expect(modalTitle).toBeNull();
   });
 });
