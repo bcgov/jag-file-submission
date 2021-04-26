@@ -32,6 +32,5 @@ describe("SafefyCheck Component Testsuite", () => {
     // assert the popup is closed
     modalTitle = screen.queryByTestId("help-title");
     expect(modalTitle).toBeNull();
-    
   });
 });
