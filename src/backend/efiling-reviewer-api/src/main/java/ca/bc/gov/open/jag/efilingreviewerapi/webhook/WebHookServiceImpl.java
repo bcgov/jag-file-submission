@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.document.service;
+package ca.bc.gov.open.jag.efilingreviewerapi.webhook;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.service.model.DocumentReady;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.service.properties.WebHookProperties;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.model.DocumentReady;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.properties.WebHookProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +44,7 @@ public class WebHookServiceImpl implements WebHookService{
                     String.class);
 
             if (result.getStatusCode().is2xxSuccessful()) {
-                logger.info("Document {} has been recieved by parent", documentId);
+                logger.info("Document {} has been received by parent", documentId);
                 break;
             }
 

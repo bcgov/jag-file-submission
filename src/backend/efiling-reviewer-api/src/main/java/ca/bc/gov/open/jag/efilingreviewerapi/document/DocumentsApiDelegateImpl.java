@@ -10,7 +10,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.service.WebHookService;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
@@ -110,7 +110,6 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
 
-        //We won't do anything with this for now
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
 
             diligenService.getDocumentDetails(documentEvent.getDocumentId());
@@ -142,7 +141,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                 logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
 
-
+                //Send document ready message
+                webHookService.sendDocumentReady(documentEvent.getDocumentId(), extractRequest.getDocument().getType());
 
             });
 

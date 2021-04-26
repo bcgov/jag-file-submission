@@ -19,6 +19,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMappe
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.*;
@@ -59,6 +60,9 @@ public class DocumentEventTest {
 
     @Mock
     private DocumentTypeConfigurationRepository documentTypeConfigurationRepositoryMock;
+
+    @Mock
+    private WebHookService webHookServiceMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -106,7 +110,9 @@ public class DocumentEventTest {
                         .create())
                 .create()));
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, null, null);
+        Mockito.doNothing().when(webHookServiceMock).sendDocumentReady(Mockito.any(), Mockito.any());
+
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, null, webHookServiceMock);
 
     }
 
