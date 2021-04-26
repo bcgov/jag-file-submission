@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.document.service.model;
+package ca.bc.gov.open.jag.efilingreviewerapi.webhook.model;
 
 
 import java.math.BigDecimal;

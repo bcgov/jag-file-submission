@@ -1,8 +1,8 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.document.service.config;
+package ca.bc.gov.open.jag.efilingreviewerapi.webhook.config;
 
-import ca.bc.gov.open.jag.efilingreviewerapi.document.service.WebHookService;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.service.WebHookServiceImpl;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.service.properties.WebHookProperties;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.properties.WebHookProperties;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookServiceImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

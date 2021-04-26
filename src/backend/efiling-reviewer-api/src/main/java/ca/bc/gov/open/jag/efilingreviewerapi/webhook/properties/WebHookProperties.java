@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingreviewerapi.document.service.properties;
+package ca.bc.gov.open.jag.efilingreviewerapi.webhook.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
