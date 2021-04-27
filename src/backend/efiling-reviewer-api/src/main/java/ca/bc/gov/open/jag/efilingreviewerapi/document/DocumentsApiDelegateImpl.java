@@ -162,6 +162,10 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
 
+        //Clear cache
+        extractStore.evict(documentId);
+        extractStore.evictResponse(documentId);
+
         return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
 
     }

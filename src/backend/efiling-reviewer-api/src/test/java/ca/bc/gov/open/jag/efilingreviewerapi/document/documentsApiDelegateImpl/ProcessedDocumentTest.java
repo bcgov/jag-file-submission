@@ -61,6 +61,10 @@ public class ProcessedDocumentTest {
                 .when(extractStoreMock.getResponse(Mockito.eq(BigDecimal.TEN)))
                 .thenReturn(Optional.empty());
 
+        Mockito.doNothing().when(extractStoreMock).evict(Mockito.any());
+
+        Mockito.doNothing().when(extractStoreMock).evictResponse(Mockito.any());
+
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, new ProcessedDocumentMapperImpl(), null);
 

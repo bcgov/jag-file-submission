@@ -8,12 +8,18 @@ import java.util.Optional;
 
 public interface ExtractStore {
 
+    //Request Cache
     Optional<ExtractRequest> put(BigDecimal id, ExtractRequest documentExtractRequest);
 
     Optional<ExtractRequest> get(BigDecimal id);
 
+    void evict(BigDecimal id);
+
+    //Response Cache
     Optional<ExtractResponse> put(BigDecimal id, ExtractResponse documentExtractResponse);
 
     Optional<ExtractResponse> getResponse(BigDecimal id);
+
+    void evictResponse(BigDecimal id);
 
 }
