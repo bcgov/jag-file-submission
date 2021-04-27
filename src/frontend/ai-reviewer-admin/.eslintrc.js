@@ -28,4 +28,9 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "react/jsx-wrap-multilines": "off",
   },
+  settings: {
+    react: {
+      version: "detect",
+    }
+  }
 };
