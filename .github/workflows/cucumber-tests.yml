@@ -166,7 +166,7 @@ jobs:
           --build-arg SERVICE_NAME=ai-reviewer-mock-api
           --build-arg MVN_PROFILE=ai-reviewer-mock
           --build-arg STARTERS_V=v0.1.8
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder
 
   cucumber-tests:
     name: Runs cucumber-tests
