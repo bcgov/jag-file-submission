@@ -73,6 +73,7 @@ export default function DocumentList({ configurations, setters }) {
             </span>
             <span className="col-12 col-sm-3 pull-right">
               <IconButton
+                data-testid="update-btn"
                 size="small"
                 className="ai-reviewer-icon-button"
                 onClick={() => handleUpdate(configuration.documentType.type)}
@@ -86,6 +87,7 @@ export default function DocumentList({ configurations, setters }) {
           <span className="col">
             <Tooltip title="add a new document type configuration">
               <IconButton
+                data-testid="add-btn"
                 size="small"
                 className="ai-reviewer-icon-button"
                 onClick={handleShowAdd}
@@ -96,6 +98,7 @@ export default function DocumentList({ configurations, setters }) {
 
             {showExit && (
               <IconButton
+                data-testid="close-btn"
                 size="small"
                 className="ai-reviewer-icon-button"
                 onClick={handleHideAdd}

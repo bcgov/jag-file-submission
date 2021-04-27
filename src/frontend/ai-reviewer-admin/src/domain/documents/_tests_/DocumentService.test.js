@@ -1,6 +1,6 @@
 import api from "AxiosConfig";
 import MockAdapter from "axios-mock-adapter";
-import { getDocumentTypeConfigurations, submitDocumentTypeConfigurations } from "domain/documents/DocumentService";
+import { getDocumentTypeConfigurations, submitNewDocumentTypeConfigurations } from "domain/documents/DocumentService";
 import { configurations } from "domain/documents/_tests_/test-data";
 
 describe("Document Service test suite", () => {
@@ -52,7 +52,7 @@ describe("Document Service test suite", () => {
     mockApi.onPost("/documentTypeConfigurations", config).reply(200, config);
     mockApi.onGet("/documentTypeConfigurations", {params: {"documentType": "TEST3"}}).reply(200, config);
     
-    await submitDocumentTypeConfigurations(JSON.stringify(config));
+    await submitNewDocumentTypeConfigurations(JSON.stringify(config));
 
     const response = await getDocumentTypeConfigurations("TEST3");
     expect(response).toMatchObject(config);
@@ -63,7 +63,7 @@ describe("Document Service test suite", () => {
     mockApi.onPost("/documentTypeConfigurations").reply(400);
 
     try {
-      await submitDocumentTypeConfigurations(JSON.stringify(config));
+      await submitNewDocumentTypeConfigurations(JSON.stringify(config));
     } catch (e) {
       expect(e.message).toEqual("Request failed with status code 400");
     }
