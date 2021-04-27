@@ -125,20 +125,69 @@ jobs:
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
 
+  efiling-reviewer-api-gcr:
+    name: Efiling Reviewer Api GCR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull efiling-reviewer-api-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder || true
+
+      - name: build efiling-reviewer-api-builder
+        run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.efiling-reviewer-api
+          --target build
+          -t efiling-reviewer-api:builder
+          --build-arg SERVICE_NAME=efiling-reviewer-api
+          --build-arg MVN_PROFILE=ai-reviewer-mock
+          --build-arg STARTERS_V=v0.1.8
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+
+      - name: tag & push efiling-reviewer-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+
+      - name: Pull ai-reviewer-mock-api
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo || true
+
+      - name: build ai-reviewer-mock-api
+        run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.ai-reviewer-mock-api
+          -t efiling-reviewer-api:demo
+          --build-arg SERVICE_NAME=efiling-reviewer-api
+          --build-arg MVN_PROFILE=ai-reviewer-mock
+          --build-arg STARTERS_V=v0.1.8
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo
+
+      # Optional only for branch on repo
+      - name: tag & push efiling-reviewer-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag efiling-reviewer-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo
+
   cucumber-tests:
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
-    needs: [efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr]
+    needs: [efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr, efiling-reviewer-api-gcr]
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
 
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
-        run: docker-compose pull -q --parallel redis clamav keycloak
+        run: docker-compose pull -q --parallel redis clamav keycloak mongodb
 
       - name: Standup Infra
-        run: docker-compose up -d redis clamav keycloak
+        run: docker-compose up -d redis clamav keycloak mongodb
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -157,15 +206,17 @@ jobs:
 
       - name: Pull images (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config efiling-reviewer-api
 
       - name: Standup Docker Pods (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend efiling-reviewer-api
+
 
       - name: Standup Docker Pods (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
-        run: docker-compose up -d efiling-api efiling-frontend
+        run: docker-compose up -d efiling-api efiling-frontend efiling-reviewer-api
+
 
       - name: Configure keycloak (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
