@@ -28,3 +28,14 @@ services:
       context: ./infrastructure/keycloak
       args:
         - KEYCLOAK_URL=http://keycloak:8080
+
+  #############################################################################################
+  ###                           Efiling reviewer api backend app                                     ###
+  #############################################################################################
+  efiling-reviewer-api:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.efiling-reviewer-api
+      args:
+        - MVN_PROFILE=${MVN_PROFILE:-ai-reviewer-mock}
+        - SKIP_TESTS=true
