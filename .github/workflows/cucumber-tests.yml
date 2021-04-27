@@ -157,17 +157,16 @@ jobs:
         run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
 
       - name: Pull ai-reviewer-mock-api
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo || true
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder || true
 
       - name: build ai-reviewer-mock-api
         run: docker build ./src/backend
-          -f ./src/backend/Dockerfile.efiling-reviewer-api
-          -t efiling-reviewer-api:demo
-          --build-arg SERVICE_NAME=efiling-reviewer-api
+          -f ./src/backend/Dockerfile.ai-reviewer-mock-api
+          -t ai-reviewer-mock-api:builder
+          --build-arg SERVICE_NAME=ai-reviewer-mock-api
           --build-arg MVN_PROFILE=ai-reviewer-mock
           --build-arg STARTERS_V=v0.1.8
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder:builder
 
   cucumber-tests:
     name: Runs cucumber-tests
