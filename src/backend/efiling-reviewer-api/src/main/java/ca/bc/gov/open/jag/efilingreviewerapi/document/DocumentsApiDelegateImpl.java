@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerInvalidTransactionIdException;
 import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
@@ -161,6 +162,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         Optional<ExtractResponse> extractResponseCached = extractStore.getResponse(documentId);
 
         if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
+
+        if (!extractResponseCached.get().getExtract().getTransactionId().equals(xTransactionId)) throw new AiReviewerInvalidTransactionIdException("Requested transaction id is not valid");
 
         return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
 

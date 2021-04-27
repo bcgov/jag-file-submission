@@ -47,7 +47,7 @@ public class AiReviewerControllerAdvisorTest {
     @DisplayName("400: Assert bad request returned")
     public void testDiligenDocumentException() {
 
-        ResponseEntity<Object> result = sut.handleDiligenDocumentException(new DiligenDocumentException("Something went wrong"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleDiligenDocumentException(new DiligenDocumentException("Something went wrong"));
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("Something went wrong", result.getBody());
@@ -58,7 +58,7 @@ public class AiReviewerControllerAdvisorTest {
     @DisplayName("400: Assert bad request returned")
     public void testAiReviewerDocumentException() {
 
-        ResponseEntity<Object> result = sut.handleAiReviewerDocumentException(new AiReviewerDocumentException("Issue with file"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleAiReviewerDocumentException(new AiReviewerDocumentException("Issue with file"));
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("DOCUMENT_VALIDATION", ((ApiError)result.getBody()).getError());
@@ -70,7 +70,7 @@ public class AiReviewerControllerAdvisorTest {
     @DisplayName("500: Assert internal server error returned")
     public void testDiligenAuthenticationException() {
 
-        ResponseEntity<Object> result = sut.handleDiligenAuthenticationException(new DiligenAuthenticationException("Not authorized"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleDiligenAuthenticationException(new DiligenAuthenticationException("Not authorized"));
 
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals("Not authorized", result.getBody());
@@ -81,7 +81,7 @@ public class AiReviewerControllerAdvisorTest {
     @DisplayName("502: Assert bad gateway returned")
     public void testDocumentExtractVirusFoundException() {
 
-        ResponseEntity<Object> result = sut.handleDocumentExtractVirusFoundException(new AiReviewerVirusFoundException("Virus found"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleDocumentExtractVirusFoundException(new AiReviewerVirusFoundException("Virus found"));
 
         Assertions.assertEquals(HttpStatus.BAD_GATEWAY, result.getStatusCode());
         Assertions.assertEquals("VIRUS_FOUND", ((ApiError)result.getBody()).getError());
@@ -92,7 +92,7 @@ public class AiReviewerControllerAdvisorTest {
     @DisplayName("500: Assert cache exception")
     public void testAiReviewerCacheException() {
 
-        ResponseEntity<Object> result = sut.handleAiReviewerCacheException(new AiReviewerCacheException("Cache Error"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleAiReviewerCacheException(new AiReviewerCacheException("Cache Error"));
 
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals("CACHE_UNAVAILABLE", ((ApiError)result.getBody()).getError());
@@ -104,7 +104,7 @@ public class AiReviewerControllerAdvisorTest {
     @DisplayName("400: Assert document mismatch exception")
     public void testAiReviewerDocumentTypeMismatchException() {
 
-        ResponseEntity<Object> result = sut.handleDocumentMismatchException(new AiReviewerDocumentTypeMismatchException("Document mismatch exception"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleDocumentMismatchException(new AiReviewerDocumentTypeMismatchException("Document mismatch exception"));
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("DOCUMENT_TYPE_MISMATCH", ((ApiError)result.getBody()).getError());
@@ -118,7 +118,7 @@ public class AiReviewerControllerAdvisorTest {
 
         Mockito.when(mailSendApiMock.mailSend(any())).thenReturn(new EmailResponse());
 
-        ResponseEntity<Object> result = sut.handleRestrictedDocumentException(new AiReviewerRestrictedDocumentException("Restricted Document exception"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleRestrictedDocumentException(new AiReviewerRestrictedDocumentException("Restricted Document exception"));
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("RESTRICTED_DOCUMENT", ((ApiError)result.getBody()).getError());
@@ -132,7 +132,7 @@ public class AiReviewerControllerAdvisorTest {
 
         Mockito.doThrow(ApiException.class).when(mailSendApiMock).mailSend(any());
 
-        ResponseEntity<Object> result = sut.handleRestrictedDocumentException(new AiReviewerRestrictedDocumentException("Restricted Document exception"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleRestrictedDocumentException(new AiReviewerRestrictedDocumentException("Restricted Document exception"));
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("RESTRICTED_DOCUMENT", ((ApiError)result.getBody()).getError());
@@ -146,11 +146,23 @@ public class AiReviewerControllerAdvisorTest {
 
         Mockito.doThrow(ApiException.class).when(mailSendApiMock).mailSend(any());
 
-        ResponseEntity<Object> result = sut.handleDocumentTypeConfigurationException(new AiReviewerDocumentTypeConfigurationException("Document Config exception"), webRequestMock);
+        ResponseEntity<Object> result = sut.handleDocumentTypeConfigurationException(new AiReviewerDocumentTypeConfigurationException("Document Config exception"));
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals("DOCUMENT_CONFIGURATION_MANAGEMENT", ((ApiError)result.getBody()).getError());
         Assertions.assertEquals("Document Config exception", ((ApiError)result.getBody()).getMessage());
+
+    }
+
+    @Test
+    @DisplayName("403: Assert invalid transaction id")
+    public void testAiReviewerInvalidTransactionIdException() {
+
+        ResponseEntity<Object> result = sut.handleInvalidTransactionIdException(new AiReviewerInvalidTransactionIdException("Invalid transaction id"));
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        Assertions.assertEquals("INVALID_TRANSACTION_ID", ((ApiError)result.getBody()).getError());
+        Assertions.assertEquals("Invalid transaction id", ((ApiError)result.getBody()).getMessage());
 
     }
 

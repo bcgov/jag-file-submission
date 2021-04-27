@@ -34,50 +34,38 @@ public class AiReviewerControllerAdvisor {
     }
 
     @ExceptionHandler(DiligenDocumentException.class)
-    public ResponseEntity<Object> handleDiligenDocumentException(DiligenDocumentException ex, WebRequest request) {
+    public ResponseEntity<Object> handleDiligenDocumentException(DiligenDocumentException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DiligenAuthenticationException.class)
-    public ResponseEntity<Object> handleDiligenAuthenticationException(DiligenAuthenticationException ex, WebRequest request) {
+    public ResponseEntity<Object> handleDiligenAuthenticationException(DiligenAuthenticationException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(AiReviewerDocumentException.class)
-    public ResponseEntity<Object> handleAiReviewerDocumentException(AiReviewerDocumentException ex, WebRequest request) {
-        ApiError apiError = new ApiError();
-        apiError.setError(ex.getErrorCode());
-        apiError.setMessage(ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Object> handleAiReviewerDocumentException(AiReviewerDocumentException ex) {
+        return new ResponseEntity<>(buildApiError(ex), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AiReviewerVirusFoundException.class)
-    public ResponseEntity<Object> handleDocumentExtractVirusFoundException(AiReviewerVirusFoundException ex, WebRequest request) {
-        ApiError apiError = new ApiError();
-        apiError.setError(ex.getErrorCode());
-        apiError.setMessage(ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_GATEWAY);
+    public ResponseEntity<Object> handleDocumentExtractVirusFoundException(AiReviewerVirusFoundException ex) {
+        return new ResponseEntity<>(buildApiError(ex), HttpStatus.BAD_GATEWAY);
     }
   
     @ExceptionHandler(AiReviewerCacheException.class)
-    public ResponseEntity<Object> handleAiReviewerCacheException(AiReviewerCacheException ex, WebRequest request) {
-        ApiError apiError = new ApiError();
-        apiError.setError(ex.getErrorCode());
-        apiError.setMessage(ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Object> handleAiReviewerCacheException(AiReviewerCacheException ex) {
+        return new ResponseEntity<>(buildApiError(ex), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(AiReviewerDocumentTypeMismatchException.class)
-    public ResponseEntity<Object> handleDocumentMismatchException(AiReviewerDocumentTypeMismatchException ex, WebRequest request) {
+    public ResponseEntity<Object> handleDocumentMismatchException(AiReviewerDocumentTypeMismatchException ex) {
         //TODO: Does this exception require an email?
-        ApiError apiError = new ApiError();
-        apiError.setError(ex.getErrorCode());
-        apiError.setMessage(ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(buildApiError(ex), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AiReviewerRestrictedDocumentException.class)
-    public ResponseEntity<Object> handleRestrictedDocumentException(AiReviewerRestrictedDocumentException ex, WebRequest request) {
+    public ResponseEntity<Object> handleRestrictedDocumentException(AiReviewerRestrictedDocumentException ex) {
 
         try {
             EmailRequest emailRequest = new EmailRequest();
@@ -98,20 +86,25 @@ public class AiReviewerControllerAdvisor {
             logger.error(e.getMessage());
         }
 
-        ApiError apiError = new ApiError();
-        apiError.setError(ex.getErrorCode());
-        apiError.setMessage(ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(buildApiError(ex), HttpStatus.BAD_REQUEST);
 
     }
 
     @ExceptionHandler(AiReviewerDocumentTypeConfigurationException.class)
-    public ResponseEntity<Object> handleDocumentTypeConfigurationException(AiReviewerDocumentTypeConfigurationException ex, WebRequest request) {
+    public ResponseEntity<Object> handleDocumentTypeConfigurationException(AiReviewerDocumentTypeConfigurationException ex) {
+        return new ResponseEntity<>(buildApiError(ex), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AiReviewerInvalidTransactionIdException.class)
+    public ResponseEntity<Object> handleInvalidTransactionIdException(AiReviewerInvalidTransactionIdException ex) {
+        return new ResponseEntity<>(buildApiError(ex), HttpStatus.FORBIDDEN);
+    }
+
+    private ApiError buildApiError(AiReviewerException ex) {
         ApiError apiError = new ApiError();
         apiError.setError(ex.getErrorCode());
         apiError.setMessage(ex.getMessage());
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+        return apiError;
     }
-
 
 }
