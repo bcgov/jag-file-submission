@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.DocumentsApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerInvalidTransactionIdException;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
@@ -27,6 +28,13 @@ import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProcessedDocumentTest {
+
+    private static final UUID EXPECTED_EXTRACT_TRANSACTION_ID = UUID.fromString("e40fb65d-1b61-40b9-9deb-d8eb3bab877f");
+    private static final UUID EXPECTED_EXTRACT_ID = UUID.fromString("89714a2a-611e-4f36-811b-1b2eb4cce7ee");
+    private static final String EXPECTED_DOCUMENT_CONTENT_TYPE = "application/pdf";
+    private static final String EXPECTED_DOCUMENT_FILE_NAME = "myfile.pdf";
+    private static final String EXPECTED_DOCUMENT_TYPE = "type";
+    private static final BigDecimal EXPECTED_DOCUMENT_SIZE = BigDecimal.TEN;
 
     private DocumentsApiDelegateImpl sut;
 
@@ -74,9 +82,16 @@ public class ProcessedDocumentTest {
     @DisplayName("200: Assert processed document is returned")
     public void withUserHavingValidRequestShouldReturnCreated() {
 
-        ResponseEntity<ProcessedDocument> actual = sut.documentProcessed(UUID.randomUUID(), BigDecimal.ONE);
+        ResponseEntity<ProcessedDocument> actual = sut.documentProcessed(EXPECTED_EXTRACT_TRANSACTION_ID, BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
+        Assertions.assertEquals(EXPECTED_EXTRACT_TRANSACTION_ID, actual.getBody().getExtract().getTransactionId());
+        Assertions.assertEquals(EXPECTED_EXTRACT_ID, actual.getBody().getExtract().getId());
+
+        Assertions.assertEquals(EXPECTED_DOCUMENT_CONTENT_TYPE, actual.getBody().getDocument().getContentType());
+        Assertions.assertEquals(EXPECTED_DOCUMENT_FILE_NAME, actual.getBody().getDocument().getFileName());
+        Assertions.assertEquals(EXPECTED_DOCUMENT_TYPE, actual.getBody().getDocument().getType());
+        Assertions.assertEquals(EXPECTED_DOCUMENT_SIZE, actual.getBody().getDocument().getSize());
 
     }
 
@@ -84,8 +99,17 @@ public class ProcessedDocumentTest {
     @DisplayName("Error: no document found ")
     public void withNoCacheThrowException() {
 
-        Assertions.assertThrows(AiReviewerCacheException.class,() ->sut.documentProcessed(UUID.randomUUID(), BigDecimal.TEN));
+        Assertions.assertThrows(AiReviewerCacheException.class,() -> sut.documentProcessed(UUID.randomUUID(), BigDecimal.TEN));
 
     }
+
+    @Test
+    @DisplayName("Error: no mismatched transaction id ")
+    public void withInvalidTransactionIdThrowsException() {
+
+        Assertions.assertThrows(AiReviewerInvalidTransactionIdException.class,() -> sut.documentProcessed(UUID.randomUUID(), BigDecimal.ONE));
+
+    }
+
 
 }
