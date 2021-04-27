@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "shared-components";
 import {
+  deleteDocumentTypeConfiguration,
   getDocumentTypeConfigurations,
   submitDocumentTypeConfigurations,
 } from "domain/documents/DocumentService";
@@ -14,17 +15,30 @@ import "./DocumentTypeEditor.scss";
 export default function DocumentTypeEditor() {
   const [configurations, setConfigurations] = useState([]);
   const [showToast, setShowToast] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [newConfigInput, setNewConfigInput] = useState("");
   const [invalidJsonError, setInvalidJsonError] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
   const [reloadConfigs, setReloadConfigs] = useState(false);
 
+  const handleDeleteConfiguration = (id) => {
+    deleteDocumentTypeConfiguration(id)
+      .then(() => setReloadConfigs(true))
+      .catch((error) => {
+        showError("Error: Could not delete configuration.");
+        setReloadConfigs(true);
+      });
+  };
+
+  const showError = (msg) => {
+    setErrorMsg(msg);
+    setShowToast(true);
+  };
+
   useEffect(() => {
     getDocumentTypeConfigurations()
-      .then((data) => {
-        setConfigurations(data);
-      })
-      .catch((error) => setShowToast(true));
+      .then((data) => setConfigurations(data))
+      .catch(() => showError("Error: Could not load configurations."));
   }, [reloadConfigs]);
 
   const submitNewConfig = () => {
@@ -45,11 +59,11 @@ export default function DocumentTypeEditor() {
       <h1>Document Type Configurations</h1>
       {showToast && (
         <Toast
-          content="Error: Could not load configurations."
+          content={errorMsg}
           setShow={setShowToast}
         />
       )}
-      <DocumentList configurations={configurations} />
+      <DocumentList configurations={configurations} onDelete={handleDeleteConfiguration} />
       <br />
 
       <TextField
