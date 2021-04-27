@@ -239,9 +239,7 @@ jobs:
           wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-          ./dockerize -wait http://127.0.0.1:8090/actuator/health -timeout 120s
-          ./dockerize -wait http://127.0.0.1:1337/api/isServerUp -timeout 120s
-          ./dockerize -wait http://127.0.0.1:8080/actuator/health -timeout 120s mvn verify -DDILIGEN_BASE_PATH=http://ai-reviewer-mock-api:1337 -ntp -f tests/pom.xml
+          ./dockerize -wait http://127.0.0.1:8090/actuator/health -timeout 120s -wait http://127.0.0.1:1337/api/isServerUp -timeout 120s -wait http://127.0.0.1:8080/actuator/health -timeout 120s mvn verify -DDILIGEN_BASE_PATH=http://ai-reviewer-mock-api:1337 -ntp -f tests/pom.xml
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
