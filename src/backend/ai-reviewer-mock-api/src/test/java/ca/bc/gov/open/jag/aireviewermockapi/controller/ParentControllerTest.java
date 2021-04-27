@@ -37,7 +37,7 @@ public class ParentControllerTest {
     @DisplayName("ok: POST document was retrieved")
     public void withValidRequestDocumentWasRetrieved() {
 
-        Mockito.when(restTemplateMock.getForEntity(ArgumentMatchers.eq(RETURN_URI), any(Class.class))).thenReturn(ResponseEntity.ok("Success"));
+        Mockito.when(restTemplateMock.exchange(ArgumentMatchers.eq(RETURN_URI), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok("Success"));
 
         DocumentReady request = new DocumentReady();
         request.setDocumentId(BigDecimal.ONE);
@@ -54,7 +54,7 @@ public class ParentControllerTest {
     @DisplayName("bad request: POST  document was not retrieved")
     public void withInValidRequestDocumentWasNotRetrieved() {
 
-        Mockito.when(restTemplateMock.getForEntity(ArgumentMatchers.eq(RETURN_URI), any(Class.class))).thenReturn(ResponseEntity.badRequest().body("Nope"));
+        Mockito.when(restTemplateMock.exchange(ArgumentMatchers.eq(RETURN_URI), any(), any(), any(Class.class))).thenReturn(ResponseEntity.badRequest().body("Nope"));
 
         DocumentReady request = new DocumentReady();
         request.setDocumentId(BigDecimal.TEN);
