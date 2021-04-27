@@ -15,7 +15,7 @@ describe("DocumentTypeEditor test suite", () => {
     mockApi = new MockAdapter(api);
   });
 
-  test("API returns 200", async () => {
+  test("API GET returns 200", async () => {
     // stub out service to return valid response.
     service.getDocumentTypeConfigurations = jest.fn(() =>
       Promise.resolve(configurations)
@@ -27,7 +27,7 @@ describe("DocumentTypeEditor test suite", () => {
     expect(sampleData).toBeInTheDocument();
   });
 
-  test("API returns 401", async () => {
+  test("API GET returns 401", async () => {
     // stub out service to return valid response.
     service.getDocumentTypeConfigurations = jest.fn(() => Promise.reject());
     const { getByRole, getByTestId } = render(<DocumentTypeEditor />);
@@ -37,6 +37,39 @@ describe("DocumentTypeEditor test suite", () => {
     expect(toast).toBeInTheDocument();
     // close the error Toast message
     fireEvent.click(getByTestId("toast-close"));
+  });
+
+  test("API DELETE returns 200", async () => {
+    // stub out service to return valid response.
+    service.getDocumentTypeConfigurations = jest.fn(() => Promise.resolve(configurations));
+    service.deleteDocumentTypeConfiguration = jest.fn((documentTypeId) => Promise.resolve());
+    const { getByText, getByTestId } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const deleteIcon = getByTestId("delete-6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(deleteIcon).toBeInTheDocument();
+
+    fireEvent.click(deleteIcon);
+    await waitFor(() => {});
+
+    expect(service.deleteDocumentTypeConfiguration).toBeCalledWith("6550866d-754c-9d41-52a5-c229bc849ee3");
+  });
+
+  test("API DELETE returns 404", async () => {
+    // stub out service to return valid response.
+    service.getDocumentTypeConfigurations = jest.fn(() => Promise.resolve(configurations));
+    service.deleteDocumentTypeConfiguration = jest.fn((documentTypeId) => Promise.reject());
+    const { getByText, getByTestId } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const deleteIcon = getByTestId("delete-6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(deleteIcon).toBeInTheDocument();
+
+    fireEvent.click(deleteIcon);
+    await waitFor(() => {});
+
+    expect(service.deleteDocumentTypeConfiguration).toBeCalledWith("6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(getByText("Error: Could not delete configuration.")).toBeInTheDocument();
   });
 
   test("Submit new config - Invalid JSON", async () => {
