@@ -157,7 +157,7 @@ jobs:
         run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
 
       - name: Pull ai-reviewer-mock-api
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:demo || true
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:ai-reviewer-mock || true
 
       - name: build ai-reviewer-mock-api
         run: docker build ./src/backend
@@ -167,7 +167,7 @@ jobs:
           --build-arg MVN_PROFILE=ai-reviewer-mock
           --build-arg STARTERS_V=v0.1.8
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:demo
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:ai-reviewer-mock
 
       # Optional only for branch on repo
       - name: tag & push efiling-reviewer-api to git container registry
