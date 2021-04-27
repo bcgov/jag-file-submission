@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
          features = {"src/test/resources"},
          glue ={"ca.bc.gov.open.jag.efiling"},
          monochrome = true,
-         tags = "not @ignore",
+        // tags = "not @ignore",
          plugin = {
                  "pretty",
                  "html:target/cucumber-reports/cucumber-pretty",
