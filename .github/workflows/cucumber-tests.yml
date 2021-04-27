@@ -188,16 +188,16 @@ jobs:
 
       - name: Pull images (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config efiling-reviewer-api
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config efiling-reviewer-api ai-reviewer-mock-api
 
       - name: Standup Docker Pods (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend efiling-reviewer-api
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend efiling-reviewer-api ai-reviewer-mock-api
 
 
       - name: Standup Docker Pods (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
-        run: docker-compose up -d efiling-api efiling-frontend efiling-reviewer-api
+        run: docker-compose up -d efiling-api efiling-frontend efiling-reviewer-api ai-reviewer-mock-api
 
 
       - name: Configure keycloak (Local REPO only)
