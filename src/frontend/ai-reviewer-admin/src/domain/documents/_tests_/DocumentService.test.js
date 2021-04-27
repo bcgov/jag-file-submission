@@ -1,6 +1,7 @@
 import api from "AxiosConfig";
 import MockAdapter from "axios-mock-adapter";
-import { getDocumentTypeConfigurations, submitNewDocumentTypeConfigurations } from "domain/documents/DocumentService";
+import { getDocumentTypeConfigurations, submitNewDocumentTypeConfigurations, deleteDocumentTypeConfiguration } from "domain/documents/DocumentService";
+
 import { configurations } from "domain/documents/_tests_/test-data";
 
 describe("Document Service test suite", () => {
@@ -45,6 +46,20 @@ describe("Document Service test suite", () => {
     } catch (error) {
       expect(error.message).toEqual("Unexpected response from Diligen API");
     }
+  });
+
+  test("deleteDocumentTypeConfiguration 200", async () => {
+    mockApi.onDelete("/documentTypeConfigurations/6550866d-754c-9d41-52a5-c229bc849ee3").reply(200);
+
+    const response = await deleteDocumentTypeConfiguration("6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(response.status).toEqual(200);
+  });
+
+  test("deleteDocumentTypeConfiguration 404", async () => {
+    mockApi.onDelete("/documentTypeConfigurations/6550866d-754c-9d41-52a5-c229bc849ee3").reply(404);
+
+    const response = deleteDocumentTypeConfiguration("6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(response).rejects.toThrowError();
   });
 
   test("submitDocumentTypeConfigurations 200", async () => {
