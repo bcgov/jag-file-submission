@@ -88,7 +88,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document is valid");
 
-        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(extractRequestMapper.toExtract(xTransactionId, xUseWebhook), xDocumentType, file, receivedTimeMillis);
+        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(extractRequestMapper.toExtract(xTransactionId, (xUseWebhook == null || xUseWebhook)), xDocumentType, file, receivedTimeMillis);
 
         BigDecimal response = diligenService.postDocument(xDocumentType, file, documentTypeConfiguration.getProjectId());
 
