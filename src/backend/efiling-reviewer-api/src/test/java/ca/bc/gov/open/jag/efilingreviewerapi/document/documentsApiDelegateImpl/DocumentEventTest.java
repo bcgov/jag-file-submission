@@ -77,9 +77,7 @@ public class DocumentEventTest {
 
         Mockito.when(fieldProcessorMock.getJson(Mockito.any(), Mockito.any())).thenReturn(result);
 
-        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
-        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(DiligenDocumentDetails.builder().create());
-
+        Mockito.when(diligenServiceMock.getDocumentDetails(Mockito.any())).thenReturn(DiligenDocumentDetails.builder().create());
 
         DocumentTypeConfiguration configuration = DocumentTypeConfiguration.builder().create();
         Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(Mockito.eq("TYPE"))).thenReturn(configuration);
@@ -107,6 +105,20 @@ public class DocumentEventTest {
                         .create())
                 .create()));
 
+        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ZERO))).thenReturn(DiligenDocumentDetails.builder()
+                .projectFieldsResponse(projectFieldResponse).create());
+
+        Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ZERO))).thenReturn(Optional.of(ExtractRequest.builder()
+                .document(Document.builder()
+                        .type("TYPE")
+                        .create())
+                .extract(Extract.builder()
+                        .id(UUID.randomUUID())
+                        .transactionId(UUID.randomUUID())
+                        .useWebhook(false)
+                        .create())
+                .create()));
+
         Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.TEN))).thenReturn(Optional.of(ExtractRequest.builder()
                 .document(Document.builder()
                         .type("NO-CONFIG")
@@ -126,7 +138,19 @@ public class DocumentEventTest {
         DocumentEvent documentEvent = new DocumentEvent();
         documentEvent.setDocumentId(BigDecimal.ONE);
         documentEvent.setStatus("Processed");
-        ResponseEntity<Void> actual = sut.documentEvent(, documentEvent);
+        ResponseEntity<Void> actual = sut.documentEvent(UUID.randomUUID(), documentEvent);
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
+
+    }
+
+    @Test()
+    @DisplayName("204: accept any event webHook ignored")
+    public void testAnyEventWebhookIgnored() {
+
+        DocumentEvent documentEvent = new DocumentEvent();
+        documentEvent.setDocumentId(BigDecimal.ONE);
+        documentEvent.setStatus("Processed");
+        ResponseEntity<Void> actual = sut.documentEvent(UUID.randomUUID(), documentEvent);
         Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
 
     }
