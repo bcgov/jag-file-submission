@@ -24,6 +24,18 @@
     margin-right: 10px;
     vertical-align: top;
   }
+
+  .ai-reviewer-icon {
+    color:#FCBA19;
+    margin-left: 8px;
+    font-size: 28px;
+  }
+
+  .ai-reviewer-icon-button, .ai-reviewer-icon-button:hover {
+    background-color: inherit;
+    outline: none;
+  }
+
   @media screen and (max-width: 575px) {
     .pull-right {
       text-align: right;
