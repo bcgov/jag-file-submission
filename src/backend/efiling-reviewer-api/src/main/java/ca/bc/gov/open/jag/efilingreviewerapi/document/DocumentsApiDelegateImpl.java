@@ -88,6 +88,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document is valid");
 
+        //Due to a bug in mapstruct logic has been performed inline
         ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(extractRequestMapper.toExtract(xTransactionId, (xUseWebhook == null || xUseWebhook)), xDocumentType, file, receivedTimeMillis);
 
         BigDecimal response = diligenService.postDocument(xDocumentType, file, documentTypeConfiguration.getProjectId());
