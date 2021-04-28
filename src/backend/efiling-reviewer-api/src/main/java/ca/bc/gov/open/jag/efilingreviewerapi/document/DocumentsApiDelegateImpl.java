@@ -70,7 +70,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<DocumentExtractResponse> extractDocumentFormData(UUID xTransactionId, String xDocumentType, MultipartFile file) {
+    public ResponseEntity<DocumentExtractResponse> extractDocumentFormData(UUID xTransactionId, String xDocumentType, Boolean xUseWebhook, MultipartFile file) {
 
         MDC.put(Keys.DOCUMENT_TYPE, xDocumentType);
 
@@ -88,7 +88,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document is valid");
 
-        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file, receivedTimeMillis);
+        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(extractRequestMapper.toExtract(xTransactionId, xUseWebhook), xDocumentType, file, receivedTimeMillis);
 
         BigDecimal response = diligenService.postDocument(xDocumentType, file, documentTypeConfiguration.getProjectId());
 
@@ -142,9 +142,10 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                 logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
 
-                //Send document ready message
-                webHookService.sendDocumentReady(documentEvent.getDocumentId(), extractRequest.getDocument().getType());
-
+                if (extractRequestCached.get().getExtract().getUseWebhook()) {
+                    //Send document ready message
+                    webHookService.sendDocumentReady(documentEvent.getDocumentId(), extractRequest.getDocument().getType());
+                }
             });
 
         }

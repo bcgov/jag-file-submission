@@ -7,11 +7,3 @@ import org.mapstruct.Mapping;
 
 import java.util.UUID;
 
-@Mapper(injectionStrategy = InjectionStrategy.CONSTRUCTOR, componentModel = "spring")
-public interface ExtractMapper {
-
-    @Mapping(target = "transactionId", source = "transactionId")
-    @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID())")
-    Extract toExtract(UUID transactionId);
-
-}

@@ -13,10 +13,9 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfigu
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentConfigException;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapper;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.Extract;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
 import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
@@ -69,8 +68,7 @@ public class DocumentEventTest {
 
         MockitoAnnotations.openMocks(this);
 
-        ExtractMapper extractMapper = new ExtractMapperImpl();
-        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(extractMapper);
+        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl();
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -102,6 +100,11 @@ public class DocumentEventTest {
                 .document(Document.builder()
                         .type("TYPE")
                         .create())
+                .extract(Extract.builder()
+                        .id(UUID.randomUUID())
+                        .transactionId(UUID.randomUUID())
+                        .useWebhook(true)
+                        .create())
                 .create()));
 
         Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.TEN))).thenReturn(Optional.of(ExtractRequest.builder()
@@ -123,7 +126,7 @@ public class DocumentEventTest {
         DocumentEvent documentEvent = new DocumentEvent();
         documentEvent.setDocumentId(BigDecimal.ONE);
         documentEvent.setStatus("Processed");
-        ResponseEntity<Void> actual = sut.documentEvent(UUID.randomUUID(), documentEvent);
+        ResponseEntity<Void> actual = sut.documentEvent(, documentEvent);
         Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
 
     }

@@ -20,6 +20,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/xDocumentType"
+        - $ref: "#/components/parameters/xUseWebhook"
       requestBody:
         content:
           multipart/form-data:
@@ -245,6 +246,13 @@ components:
       required: true
       schema:
         type: string
+    xUseWebhook:
+      name: X-Use-Webhook
+      in: header
+      description: A document type
+      schema:
+        type: boolean
+        default: true
   schemas:
     ApiError:
       required:

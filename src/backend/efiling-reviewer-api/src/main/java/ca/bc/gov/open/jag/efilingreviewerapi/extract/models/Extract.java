@@ -8,17 +8,21 @@ public class Extract {
 
     private UUID id;
     private UUID transactionId;
+    private Boolean useWebhook;
 
     public Extract(
             @JsonProperty("id") UUID id,
-            @JsonProperty("transactionId") UUID transactionId) {
+            @JsonProperty("transactionId") UUID transactionId,
+            @JsonProperty("useWebhook") Boolean useWebhook) {
         this.id = id;
         this.transactionId = transactionId;
+        this.useWebhook = useWebhook;
     }
 
     public Extract(Builder builder) {
         this.id = builder.id;
         this.transactionId = builder.transactionId;
+        this.useWebhook = builder.useWebhook;
     }
 
     public static Builder builder() {
@@ -41,6 +45,13 @@ public class Extract {
             return this;
         }
 
+        private Boolean useWebhook;
+
+        public Builder useWebhook(Boolean useWebhook) {
+            this.useWebhook = useWebhook;
+            return this;
+        }
+
         public Extract create() {
             return new Extract(this);
         }
@@ -54,4 +65,6 @@ public class Extract {
     public UUID getTransactionId() {
         return transactionId;
     }
+
+    public Boolean getUseWebhook() { return useWebhook; }
 }

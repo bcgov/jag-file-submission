@@ -11,7 +11,6 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidat
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractRequestMockFactory;
@@ -95,7 +94,7 @@ public class ExtractDocumentFormDataTest {
         
         Mockito.doNothing().when(stringRedisTemplateMock).convertAndSend(any(), any());
 
-        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
+        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl();
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, null, null);
 
     }
@@ -114,7 +113,7 @@ public class ExtractDocumentFormDataTest {
 
         Mockito.doNothing().when(documentValidatorMock).validateDocument(any(), any());
 
-        ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile);
+        ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, true, multipartFile);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals(ExtractRequestMockFactory.EXPECTED_DOCUMENT_CONTENT_TYPE, actual.getBody().getDocument().getContentType());
@@ -140,7 +139,7 @@ public class ExtractDocumentFormDataTest {
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
         Assertions.assertThrows(AiReviewerCacheException.class,
-                () -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile)
+                () -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE,true, multipartFile)
         );
 
     }
@@ -159,7 +158,7 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, NOT_FOUND_DOCUMENT_TYPE, multipartFile);
+        ResponseEntity<DocumentExtractResponse> actual = sut.extractDocumentFormData(transactionId, NOT_FOUND_DOCUMENT_TYPE, true, multipartFile);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
 
@@ -179,7 +178,7 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, true, multipartFile));
 
     }
 
@@ -195,7 +194,7 @@ public class ExtractDocumentFormDataTest {
         MockMultipartFile mockMultipartFileException = Mockito.mock(MockMultipartFile.class);
         Mockito.when(mockMultipartFileException.getBytes()).thenThrow(IOException.class);
 
-        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, mockMultipartFileException));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, true, mockMultipartFileException));
 
     }
 
@@ -212,7 +211,7 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(AiReviewerVirusFoundException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, multipartFile));
+        Assertions.assertThrows(AiReviewerVirusFoundException.class,() -> sut.extractDocumentFormData(transactionId, DOCUMENT_TYPE, true, multipartFile));
 
     }
 
@@ -228,7 +227,7 @@ public class ExtractDocumentFormDataTest {
         MultipartFile multipartFile = new MockMultipartFile(CASE_1,
                 CASE_1, APPLICATION_PDF, Files.readAllBytes(path));
 
-        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, INVALID_DOCUMENT_TYPE, multipartFile));
+        Assertions.assertThrows(AiReviewerDocumentException.class,() -> sut.extractDocumentFormData(transactionId, INVALID_DOCUMENT_TYPE, true, multipartFile));
 
     }
 

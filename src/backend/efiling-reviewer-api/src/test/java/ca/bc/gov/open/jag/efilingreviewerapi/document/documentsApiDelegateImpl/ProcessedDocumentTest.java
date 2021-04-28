@@ -8,7 +8,6 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigur
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerInvalidTransactionIdException;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ProcessedDocumentMapperImpl;
@@ -69,7 +68,7 @@ public class ProcessedDocumentTest {
                 .when(extractStoreMock.getResponse(Mockito.eq(BigDecimal.TEN)))
                 .thenReturn(Optional.empty());
 
-        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(new ExtractMapperImpl());
+        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl();
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, new ProcessedDocumentMapperImpl(), null);
 
     }
