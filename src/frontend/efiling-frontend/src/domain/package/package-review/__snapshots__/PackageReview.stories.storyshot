@@ -474,7 +474,7 @@ exports[`Storyshots PackageReview Default 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Return to Parent App
@@ -1152,7 +1152,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Return to Parent App
