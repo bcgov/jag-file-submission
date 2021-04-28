@@ -163,8 +163,11 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         Optional<ExtractResponse> extractResponseCached = extractStore.getResponse(documentId);
 
         if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
-
         if (!extractResponseCached.get().getExtract().getTransactionId().equals(xTransactionId)) throw new AiReviewerInvalidTransactionIdException("Requested transaction id is not valid");
+
+        //Clear cache
+        extractStore.evict(documentId);
+        extractStore.evictResponse(documentId);
 
         return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
 

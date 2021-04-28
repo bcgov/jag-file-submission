@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingreviewerapi.extract.store;
 
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractResponse;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -23,6 +24,12 @@ public class CacheExtractStore implements ExtractStore {
     }
 
     @Override
+    @CacheEvict(cacheNames = "extractRequest", key = "{ #id }", cacheManager = "extractRequestCacheManager")
+    public void evict(BigDecimal id) {
+        //No code required
+    }
+
+    @Override
     @CachePut(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractResponseCacheManager")
     public Optional<ExtractResponse> put(BigDecimal id, ExtractResponse documentExtractResponse) {
         return Optional.of(documentExtractResponse);
@@ -34,5 +41,10 @@ public class CacheExtractStore implements ExtractStore {
         return Optional.empty();
     }
 
+    @Override
+    @CacheEvict(cacheNames = "extractResponse", key = "{ #id }", cacheManager = "extractResponseCacheManager")
+    public void evictResponse(BigDecimal id) {
+        //No code required
+    }
 
 }

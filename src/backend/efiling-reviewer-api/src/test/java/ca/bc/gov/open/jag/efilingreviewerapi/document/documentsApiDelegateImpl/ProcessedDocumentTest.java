@@ -69,6 +69,11 @@ public class ProcessedDocumentTest {
                 .thenReturn(Optional.empty());
 
         ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl();
+
+        Mockito.doNothing().when(extractStoreMock).evict(Mockito.any());
+
+        Mockito.doNothing().when(extractStoreMock).evictResponse(Mockito.any());
+
         sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, new ProcessedDocumentMapperImpl(), null);
 
     }
@@ -105,6 +110,5 @@ public class ProcessedDocumentTest {
         Assertions.assertThrows(AiReviewerInvalidTransactionIdException.class,() -> sut.documentProcessed(UUID.randomUUID(), BigDecimal.ONE));
 
     }
-
 
 }

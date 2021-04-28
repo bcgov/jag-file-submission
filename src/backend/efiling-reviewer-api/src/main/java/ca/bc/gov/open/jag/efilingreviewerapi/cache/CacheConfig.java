@@ -87,6 +87,7 @@ public class CacheConfig {
 
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
+                .entryTtl(Duration.ofHours(24))
                 .serializeValuesWith(RedisSerializationContext
                         .SerializationPair.fromSerializer(extractRequestSerializer));
 
