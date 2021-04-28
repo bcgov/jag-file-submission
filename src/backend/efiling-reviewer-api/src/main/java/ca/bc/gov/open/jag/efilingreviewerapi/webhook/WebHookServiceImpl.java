@@ -35,20 +35,22 @@ public class WebHookServiceImpl implements WebHookService{
 
         while(attempt < maxAttempt) {
             logger.info("Attempting to send {} try number {}", documentId, (attempt + 1));
+            try {
+                ResponseEntity result = restTemplate.postForEntity(MessageFormat.format(Keys.WEBHOOK_PATH, webHookProperties.getBasePath()),
+                        DocumentReady.builder()
+                                .documentId(documentId)
+                                .documentType(documentType)
+                                .returnUri(MessageFormat.format(Keys.WEBHOOK_RETURN_PATH, webHookProperties.getReturnPath(), documentId.toPlainString()))
+                                .create(),
+                        DocumentReady.class);
 
-            ResponseEntity result = restTemplate.postForEntity(MessageFormat.format(Keys.WEBHOOK_PATH, webHookProperties.getBasePath()),
-                    DocumentReady.builder()
-                            .documentId(documentId)
-                            .documentType(documentType)
-                            .returnUri(MessageFormat.format(Keys.WEBHOOK_RETURN_PATH, webHookProperties.getReturnPath(), documentId.toPlainString()))
-                            .create(),
-                    DocumentReady.class);
-
-            if (result.getStatusCode().is2xxSuccessful()) {
-                logger.info("Document {} has been received by parent", documentId);
-                break;
+                if (result.getStatusCode().is2xxSuccessful()) {
+                    logger.info("Document {} has been received by parent", documentId);
+                    break;
+                }
+            } catch (Exception ex) {
+                logger.error("Failed to notify: {}", ex.getMessage());
             }
-
             attempt++;
 
         }

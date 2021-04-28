@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { VscJson } from "react-icons/vsc";
-import { MdEdit } from "react-icons/md";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import { MdDeleteForever, MdEdit, MdLibraryAdd } from "react-icons/md";
+
 
 import "./DocumentList.scss";
 import { getDocumentTypeConfigurations } from "./DocumentService";
 
-export default function DocumentList({ configurations, setters }) {
+export default function DocumentList({ configurations, setters, onDelete }) {
   const { setShowAdd, setNewConfigInput, setIsNew, setIsUpdate } = setters;
   const [showExit, setShowExit] = useState(false);
 
@@ -80,6 +81,14 @@ export default function DocumentList({ configurations, setters }) {
               >
                 <MdEdit size="24" color="#FCBA19" />
               </IconButton>
+              <span
+                  role="button"
+                  tabIndex={-1}
+                  onClick={(e) => onDelete(configuration.id)}
+                  data-testid={"delete-"+configuration.id}
+                >
+                <MdDeleteForever size="24" className="delete-icon"/>
+              </span>
             </span>
           </li>
         ))}
@@ -116,6 +125,7 @@ export default function DocumentList({ configurations, setters }) {
 DocumentList.propTypes = {
   configurations: PropTypes.arrayOf(PropTypes.object),
   setters: PropTypes.object,
+  onDelete: PropTypes.func.isRequired,
 };
 
 DocumentList.defaultProps = {
