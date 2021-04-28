@@ -46,7 +46,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "1")));
+        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "", "1")));
 
     }
 
@@ -59,7 +59,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "1")));
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","1")));
 
     }
 
@@ -71,7 +71,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doThrow(NestedEjbException_Exception.class).when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "1")));
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","1")));
 
     }
 
@@ -83,7 +83,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doThrow(NestedEjbException_Exception.class).when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "1")));
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","1")));
 
     }
 }
