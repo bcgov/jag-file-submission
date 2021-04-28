@@ -1,7 +1,12 @@
 import React from "react";
 import api from "AxiosConfig";
 import MockAdapter from "axios-mock-adapter";
-import { render, waitFor, fireEvent, getByTestId } from "@testing-library/react";
+import {
+  render,
+  waitFor,
+  fireEvent,
+  getByTestId,
+} from "@testing-library/react";
 import DocumentTypeEditor from "domain/documents/DocumentTypeEditor";
 import { configurations } from "domain/documents/_tests_/test-data";
 import userEvent from "@testing-library/user-event";
@@ -45,14 +50,19 @@ describe("DocumentTypeEditor test suite", () => {
       Promise.resolve(configurations)
     );
 
-    const { getByPlaceholderText, getByText, queryByText, getByTestId } = render(
-      <DocumentTypeEditor />
-    );
+    const {
+      getByPlaceholderText,
+      getByText,
+      queryByText,
+      getByTestId,
+    } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
 
     const add = getByTestId("add-btn");
-    fireEvent.click(add)
-    await waitFor(() => {getByPlaceholderText("Input a new configuration JSON")});
+    fireEvent.click(add);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
@@ -72,16 +82,21 @@ describe("DocumentTypeEditor test suite", () => {
       Promise.resolve(configurations)
     );
 
-    mockApi.onPost("/documentTypeConfigurations").reply(200)
+    mockApi.onPost("/documentTypeConfigurations").reply(200);
 
-    const { getByPlaceholderText, getByText, queryByText, getByTestId } = render(
-      <DocumentTypeEditor />
-    );
+    const {
+      getByPlaceholderText,
+      getByText,
+      queryByText,
+      getByTestId,
+    } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
 
     const add = getByTestId("add-btn");
-    fireEvent.click(add)
-    await waitFor(() => {getByPlaceholderText("Input a new configuration JSON")});
+    fireEvent.click(add);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
@@ -99,21 +114,25 @@ describe("DocumentTypeEditor test suite", () => {
     await waitFor(() => {});
 
     expect(queryByText("Sorry this JSON is invalid!")).not.toBeInTheDocument();
-    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(2)
+    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(2);
   });
 
   test("Submit new config - API Error", async () => {
     service.getDocumentTypeConfigurations = jest.fn(() => Promise.reject());
     service.submitDocumentTypeConfigurations = jest.fn(() =>
-      Promise.reject({error: {message: "Error"}})
+      Promise.reject({ error: { message: "Error" } })
     );
 
-    const { getByPlaceholderText, getByText, getByTestId } = render(<DocumentTypeEditor />);
+    const { getByPlaceholderText, getByText, getByTestId } = render(
+      <DocumentTypeEditor />
+    );
     await waitFor(() => {});
 
     const add = getByTestId("add-btn");
-    fireEvent.click(add)
-    await waitFor(() => {getByPlaceholderText("Input a new configuration JSON")});
+    fireEvent.click(add);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
@@ -134,54 +153,67 @@ describe("DocumentTypeEditor test suite", () => {
   });
 
   test("Update existing config - Success", async () => {
-    service.getDocumentTypeConfigurations = jest.fn(() => Promise.resolve(configurations));
-    mockApi.onPut("/documentTypeConfigurations").reply(200)
-
-    const { getByPlaceholderText, getByText, queryByText, getAllByTestId, getByTestId } = render(
-      <DocumentTypeEditor />
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
     );
+    mockApi.onPut("/documentTypeConfigurations").reply(200);
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      queryByText,
+      getAllByTestId,
+      getByTestId,
+    } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
 
     const update = getAllByTestId("update-btn")[0];
     fireEvent.click(update);
-    await waitFor(() => {getByPlaceholderText("Input a new configuration JSON")});
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
-    const close = getByTestId("close-btn")
+    const close = getByTestId("close-btn");
 
     fireEvent.click(button);
     await waitFor(() => {});
-    
+
     expect(queryByText("Sorry this JSON is invalid!")).not.toBeInTheDocument();
-    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(3)
-    
+    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(3);
+
     fireEvent.click(close);
 
     expect(textArea).not.toBeInTheDocument();
-
   });
 
   test("Update existing config - Failure", async () => {
-    service.getDocumentTypeConfigurations = jest.fn(() => Promise.resolve(configurations));
-    mockApi.onPut("/documentTypeConfigurations").reply(400)
-
-    const { getByPlaceholderText, getByText, getAllByTestId, getByTestId } = render(
-      <DocumentTypeEditor />
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
     );
+    mockApi.onPut("/documentTypeConfigurations").reply(400);
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      getAllByTestId,
+      getByTestId,
+    } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
 
     const update = getAllByTestId("update-btn")[0];
     fireEvent.click(update);
-    await waitFor(() => {getByPlaceholderText("Input a new configuration JSON")});
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
 
     fireEvent.click(button);
     await waitFor(() => {});
-    
-    expect(getByTestId("submission-error")).toBeInTheDocument();
 
+    expect(getByTestId("submission-error")).toBeInTheDocument();
   });
 });
