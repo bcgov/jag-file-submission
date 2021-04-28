@@ -11,6 +11,12 @@ This profile mostly enables splunk logging.
 mvn install -P openshift
 ```
 
+Require to run locally:
+
+```bash
+mvn install -P efiling-reviewer
+```
+
 ## Configuration
 
 You should use environment variables to configure the jag efiling-reviewer-api
@@ -20,7 +26,7 @@ You should use environment variables to configure the jag efiling-reviewer-api
 | SERVER_PORT                     				  | Integer | web application server port                  | defaulted to `8080`            |
 | DILIGEN_HEALTH_ENABLED   						  | Boolean | if Diligen should be monitored on healt check| defaulted to `true`            |
 | DILIGEN_BASE_PATH               				  | String  | Diligen api base path                        |                                |
-| DILIGEN_USERNAME    							  | String  | Diligen username  						   | defaulted to `true`            |
+| DILIGEN_USERNAME    							  | String  | Diligen username  						   |                                |
 | DILIGEN_PASSWORD              				  | String  | Diligen password                             |                                |
 | CLAMAV_HOST              						  | String  | Clamav host                                  | defaulted to `localhost`       |
 | CLAMAV_PORT    								  | Integer | Clamav port                                  | defaulted to `true`            |
@@ -37,6 +43,9 @@ You should use environment variables to configure the jag efiling-reviewer-api
 | REDIS_HOST               						  | String  | Redis host                                   | defaulted to `localhost`       |
 | REDIS_PORT    								  | Integer | Redis port                                   | defaulted to `6379`            |
 | REDIS_PASSWORD               					  | String  | Redis password                               | defaulted to `admin`           |
+| CSO_WEBHOOK_ENDPOINT               			  | String  | CSO notification endpoint                    | defaulted to  mock service     |
+| CSO_WEBHOOK_RETURN_ENDPOINT    				  | String  | Endpoint for cso to return                   | defaulted to  mock service     |
+
 
 ## Backend Folder Structure
 
