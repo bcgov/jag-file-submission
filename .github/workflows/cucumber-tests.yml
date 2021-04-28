@@ -125,35 +125,35 @@ jobs:
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
 
-  efiling-reviewer-api-gcr:
-    name: Efiling Reviewer Api GCR
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull Git repo.
-        uses: actions/checkout@v2
+  # efiling-reviewer-api-gcr:
+  #   name: Efiling Reviewer Api GCR
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Pull Git repo.
+  #       uses: actions/checkout@v2
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v1
+  #       with:
+  #         registry: docker.pkg.github.com
+  #         username: ${{ github.repository_owner }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pull efiling-reviewer-api-builder
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder || true
+  #     - name: Pull efiling-reviewer-api-builder
+  #       run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder || true
 
-      - name: build efiling-reviewer-api-builder
-        run: docker build ./src/backend
-          -f ./src/backend/Dockerfile.efiling-reviewer-api
-          --target build
-          -t efiling-reviewer-api:builder
-          --build-arg SERVICE_NAME=efiling-reviewer-api
-          --build-arg MVN_PROFILE=ai-reviewer-mock
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+  #     - name: build efiling-reviewer-api-builder
+  #       run: docker build ./src/backend
+  #         -f ./src/backend/Dockerfile.efiling-reviewer-api
+  #         --target build
+  #         -t efiling-reviewer-api:builder
+  #         --build-arg SERVICE_NAME=efiling-reviewer-api
+  #         --build-arg MVN_PROFILE=ai-reviewer-mock
+  #         --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
 
-      - name: tag & push efiling-reviewer-api to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+  #     - name: tag & push efiling-reviewer-api to git container registry
+  #       if: github.event.pull_request.head.repo.full_name == github.repository
+  #       run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
 
   cucumber-tests:
     name: Runs cucumber-tests
@@ -225,6 +225,8 @@ jobs:
           # We need to test if efiling-api pod and service is running before we can proceed.  Using dockerize to proceed only after efiling-demo:8080 can be reached.
           wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+          ./dockerize -wait http://127.0.0.1:8090/actuator/health -timeout 120s
 
           ./dockerize -wait http://127.0.0.1:8080/actuator/health -timeout 120s -wait http://127.0.0.1:1337/api/isServerUp -timeout 120s 
           mvn verify -DDILIGEN_BASE_PATH=http://ai-reviewer-mock-api:1337 -ntp -f tests/pom.xml
