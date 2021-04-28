@@ -7,6 +7,8 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmissionFilingPackage;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -138,14 +140,14 @@ public class GetPackageInformationTest {
     }
 
     @Test
-    @DisplayName("404: with no universal id should return 403")
-    public void withInCorrectIDReturnForbidden() {
+    @DisplayName("404: with no universal id should throw InvalidUniversalException")
+    public void withInCorrectIDThrowInvalidUniversalException() {
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, null);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<SubmissionFilingPackage> actual = sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2);
-        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
 
 

@@ -21,115 +21,96 @@ public class ExceptionControllerAdvisorTest {
     }
 
     @Test
-    @DisplayName("403: Assert Invalid Role Exception")
-    public void testInvalidRoleException() {
+    @DisplayName("500: Assert Cache Exception")
+    public void testCacheException() {
 
         String expected = "Something went wrong";
 
         //arrange
-        InvalidRoleException exception = new InvalidRoleException(expected);
+        CacheException exception = new CacheException(expected);
 
         //act
-        ResponseEntity<Object> result = sut.handleInvalidRoleException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.INVALIDROLE.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("403: Assert Invalid Universal Exception")
-    public void testInvalidUniversalException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        InvalidUniversalException exception = new InvalidUniversalException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleInvalidUniversalException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("400: Assert Multiple Accounts Exception")
-    public void testMultipleAccountsException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        AccountException exception = new AccountException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleAccountException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.ACCOUNTEXCEPTION.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("500: Assert Document Type Exception")
-    public void testDocumentTypeException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        DocumentTypeException exception = new DocumentTypeException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleDocumentTypeException(exception);
+        ResponseEntity<Object> result = sut.handleCacheException(exception);
 
         //assert
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.DOCUMENT_TYPE_ERROR.toString(),
+        Assertions.assertEquals(ErrorCode.CACHE_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }
 
     @Test
-    @DisplayName("400: Assert Payment Exception")
-    public void testPaymentException() {
+    @DisplayName("500: Assert Court Location Exception")
+    public void testCourtLocationException() {
 
         String expected = "Something went wrong";
 
         //arrange
-        PaymentException exception = new PaymentException(expected);
+        CourtLocationException exception = new CourtLocationException(expected);
 
         //act
-        ResponseEntity<Object> result = sut.handlePaymentException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.PAYMENT_FAILURE.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("500: Assert Submission Exception")
-    public void testSubmissionException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        SubmissionException exception = new SubmissionException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleSubmissionException(exception);
+        ResponseEntity<Object> result = sut.handleCourtLocationException(exception);
 
         //assert
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.SUBMISSION_FAILURE.toString(),
+        Assertions.assertEquals(ErrorCode.COURT_LOCATION_ERROR.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("500: Assert Create Account Exception")
+    public void testCreateAccountException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        CreateAccountException exception = new CreateAccountException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handleCreateAccountException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.CREATE_ACCOUNT_EXCEPTION.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("404: Assert Delete Document Exception Returns Not Found")
+    public void testDeleteDocumentExceptionReturnNotFound() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        DeleteDocumentException exception = new DeleteDocumentException(expected, HttpStatus.NOT_FOUND);
+
+        //act
+        ResponseEntity<Object> result = sut.handleDeleteDocumentException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("400: Assert Delete Document Exception Returns Bad Request")
+    public void testDeleteDocumentExceptionReturnsBadRequest() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        DeleteDocumentException exception = new DeleteDocumentException(expected, HttpStatus.BAD_REQUEST);
+
+        //act
+        ResponseEntity<Object> result = sut.handleDeleteDocumentException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }
@@ -173,6 +154,25 @@ public class ExceptionControllerAdvisorTest {
     }
 
     @Test
+    @DisplayName("500: Assert Document Type Exception")
+    public void testDocumentTypeException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        DocumentTypeException exception = new DocumentTypeException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handleDocumentTypeException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.DOCUMENT_TYPE_ERROR.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
     @DisplayName("400: Assert File Type Exception")
     public void testFileTypeException() {
 
@@ -191,116 +191,22 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }
 
+
     @Test
-    @DisplayName("500: Assert Create Account Exception")
-    public void testCreateAccountException() {
+    @DisplayName("404: Assert Filing Package Not Found Exception")
+    public void testFilingPackageNotFoundException() {
 
         String expected = "Something went wrong";
 
         //arrange
-        CreateAccountException exception = new CreateAccountException(expected);
+        FilingPackageNotFoundException exception = new FilingPackageNotFoundException(expected);
 
         //act
-        ResponseEntity<Object> result = sut.handleCreateAccountException(exception);
+        ResponseEntity<Object> result = sut.handleFilingPackageNotFoundException(exception);
 
         //assert
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.CREATE_ACCOUNT_EXCEPTION.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("500: Assert Update Client Exception")
-    public void testUpdateClientException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        UpdateClientException exception = new UpdateClientException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleUpdateClientException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.UPDATE_CLIENT_EXCEPTION.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("500: Assert Cache Exception")
-    public void testCacheException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        CacheException exception = new CacheException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleCacheException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.CACHE_ERROR.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("403: Assert Missing Universal Id Exception")
-    public void testMissingUniversalIdException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        MissingUniversalIdException exception = new MissingUniversalIdException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleMissingUniversalIdException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("403: Assert Missing Identity Provider Exception")
-    public void testMissingIdentityProviderException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        MissingIdentityProviderException exception = new MissingIdentityProviderException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleMissingIdentityProviderException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.MISSING_IDENTITY_PROVIDER.toString(),
-                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
-    }
-
-    @Test
-    @DisplayName("500: Assert Url Generation Exception")
-    public void testUrlGenerationException() {
-
-        String expected = "Something went wrong";
-
-        //arrange
-        UrlGenerationException exception = new UrlGenerationException(expected);
-
-        //act
-        ResponseEntity<Object> result = sut.handleUrlGenerationException(exception);
-
-        //assert
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.URL_GENERATION_FAILURE.toString(),
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.FILING_PACKAGE_NOT_FOUND.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }
@@ -325,20 +231,39 @@ public class ExceptionControllerAdvisorTest {
     }
 
     @Test
-    @DisplayName("500: Assert Court Location Exception")
-    public void testCourtLocationException() {
+    @DisplayName("403: Assert Invalid Role Exception")
+    public void testInvalidRoleException() {
 
         String expected = "Something went wrong";
 
         //arrange
-        CourtLocationException exception = new CourtLocationException(expected);
+        InvalidRoleException exception = new InvalidRoleException(expected);
 
         //act
-        ResponseEntity<Object> result = sut.handleCourtLocationException(exception);
+        ResponseEntity<Object> result = sut.handleInvalidRoleException(exception);
 
         //assert
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.COURT_LOCATION_ERROR.toString(),
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.INVALIDROLE.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("403: Assert Invalid Universal Exception")
+    public void testInvalidUniversalException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        InvalidUniversalException exception = new InvalidUniversalException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handleInvalidUniversalException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }
@@ -363,58 +288,134 @@ public class ExceptionControllerAdvisorTest {
     }
 
     @Test
-    @DisplayName("404: Assert Filing Package Not Found Exception")
-    public void testFilingPackageNotFoundException() {
+    @DisplayName("403: Assert Missing Identity Provider Exception")
+    public void testMissingIdentityProviderException() {
 
         String expected = "Something went wrong";
 
         //arrange
-        FilingPackageNotFoundException exception = new FilingPackageNotFoundException(expected);
+        MissingIdentityProviderException exception = new MissingIdentityProviderException(expected);
 
         //act
-        ResponseEntity<Object> result = sut.handleFilingPackageNotFoundException(exception);
+        ResponseEntity<Object> result = sut.handleMissingIdentityProviderException(exception);
 
         //assert
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.FILING_PACKAGE_NOT_FOUND.toString(),
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.MISSING_IDENTITY_PROVIDER.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }
 
     @Test
-    @DisplayName("404: Assert Delete Document Exception Returns Not Found")
-    public void testDeleteDocumentExceptionReturnNotFound() {
+    @DisplayName("403: Assert Missing Universal Id Exception")
+    public void testMissingUniversalIdException() {
 
         String expected = "Something went wrong";
 
         //arrange
-        DeleteDocumentException exception = new DeleteDocumentException(expected, HttpStatus.NOT_FOUND);
+        MissingUniversalIdException exception = new MissingUniversalIdException(expected);
 
         //act
-        ResponseEntity<Object> result = sut.handleDeleteDocumentException(exception);
+        ResponseEntity<Object> result = sut.handleMissingUniversalIdException(exception);
 
         //assert
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }
 
     @Test
-    @DisplayName("400: Assert Delete Document Exception Returns Bad Request")
-    public void testDeleteDocumentExceptionReturnsBadRequest() {
+    @DisplayName("400: Assert Multiple Accounts Exception")
+    public void testMultipleAccountsException() {
 
         String expected = "Something went wrong";
 
         //arrange
-        DeleteDocumentException exception = new DeleteDocumentException(expected, HttpStatus.BAD_REQUEST);
+        AccountException exception = new AccountException(expected);
 
         //act
-        ResponseEntity<Object> result = sut.handleDeleteDocumentException(exception);
+        ResponseEntity<Object> result = sut.handleAccountException(exception);
 
         //assert
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
+        Assertions.assertEquals(ErrorCode.ACCOUNTEXCEPTION.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("400: Assert Payment Exception")
+    public void testPaymentException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        PaymentException exception = new PaymentException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handlePaymentException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.PAYMENT_FAILURE.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("500: Assert Submission Exception")
+    public void testSubmissionException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        SubmissionException exception = new SubmissionException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handleSubmissionException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.SUBMISSION_FAILURE.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("500: Assert Update Client Exception")
+    public void testUpdateClientException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        UpdateClientException exception = new UpdateClientException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handleUpdateClientException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.UPDATE_CLIENT_EXCEPTION.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+    }
+
+    @Test
+    @DisplayName("500: Assert Url Generation Exception")
+    public void testUrlGenerationException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        UrlGenerationException exception = new UrlGenerationException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handleUrlGenerationException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.URL_GENERATION_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
     }

@@ -8,6 +8,8 @@ import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionConfigResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -18,10 +20,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
@@ -216,18 +215,15 @@ public class GetSubmissionTest {
     }
 
     @Test
-    @DisplayName("403: With user not having universal id claim")
-    public void withUserNotHavingUniversalIdShouldReturn403() {
+    @DisplayName("403: With user not having universal id claim should throw MissingUniversalIdException")
+    public void withUserNotHavingUniversalIdShouldThrowMissingUniversalIdException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity actual = sut.getSubmissionConfig(UUID.randomUUID(), TestHelpers.CASE_5);
-        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError) actual.getBody()).getError());
-        assertEquals("universal-id claim missing in jwt token.", ((EfilingError) actual.getBody()).getMessage());
-
-
+        MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.getSubmissionConfig(UUID.randomUUID(), TestHelpers.CASE_5));
+        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
+        Assertions.assertEquals("universal-id claim missing in jwt token.", exception.getMessage());
     }
 
     private List<ServiceFees> createFees() {

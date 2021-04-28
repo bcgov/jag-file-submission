@@ -7,6 +7,10 @@ import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UploadSubmissionDocumentsResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.DocumentRequiredException;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.FileTypeException;
+import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -32,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.*;
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_STORAGE_FAILURE;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -105,8 +109,8 @@ public class UploadSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("400: with non pdf files should return bad request")
-    public void withNonPdfFilesShouldReturnOk() throws IOException, VirusDetectedException {
+    @DisplayName("400: with non pdf files should throw FileTypeException")
+    public void withNonPdfFilesShouldThrowFileTypeException() throws IOException, VirusDetectedException {
 
         File file = new File("src/test/resources/test.txt");
 
@@ -117,37 +121,27 @@ public class UploadSubmissionDocumentsTest {
 
         Mockito.doNothing().when(clamAvServiceMock).scan(any());
 
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(FILE_TYPE_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(FILE_TYPE_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
-
+        FileTypeException exception = Assertions.assertThrows(FileTypeException.class, () -> sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files));
+        Assertions.assertEquals(ErrorCode.FILE_TYPE_ERROR.toString(), exception.getErrorCode());
     }
 
 
     @Test
-    @DisplayName("400: with empty files should return bad request")
-    public void withEmptyFilesShouldReturnBadRequest() {
+    @DisplayName("400: with empty files should throw DocumentRequiredException")
+    public void withEmptyFilesShouldThrowDocumentRequiredException() {
 
         List<MultipartFile> files = new ArrayList<>();
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentRequiredException exception = Assertions.assertThrows(DocumentRequiredException.class, () -> sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), files));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_REQUIRED.toString(), exception.getErrorCode());
     }
 
 
     @Test
-    @DisplayName("400: with null files should return bad request")
-    public void withNullFilesShouldReturnBadRequest() {
+    @DisplayName("400: with null files should throw DocumentRequiredException")
+    public void withNullFilesShouldThrowDocumentRequiredException() {
 
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), null);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentRequiredException exception = Assertions.assertThrows(DocumentRequiredException.class, () -> sut.uploadSubmissionDocuments(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), null));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_REQUIRED.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -185,9 +179,8 @@ public class UploadSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("403: with missing id should return 403")
-    public void withBlankIdShouldReturn400() throws VirusDetectedException, IOException {
-
+    @DisplayName("403: with missing id should throw InvalidUniversalException")
+    public void withBlankIdShouldThrowInvalidUniversalException() throws VirusDetectedException, IOException {
 
         File file = new File("src/test/resources/test.pdf");
 
@@ -198,11 +191,7 @@ public class UploadSubmissionDocumentsTest {
 
         Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
 
-        ResponseEntity actual = sut.uploadSubmissionDocuments(UUID.randomUUID(), "  ", files);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.uploadSubmissionDocuments(UUID.randomUUID(), "  ", files));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
-
 }

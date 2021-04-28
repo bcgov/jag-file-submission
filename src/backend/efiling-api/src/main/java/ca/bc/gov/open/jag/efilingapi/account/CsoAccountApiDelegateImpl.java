@@ -7,8 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccountUpdateRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -28,6 +27,10 @@ import java.util.UUID;
 @Service
 public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
+    private static final String INVALID_UNIVERSAL_ID = "Invalid universal id.";
+    private static final String MISSING_IDENTITY_PROVIDER = "identityProviderAlias claim missing in jwt token.";
+    private static final String MISSING_UNIVERSAL_ID = "universal-id claim missing in jwt token.";
+
     Logger logger = LoggerFactory.getLogger(CsoAccountApiDelegateImpl.class);
 
     private final AccountService accountService;
@@ -46,13 +49,13 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
         
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        if(!universalId.isPresent())
+            throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
 
         Optional<String> identityProvider = SecurityUtils.getIdentityProvider();
 
-        if(!identityProvider.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_IDENTITY_PROVIDER).create(), HttpStatus.FORBIDDEN);
+        if(!identityProvider.isPresent())
+            throw new MissingIdentityProviderException(MISSING_IDENTITY_PROVIDER);
 
         try {
 
@@ -101,9 +104,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
 
         ResponseEntity response;
 
@@ -112,9 +113,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId.get());
 
             if(accountDetails == null) {
-                return new ResponseEntity(
-                        EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                        HttpStatus.FORBIDDEN);
+                throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
             }
 
             accountDetails.updateInternalClientNumber(clientUpdateRequest.getInternalClientNumber());
