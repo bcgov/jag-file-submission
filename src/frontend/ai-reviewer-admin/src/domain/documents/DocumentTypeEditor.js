@@ -82,7 +82,7 @@ export default function DocumentTypeEditor() {
       <DocumentList
         configurations={configurations}
         setters={{ setNewConfigInput, setShowAdd, setIsNew, setIsUpdate }} 
-        onDelete={handleDeleteConfiguration} />
+        onDelete={handleDeleteConfiguration}
       />
       <br />
 
