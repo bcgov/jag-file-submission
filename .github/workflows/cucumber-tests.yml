@@ -231,7 +231,7 @@ jobs:
         run: docker-compose up -d efiling-api efiling-frontend efiling-reviewer-api ai-reviewer-mock-api
 
       - name: Efiling Api Logs
-        run: docker-compose logs -f docker-compose.yml  -f tests/docker-compose-integration.yml efiling-reviewer-api
+        run: docker-compose logs -f efiling-reviewer-api
 
       - name: Checkrunningcontainers
         run: docker ps -a
