@@ -15,7 +15,7 @@ import "./App.scss";
 function App() {
   const header = {
     name: "AI Reviewer Admin Client",
-    history: useHistory(),
+    history: useHistory() || {},
   };
 
   return (
