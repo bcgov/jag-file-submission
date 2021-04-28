@@ -82,7 +82,6 @@ export default function DocumentList({ configurations, setters, onDelete }) {
                 <MdEdit size="24" color="#FCBA19" />
               </IconButton>
               <span
-                  role="button"
                   tabIndex={-1}
                   onClick={(e) => onDelete(configuration.id)}
                   data-testid={"delete-"+configuration.id}
@@ -93,7 +92,7 @@ export default function DocumentList({ configurations, setters, onDelete }) {
           </li>
         ))}
         <li>
-          <span className="col">
+          <span className="col add-row">
             <Tooltip title="add a new document type configuration">
               <IconButton
                 data-testid="add-btn"

@@ -27,10 +27,9 @@ export default function DocumentTypeEditor() {
 
   const handleDeleteConfiguration = (id) => {
     deleteDocumentTypeConfiguration(id)
-      .then(() => setReloadConfigs(true))
-      .catch((error) => {
+      .then(() => setReloadConfigs(!reloadConfigs))
+      .catch(() => {
         showError("Error: Could not delete configuration.");
-        setReloadConfigs(true);
       });
   };
 
