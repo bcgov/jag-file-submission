@@ -243,6 +243,9 @@ jobs:
         run: |
           docker-compose up keycloak-config
 
+      - name: Checkrunningcontainers
+        run: docker ps -a
+
       - name: Running Integration Tests
         env:
           DOCKERIZE_VERSION: v0.6.1
