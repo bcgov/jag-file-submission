@@ -23,3 +23,9 @@ services:
   #############################################################################################
   efiling-reviewer-api:
     image: docker.pkg.github.com/bcgov/jag-file-submission/efiling-reviewer-api
+
+  #############################################################################################
+  ###                           AI Reviewer Mock Service                                 ###
+  #############################################################################################
+  ai-reviewer-mock-api:
+    image: docker.pkg.github.com/bcgov/jag-file-submission/ai-reviewer-mock-api

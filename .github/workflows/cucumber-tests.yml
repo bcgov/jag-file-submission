@@ -125,40 +125,72 @@ jobs:
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
 
-  # efiling-reviewer-api-gcr:
-  #   name: Efiling Reviewer Api GCR
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Pull Git repo.
-  #       uses: actions/checkout@v2
+  efiling-reviewer-api-gcr:
+    name: Efiling Reviewer Api GCR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
 
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v1
-  #       with:
-  #         registry: docker.pkg.github.com
-  #         username: ${{ github.repository_owner }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-  #     - name: Pull efiling-reviewer-api-builder
-  #       run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder || true
+      - name: Pull efiling-reviewer-api-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder || true
 
-  #     - name: build efiling-reviewer-api-builder
-  #       run: docker build ./src/backend
-  #         -f ./src/backend/Dockerfile.efiling-reviewer-api
-  #         --target build
-  #         -t efiling-reviewer-api:builder
-  #         --build-arg SERVICE_NAME=efiling-reviewer-api
-  #         --build-arg MVN_PROFILE=ai-reviewer-mock
-  #         --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+      - name: build efiling-reviewer-api-builder
+        run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.efiling-reviewer-api
+          --target build
+          -t efiling-reviewer-api:builder
+          --build-arg SERVICE_NAME=efiling-reviewer-api
+          --build-arg MVN_PROFILE=efiling-reviewer
+          --build-arg STARTERS_V=v0.1.8
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
 
-  #     - name: tag & push efiling-reviewer-api to git container registry
-  #       if: github.event.pull_request.head.repo.full_name == github.repository
-  #       run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+      - name: tag & push efiling-reviewer-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
+
+  ai-reviewer-mock-api-gcr:
+    name: Ai Reviewer Api GCR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull ai-reviewer-mock-api-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder || true
+
+      - name: build ai-reviewer-mock-api
+        run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.ai-reviewer-mock-api
+          --target build
+          -t ai-reviewer-mock-api:builder
+          --build-arg SERVICE_NAME=ai-reviewer-mock-api
+          --build-arg MVN_PROFILE=ai-reviewer-mock
+          --build-arg STARTERS_V=v0.1.8
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder
+
+      - name: tag & push ai-reviewer-mock-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag ai-reviewer-mock-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder
 
   cucumber-tests:
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
-    needs: [efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr, efiling-reviewer-api-gcr]
+    needs: [efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr, efiling-reviewer-api-gcr, ai-reviewer-mock-api-gcr]
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
