@@ -28,7 +28,7 @@ public class ExtractResponseMockFactory {
     public static ExtractResponse mock() {
 
         return new ExtractResponse(
-                new Extract(EXPECTED_EXTRACT_ID, EXPECTED_EXTRACT_TRANSACTION_ID),
+                new Extract(EXPECTED_EXTRACT_ID, EXPECTED_EXTRACT_TRANSACTION_ID, true),
                 new Document(EXPECTED_DOCUMENT_TYPE, EXPECTED_DOCUMENT_FILE_NAME, EXPECTED_DOCUMENT_SIZE, EXPECTED_DOCUMENT_CONTENT_TYPE),
                 new DocumentValidation(Collections.singletonList(new DocumentValidationResult(ValidationTypes.DOCUMENT_TYPE, EXPECTED, ACTUAL))),
                 null);
