@@ -37,7 +37,7 @@ services:
       context: ./src/backend
       dockerfile: Dockerfile.efiling-reviewer-api
       args:
-        - MVN_PROFILE=${MVN_PROFILE:-ai-reviewer-mock}
+        - MVN_PROFILE=${MVN_PROFILE:-efiling-reviewer}
         - SKIP_TESTS=true
 
   #############################################################################################
