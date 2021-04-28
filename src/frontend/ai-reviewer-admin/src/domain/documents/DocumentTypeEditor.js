@@ -28,15 +28,17 @@ export default function DocumentTypeEditor() {
   const handleDeleteConfiguration = (id) => {
     deleteDocumentTypeConfiguration(id)
       .then(() => setReloadConfigs(!reloadConfigs))
-      .catch(() => {
-        showError("Error: Could not delete configuration.");
-      });
+      .catch(() => showError("Error: Could not delete configuration."));
   };
 
   const showError = (msg) => {
     setErrorMsg(msg);
     setShowToast(true);
   };
+
+  const cancelConfig = () => {
+    setShowAdd(false);
+  }
 
   useEffect(() => {
     getDocumentTypeConfigurations()
@@ -48,6 +50,7 @@ export default function DocumentTypeEditor() {
     setReloadConfigs(!reloadConfigs);
     setSubmissionError(null);
     setNewConfigInput("");
+    setShowAdd(false);
   };
 
   const submitConfig = () => {
@@ -80,10 +83,9 @@ export default function DocumentTypeEditor() {
 
       <DocumentList
         configurations={configurations}
-        setters={{ setNewConfigInput, setShowAdd, setIsNew, setIsUpdate }} 
+        setters={{ setNewConfigInput, showAdd, setShowAdd, setIsNew, setIsUpdate }} 
         onDelete={handleDeleteConfiguration}
       />
-      <br />
 
       {showAdd && (
         <>
@@ -119,8 +121,13 @@ export default function DocumentTypeEditor() {
             </>
           )}
           <Button
+            label="Cancel"
+            styling="btn btn-secondary pull-left"
+            onClick={cancelConfig}
+          />
+          <Button
             label="Submit"
-            styling="bcgov-normal-blue btn new-config-submit"
+            styling="btn btn-primary pull-right"
             onClick={submitConfig}
           />
         </>
