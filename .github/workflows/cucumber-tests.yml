@@ -231,9 +231,6 @@ jobs:
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: docker-compose up -d efiling-api efiling-frontend efiling-reviewer-api ai-reviewer-mock-api
 
-      - name: Efiling Api Logs
-        run: docker-compose logs -f efiling-reviewer-api
-
       - name: Checkrunningcontainers
         run: docker ps -a
 
