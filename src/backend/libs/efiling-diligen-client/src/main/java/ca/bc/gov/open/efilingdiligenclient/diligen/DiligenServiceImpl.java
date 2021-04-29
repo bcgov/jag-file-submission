@@ -84,12 +84,23 @@ public class DiligenServiceImpl implements DiligenService {
             if (!diligenResponse.getData().getDocuments().isEmpty()) {
 
                 BigDecimal result = diligenResponse.getData().getDocuments().get(0).getFileId();
+
                 logger.debug("successfully retrieved document id {}", result);
 
                 return result;
 
             } else {
-                throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
+
+                Optional<BigDecimal> fileId = tryGetFileId(headers, file.getOriginalFilename(), 5, projectIdentifier);
+
+                if(!fileId.isPresent()) {
+                    throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
+                }
+
+                logger.debug("successfully retrieved document id {}", fileId.get());
+
+                return fileId.get();
+
             }
 
         } catch (JsonProcessingException e) {
