@@ -10,7 +10,7 @@ public class Keys {
     public static final String X_TRANSACTION_ID = "X-Transaction-Id";
     public static final String X_DOCUMENT_TYPE = "X-Document-Type";
 
-    public static final String PARENT_APPLICATION = "efiling-admin";
+    public static final String PARENT_APPLICATION = "FLA";
 
     // Submission Service
     public static final String X_USER_ID = "X-User-Id";
