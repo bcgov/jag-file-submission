@@ -1,16 +1,16 @@
-package ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
+package preview.ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
 
-import ca.bc.gov.ag.csows.filing.status.FilePackage;
-import ca.bc.gov.ag.csows.filing.status.FilingStatus;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
+import preview.ca.bc.gov.ag.csows.filing.status.FilePackage;
+import preview.ca.bc.gov.ag.csows.filing.status.FilingStatus;
+import preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
+import preview.ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
-import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -28,17 +28,18 @@ import static org.mockito.ArgumentMatchers.any;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Review Service Test Suite")
 public class FindPackagesByClientIdTest {
-    public static final String CLIENT_FILE_NO = "CLIENTFILENO";
-    public static final String COURT_CLASS_CD = "CLASSCD";
-    public static final String COURT_FILE_NO = "FILENO";
-    public static final String COURT_LEVEL_CD = "LEVELCD";
-    public static final String COURT_LOCATION_CD = "LOCATIONCD";
-    public static final String COURT_LOCATION_NAME = "LOCATIONAME";
-    public static final String FILING_COMMENTS_TXT = "COMMENTSTXT";
-    public static final String FIRST_NAME = "FIRSTNAME";
-    public static final String LAST_NAME = "LASTNAME";
-    public static final String PACKAGE_NO = "PACKAGENO";
-    public static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
+    private static final String CLIENT_FILE_NO = "CLIENTFILENO";
+    private static final String COURT_CLASS_CD = "CLASSCD";
+    private static final String COURT_FILE_NO = "FILENO";
+    private static final String COURT_LEVEL_CD = "LEVELCD";
+    private static final String COURT_LOCATION_CD = "LOCATIONCD";
+    private static final String COURT_LOCATION_NAME = "LOCATIONAME";
+    private static final String FILING_COMMENTS_TXT = "COMMENTSTXT";
+    private static final String FIRST_NAME = "FIRSTNAME";
+    private static final String LAST_NAME = "LASTNAME";
+    private static final String PACKAGE_NO = "PACKAGENO";
+    private static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
+    private static final String PARENT_APPLICATION = "PARENTAPP";
 
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
@@ -52,7 +53,7 @@ public class FindPackagesByClientIdTest {
 
     private final BigDecimal NOTFOUND_CLIENT = BigDecimal.ZERO;
 
-    private static CsoReviewServiceImpl sut;
+    private static PreviewCsoReviewServiceImpl sut;
 
     @BeforeAll
     public void beforeAll() throws NestedEjbException_Exception, DatatypeConfigurationException {
@@ -62,21 +63,21 @@ public class FindPackagesByClientIdTest {
         FilingStatus filingStatus =  createFilingStatus();
         filingStatus.getFilePackages().add(createFilePackage());
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_CLIENT), any(), any(), any(), any(), any(), any())).thenReturn(filingStatus);
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingStatus);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(NOTFOUND_CLIENT), any(), any(), any(), any(), any(), any())).thenReturn(createFilingStatus());
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(NOTFOUND_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(createFilingStatus());
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
         CsoProperties csoProperties = new CsoProperties();
         csoProperties.setCsoBasePath("http://locahost:8080");
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
+        sut = new PreviewCsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
     }
 
     @DisplayName("OK: packages found")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
-        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(SUCCESS_CLIENT, null, ""));
+        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(SUCCESS_CLIENT, null, PARENT_APPLICATION));
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals(COURT_FILE_NO, result.get(0).getCourt().getFileNumber());
@@ -91,7 +92,7 @@ public class FindPackagesByClientIdTest {
     @DisplayName("Ok: no packages found")
     @Test
     public void testWithNoResult() {
-        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(NOTFOUND_CLIENT, null, ""));
+        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(NOTFOUND_CLIENT, null, PARENT_APPLICATION));
 
         Assertions.assertTrue(result.isEmpty());
 
@@ -100,7 +101,7 @@ public class FindPackagesByClientIdTest {
     @DisplayName("Exception: filing status facade throws an exception")
     @Test
     public void testWithException() {
-        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByClient(new FilingPackageRequest(EXCEPTION_CLIENT, null, "")));
+        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByClient(new FilingPackageRequest(EXCEPTION_CLIENT, null, PARENT_APPLICATION)));
     }
 
     private FilingStatus createFilingStatus() {

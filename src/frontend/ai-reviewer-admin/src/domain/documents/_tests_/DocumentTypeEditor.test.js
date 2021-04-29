@@ -196,7 +196,33 @@ describe("DocumentTypeEditor test suite", () => {
       getByText,
       queryByText,
       getAllByTestId,
-      getByTestId,
+    } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const update = getAllByTestId("update-btn")[0];
+    fireEvent.click(update);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
+
+    const submit = getByText("Submit");
+
+    fireEvent.click(submit);
+    await waitFor(() => {});
+
+    expect(queryByText("Sorry this JSON is invalid!")).not.toBeInTheDocument();
+    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(3);
+  });
+
+  test("Update existing config - Cancel", async () => {
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
+    );
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      getAllByTestId,
     } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
 
@@ -207,16 +233,9 @@ describe("DocumentTypeEditor test suite", () => {
     });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
-    const button = getByText("Submit");
-    const close = getByTestId("close-btn");
-
-    fireEvent.click(button);
+    const cancel = getByText("Cancel");
+    fireEvent.click(cancel);
     await waitFor(() => {});
-
-    expect(queryByText("Sorry this JSON is invalid!")).not.toBeInTheDocument();
-    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(3);
-
-    fireEvent.click(close);
 
     expect(textArea).not.toBeInTheDocument();
   });
