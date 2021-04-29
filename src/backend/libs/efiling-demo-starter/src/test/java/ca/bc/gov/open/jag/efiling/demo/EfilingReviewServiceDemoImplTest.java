@@ -25,7 +25,7 @@ public class EfilingReviewServiceDemoImplTest {
     @Test
     @DisplayName("OK: with correct id return payload")
     public void requestPackageOneShouldReturnData() {
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, ""));
 
         Assertions.assertTrue(result.isPresent());
         //Package
@@ -104,7 +104,7 @@ public class EfilingReviewServiceDemoImplTest {
     @Test
     @DisplayName("OK: with correct id return payload")
     public void requestPackageTwoShouldReturnData() {
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(2)));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(2), ""));
 
         Assertions.assertTrue(result.isPresent());
         //Package
@@ -183,7 +183,7 @@ public class EfilingReviewServiceDemoImplTest {
     @Test
     @DisplayName("OK: with correct id return payload")
     public void requestPackageThreeShouldReturnData() {
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(3)));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(3), ""));
 
         Assertions.assertTrue(result.isPresent());
         //Package
@@ -263,15 +263,47 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("No result: with not 1 return empty")
     public void withEmptyCacheShouldReturnEmpty() {
 
-        Assertions.assertFalse(sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ZERO, BigDecimal.ZERO)).isPresent());
+        Assertions.assertFalse(sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ZERO, BigDecimal.ZERO, "")).isPresent());
 
     }
 
     @Test
-    @DisplayName("OK: demo returns a one element array")
-    public void withRequestReturnOneElementArray() {
+    @DisplayName("OK: demo returns a 3 element array")
+    public void withRequestReturnThreeElementArray() {
 
-        Assertions.assertEquals(3, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
+        Assertions.assertEquals(3, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, null)).size());
+
+    }
+
+    @Test
+    @DisplayName("OK: demo returns a 2 element array")
+    public void withFLARequestReturnTwoElementArray() {
+
+        Assertions.assertEquals(2, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, Keys.PARENT_APPLICATION_FLA)).size());
+
+    }
+
+    @Test
+    @DisplayName("OK: demo returns a 1 element array")
+    public void withCOARequestReturnOneElementArray() {
+
+        Assertions.assertEquals(1, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, Keys.PARENT_APPLICATION_COA)).size());
+
+    }
+
+    @Test
+    @DisplayName("OK: demo returns a 1 element array")
+    public void withOTHERRequestReturnOneElementArray() {
+
+        Assertions.assertEquals(1, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, Keys.PARENT_APPLICATION_OTHER)).size());
+
+    }
+
+    @Test
+    @DisplayName("OK: demo returns a empty array")
+    public void withUNKNOWNRequestReturnEmptyArray() {
+
+        Assertions.assertEquals(0, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, "UNKNOWN")).size());
 
     }
 
@@ -299,7 +331,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a boolean")
     public void withDocumentRequestBoolean() {
 
-        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "TEST")));
+        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","TEST")));
 
     }
 

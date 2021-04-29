@@ -1,12 +1,12 @@
-package ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
+package preview.ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
-import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -22,7 +22,7 @@ public class DeleteSubmittedDocumentTest {
     @Mock
     FilingFacadeBean filingFacadeBeanMock;
 
-    private static CsoReviewServiceImpl sut;
+    private static PreviewCsoReviewServiceImpl sut;
 
     @Mock
     private RestTemplate restTemplateMock;
@@ -35,7 +35,7 @@ public class DeleteSubmittedDocumentTest {
 
         CsoProperties csoProperties = new CsoProperties();
         csoProperties.setCsoBasePath("http://locahost:8080");
-        sut = new CsoReviewServiceImpl(null, null, filingFacadeBeanMock, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
+        sut = new PreviewCsoReviewServiceImpl(null, null, filingFacadeBeanMock, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
     }
 
     @DisplayName("OK: document withdrawn")
@@ -46,7 +46,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "", "1")));
+        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, null,"1")));
 
     }
 
@@ -59,7 +59,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","1")));
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, null,"1")));
 
     }
 
@@ -71,7 +71,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doThrow(NestedEjbException_Exception.class).when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doNothing().when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","1")));
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, null,"1")));
 
     }
 
@@ -83,7 +83,7 @@ public class DeleteSubmittedDocumentTest {
         Mockito.doNothing().when(filingFacadeBeanMock).inactivateReferrals(Mockito.any(), Mockito.any(), Mockito.any());
         Mockito.doThrow(NestedEjbException_Exception.class).when(filingFacadeBeanMock).removePackageParties(Mockito.any());
 
-        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","1")));
+        Assertions.assertThrows(EfilingReviewServiceException.class, () -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE,null, "1")));
 
     }
 }

@@ -39,7 +39,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<FilingPackage> getCSOFilingPackage(String universalId, BigDecimal packageNumber) {
 
-        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber);
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber, null);
 
         if (!request.isPresent()) return Optional.empty();
 
@@ -56,7 +56,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<List<FilingPackage>> getFilingPackages(String universalId, String parentApplication) {
 
-        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, null);
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, null, parentApplication);
 
         if (!request.isPresent()) return Optional.empty();
 
@@ -91,7 +91,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, BigDecimal documentIdentifier) {
 
-        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber);
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber, null);
 
         if (!request.isPresent()) return Optional.empty();
 
@@ -119,17 +119,17 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (accountDetails.getClientId() == null) throw new EfilingAccountServiceException("Account not found");
 
-        efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, documentIdentifier));
+        efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, null, documentIdentifier));
 
     }
 
-    private Optional<FilingPackageRequest> buildFilingPackageRequest(String universalId, BigDecimal packageNumber) {
+    private Optional<FilingPackageRequest> buildFilingPackageRequest(String universalId, BigDecimal packageNumber, String parentApplication) {
 
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
 
         if (accountDetails.getClientId() == null) return Optional.empty();
 
-        return Optional.of(new FilingPackageRequest(accountDetails.getClientId(), packageNumber));
+        return Optional.of(new FilingPackageRequest(accountDetails.getClientId(), packageNumber, parentApplication));
 
     }
 
