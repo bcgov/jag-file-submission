@@ -28,7 +28,7 @@ jag:
     diligen:
       health:
         enabled: ${DILIGEN_HEALTH_ENABLED:true}
-      basePath: ${DILIGEN_BASE_PATH}
+      basePath: ${DILIGEN_BASE_PATH:http://ai-reviewer-mock-api:1337}
       username: ${DILIGEN_USERNAME}
       password: ${DILIGEN_PASSWORD}
 
