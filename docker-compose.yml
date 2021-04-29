@@ -127,7 +127,7 @@ services:
     ports:
       - "8090:8080"
     environment:
-      - DILIGEN_BASE_PATH=${DILIGEN_BASE_PATH}
+      - DILIGEN_BASE_PATH=http://ai-reviewer-mock-api:1337
       - DILIGEN_USERNAME=${DILIGEN_USERNAME}
       - DILIGEN_PASSWORD=${DILIGEN_PASSWORD}
       - REDIS_HOST=redis

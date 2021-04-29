@@ -149,7 +149,6 @@ jobs:
           -t efiling-reviewer-api:builder
           --build-arg SERVICE_NAME=efiling-reviewer-api
           --build-arg MVN_PROFILE=efiling-reviewer
-          --build-arg DILIGEN_BASE_PATH=http://ai-reviewer-mock-api:1337
           --build-arg STARTERS_V=v0.1.8
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
 
