@@ -2,8 +2,8 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.validators.documentValida
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
@@ -50,7 +50,7 @@ public class ValidateDocumentTest {
 
         Mockito.when(documentTypeConfigurationRepositoryMock.existsByDocumentType(ArgumentMatchers.eq(NOT_RCC))).thenReturn(false);
 
-        sut = new DocumentValidatorImpl(clamAvServiceMock, null, documentTypeConfigurationRepositoryMock);
+        sut = new DocumentValidatorImpl(clamAvServiceMock, null, documentTypeConfigurationRepositoryMock, null);
 
     }
 

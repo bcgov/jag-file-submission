@@ -6,6 +6,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidation;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.ValidationTypes;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
 import org.junit.jupiter.api.*;
@@ -23,8 +24,7 @@ import java.util.List;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentsValidatorImpl test suite")
 public class ValidateExtractedDocumentTest {
-
-    private static final String DOCUMENT_TYPE = "RCC";
+    
     private static final String RESPONSE_TO_CIVIL_CLAIM = "Response to Civil Claim";
     private static final String NOT_RESPONSE_TO_CIVIL_CLAIM = "THIS IS NOT VALID";
     private static final String RESTRICTED_DOCUMENT = "This is a temporary";
@@ -45,6 +45,9 @@ public class ValidateExtractedDocumentTest {
     @Mock
     DiligenService diligenServiceMock;
 
+    @Mock
+    RestrictedDocumentRepository restrictedDocumentRepositoryMock;
+
     @BeforeAll
     public void beforeAll() {
 
@@ -52,7 +55,13 @@ public class ValidateExtractedDocumentTest {
 
         Mockito.doNothing().when(diligenServiceMock).deleteDocument(ArgumentMatchers.eq(BigDecimal.ONE));
 
-        sut = new DocumentValidatorImpl(null, diligenServiceMock, null);
+        Mockito.when(restrictedDocumentRepositoryMock.existsByDocumentTypeDescription(ArgumentMatchers.eq(RESTRICTED_DOCUMENT))).thenReturn(true);
+
+        Mockito.when(restrictedDocumentRepositoryMock.existsByDocumentTypeDescription(ArgumentMatchers.eq(RESPONSE_TO_CIVIL_CLAIM))).thenReturn(false);
+
+        Mockito.when(restrictedDocumentRepositoryMock.existsByDocumentTypeDescription(ArgumentMatchers.eq(NOT_RESPONSE_TO_CIVIL_CLAIM))).thenReturn(false);
+
+        sut = new DocumentValidatorImpl(null, diligenServiceMock, null, restrictedDocumentRepositoryMock);
 
     }
 
