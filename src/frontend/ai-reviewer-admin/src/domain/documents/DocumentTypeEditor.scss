@@ -2,11 +2,16 @@
   margin: 20px;
   max-width: 1000px;
 
-  .new-config-submit {
-    margin-top: 20px;
+  .btn {
+    margin: 20px 0px;
   }
-
   .error {
     color: red;
+  }
+  .pull-left {
+    float: left;
+  }
+  .pull-right {
+    float: right;
   }
 }

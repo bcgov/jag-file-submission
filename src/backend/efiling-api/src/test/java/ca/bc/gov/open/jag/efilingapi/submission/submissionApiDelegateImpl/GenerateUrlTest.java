@@ -7,7 +7,9 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.InvalidRoleException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -88,9 +90,8 @@ public class GenerateUrlTest {
     @Mock
     private GenerateUrlRequestValidator generateUrlRequestValidatorMock;
 
-
-    @BeforeAll
-    public void beforeAll() {
+    @BeforeEach
+    public void beforeEach() {
 
         MockitoAnnotations.openMocks(this);
 
@@ -155,6 +156,9 @@ public class GenerateUrlTest {
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidatorMock);
 
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
     }
 
 
@@ -163,10 +167,6 @@ public class GenerateUrlTest {
     public void withValidRequestShouldGenerateUrl() {
 
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
@@ -192,10 +192,6 @@ public class GenerateUrlTest {
 
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
-
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
@@ -218,10 +214,6 @@ public class GenerateUrlTest {
     public void whenInitialPackageValidationFailureShouldReturn() {
 
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
@@ -248,10 +240,6 @@ public class GenerateUrlTest {
     public void whenCSOHasMultipleAccountExceptionShouldReturnBadRequest() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
-
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));
         InitialPackage initialPackage = new InitialPackage();
@@ -270,8 +258,8 @@ public class GenerateUrlTest {
     }
 
     @Test
-    @DisplayName("403: when InvalidAccountStateException should return FORBIDDEN")
-    public void whenInvalidAccountStateExceptionShouldReturnForbidden() {
+    @DisplayName("403: when InvalidAccountStateException should throw InvalidRoleException")
+    public void whenInvalidAccountStateExceptionShouldThrowInvalidRoleException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -282,23 +270,14 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest);
-
-        EfilingError actualError = (EfilingError) actual.getBody();
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.INVALIDROLE.getErrorCode(), actualError.getError());
-        Assertions.assertEquals(ErrorResponse.INVALIDROLE.getErrorMessage(), actualError.getMessage());
+        InvalidRoleException exception = Assertions.assertThrows(InvalidRoleException.class, () -> sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_3, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.INVALIDROLE.toString(), exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("403: when EFileRole not present should return FORBIDDEN")
-    public void whenEFileRoleNotPresentShouldReturnForbidden() {
+    @DisplayName("403: when EFileRole not present should throw InvalidRoleException")
+    public void whenEFileRoleNotPresentShouldThrowInvalidRoleException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(any())).thenReturn(TestHelpers.createCSOAccountDetails(false));
 
@@ -310,9 +289,8 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        InvalidRoleException exception = Assertions.assertThrows(InvalidRoleException.class, () -> sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.INVALIDROLE.toString(), exception.getErrorCode());
     }
 
     @Test

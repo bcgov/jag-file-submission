@@ -3,6 +3,7 @@ updates:
   # Mvn dependencies
   - package-ecosystem: "maven"
     directory: "/src/backend"
+    open-pull-requests-limit: 3
     schedule:
       interval: "weekly"
       day: "monday"
@@ -10,6 +11,7 @@ updates:
   # npm dependencies - frontend
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-frontend"
+    open-pull-requests-limit: 3
     schedule:
       interval: "weekly"
       day: "monday"
@@ -17,6 +19,15 @@ updates:
   # npm dependencies - demo
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-demo"
+    open-pull-requests-limit: 3
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+  # npm dependencies - admin
+  - package-ecosystem: "npm"
+    directory: "/src/frontend/ai-reviewer-admin"
+    open-pull-requests-limit: 3
     schedule:
       interval: "weekly"
       day: "monday"

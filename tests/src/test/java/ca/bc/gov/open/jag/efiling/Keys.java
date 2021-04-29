@@ -10,7 +10,7 @@ public class Keys {
     public static final String X_TRANSACTION_ID = "X-Transaction-Id";
     public static final String X_DOCUMENT_TYPE = "X-Document-Type";
 
-    public static final String PARENT_APPLICATION = "efiling-admin";
+    public static final String PARENT_APPLICATION = "FLA";
 
     // Submission Service
     public static final String X_USER_ID = "X-User-Id";
@@ -26,6 +26,7 @@ public class Keys {
     public static final String RESPONSE_NAVIGATION_URL = "http//somewhere.com";
     public static final String APPLICANT = "Applicant";
     public static final String EFILE_SUBMISSION_PAGE_TITLE = "E-File submission";
+    public static final String ID_INDEX_FROM_RESPONSE = "id[0]";
 
     // Downloaded Files path
     public static final String DOWNLOADED_FILES_PATH = File.separator + "downloadedFiles";
@@ -33,10 +34,11 @@ public class Keys {
     // File path
     public static final String BASE_PATH = System.getProperty("user.dir");
     public static final String SECOND_PDF_PATH = "/src/test/resources/data/test-document-additional.pdf";
-    public static final String DOCUMENT_TYPE_PAYLOAD = "document-type-config-payload.json";
+    public static final String DOCUMENT_TYPE_CONFIG_PAYLOAD = "document-type-config-payload.json";
     public static final String RESTRICTED_DOCUMENT_TYPE_PAYLOAD = "restricted-document-type-payload.json";
     public static final String ADDITIONAL_RESTRICTED_DOCUMENT_TYPE_PAYLOAD = "additional-restricted-document-type-payload.json";
     public static final String RESTRICTED_DOCUMENT_TYPE_UPDATE_PAYLOAD = "restricted-document-type-update-payload.json";
+    public static final String DOCUMENT_TYPE_CONFIG_UPDATE_PAYLOAD = "document-type-config-update-payload.json";
 
     // Api endpoint Paths
     public static final String SUBMIT_PATH = "submit";

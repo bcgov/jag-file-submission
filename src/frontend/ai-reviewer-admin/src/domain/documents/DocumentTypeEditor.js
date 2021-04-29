@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "shared-components";
 import {
+  deleteDocumentTypeConfiguration,
   getDocumentTypeConfigurations,
-  submitDocumentTypeConfigurations,
+  submitNewDocumentTypeConfigurations,
+  submitUpdatedDocumentTypeConfigurations,
 } from "domain/documents/DocumentService";
 import { isValidJSON } from "utils/JsonUtils";
 import Toast from "components/toast/Toast";
@@ -14,25 +16,54 @@ import "./DocumentTypeEditor.scss";
 export default function DocumentTypeEditor() {
   const [configurations, setConfigurations] = useState([]);
   const [showToast, setShowToast] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [newConfigInput, setNewConfigInput] = useState("");
   const [invalidJsonError, setInvalidJsonError] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
   const [reloadConfigs, setReloadConfigs] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [isNew, setIsNew] = useState(false);
+
+  const handleDeleteConfiguration = (id) => {
+    deleteDocumentTypeConfiguration(id)
+      .then(() => setReloadConfigs(!reloadConfigs))
+      .catch(() => showError("Error: Could not delete configuration."));
+  };
+
+  const showError = (msg) => {
+    setErrorMsg(msg);
+    setShowToast(true);
+  };
+
+  const cancelConfig = () => {
+    setShowAdd(false);
+  }
 
   useEffect(() => {
     getDocumentTypeConfigurations()
-      .then((data) => {
-        setConfigurations(data);
-      })
-      .catch((error) => setShowToast(true));
+      .then((data) => setConfigurations(data))
+      .catch(() => showError("Error: Could not load configurations."));
   }, [reloadConfigs]);
 
-  const submitNewConfig = () => {
-    if (isValidJSON(newConfigInput)) {
-      submitDocumentTypeConfigurations(newConfigInput)
+  const successfullySubmitted = () => {
+    setReloadConfigs(!reloadConfigs);
+    setSubmissionError(null);
+    setNewConfigInput("");
+    setShowAdd(false);
+  };
+
+  const submitConfig = () => {
+    if (isValidJSON(newConfigInput) && isNew) {
+      submitNewDocumentTypeConfigurations(newConfigInput)
         .then(() => {
-          setReloadConfigs(!reloadConfigs);
-          setSubmissionError(null);
+          successfullySubmitted();
+        })
+        .catch((error) => setSubmissionError(error.message));
+    } else if (isValidJSON(newConfigInput) && isUpdate) {
+      submitUpdatedDocumentTypeConfigurations(newConfigInput)
+        .then(() => {
+          successfullySubmitted();
         })
         .catch((error) => setSubmissionError(error.message));
     } else {
@@ -45,47 +76,62 @@ export default function DocumentTypeEditor() {
       <h1>Document Type Configurations</h1>
       {showToast && (
         <Toast
-          content="Error: Could not load configurations."
+          content={errorMsg}
           setShow={setShowToast}
         />
       )}
-      <DocumentList configurations={configurations} />
-      <br />
 
-      <TextField
-        id="new-config-textfield"
-        fullWidth
-        multiline
-        rows={25}
-        rowsMax={200}
-        placeholder="Input a new configuration JSON"
-        variant="outlined"
-        onChange={(e) => {
-          setNewConfigInput(e.target.value);
-          setInvalidJsonError(false);
-        }}
+      <DocumentList
+        configurations={configurations}
+        setters={{ setNewConfigInput, showAdd, setShowAdd, setIsNew, setIsUpdate }} 
+        onDelete={handleDeleteConfiguration}
       />
-      <br />
 
-      {invalidJsonError && (
+      {showAdd && (
         <>
-          <span className="error">Sorry this JSON is invalid!</span>
+          <TextField
+            id="new-config-textfield"
+            fullWidth
+            multiline
+            spellCheck={false}
+            rows={25}
+            rowsMax={200}
+            placeholder="Input a new configuration JSON"
+            variant="outlined"
+            value={newConfigInput}
+            onChange={(e) => {
+              setNewConfigInput(e.target.value);
+              setInvalidJsonError(false);
+            }}
+          />
           <br />
+
+          {invalidJsonError && (
+            <>
+              <span className="error">Sorry this JSON is invalid!</span>
+              <br />
+            </>
+          )}
+          {submissionError && (
+            <>
+              <span className="error" data-testid="submission-error">
+                {submissionError}
+              </span>
+              <br />
+            </>
+          )}
+          <Button
+            label="Cancel"
+            styling="btn btn-secondary pull-left"
+            onClick={cancelConfig}
+          />
+          <Button
+            label="Submit"
+            styling="btn btn-primary pull-right"
+            onClick={submitConfig}
+          />
         </>
       )}
-      {submissionError && (
-        <>
-          <span className="error" data-testid="submission-error">
-            {submissionError}
-          </span>
-          <br />
-        </>
-      )}
-      <Button
-        label="Submit"
-        styling="bcgov-normal-blue btn new-config-submit"
-        onClick={submitNewConfig}
-      />
     </div>
   );
 }

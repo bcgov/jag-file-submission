@@ -11,6 +11,7 @@ import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
+import SafefyCheck from "../../../components/safety-check/SafetyCheck";
 import {
   getFilingPackage,
   downloadSubmissionSheet,
@@ -298,6 +299,9 @@ export default function PackageReview() {
               </section>
             </>
           )}
+          <br />
+          <br />
+          <SafefyCheck />
         </div>
         <div className="sidecard">
           <Sidecard sideCard={csoAccountDetailsSidecard} />

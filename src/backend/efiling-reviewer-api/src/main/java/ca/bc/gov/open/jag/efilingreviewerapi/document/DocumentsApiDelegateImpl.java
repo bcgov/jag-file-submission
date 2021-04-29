@@ -10,6 +10,8 @@ import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerInvalidTransactionIdException;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerCacheException;
@@ -46,6 +48,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
     private final DocumentValidator documentValidator;
     private final DocumentTypeConfigurationRepository documentTypeConfigurationRepository;
     private final ProcessedDocumentMapper processedDocumentMapper;
+    private final WebHookService webHookService;
 
     public DocumentsApiDelegateImpl(
             DiligenService diligenService,
@@ -53,7 +56,7 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
             ExtractStore extractStore,
             StringRedisTemplate stringRedisTemplate,
             FieldProcessor fieldProcessor,
-            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository, ProcessedDocumentMapper processedDocumentMapper) {
+            DocumentValidator documentValidator, DocumentTypeConfigurationRepository documentTypeConfigurationRepository, ProcessedDocumentMapper processedDocumentMapper, WebHookService webHookService) {
 
         this.diligenService = diligenService;
         this.extractRequestMapper = extractRequestMapper;
@@ -63,10 +66,11 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         this.documentValidator = documentValidator;
         this.documentTypeConfigurationRepository = documentTypeConfigurationRepository;
         this.processedDocumentMapper = processedDocumentMapper;
+        this.webHookService = webHookService;
     }
 
     @Override
-    public ResponseEntity<DocumentExtractResponse> extractDocumentFormData(UUID xTransactionId, String xDocumentType, MultipartFile file) {
+    public ResponseEntity<DocumentExtractResponse> extractDocumentFormData(UUID xTransactionId, String xDocumentType, Boolean xUseWebhook, MultipartFile file) {
 
         MDC.put(Keys.DOCUMENT_TYPE, xDocumentType);
 
@@ -84,7 +88,8 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document is valid");
 
-        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(xTransactionId, xDocumentType, file, receivedTimeMillis);
+        //Due to a bug in mapstruct logic has been performed inline
+        ExtractRequest extractRequest = extractRequestMapper.toExtractRequest(extractRequestMapper.toExtract(xTransactionId, (xUseWebhook == null || xUseWebhook)), xDocumentType, file, receivedTimeMillis);
 
         BigDecimal response = diligenService.postDocument(xDocumentType, file, documentTypeConfiguration.getProjectId());
 
@@ -107,7 +112,6 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
 
-        //We won't do anything with this for now
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
 
             diligenService.getDocumentDetails(documentEvent.getDocumentId());
@@ -139,6 +143,10 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
                 logger.info("document processing time: [{}]", extractRequest.getProcessedTimeMillis());
                 extractStore.put(documentEvent.getDocumentId(), extractRequest);
 
+                if (extractRequestCached.get().getExtract().getUseWebhook()) {
+                    //Send document ready message
+                    webHookService.sendDocumentReady(documentEvent.getDocumentId(), extractRequest.getDocument().getType());
+                }
             });
 
         }
@@ -156,6 +164,11 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
         Optional<ExtractResponse> extractResponseCached = extractStore.getResponse(documentId);
 
         if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
+        if (!extractResponseCached.get().getExtract().getTransactionId().equals(xTransactionId)) throw new AiReviewerInvalidTransactionIdException("Requested transaction id is not valid");
+
+        //Clear cache
+        extractStore.evict(documentId);
+        extractStore.evictResponse(documentId);
 
         return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
 

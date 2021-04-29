@@ -13,12 +13,12 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfigu
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentConfigException;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapper;
-import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapper;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMapperImpl;
+import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.Extract;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.models.ExtractRequest;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
+import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.*;
@@ -60,13 +60,15 @@ public class DocumentEventTest {
     @Mock
     private DocumentTypeConfigurationRepository documentTypeConfigurationRepositoryMock;
 
+    @Mock
+    private WebHookService webHookServiceMock;
+
     @BeforeAll
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
 
-        ExtractMapper extractMapper = new ExtractMapperImpl();
-        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl(extractMapper);
+        ExtractRequestMapper extractRequestMapper = new ExtractRequestMapperImpl();
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -75,9 +77,7 @@ public class DocumentEventTest {
 
         Mockito.when(fieldProcessorMock.getJson(Mockito.any(), Mockito.any())).thenReturn(result);
 
-        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ONE))).thenReturn(DiligenDocumentDetails.builder().create());
-        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.TEN))).thenReturn(DiligenDocumentDetails.builder().create());
-
+        Mockito.when(diligenServiceMock.getDocumentDetails(Mockito.any())).thenReturn(DiligenDocumentDetails.builder().create());
 
         DocumentTypeConfiguration configuration = DocumentTypeConfiguration.builder().create();
         Mockito.when(documentTypeConfigurationRepositoryMock.findByDocumentType(Mockito.eq("TYPE"))).thenReturn(configuration);
@@ -98,6 +98,25 @@ public class DocumentEventTest {
                 .document(Document.builder()
                         .type("TYPE")
                         .create())
+                .extract(Extract.builder()
+                        .id(UUID.randomUUID())
+                        .transactionId(UUID.randomUUID())
+                        .useWebhook(true)
+                        .create())
+                .create()));
+
+        Mockito.when(diligenServiceMock.getDocumentDetails(ArgumentMatchers.eq(BigDecimal.ZERO))).thenReturn(DiligenDocumentDetails.builder()
+                .projectFieldsResponse(projectFieldResponse).create());
+
+        Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.ZERO))).thenReturn(Optional.of(ExtractRequest.builder()
+                .document(Document.builder()
+                        .type("TYPE")
+                        .create())
+                .extract(Extract.builder()
+                        .id(UUID.randomUUID())
+                        .transactionId(UUID.randomUUID())
+                        .useWebhook(false)
+                        .create())
                 .create()));
 
         Mockito.when(extractStoreMock.get(Mockito.eq(BigDecimal.TEN))).thenReturn(Optional.of(ExtractRequest.builder()
@@ -106,13 +125,27 @@ public class DocumentEventTest {
                         .create())
                 .create()));
 
-        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, null);
+        Mockito.doNothing().when(webHookServiceMock).sendDocumentReady(Mockito.any(), Mockito.any());
+
+        sut = new DocumentsApiDelegateImpl(diligenServiceMock, extractRequestMapper, extractStoreMock, stringRedisTemplateMock, fieldProcessorMock, documentValidatorMock, documentTypeConfigurationRepositoryMock, null, webHookServiceMock);
 
     }
 
     @Test()
     @DisplayName("204: accept any event")
     public void testAnyEvent() {
+
+        DocumentEvent documentEvent = new DocumentEvent();
+        documentEvent.setDocumentId(BigDecimal.ONE);
+        documentEvent.setStatus("Processed");
+        ResponseEntity<Void> actual = sut.documentEvent(UUID.randomUUID(), documentEvent);
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, actual.getStatusCode());
+
+    }
+
+    @Test()
+    @DisplayName("204: accept any event webHook ignored")
+    public void testAnyEventWebhookIgnored() {
 
         DocumentEvent documentEvent = new DocumentEvent();
         documentEvent.setDocumentId(BigDecimal.ONE);

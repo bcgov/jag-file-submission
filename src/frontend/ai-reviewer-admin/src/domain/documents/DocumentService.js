@@ -10,7 +10,22 @@ export const getDocumentTypeConfigurations = async (documentType) => {
   return response.data;
 };
 
-export const submitDocumentTypeConfigurations = async (configJson) => {
-  const response = await api.post("/documentTypeConfigurations", JSON.parse(configJson));
+export const submitNewDocumentTypeConfigurations = async (configJson) => {
+  const response = await api.post(
+    "/documentTypeConfigurations",
+    JSON.parse(configJson)
+  );
   return response.data;
-}
+};
+
+/** Removes a document configuration from Diligen. */
+export const deleteDocumentTypeConfiguration = async (documentTypeId) => 
+  api.delete(`/documentTypeConfigurations/${documentTypeId}`);
+
+export const submitUpdatedDocumentTypeConfigurations = async (configJson) => {
+  const response = await api.put(
+    "/documentTypeConfigurations",
+    JSON.parse(configJson)
+  );
+  return response.data;
+};

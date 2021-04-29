@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.InvalidRoleException;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -246,9 +247,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if (accountService.getCsoAccountDetails(xUserId) != null &&
                 !accountService.getCsoAccountDetails(xUserId).isFileRolePresent())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDROLE).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidRoleException("User does not have a valid role for this request.");
 
         SubmissionKey submissionKey = new SubmissionKey(xUserId, xTransactionId, submissionId);
 
@@ -265,7 +264,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
         } catch (InvalidAccountStateException e) {
             logger.warn(e.getMessage(), e);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.INVALIDROLE), HttpStatus.FORBIDDEN);
+            throw new InvalidRoleException("User does not have a valid role for this request.");
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);

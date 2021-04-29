@@ -1,6 +1,7 @@
 import api from "AxiosConfig";
 import MockAdapter from "axios-mock-adapter";
-import { getDocumentTypeConfigurations, submitDocumentTypeConfigurations } from "domain/documents/DocumentService";
+import { getDocumentTypeConfigurations, submitNewDocumentTypeConfigurations, deleteDocumentTypeConfiguration } from "domain/documents/DocumentService";
+
 import { configurations } from "domain/documents/_tests_/test-data";
 
 describe("Document Service test suite", () => {
@@ -47,12 +48,26 @@ describe("Document Service test suite", () => {
     }
   });
 
+  test("deleteDocumentTypeConfiguration 200", async () => {
+    mockApi.onDelete("/documentTypeConfigurations/6550866d-754c-9d41-52a5-c229bc849ee3").reply(200);
+
+    const response = await deleteDocumentTypeConfiguration("6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(response.status).toEqual(200);
+  });
+
+  test("deleteDocumentTypeConfiguration 404", async () => {
+    mockApi.onDelete("/documentTypeConfigurations/6550866d-754c-9d41-52a5-c229bc849ee3").reply(404);
+
+    const response = deleteDocumentTypeConfiguration("6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(response).rejects.toThrowError();
+  });
+
   test("submitDocumentTypeConfigurations 200", async () => {
     const config = [{...configurations[0], documentType: "TEST3", documentTypeDescription: "Description"}];
     mockApi.onPost("/documentTypeConfigurations", config).reply(200, config);
     mockApi.onGet("/documentTypeConfigurations", {params: {"documentType": "TEST3"}}).reply(200, config);
     
-    await submitDocumentTypeConfigurations(JSON.stringify(config));
+    await submitNewDocumentTypeConfigurations(JSON.stringify(config));
 
     const response = await getDocumentTypeConfigurations("TEST3");
     expect(response).toMatchObject(config);
@@ -63,7 +78,7 @@ describe("Document Service test suite", () => {
     mockApi.onPost("/documentTypeConfigurations").reply(400);
 
     try {
-      await submitDocumentTypeConfigurations(JSON.stringify(config));
+      await submitNewDocumentTypeConfigurations(JSON.stringify(config));
     } catch (e) {
       expect(e.message).toEqual("Request failed with status code 400");
     }

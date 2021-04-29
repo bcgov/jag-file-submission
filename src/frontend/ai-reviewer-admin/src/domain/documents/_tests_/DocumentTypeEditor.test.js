@@ -1,7 +1,12 @@
 import React from "react";
 import api from "AxiosConfig";
 import MockAdapter from "axios-mock-adapter";
-import { render, waitFor, fireEvent } from "@testing-library/react";
+import {
+  render,
+  waitFor,
+  fireEvent,
+  getByTestId,
+} from "@testing-library/react";
 import DocumentTypeEditor from "domain/documents/DocumentTypeEditor";
 import { configurations } from "domain/documents/_tests_/test-data";
 import userEvent from "@testing-library/user-event";
@@ -15,7 +20,7 @@ describe("DocumentTypeEditor test suite", () => {
     mockApi = new MockAdapter(api);
   });
 
-  test("API returns 200", async () => {
+  test("API GET returns 200", async () => {
     // stub out service to return valid response.
     service.getDocumentTypeConfigurations = jest.fn(() =>
       Promise.resolve(configurations)
@@ -27,7 +32,7 @@ describe("DocumentTypeEditor test suite", () => {
     expect(sampleData).toBeInTheDocument();
   });
 
-  test("API returns 401", async () => {
+  test("API GET returns 401", async () => {
     // stub out service to return valid response.
     service.getDocumentTypeConfigurations = jest.fn(() => Promise.reject());
     const { getByRole, getByTestId } = render(<DocumentTypeEditor />);
@@ -39,16 +44,58 @@ describe("DocumentTypeEditor test suite", () => {
     fireEvent.click(getByTestId("toast-close"));
   });
 
+  test("API DELETE returns 200", async () => {
+    // stub out service to return valid response.
+    service.getDocumentTypeConfigurations = jest.fn(() => Promise.resolve(configurations));
+    service.deleteDocumentTypeConfiguration = jest.fn((documentTypeId) => Promise.resolve());
+    const { getByText, getByTestId } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const deleteIcon = getByTestId("delete-6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(deleteIcon).toBeInTheDocument();
+
+    fireEvent.click(deleteIcon);
+    await waitFor(() => {});
+
+    expect(service.deleteDocumentTypeConfiguration).toBeCalledWith("6550866d-754c-9d41-52a5-c229bc849ee3");
+  });
+
+  test("API DELETE returns 404", async () => {
+    // stub out service to return valid response.
+    service.getDocumentTypeConfigurations = jest.fn(() => Promise.resolve(configurations));
+    service.deleteDocumentTypeConfiguration = jest.fn((documentTypeId) => Promise.reject());
+    const { getByText, getByTestId } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const deleteIcon = getByTestId("delete-6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(deleteIcon).toBeInTheDocument();
+
+    fireEvent.click(deleteIcon);
+    await waitFor(() => {});
+
+    expect(service.deleteDocumentTypeConfiguration).toBeCalledWith("6550866d-754c-9d41-52a5-c229bc849ee3");
+    expect(getByText("Error: Could not delete configuration.")).toBeInTheDocument();
+  });
+
   test("Submit new config - Invalid JSON", async () => {
     service.submitDocumentTypeConfigurations = jest.fn(() => Promise.resolve());
     service.getDocumentTypeConfigurations = jest.fn(() =>
       Promise.resolve(configurations)
     );
 
-    const { getByPlaceholderText, getByText, queryByText } = render(
-      <DocumentTypeEditor />
-    );
+    const {
+      getByPlaceholderText,
+      getByText,
+      queryByText,
+      getByTestId,
+    } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
+
+    const add = getByTestId("add-btn");
+    fireEvent.click(add);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
@@ -68,10 +115,21 @@ describe("DocumentTypeEditor test suite", () => {
       Promise.resolve(configurations)
     );
 
-    const { getByPlaceholderText, getByText, queryByText } = render(
-      <DocumentTypeEditor />
-    );
+    mockApi.onPost("/documentTypeConfigurations").reply(200);
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      queryByText,
+      getByTestId,
+    } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
+
+    const add = getByTestId("add-btn");
+    fireEvent.click(add);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
@@ -95,11 +153,19 @@ describe("DocumentTypeEditor test suite", () => {
   test("Submit new config - API Error", async () => {
     service.getDocumentTypeConfigurations = jest.fn(() => Promise.reject());
     service.submitDocumentTypeConfigurations = jest.fn(() =>
-      Promise.reject({error: {message: "Error"}})
+      Promise.reject({ error: { message: "Error" } })
     );
 
-    const { getByPlaceholderText, getByText } = render(<DocumentTypeEditor />);
+    const { getByPlaceholderText, getByText, getByTestId } = render(
+      <DocumentTypeEditor />
+    );
     await waitFor(() => {});
+
+    const add = getByTestId("add-btn");
+    fireEvent.click(add);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
 
     const textArea = getByPlaceholderText("Input a new configuration JSON");
     const button = getByText("Submit");
@@ -117,5 +183,89 @@ describe("DocumentTypeEditor test suite", () => {
     await waitFor(() => {});
 
     expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(1);
+  });
+
+  test("Update existing config - Success", async () => {
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
+    );
+    mockApi.onPut("/documentTypeConfigurations").reply(200);
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      queryByText,
+      getAllByTestId,
+    } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const update = getAllByTestId("update-btn")[0];
+    fireEvent.click(update);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
+
+    const submit = getByText("Submit");
+
+    fireEvent.click(submit);
+    await waitFor(() => {});
+
+    expect(queryByText("Sorry this JSON is invalid!")).not.toBeInTheDocument();
+    expect(service.getDocumentTypeConfigurations).toHaveBeenCalledTimes(3);
+  });
+
+  test("Update existing config - Cancel", async () => {
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
+    );
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      getAllByTestId,
+    } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const update = getAllByTestId("update-btn")[0];
+    fireEvent.click(update);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
+
+    const textArea = getByPlaceholderText("Input a new configuration JSON");
+    const cancel = getByText("Cancel");
+    fireEvent.click(cancel);
+    await waitFor(() => {});
+
+    expect(textArea).not.toBeInTheDocument();
+  });
+
+  test("Update existing config - Failure", async () => {
+    service.getDocumentTypeConfigurations = jest.fn(() =>
+      Promise.resolve(configurations)
+    );
+    mockApi.onPut("/documentTypeConfigurations").reply(400);
+
+    const {
+      getByPlaceholderText,
+      getByText,
+      getAllByTestId,
+      getByTestId,
+    } = render(<DocumentTypeEditor />);
+    await waitFor(() => {});
+
+    const update = getAllByTestId("update-btn")[0];
+    fireEvent.click(update);
+    await waitFor(() => {
+      getByPlaceholderText("Input a new configuration JSON");
+    });
+
+    const textArea = getByPlaceholderText("Input a new configuration JSON");
+    const button = getByText("Submit");
+
+    fireEvent.click(button);
+    await waitFor(() => {});
+
+    expect(getByTestId("submission-error")).toBeInTheDocument();
   });
 });

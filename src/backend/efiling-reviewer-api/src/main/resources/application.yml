@@ -21,13 +21,16 @@ spring:
       password: ${AIR_SPRING_DATA_MONGODB_PASSWORD:admin}
 jag:
   efiling:
+    cso:
+      webhook:
+        basePath: ${CSO_WEBHOOK_ENDPOINT:http://ai-reviewer-mock-api:1337}
+        returnPath: ${CSO_WEBHOOK_RETURN_ENDPOINT:http://efiling-reviewer-api:8090}
     diligen:
       health:
         enabled: ${DILIGEN_HEALTH_ENABLED:true}
       basePath: ${DILIGEN_BASE_PATH}
       username: ${DILIGEN_USERNAME}
       password: ${DILIGEN_PASSWORD}
-      projectIdentifier: ${DILIGEN_PROJECT_IDENTIFIER}
 
 bcgov:
   clamav:
