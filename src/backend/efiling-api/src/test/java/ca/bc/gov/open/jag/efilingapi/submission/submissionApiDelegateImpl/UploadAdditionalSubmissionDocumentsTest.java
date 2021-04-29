@@ -9,6 +9,10 @@ import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UploadSubmissionDocumentsResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.DocumentRequiredException;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.FileTypeException;
+import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -40,8 +44,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.*;
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.FILE_TYPE_ERROR;
+import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_STORAGE_FAILURE;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -147,8 +150,8 @@ public class UploadAdditionalSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("400: with non pdf files should return bad request")
-    public void withNonPdfFilesShouldReturnBadRequest() throws IOException, VirusDetectedException {
+    @DisplayName("400: with non pdf files should throw FileTypeException")
+    public void withNonPdfFilesShouldThrowFileTypeException() throws IOException, VirusDetectedException {
 
 
         Map<String, Object> otherClaims = new HashMap<>();
@@ -164,44 +167,34 @@ public class UploadAdditionalSubmissionDocumentsTest {
 
         Mockito.doNothing().when(clamAvServiceMock).scan(any());
 
-        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(FILE_TYPE_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(FILE_TYPE_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
-
+        FileTypeException exception = Assertions.assertThrows(FileTypeException.class, () -> sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files));
+        Assertions.assertEquals(ErrorCode.FILE_TYPE_ERROR.toString(), exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("400: with empty files should return bad request")
-    public void withEmptyFilesShouldReturnBadRequest() {
+    @DisplayName("400: with empty files should throw DocumentRequiredException")
+    public void withEmptyFilesShouldThrowDocumentRequiredException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
         List<MultipartFile> files = new ArrayList<>();
-        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentRequiredException exception = Assertions.assertThrows(DocumentRequiredException.class, () -> sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_REQUIRED.toString(), exception.getErrorCode());
     }
 
 
     @Test
-    @DisplayName("400: with null files should return bad request")
-    public void withNullFilesShouldReturnBadRequest() {
+    @DisplayName("400: with null files should throw DocumentRequiredException")
+    public void withNullFilesShouldThrowDocumentRequiredException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), null);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentRequiredException exception = Assertions.assertThrows(DocumentRequiredException.class, () -> sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), null));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_REQUIRED.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -261,8 +254,8 @@ public class UploadAdditionalSubmissionDocumentsTest {
     }
 
     @Test
-    @DisplayName("403: without universalId should return forbidden")
-    public void withoutUniversalIdShouldReturnForbidden() throws VirusDetectedException, IOException {
+    @DisplayName("403: without universalId should throw InvalidUniversalException")
+    public void withoutUniversalIdShouldThrowInvalidUniversalException() throws VirusDetectedException, IOException {
 
         Map<String, Object> otherClaims = new HashMap<>();
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
@@ -276,11 +269,8 @@ public class UploadAdditionalSubmissionDocumentsTest {
 
         Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
 
-        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(INVALIDUNIVERSAL.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
 
 }

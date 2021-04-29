@@ -9,7 +9,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccountUpdateRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.*;
@@ -145,8 +145,8 @@ public class CsoAccountApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("403: when universal id is missing should return 403")
-    public void createAccountWithUserNotHavingUniversalIdShouldReturn403() {
+    @DisplayName("403: when universal id is missing should throw MissingUniversalIdException")
+    public void createAccountWithUserNotHavingUniversalIdShouldThrowMissingUniversalIdException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
@@ -156,12 +156,9 @@ public class CsoAccountApiDelegateImplTest {
         request.setMiddleName(MIDDLE_NAME);
         request.setEmail(EMAIL);
         request.setFirstName(FIRST_NAME);
-        ResponseEntity actual = sut.createAccount(TestHelpers.CASE_1, request);
 
-        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        assertEquals("MISSING_UNIVERSAL_ID", ((EfilingError)actual.getBody()).getError());
-        assertEquals("universal-id claim missing in jwt token.", ((EfilingError)actual.getBody()).getMessage());
-
+        MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.createAccount(TestHelpers.CASE_1, request));
+        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
     }
 
 
@@ -186,17 +183,15 @@ public class CsoAccountApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("403: when creating account identity provider is missing should return 403")
-    public void createAccountWithUserNotHavingIdentityProviderShouldReturn403() {
+    @DisplayName("403: when creating account identity provider is missing should throw MissingIdentityProviderException")
+    public void createAccountWithUserNotHavingIdentityProviderShouldThrowMissingIdentityProviderException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<CsoAccount> actual = sut.createAccount(TestHelpers.CASE_3, null);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-
+        MissingIdentityProviderException exception = Assertions.assertThrows(MissingIdentityProviderException.class, () -> sut.createAccount(TestHelpers.CASE_3, null));
+        Assertions.assertEquals(ErrorCode.MISSING_IDENTITY_PROVIDER.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -254,8 +249,8 @@ public class CsoAccountApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("403: With user not having cso account should return forbidden")
-    public void updateAccountWithUserHavingNoCsoAccountShouldReturnForbidden() {
+    @DisplayName("403: With user not having cso account should throw InvalidUniversalException")
+    public void updateAccountWithUserHavingNoCsoAccountShouldThrowInvalidUniversalException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
@@ -264,9 +259,8 @@ public class CsoAccountApiDelegateImplTest {
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
         clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
 
-        ResponseEntity<CsoAccount> actual = sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest);
-        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -288,8 +282,8 @@ public class CsoAccountApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("403: with no universal id is forbidden")
-    public void updateAccountWithUserNotHavingUniversalIdShouldReturn403() {
+    @DisplayName("403: with no universal id should throw InvalidUniversalException")
+    public void updateAccountWithUserNotHavingUniversalIdShouldThrowInvalidUniversalException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, null);
@@ -298,9 +292,8 @@ public class CsoAccountApiDelegateImplTest {
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
         clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
 
-        ResponseEntity actual = sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest);
-        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
 
 

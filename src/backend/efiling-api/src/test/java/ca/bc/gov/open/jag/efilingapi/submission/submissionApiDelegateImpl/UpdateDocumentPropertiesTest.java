@@ -4,10 +4,16 @@ import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
+import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.DocumentRequiredException;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -38,8 +44,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_REQUIRED;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -141,19 +145,16 @@ public class UpdateDocumentPropertiesTest {
     }
 
     @Test
-    @DisplayName("400")
-    public void withInValidParamtersReturnBadRequest() {
+    @DisplayName("400: with invalid parameters should throw DocumentRequiredException")
+    public void withInValidParamtersShouldThrowDocumentRequiredException() {
 
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity actual = sut.updateDocumentProperties(TestHelpers.CASE_1, UUID.randomUUID(), null);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(DOCUMENT_REQUIRED.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentRequiredException exception = Assertions.assertThrows(DocumentRequiredException.class, () -> sut.updateDocumentProperties(TestHelpers.CASE_1, UUID.randomUUID(), null));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_REQUIRED.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -198,8 +199,8 @@ public class UpdateDocumentPropertiesTest {
 
 
     @Test
-    @DisplayName("403: with no universal id is forbidden")
-    public void withUserNotHavingUniversalIdShouldReturn403() {
+    @DisplayName("403: with no universal id should throw InvalidUniversalException")
+    public void withUserNotHavingUniversalIdShouldThrowInvalidUniversalException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,null);
@@ -207,9 +208,8 @@ public class UpdateDocumentPropertiesTest {
 
         UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest();
         updateDocumentRequest.addDocumentsItem(new DocumentProperties());
-        ResponseEntity actual = sut.updateDocumentProperties(TestHelpers.CASE_2, UUID.randomUUID(), updateDocumentRequest);
 
-        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.updateDocumentProperties(TestHelpers.CASE_2, UUID.randomUUID(), updateDocumentRequest));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
 }
