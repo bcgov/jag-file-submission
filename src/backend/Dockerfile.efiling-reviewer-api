@@ -3,6 +3,8 @@
 #############################################################################################
 FROM maven:3.6.3-jdk-8 as build
 
+RUN echo "${DILIGEN_BASE_PATH} ************"
+
 ARG SERVICE_NAME=efiling-reviewer-api
 ARG SKIP_TESTS=false
 ARG MVN_PROFILE=default

@@ -39,6 +39,8 @@ services:
       args:
         - MVN_PROFILE=${MVN_PROFILE:-efiling-reviewer}
         - SKIP_TESTS=true
+      environment:
+        - DILIGEN_BASE_PATH=http://ai-reviewer-mock-api:1337
 
   #############################################################################################
   ###                           AI Reviewer Mock Service                                    ###
