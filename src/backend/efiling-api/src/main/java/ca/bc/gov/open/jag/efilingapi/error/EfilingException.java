@@ -9,11 +9,6 @@ public class EfilingException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public EfilingException(String message, Throwable cause, ErrorCode errorCode) {
-        super(message, cause);
-        this.errorCode = errorCode;
-    }
-
     public String getErrorCode() {
         return errorCode.name();
     }
