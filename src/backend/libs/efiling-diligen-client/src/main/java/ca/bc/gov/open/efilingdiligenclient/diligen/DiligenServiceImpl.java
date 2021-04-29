@@ -75,15 +75,27 @@ public class DiligenServiceImpl implements DiligenService {
 
         if (!response.getStatusCode().is2xxSuccessful()) throw new DiligenDocumentException(response.getStatusCode().toString());
 
-        logger.info("document posted to diligen");
+        try {
 
-        Optional<BigDecimal> fileId = tryGetFileId(headers, file.getOriginalFilename(), 5, projectIdentifier);
+            logger.info("document posted to diligen");
 
-        if(!fileId.isPresent()) {
-            throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
+            DiligenResponse diligenResponse = objectMapper.readValue(response.getBody(), DiligenResponse.class);
+
+            if (!diligenResponse.getData().getDocuments().isEmpty()) {
+
+                BigDecimal result = diligenResponse.getData().getDocuments().get(0).getFileId();
+                logger.debug("successfully retrieved document id {}", result);
+
+                return result;
+
+            } else {
+                throw new DiligenDocumentException("Failed getting the document id after 5 attempts");
+            }
+
+        } catch (JsonProcessingException e) {
+            //Using the exceptions message can contain PII data. It is safer to just say it failed for now.
+            throw new DiligenDocumentException("Failed in object deserialization");
         }
-
-        return fileId.get();
 
     }
 
