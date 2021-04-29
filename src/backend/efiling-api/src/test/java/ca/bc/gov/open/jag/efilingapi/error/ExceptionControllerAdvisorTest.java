@@ -6,6 +6,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,7 +38,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.CACHE_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -55,7 +57,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.COURT_LOCATION_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -74,7 +76,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.CREATE_ACCOUNT_EXCEPTION.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -93,7 +95,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -112,7 +114,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -131,7 +133,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.DOCUMENT_REQUIRED.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -150,7 +152,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_GATEWAY, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.DOCUMENT_STORAGE_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -169,7 +171,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.DOCUMENT_TYPE_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -188,7 +190,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.FILE_TYPE_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
 
@@ -208,7 +210,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.FILING_PACKAGE_NOT_FOUND.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -216,9 +218,12 @@ public class ExceptionControllerAdvisorTest {
     public void testInvalidInitialSubmissionPayloadException() {
 
         String expected = "Something went wrong";
+        String expectedDetail1 = "Detail 1 - FileNumber [3] does not exists.";
+        String expectedDetail2 = "Detail 2 - FileNumber [3] does not exists.";
+        List<String> expectedDetails = Arrays.asList(expectedDetail1, expectedDetail2);
 
         //arrange
-        InvalidInitialSubmissionPayloadException exception = new InvalidInitialSubmissionPayloadException(expected);
+        InvalidInitialSubmissionPayloadException exception = new InvalidInitialSubmissionPayloadException(expected, expectedDetails);
 
         //act
         ResponseEntity<Object> result = sut.handleInvalidInitialSubmissionPayloadException(exception);
@@ -227,7 +232,10 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.INVALID_INITIAL_SUBMISSION_PAYLOAD.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+        Assertions.assertEquals(expectedDetails, ((EfilingError) result.getBody()).getDetails());
+        Assertions.assertEquals(expectedDetail1, ((EfilingError) result.getBody()).getDetails().get(0));
+        Assertions.assertEquals(expectedDetail2, ((EfilingError) result.getBody()).getDetails().get(1));
     }
 
     @Test
@@ -246,7 +254,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.INVALIDROLE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -265,7 +273,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -284,7 +292,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.MISSING_APPLICATION_CODE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -303,7 +311,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.MISSING_IDENTITY_PROVIDER.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -322,7 +330,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -341,7 +349,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.ACCOUNTEXCEPTION.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -360,7 +368,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.PAYMENT_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -379,7 +387,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.SUBMISSION_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -398,7 +406,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.UPDATE_CLIENT_EXCEPTION.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 
     @Test
@@ -417,6 +425,6 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         Assertions.assertEquals(ErrorCode.URL_GENERATION_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
-        Assertions.assertEquals(expected, ((EfilingError)result.getBody()).getMessage());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
     }
 }

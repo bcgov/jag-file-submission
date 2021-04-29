@@ -113,6 +113,10 @@ public class ExceptionControllerAdvisor {
         EfilingError efilingError = new EfilingError();
         efilingError.setError(ex.getErrorCode());
         efilingError.setMessage(ex.getMessage());
+
+        if (ex instanceof InvalidInitialSubmissionPayloadException) {
+            efilingError.setDetails(((InvalidInitialSubmissionPayloadException) ex).getDetails());
+        }
         return efilingError;
     }
 }

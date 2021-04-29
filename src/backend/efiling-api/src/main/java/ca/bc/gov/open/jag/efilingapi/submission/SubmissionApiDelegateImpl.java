@@ -228,7 +228,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, applicationCode.get());
 
         if (validation.hasError())
-            throw new InvalidInitialSubmissionPayloadException(INVALID_INITIAL_SUBMISSION_PAYLOAD);
+            throw new InvalidInitialSubmissionPayloadException(INVALID_INITIAL_SUBMISSION_PAYLOAD, validation.getErrors());
 
         if (accountService.getCsoAccountDetails(xUserId) != null &&
                 !accountService.getCsoAccountDetails(xUserId).isFileRolePresent())
