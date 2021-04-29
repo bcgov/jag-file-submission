@@ -230,9 +230,6 @@ jobs:
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: docker-compose up -d efiling-api efiling-frontend efiling-reviewer-api ai-reviewer-mock-api
 
-      - name: Checkrunningcontainers
-        run: docker ps -a
-
       - name: Configure keycloak (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: |
@@ -242,9 +239,6 @@ jobs:
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: |
           docker-compose up keycloak-config
-
-      - name: Checkrunningcontainers
-        run: docker ps -a
 
       - name: Running Integration Tests
         env:
