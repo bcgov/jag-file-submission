@@ -25,7 +25,7 @@ public class EfilingReviewServiceDemoImplTest {
     @Test
     @DisplayName("OK: with correct id return payload")
     public void requestPackageOneShouldReturnData() {
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, ""));
 
         Assertions.assertTrue(result.isPresent());
         //Package
@@ -104,7 +104,7 @@ public class EfilingReviewServiceDemoImplTest {
     @Test
     @DisplayName("OK: with correct id return payload")
     public void requestPackageTwoShouldReturnData() {
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(2)));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(2), ""));
 
         Assertions.assertTrue(result.isPresent());
         //Package
@@ -183,7 +183,7 @@ public class EfilingReviewServiceDemoImplTest {
     @Test
     @DisplayName("OK: with correct id return payload")
     public void requestPackageThreeShouldReturnData() {
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(3)));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ONE, new BigDecimal(3), ""));
 
         Assertions.assertTrue(result.isPresent());
         //Package
@@ -263,7 +263,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("No result: with not 1 return empty")
     public void withEmptyCacheShouldReturnEmpty() {
 
-        Assertions.assertFalse(sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ZERO, BigDecimal.ZERO)).isPresent());
+        Assertions.assertFalse(sut.findStatusByPackage(new FilingPackageRequest(BigDecimal.ZERO, BigDecimal.ZERO, "")).isPresent());
 
     }
 
@@ -271,7 +271,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a one element array")
     public void withRequestReturnOneElementArray() {
 
-        Assertions.assertEquals(3, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE)).size());
+        Assertions.assertEquals(3, sut.findStatusByClient(new FilingPackageRequest(BigDecimal.ONE, BigDecimal.ONE, "")).size());
 
     }
 
@@ -299,7 +299,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a boolean")
     public void withDocumentRequestBoolean() {
 
-        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "TEST")));
+        Assertions.assertDoesNotThrow(() -> sut.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(BigDecimal.ONE, BigDecimal.ONE, "","TEST")));
 
     }
 
