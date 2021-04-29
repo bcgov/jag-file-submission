@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import DocumentList from "domain/documents/DocumentList";
 import { configurations } from "domain/documents/_tests_/test-data";
 
