@@ -34,6 +34,7 @@ public class GetFilingPackagesSD {
     public void userIdIsAuthenticated() {
 
         actualUserIdentity = oauthService.getUserIdentity();
+
     }
 
     @When("user submits request to get filing packages history")
