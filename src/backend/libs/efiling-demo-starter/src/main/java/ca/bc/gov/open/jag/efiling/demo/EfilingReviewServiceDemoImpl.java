@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocum
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.*;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -33,7 +34,19 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
 
     @Override
     public List<ReviewFilingPackage> findStatusByClient(FilingPackageRequest filingPackageRequest) {
-        return Arrays.asList(createReviewPackage("1", true), createReviewPackage("2", false),  createReviewPackage("3", true));
+
+        if (StringUtils.isBlank(filingPackageRequest.getParentApplication())) {
+            return Arrays.asList(createReviewPackage("1", true), createReviewPackage("2", false), createReviewPackage("3", true));
+        } else if (filingPackageRequest.getParentApplication().equals(Keys.PARENT_APPLICATION_FLA)) {
+            return Arrays.asList(createReviewPackage("1", true), createReviewPackage("2", false));
+        } else if (filingPackageRequest.getParentApplication().equals(Keys.PARENT_APPLICATION_COA)) {
+            return Collections.singletonList(createReviewPackage("3", true));
+        } else if (filingPackageRequest.getParentApplication().equals(Keys.PARENT_APPLICATION_OTHER)) {
+            return Collections.singletonList(createReviewPackage("4", true));
+        } else {
+            return new ArrayList<>();
+        }
+
     }
 
     @Override
