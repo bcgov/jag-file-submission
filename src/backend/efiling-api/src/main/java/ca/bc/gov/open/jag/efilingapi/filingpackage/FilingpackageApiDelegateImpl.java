@@ -5,6 +5,8 @@ import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.FilingPackageNotFoundException;
+import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
@@ -31,6 +33,9 @@ import java.util.Optional;
 @Service
 public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
+    private static final String FILING_PACKAGE_NOT_FOUND = "Requested filing package was not found.";
+    private static final String MISSING_UNIVERSAL_ID = "universal-id claim missing in jwt token.";
+
     private final FilingPackageService filingPackageService;
     Logger logger = LoggerFactory.getLogger(FilingpackageApiDelegateImpl.class);
 
@@ -48,14 +53,12 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
-
+        if(!universalId.isPresent())
+            throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
 
         Optional<FilingPackage> result = filingPackageService.getCSOFilingPackage(universalId.get(), packageIdentifier);
 
-        return result.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
+        return result.map(ResponseEntity::ok).orElseThrow(() -> new FilingPackageNotFoundException(FILING_PACKAGE_NOT_FOUND));
     }
 
     @Override
@@ -66,15 +69,12 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
-
+        if(!universalId.isPresent())
+            throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
 
         Optional<List<FilingPackage>> result = filingPackageService.getFilingPackages(universalId.get(), parentApplication);
 
-        return result.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILING_PACKAGE_NOT_FOUND).create(), HttpStatus.NOT_FOUND));
-
+        return result.map(ResponseEntity::ok).orElseThrow(() -> new FilingPackageNotFoundException(FILING_PACKAGE_NOT_FOUND));
     }
 
     @Override
@@ -166,8 +166,8 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
-        if(!universalId.isPresent()) return new ResponseEntity(
-                EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+        if(!universalId.isPresent())
+            throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
 
         try {
             filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
