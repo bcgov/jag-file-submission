@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class DeleteSubmissionDocumentRequest extends FilingPackageRequest {
     private String documentId;
 
-    public DeleteSubmissionDocumentRequest(BigDecimal clientId, BigDecimal packageNo, String documentId) {
-        super(clientId, packageNo);
+    public DeleteSubmissionDocumentRequest(BigDecimal clientId, BigDecimal packageNo, String parentApplication, String documentId) {
+        super(clientId, packageNo, parentApplication);
         this.documentId = documentId;
     }
 

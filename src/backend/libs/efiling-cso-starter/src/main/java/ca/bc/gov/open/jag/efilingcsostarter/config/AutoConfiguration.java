@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoDocumentServiceImpl;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoLookupServiceImpl;
+import preview.ca.bc.gov.open.jag.efilingcsoclient.PreviewCsoReviewServiceImpl;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapper;
 import preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 
@@ -213,8 +214,16 @@ public class AutoConfiguration {
     }
 
     @Bean
+    @Primary
+    @Profile(STATUS_FACADE_FINAL)
     public EfilingReviewService efilingReviewService(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, RestTemplate restTemplate) {
         return new CsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new FilePackageMapperImpl(), csoProperties, restTemplate);
+    }
+
+    @Bean
+    @Profile(STATUS_FACADE_PREVIEW)
+    public EfilingReviewService previewEfilingReviewService(preview.ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, RestTemplate restTemplate) {
+        return new PreviewCsoReviewServiceImpl(filingStatusFacadeBean, reportService, filingFacadeBean, new preview.ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl(), csoProperties, restTemplate);
     }
 
     @Bean
