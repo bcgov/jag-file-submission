@@ -24,7 +24,7 @@ import java.util.List;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DocumentsValidatorImpl test suite")
 public class ValidateExtractedDocumentTest {
-    
+
     private static final String RESPONSE_TO_CIVIL_CLAIM = "Response to Civil Claim";
     private static final String NOT_RESPONSE_TO_CIVIL_CLAIM = "THIS IS NOT VALID";
     private static final String RESTRICTED_DOCUMENT = "This is a temporary";
