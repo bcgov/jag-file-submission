@@ -1,8 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.courts;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLocations;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.courts.mappers.CourtLocationMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.error.CourtLocationException;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.junit.jupiter.api.*;
@@ -15,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.COURT_LOCATION_ERROR;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("CourtsApiDelegateImpl test suite")
@@ -78,15 +77,11 @@ public class GetCourtLocationsTest {
     }
 
     @Test
-    @DisplayName("500")
-    public void withValidAdapterThrowsException() {
+    @DisplayName("500: with invalid court name should throw CourtLocationException")
+    public void withInvalidCourtNameShouldThrowException() {
 
-        ResponseEntity actual = sut.getCourtLocations(COURTLEVELERROR);
-
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(COURT_LOCATION_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(COURT_LOCATION_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
-
+        CourtLocationException exception = Assertions.assertThrows(CourtLocationException.class, () -> sut.getCourtLocations(COURTLEVELERROR));
+        Assertions.assertEquals(ErrorCode.COURT_LOCATION_ERROR.toString(), exception.getErrorCode());
     }
 
     private List<InternalCourtLocation> buildMockData() {

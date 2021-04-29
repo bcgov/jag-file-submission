@@ -7,9 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import ca.bc.gov.open.jag.efilingapi.error.InvalidRoleException;
+import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -210,8 +208,8 @@ public class GenerateUrlTest {
     }
 
     @Test
-    @DisplayName("400: with initialPackage validation failure should return 400")
-    public void whenInitialPackageValidationFailureShouldReturn() {
+    @DisplayName("400: with initialPackage validation failure should throw InvalidInitialSubmissionPayloadException")
+    public void whenInitialPackageValidationFailureShouldThrowInvalidInitialSubmissionPayloadException() {
 
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
@@ -223,16 +221,8 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity actual = sut.generateUrl(transactionId, USER_WITH_NO_CSO_ACCOUNT.toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-
-        EfilingError actualError = (EfilingError) actual.getBody();
-
-        Assertions.assertEquals("Initial Submission payload invalid, find more in the details array.", actualError.getMessage());
-        Assertions.assertEquals("INVALID_INITIAL_SUBMISSION_PAYLOAD", actualError.getError());
-        Assertions.assertEquals("a random error", actualError.getDetails().get(0));
-
+        InvalidInitialSubmissionPayloadException exception = Assertions.assertThrows(InvalidInitialSubmissionPayloadException.class, () -> sut.generateUrl(transactionId, USER_WITH_NO_CSO_ACCOUNT.toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.INVALID_INITIAL_SUBMISSION_PAYLOAD.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -294,8 +284,8 @@ public class GenerateUrlTest {
     }
 
     @Test
-    @DisplayName("403: when Application Code is not present should return FORBIDDEN")
-    public void whenApplicationCodeNotPresentShouldReturnForbidden() {
+    @DisplayName("403: when Application Code is not present should throw MissingApplicationCodeException")
+    public void whenApplicationCodeNotPresentShouldThrowMissingApplicationCodeException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         Map<String, Object> otherClaims = new HashMap<>();
@@ -310,9 +300,8 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity<GenerateUrlResponse> actual = sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        MissingApplicationCodeException exception = Assertions.assertThrows(MissingApplicationCodeException.class, () -> sut.generateUrl(transactionId, UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_1, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.MISSING_APPLICATION_CODE.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -360,8 +349,8 @@ public class GenerateUrlTest {
     }
 
     @Test
-    @DisplayName("403: with no user id it should return forbidden")
-    public void withNoUserIdShouldReturnForbidden() {
+    @DisplayName("403: with no user id it should throw InvalidUniversalException")
+    public void withNoUserIdShouldThrowInvalidUniversalException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -372,14 +361,7 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), "  ", TestHelpers.CASE_5, generateUrlRequest);
-
-        EfilingError actualError = (EfilingError) actual.getBody();
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.INVALIDUNIVERSAL.getErrorCode(), actualError.getError());
-        Assertions.assertEquals(ErrorResponse.INVALIDUNIVERSAL.getErrorMessage(), actualError.getMessage());
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.generateUrl(UUID.randomUUID(), "  ", TestHelpers.CASE_5, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
-
-
 }

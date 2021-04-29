@@ -2,6 +2,8 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -85,14 +87,13 @@ public class DeleteSubmittedDocumentTest {
     }
 
     @Test
-    @DisplayName("403: when no universal id should return 403")
-    public void withNoUniversalIdShouldReturn403() {
+    @DisplayName("403: when no universal id should throw MissingUniversalIdException")
+    public void withNoUniversalIdShouldThrowMissingUniversalIdException() {
 
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
 
-        ResponseEntity<?> actual = sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_ONE);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_ONE));
+        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
 
     }
 
