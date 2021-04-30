@@ -120,6 +120,11 @@
             <artifactId>mapstruct</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>jackson-coreutils</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -176,7 +181,7 @@
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>4.3.1</version>
+                <version>5.1.0</version>
                 <executions>
                     <execution>
                         <id>spring-boot-api</id>

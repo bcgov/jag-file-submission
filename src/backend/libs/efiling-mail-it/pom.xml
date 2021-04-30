@@ -88,14 +88,17 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.threeten</groupId>
 			<artifactId>threetenbp</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.github.joschi.jackson</groupId>
 			<artifactId>jackson-datatype-threetenbp</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.openapitools</groupId>
 			<artifactId>jackson-databind-nullable</artifactId>
@@ -104,6 +107,11 @@
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.java-json-tools</groupId>
+			<artifactId>jackson-coreutils</artifactId>
 		</dependency>
 
     </dependencies>
@@ -132,7 +140,7 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>4.3.1</version>
+				<version>5.1.0</version>
 				<executions>
 					<execution>
 						<id>spring-boot-api</id>

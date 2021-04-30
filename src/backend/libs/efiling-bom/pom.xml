@@ -37,6 +37,7 @@
         <org.springdoc.version>1.5.3</org.springdoc.version>
         <org.threeten.version>1.5.1</org.threeten.version>
         <org.springdoc.version>1.5.8</org.springdoc.version>
+        <com.github.java.json.tools.version>2.0</com.github.java.json.tools.version>
     </properties>
 
     <repositories>
@@ -264,6 +265,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${org.springdoc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.java-json-tools</groupId>
+                <artifactId>jackson-coreutils</artifactId>
+                <version>${com.github.java.json.tools.version}</version>
             </dependency>
 
         </dependencies>
