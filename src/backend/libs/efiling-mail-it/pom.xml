@@ -109,11 +109,6 @@
 			<artifactId>jsr305</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.github.java-json-tools</groupId>
-			<artifactId>jackson-coreutils</artifactId>
-		</dependency>
-
     </dependencies>
 
 	<dependencyManagement>

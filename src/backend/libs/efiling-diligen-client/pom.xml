@@ -119,7 +119,7 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
-        
+
     </dependencies>
 
     <dependencyManagement>
