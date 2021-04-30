@@ -193,11 +193,6 @@
             <artifactId>jackson-coreutils</artifactId>
             <version>2.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.java-json-tools</groupId>
-            <artifactId>jackson-coreutils-equivalence</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -325,6 +320,7 @@
                             <inputSpec>${project.basedir}/jag-efiling-api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <configOptions>
+                                <legacyDiscriminatorBehavior>true</legacyDiscriminatorBehavior>
                                 <dateLibrary>joda</dateLibrary>
                                 <delegatePattern>true</delegatePattern>
                             </configOptions>

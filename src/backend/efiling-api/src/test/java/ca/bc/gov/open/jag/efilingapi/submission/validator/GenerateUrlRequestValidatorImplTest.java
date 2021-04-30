@@ -123,11 +123,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        party.setRoleType(Individual.RoleTypeEnum.ADJ);
         party.setLastName(LAST_NAME);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        party2.setRoleType(Individual.RoleTypeEnum.CIT);
         party2.setLastName(LAST_NAME);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -180,7 +180,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.APP);
+        party.setRoleType(Individual.RoleTypeEnum.APP);
         party.setLastName(LAST_NAME);
         initialFilingPackage.setParties(parties);
 
@@ -207,11 +207,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        party.setRoleType(Individual.RoleTypeEnum.ADJ);
         party.setLastName(LAST_NAME);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        party2.setRoleType(Individual.RoleTypeEnum.CIT);
         party2.setLastName(LAST_NAME);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -245,11 +245,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        party.setRoleType(Individual.RoleTypeEnum.ADJ);
         party.setLastName(LAST_NAME);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        party2.setRoleType(Individual.RoleTypeEnum.CIT);
         party2.setLastName(LAST_NAME);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -332,7 +332,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.APP);
+        party.setRoleType(Individual.RoleTypeEnum.APP);
         party.setLastName(LAST_NAME);
         initialFilingPackage.setParties(parties);
 
@@ -359,11 +359,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        party.setRoleType(Individual.RoleTypeEnum.ADJ);
         party.setLastName(LAST_NAME);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        party2.setRoleType(Individual.RoleTypeEnum.CIT);
         party2.setLastName(LAST_NAME);
         parties.add(party2);
 
@@ -439,11 +439,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.CAV);
+        party.setRoleType(Individual.RoleTypeEnum.CAV);
         party.setLastName(LAST_NAME);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.DEO);
+        party2.setRoleType(Individual.RoleTypeEnum.DEO);
         party2.setLastName(LAST_NAME);
         parties.add(party2);
 
@@ -480,11 +480,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.CAV);
+        party.setRoleType(Individual.RoleTypeEnum.CAV);
         party.setLastName(LAST_NAME);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.DEO);
+        party2.setRoleType(Individual.RoleTypeEnum.DEO);
         party2.setLastName(LAST_NAME);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -552,11 +552,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        party.setRoleType(Individual.RoleTypeEnum.ADJ);
         party.setLastName(LAST_NAME);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        party2.setRoleType(Individual.RoleTypeEnum.CIT);
         party2.setLastName(LAST_NAME);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
@@ -630,11 +630,11 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Organization> orgs = new ArrayList<>();
         Organization org1 = new Organization();
-        org1.setRoleType(Party.RoleTypeEnum.CAV);
+        org1.setRoleType(Organization.RoleTypeEnum.CAV);
         org1.setName(ORGANIZATION_NAME);
         orgs.add(org1);
         Organization org2 = new Organization();
-        org2.setRoleType(Party.RoleTypeEnum.DEO);
+        org2.setRoleType(Organization.RoleTypeEnum.DEO);
         org2.setName(ORGANIZATION_NAME);
         orgs.add(org2);
         initialFilingPackage.setOrganizationParties(orgs);
@@ -670,10 +670,10 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Organization> orgs = new ArrayList<>();
         Organization org1 = new Organization();
-        org1.setRoleType(Party.RoleTypeEnum.ADJ);
+        org1.setRoleType(Organization.RoleTypeEnum.ADJ);
         orgs.add(org1);
         Organization org2 = new Organization();
-        org2.setRoleType(Party.RoleTypeEnum.CIT);
+        org2.setRoleType(Organization.RoleTypeEnum.CIT);
         orgs.add(org2);
         initialFilingPackage.setOrganizationParties(orgs);
 
@@ -708,10 +708,10 @@ public class GenerateUrlRequestValidatorImplTest {
 
         List<Individual> parties = new ArrayList<>();
         Individual party = new Individual();
-        party.setRoleType(Party.RoleTypeEnum.ADJ);
+        party.setRoleType(Individual.RoleTypeEnum.ADJ);
         parties.add(party);
         Individual party2 = new Individual();
-        party2.setRoleType(Party.RoleTypeEnum.CIT);
+        party2.setRoleType(Individual.RoleTypeEnum.CIT);
         parties.add(party2);
         initialFilingPackage.setParties(parties);
 

@@ -66,7 +66,7 @@ public class TestHelpers {
     public static final String TRANSACTION_DESC = "TRANSACTION_DESC";
 
 
-    public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
+    public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.CourtBase court, List<InitialDocument> initialDocuments) {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
         initialPackage.setDocuments(initialDocuments);
@@ -112,6 +112,18 @@ public class TestHelpers {
         court.setLocationDescription(COURT_DESCRIPTION);
         return court;
     }
+
+    public static ca.bc.gov.open.jag.efilingapi.api.model.CourtBase createApiCourtBase(String location) {
+        ca.bc.gov.open.jag.efilingapi.api.model.CourtBase court = new ca.bc.gov.open.jag.efilingapi.api.model.CourtBase();
+        court.setDivision(DIVISION);
+        court.setFileNumber(FILENUMBER);
+        court.setLevel(LEVEL);
+        court.setLocation(location);
+        court.setParticipatingClass(PARTICIPATIONCLASS);
+        court.setCourtClass(PROPERTYCLASS);
+        return court;
+    }
+
 
     public static Court createCourt() {
         return Court.builder()
