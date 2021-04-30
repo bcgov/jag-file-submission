@@ -111,11 +111,6 @@
             <scope>compile</scope>
         </dependency>
 
-		<dependency>
-			<groupId>com.github.java-json-tools</groupId>
-			<artifactId>jackson-coreutils</artifactId>
-		</dependency>
-
     </dependencies>
 
 	<dependencyManagement>
