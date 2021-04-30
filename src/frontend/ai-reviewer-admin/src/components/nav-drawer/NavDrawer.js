@@ -15,8 +15,6 @@ export default function NavDrawer(props) {
   const {variant} = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const BaseLink = (props) => <Link to="/" {...props} />;
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -26,12 +24,12 @@ export default function NavDrawer(props) {
       <Toolbar />
       <div className="drawer-container">
         <List>
-            <ListItem button component={BaseLink} >
+            <ListItem button component={Link} to="/" >
               <ListItemText primary="Document Type Configuration" />
             </ListItem>
             <Divider/>
 
-            <ListItem button component={BaseLink} >
+            <ListItem button component={Link} to="/" >
               <ListItemText primary="Logs" />
             </ListItem>
             <Divider/>
