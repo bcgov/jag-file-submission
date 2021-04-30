@@ -4,12 +4,13 @@ import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
+import ca.bc.gov.open.jag.efilingapi.error.PaymentException;
+import ca.bc.gov.open.jag.efilingapi.error.SubmissionException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -178,33 +179,27 @@ public class SubmitTest {
     }
 
     @Test
-    @DisplayName("500: with valid request but soap service throws an exception return 500")
-    public void withErrorInServiceShouldReturnInternalServiceError() {
+    @DisplayName("500: with valid request but soap service throws an exception should throw SubmissionException")
+    public void withErrorInServiceShouldThrowSubmissionException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_2, null);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        assertEquals("SUBMISSION_FAILURE", ((EfilingError)actual.getBody()).getError());
-        assertEquals("Error while submitting filing package", ((EfilingError)actual.getBody()).getMessage());
-
+        SubmissionException exception = Assertions.assertThrows(SubmissionException.class, () -> sut.submit(UUID.randomUUID(), TestHelpers.CASE_2, null));
+        Assertions.assertEquals(ErrorCode.SUBMISSION_FAILURE.toString(), exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("400: with valid request but bambora throws an exception return 400")
-    public void withErrorInBamboraShouldReturnBadRequest() {
+    @DisplayName("400: with valid request but bambora is thrown and caught should throw PaymentException")
+    public void withErrorInBamboraShouldThrowPaymentException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity actual = sut.submit(UUID.randomUUID(), TestHelpers.CASE_4, null);
-        assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        assertEquals("PAYMENT_FAILURE", ((EfilingError)actual.getBody()).getError());
-        assertEquals("Error while making payment", ((EfilingError)actual.getBody()).getMessage());
-
+        PaymentException exception = Assertions.assertThrows(PaymentException.class, () -> sut.submit(UUID.randomUUID(), TestHelpers.CASE_4, null));
+        Assertions.assertEquals(ErrorCode.PAYMENT_FAILURE.toString(), exception.getErrorCode());
     }
 
     @Test
