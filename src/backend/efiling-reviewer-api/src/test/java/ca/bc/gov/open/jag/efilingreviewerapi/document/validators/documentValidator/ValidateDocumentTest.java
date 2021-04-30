@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingreviewerapi.document.validators.documentValida
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
-import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidator;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.validators.DocumentValidatorImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
