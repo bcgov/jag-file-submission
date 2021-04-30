@@ -192,6 +192,11 @@
             <groupId>com.github.java-json-tools</groupId>
             <artifactId>jackson-coreutils</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>jackson-coreutils-equivalence</artifactId>
+            <version>1.0</version>
+        </dependency>
 
     </dependencies>
 
