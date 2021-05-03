@@ -8,9 +8,7 @@ import ca.bc.gov.open.jag.efilingapi.api.SubmissionApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import ca.bc.gov.open.jag.efilingapi.error.InvalidRoleException;
+import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
@@ -45,7 +43,15 @@ import java.util.UUID;
 @EnableConfigurationProperties(NavigationProperties.class)
 public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
+    private static final String DOCUMENT_REQUIRED = "At least one document is required.";
+    private static final String FILE_IS_NOT_PDF = "File is not a PDF";
+    private static final String INVALID_INITIAL_SUBMISSION_PAYLOAD = "Initial Submission payload invalid, find more in the details array.";
+    private static final String INVALID_UNIVERSAL_ID = "Invalid universal id.";
+    private static final String INVALID_ROLE = "User does not have a valid role for this request.";
+    private static final String MISSING_APPLICATION_CODE = "Missing application code claim. Contact administrator";
+    private static final String MISSING_UNIVERSAL_ID = "universal-id claim missing in jwt token.";
     private static final String UNIVERSAL_ID_IS_REQUIRED = "universal Id is required.";
+
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
 
     private final SubmissionService submissionService;
@@ -81,9 +87,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         if(StringUtils.isBlank(xUserId)) {
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(
@@ -110,10 +114,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!universalId.isPresent()) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -142,19 +143,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!universalId.isPresent()) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
 
         logger.info("attempting to add new document for transaction [{}]", submissionId);
 
         if (updateDocumentRequest == null || updateDocumentRequest.getDocuments().isEmpty())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
-                    HttpStatus.BAD_REQUEST);
+            throw new DocumentRequiredException(DOCUMENT_REQUIRED);
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
 
@@ -192,10 +188,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!universalId.isPresent()) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -220,34 +213,26 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (StringUtils.isBlank(xUserId)) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
         Optional<String> applicationCode = SecurityUtils.getApplicationCode();
 
         if (!applicationCode.isPresent()) {
 
-            logger.error("[{}]: {}", ErrorResponse.MISSING_APPLICATION_CODE.getErrorCode(), ErrorResponse.MISSING_APPLICATION_CODE.getErrorMessage());
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_APPLICATION_CODE).create(),
-                    HttpStatus.FORBIDDEN
-            );
+            logger.error("[{}]: {}", ErrorCode.MISSING_APPLICATION_CODE.toString(), MISSING_APPLICATION_CODE);
+            throw new MissingApplicationCodeException(MISSING_APPLICATION_CODE);
 
         }
 
         Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, applicationCode.get());
 
         if (validation.hasError())
-            return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALID_INITIAL_SUBMISSION_PAYLOAD).addDetails(validation.getErrors()).create(),
-                    HttpStatus.BAD_REQUEST);
-
+            throw new InvalidInitialSubmissionPayloadException(INVALID_INITIAL_SUBMISSION_PAYLOAD, validation.getErrors());
 
         if (accountService.getCsoAccountDetails(xUserId) != null &&
                 !accountService.getCsoAccountDetails(xUserId).isFileRolePresent())
-            throw new InvalidRoleException("User does not have a valid role for this request.");
+            throw new InvalidRoleException(INVALID_ROLE);
 
         SubmissionKey submissionKey = new SubmissionKey(xUserId, xTransactionId, submissionId);
 
@@ -264,7 +249,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             response = new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
         } catch (InvalidAccountStateException e) {
             logger.warn(e.getMessage(), e);
-            throw new InvalidRoleException("User does not have a valid role for this request.");
+            throw new InvalidRoleException(INVALID_ROLE);
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
             response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -286,9 +271,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if (!universalId.isPresent()) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.MISSING_UNIVERSAL_ID).create(), HttpStatus.FORBIDDEN);
+            throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -323,10 +306,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!universalId.isPresent()) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -352,10 +332,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!universalId.isPresent()) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -383,10 +360,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         if(!universalId.isPresent()) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
-
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.INVALIDUNIVERSAL).create(),
-                    HttpStatus.FORBIDDEN);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -433,9 +407,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private ResponseEntity storeDocuments(SubmissionKey submissionKey, List<MultipartFile> files) {
 
         if (files == null || files.isEmpty())
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_REQUIRED).create(),
-                    HttpStatus.BAD_REQUEST);
+            throw new DocumentRequiredException(DOCUMENT_REQUIRED);
 
         try {
 
@@ -448,8 +420,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                 }
 
                 if (!TikaAnalysis.isPdf(file))
-                    return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.FILE_TYPE_ERROR).create(),
-                            HttpStatus.BAD_REQUEST);
+                    throw new FileTypeException(FILE_IS_NOT_PDF);
             }
             for (MultipartFile file : files) {
                 documentStore.put(submissionKey, file.getResource().getFilename(), file.getBytes());

@@ -10,6 +10,7 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidation;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentValidationResult;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.ValidationTypes;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
+import ca.bc.gov.open.jag.efilingreviewerapi.document.store.RestrictedDocumentRepository;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerRestrictedDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerVirusFoundException;
@@ -38,10 +39,13 @@ public class DocumentValidatorImpl implements DocumentValidator {
 
     private final DocumentTypeConfigurationRepository documentTypeConfigurationRepository;
 
-    public DocumentValidatorImpl(ClamAvService clamAvService, DiligenService diligenService, DocumentTypeConfigurationRepository documentTypeConfigurationRepository) {
+    private final RestrictedDocumentRepository restrictedDocumentRepository;
+
+    public DocumentValidatorImpl(ClamAvService clamAvService, DiligenService diligenService, DocumentTypeConfigurationRepository documentTypeConfigurationRepository, RestrictedDocumentRepository restrictedDocumentRepository) {
         this.clamAvService = clamAvService;
         this.diligenService = diligenService;
         this.documentTypeConfigurationRepository = documentTypeConfigurationRepository;
+        this.restrictedDocumentRepository = restrictedDocumentRepository;
     }
 
     @Override
@@ -85,7 +89,7 @@ public class DocumentValidatorImpl implements DocumentValidator {
         Optional<String> returnedDocumentType = findDocumentType(answers);
 
         if (!returnedDocumentType.isPresent() || !returnedDocumentType.get().equals(documentTypeConfiguration.getDocumentTypeDescription())) {
-            if (returnedDocumentType.isPresent() && Keys.RESTRICTED_DOCUMENT_TYPES.containsValue(returnedDocumentType.get())) {
+            if (returnedDocumentType.isPresent() && restrictedDocumentRepository.existsByDocumentTypeDescription(returnedDocumentType.get())) {
                 logger.error("Document {} of type {} detected.", documentId, returnedDocumentType.get());
                 diligenService.deleteDocument(documentId);
                 logger.info("Document {} has been deleted.", documentId);
