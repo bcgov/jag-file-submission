@@ -66,7 +66,7 @@ public class TestHelpers {
     public static final String TRANSACTION_DESC = "TRANSACTION_DESC";
 
 
-    public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.Court court, List<InitialDocument> initialDocuments) {
+    public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.CourtBase court, List<InitialDocument> initialDocuments) {
         InitialPackage initialPackage = new InitialPackage();
         initialPackage.setCourt(court);
         initialPackage.setDocuments(initialDocuments);
@@ -83,33 +83,25 @@ public class TestHelpers {
         return navigation;
     }
 
-    public static ca.bc.gov.open.jag.efilingapi.api.model.Court createApiCourt() {
-        ca.bc.gov.open.jag.efilingapi.api.model.Court court = new ca.bc.gov.open.jag.efilingapi.api.model.Court();
+    public static ca.bc.gov.open.jag.efilingapi.api.model.CourtBase createApiCourtBase() {
+        ca.bc.gov.open.jag.efilingapi.api.model.CourtBase court = new ca.bc.gov.open.jag.efilingapi.api.model.CourtBase();
         court.setDivision(DIVISION);
         court.setFileNumber(FILENUMBER);
         court.setLevel(LEVEL);
         court.setLocation(LOCATION);
         court.setParticipatingClass(PARTICIPATIONCLASS);
         court.setCourtClass(PROPERTYCLASS);
-        court.setAgencyId(BigDecimal.TEN);
-        court.setLevelDescription(LEVEL_DESCRIPTION);
-        court.setClassDescription(CLASS_DESCRIPTION);
-        court.setLocationDescription(COURT_DESCRIPTION);
         return court;
     }
 
-    public static ca.bc.gov.open.jag.efilingapi.api.model.Court createApiCourt(String location) {
-        ca.bc.gov.open.jag.efilingapi.api.model.Court court = new ca.bc.gov.open.jag.efilingapi.api.model.Court();
+    public static ca.bc.gov.open.jag.efilingapi.api.model.CourtBase createApiCourtBase(String location) {
+        ca.bc.gov.open.jag.efilingapi.api.model.CourtBase court = new ca.bc.gov.open.jag.efilingapi.api.model.CourtBase();
         court.setDivision(DIVISION);
         court.setFileNumber(FILENUMBER);
         court.setLevel(LEVEL);
         court.setLocation(location);
         court.setParticipatingClass(PARTICIPATIONCLASS);
         court.setCourtClass(PROPERTYCLASS);
-        court.setAgencyId(BigDecimal.TEN);
-        court.setLevelDescription(LEVEL_DESCRIPTION);
-        court.setClassDescription(CLASS_DESCRIPTION);
-        court.setLocationDescription(COURT_DESCRIPTION);
         return court;
     }
 

@@ -78,7 +78,7 @@ public class GetFilingPackagesTest {
         //Party
         Assertions.assertEquals(1, actual.get().get(0).getParties().size());
         Assertions.assertEquals(TestHelpers.PARTY_TYPE_DESC, actual.get().get(0).getParties().get(0).getPartyDescription());
-        Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Party.RoleTypeEnum.ABC, actual.get().get(0).getParties().get(0).getRoleType());
+        Assertions.assertEquals(ca.bc.gov.open.jag.efilingapi.api.model.Individual.RoleTypeEnum.ABC, actual.get().get(0).getParties().get(0).getRoleType());
         Assertions.assertEquals(TestHelpers.ROLE_TYPE_DESC, actual.get().get(0).getParties().get(0).getRoleDescription());
         Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.get().get(0).getParties().get(0).getFirstName());
         Assertions.assertEquals(TestHelpers.LAST_NAME, actual.get().get(0).getParties().get(0).getLastName());
