@@ -14,8 +14,11 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 @Service
 public class DocumentConfigurationsApiDelegateImpl implements DocumentTypeConfigurationsApiDelegate {
@@ -67,26 +70,33 @@ public class DocumentConfigurationsApiDelegateImpl implements DocumentTypeConfig
     }
 
     @Override
-    public ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> updateDocumentTypeConfiguration(ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration documentTypeConfiguration) {
+	public ResponseEntity<ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration> updateDocumentTypeConfiguration(
+			ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentTypeConfiguration documentTypeConfiguration) {
 
-        if (!documentTypeConfigurationRepository.existsByDocumentTypeAndId(documentTypeConfiguration.getDocumentType().getType(), documentTypeConfiguration.getId())) throw new AiReviewerDocumentTypeConfigurationException("No matches found for that type and id");
-        if (!documentTypeConfiguration.getDocumentType().getType().equals(documentTypeConfigurationRepository.findById(documentTypeConfiguration.getId()).get().getDocumentType())) throw new AiReviewerDocumentTypeConfigurationException("Document type cannot be updated");
-
-        DocumentTypeConfiguration updateDocumentTypeConfiguration = DocumentTypeConfiguration
+		if (!documentTypeConfigurationRepository.existsByDocumentTypeAndId(
+				documentTypeConfiguration.getDocumentType().getType(), documentTypeConfiguration.getId())) {
+			throw new AiReviewerDocumentTypeConfigurationException("No matches found for that type and id");
+		}
+		
+		DocumentTypeConfiguration dbDocumentTypeConfiguration = documentTypeConfigurationRepository.findById(documentTypeConfiguration.getId()).get();
+		if (!documentTypeConfiguration.getDocumentType().getType().equals(dbDocumentTypeConfiguration.getDocumentType())) {
+			throw new AiReviewerDocumentTypeConfigurationException("Document type cannot be updated");
+		}
+		
+        DocumentTypeConfiguration tmp = DocumentTypeConfiguration
                 .builder()
-                .documentType(documentTypeConfiguration.getDocumentType().getType())
-                .documentTypeDescription(documentTypeConfiguration.getDocumentType().getDescription())
-                .projectId(documentTypeConfiguration.getProjectId())
                 .documentConfig((LinkedHashMap<String, Object>) documentTypeConfiguration.getDocumentConfig())
                 .create();
 
-        updateDocumentTypeConfiguration.setId(documentTypeConfiguration.getId());
+        // We need to update, not replace the existing object, otherwise auditing @Version and @CreatedDate won't work.
+		dbDocumentTypeConfiguration.setDocumentType(documentTypeConfiguration.getDocumentType().getType());
+		dbDocumentTypeConfiguration.setDocumentTypeDescription(documentTypeConfiguration.getDocumentType().getDescription());	
+		dbDocumentTypeConfiguration.setDocumentConfig(tmp.getDocumentConfig());
 
-        DocumentTypeConfiguration updatedDocumentTypeConfiguration = documentTypeConfigurationRepository.save(updateDocumentTypeConfiguration);
+		DocumentTypeConfiguration updatedDocumentTypeConfiguration = documentTypeConfigurationRepository.save(dbDocumentTypeConfiguration);
 
-        return ResponseEntity.ok(documentTypeConfigurationMapper.toDocumentTypeConfiguration(updatedDocumentTypeConfiguration));
-
-    }
+		return ResponseEntity.ok(documentTypeConfigurationMapper.toDocumentTypeConfiguration(updatedDocumentTypeConfiguration));
+	}
 
     @Override
     public ResponseEntity<Void> deleteDocumentTypeConfiguration(UUID id) {
