@@ -5,6 +5,10 @@ import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 
+/**
+ * A model object to store a history of transactions against {@link DocumentTypeConfiguration}. Besides the object
+ * itself, includes an action (INSERT, UPDATE, or DELETE) and a timestamp.
+ */
 public class DocumentTypeConfigurationAudit {
 
 	@Id
@@ -24,11 +28,11 @@ public class DocumentTypeConfigurationAudit {
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public DocumentTypeConfiguration getDocumentTypeConfiguration() {
 		return DocumentTypeConfiguration;
 	}
-	
+
 	public void setDocumentTypeConfiguration(DocumentTypeConfiguration documentTypeConfiguration) {
 		DocumentTypeConfiguration = documentTypeConfiguration;
 	}

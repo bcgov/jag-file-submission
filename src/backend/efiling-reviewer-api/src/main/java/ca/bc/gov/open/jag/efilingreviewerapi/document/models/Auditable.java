@@ -7,9 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 
 /**
- * An abstract Auditable class that auto-populates <code>createDate</code>,
- * <code>modifiedDate</code>, and <code>version</code> fields. Class need only
- * to extend this class to add auditing fields to a model object.
+ * An abstract Auditable class that auto-populates <code>createdDate</code>, <code>modifiedDate</code>, and
+ * <code>version</code> fields. Class need only to extend this class to add auditing fields to a model object.
  */
 public abstract class Auditable {
 
