@@ -2,9 +2,10 @@ package ca.bc.gov.open.jag.efilingapi.payment;
 
 import ca.bc.gov.open.bambora.payment.starter.BamboraException;
 import ca.bc.gov.open.bambora.payment.starter.managment.BamboraCardService;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import com.sun.jndi.toolkit.url.Uri;
 import org.junit.jupiter.api.*;
@@ -15,11 +16,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.util.UUID;
-
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.URL_GENERATION_FAILURE;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("PaymentApiDelegateImpl")
@@ -63,15 +61,13 @@ public class PaymentApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("500: exception was thrown")
-    public void withBamboraThorwsException() {
+    @DisplayName("500: bambora exception caught should throw UrlGenerationException")
+    public void withBamboraExceptionCaughtShouldThrowUrlGenerationException() {
         GenerateCardUrlRequest request = new GenerateCardUrlRequest();
         request.setInternalClientNumber(FAIL_INTERNAL_CLIENT_NUMBER);
         request.setRedirectUrl(REDIRECT_URL);
-        ResponseEntity actual = sut.updateCreditCard(UUID.randomUUID(),request);
 
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(URL_GENERATION_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(URL_GENERATION_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        UrlGenerationException exception = Assertions.assertThrows(UrlGenerationException.class, () -> sut.updateCreditCard(UUID.randomUUID(),request));
+        Assertions.assertEquals(ErrorCode.URL_GENERATION_FAILURE.toString(), exception.getErrorCode());
     }
 }

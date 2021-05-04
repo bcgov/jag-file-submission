@@ -3,10 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
-import ca.bc.gov.open.jag.efilingapi.error.FilingPackageNotFoundException;
-import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
+import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
@@ -33,6 +30,7 @@ import java.util.Optional;
 @Service
 public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
+    private static final String DELETE_DOCUMENT_ERROR = "Document deletion failed.";
     private static final String FILING_PACKAGE_NOT_FOUND = "Requested filing package was not found.";
     private static final String MISSING_UNIVERSAL_ID = "universal-id claim missing in jwt token.";
 
@@ -173,11 +171,9 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
             filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
             return ResponseEntity.ok(null);
         } catch (EfilingAccountServiceException e) {
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.NOT_FOUND);
+            throw new DeleteDocumentException(DELETE_DOCUMENT_ERROR, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DELETE_DOCUMENT_ERROR).create(), HttpStatus.BAD_REQUEST);
+            throw new DeleteDocumentException(DELETE_DOCUMENT_ERROR, HttpStatus.BAD_REQUEST);
         }
     }
 
