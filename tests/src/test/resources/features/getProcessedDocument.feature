@@ -13,4 +13,4 @@ Feature: Auto processing flag can be set based on the document type validation
     Given user uploaded a invalid RCC document with "RCC" document type
     When document event is retrieved
     Then document type validation flag is not set and provides error details
-    And document is deleted
+    And document type is deleted

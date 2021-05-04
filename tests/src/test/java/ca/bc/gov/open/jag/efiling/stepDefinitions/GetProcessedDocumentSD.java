@@ -27,7 +27,8 @@ import static org.junit.Assert.assertEquals;
 public class GetProcessedDocumentSD {
 
     private final ExtractDocumentService extractDocumentService;
-    private Response actualExtractDocumentServiceResponse;
+    private Response actualValidExtractDocumentServiceResponse;
+    private Response actualInvalidExtractDocumentServiceResponse;
     private final DocumentTypeConfigService documentTypeConfigService;
     JsonPath actualExtractDocumentsJsonPath;
 
@@ -55,36 +56,36 @@ public class GetProcessedDocumentSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_VALID_DOCUMENT_PDF);
 
-        actualExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), docType, fileSpec);
+        actualValidExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), docType, fileSpec);
 
-        logger.info("Api response status code for valid docType: {}", actualExtractDocumentServiceResponse.getStatusCode());
-        logger.info("Api response for valid docType: {}", actualExtractDocumentServiceResponse.asString());
+        logger.info("Api response status code for valid docType: {}", actualValidExtractDocumentServiceResponse.getStatusCode());
+        logger.info("Api response for valid docType: {}", actualValidExtractDocumentServiceResponse.asString());
 
-        assertEquals(HttpStatus.SC_OK, actualExtractDocumentServiceResponse.getStatusCode());
-        assertEquals("application/json", actualExtractDocumentServiceResponse.getContentType());
+        assertEquals(HttpStatus.SC_OK, actualValidExtractDocumentServiceResponse.getStatusCode());
+        assertEquals("application/json", actualValidExtractDocumentServiceResponse.getContentType());
 
     }
 
     @When("document event is retrieved by document id")
     public void retrievedDocumentById() {
 
-        actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
+        actualExtractDocumentsJsonPath = new JsonPath(actualValidExtractDocumentServiceResponse.asString());
 
         Integer documentIdForValidDocument = actualExtractDocumentsJsonPath.get("document.documentId");
 
-        actualExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForValidDocument);
+        actualValidExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForValidDocument);
 
-        logger.info("Api response status code for valid docType event: {}", actualExtractDocumentServiceResponse.getStatusCode());
-        logger.info("Api response for valid docType event: {}", actualExtractDocumentServiceResponse.asString());
+        logger.info("Api response status code for valid docType event: {}", actualValidExtractDocumentServiceResponse.getStatusCode());
+        logger.info("Api response for valid docType event: {}", actualValidExtractDocumentServiceResponse.asString());
 
-        Assert.assertEquals(HttpStatus.SC_OK, actualExtractDocumentServiceResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualValidExtractDocumentServiceResponse.getStatusCode());
 
     }
 
     @Then("document type validation flag is set for processing")
     public void verifyDocumentTypeValidationFlagIsSet() {
 
-        actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
+        actualExtractDocumentsJsonPath = new JsonPath(actualValidExtractDocumentServiceResponse.asString());
 
         Assert.assertEquals(Keys.TEST_VALID_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
         Assert.assertNotNull(actualExtractDocumentsJsonPath.get("validation"));
@@ -124,42 +125,58 @@ public class GetProcessedDocumentSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_INVALID_DOCUMENT_PDF);
 
-        actualExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), docType, fileSpec);
+        actualInvalidExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), docType, fileSpec);
 
-        logger.info("Api response status code for invalid docType event: {}", actualExtractDocumentServiceResponse.getStatusCode());
-        logger.info("Api response for invalid docType event: {}", actualExtractDocumentServiceResponse.asString());
+        logger.info("Api response status code for invalid docType event: {}", actualInvalidExtractDocumentServiceResponse.getStatusCode());
+        logger.info("Api response for invalid docType event: {}", actualInvalidExtractDocumentServiceResponse.asString());
 
-        assertEquals(HttpStatus.SC_OK, actualExtractDocumentServiceResponse.getStatusCode());
-        assertEquals("application/json", actualExtractDocumentServiceResponse.getContentType());
+        assertEquals(HttpStatus.SC_OK, actualInvalidExtractDocumentServiceResponse.getStatusCode());
+        assertEquals("application/json", actualInvalidExtractDocumentServiceResponse.getContentType());
 
     }
 
     @When("document event is retrieved")
     public void retrieveDocumentById() {
 
-        actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
+        actualExtractDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
 
         Integer documentIdForInvalidDocument = actualExtractDocumentsJsonPath.get("document.documentId");
 
-        actualExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForInvalidDocument);
+        actualInvalidExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForInvalidDocument);
 
-        logger.info("Api response status code for invalid docType event: {}", actualExtractDocumentServiceResponse.getStatusCode());
-        logger.info("Api response for invalid docType event: {}", actualExtractDocumentServiceResponse.asString());
+        logger.info("Api response status code for invalid docType event: {}", actualInvalidExtractDocumentServiceResponse.getStatusCode());
+        logger.info("Api response for invalid docType event: {}", actualInvalidExtractDocumentServiceResponse.asString());
 
-        Assert.assertEquals(HttpStatus.SC_OK, actualExtractDocumentServiceResponse.getStatusCode());
+        Assert.assertEquals(HttpStatus.SC_OK, actualInvalidExtractDocumentServiceResponse.getStatusCode());
 
     }
 
     @Then("document type validation flag is not set and provides error details")
     public void verifyDocumentTypeValidationFlagIsNotSet() {
 
-        actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
+        actualExtractDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
 
         Assert.assertEquals(Keys.TEST_INVALID_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
         Assert.assertEquals("DOCUMENT_TYPE", actualExtractDocumentsJsonPath.get("validation[0].type"));
         Assert.assertEquals("Response to Civil Claim", actualExtractDocumentsJsonPath.get("validation[0].expected"));
         Assert.assertEquals("This is invalid", actualExtractDocumentsJsonPath.get("validation[0].actual"));
         Assert.assertEquals("1234", actualExtractDocumentsJsonPath.get("result.court.fileNumber"));
+
+    }
+
+    @And("document type is deleted")
+    public void deleteTheDocument() {
+
+        logger.info("Requesting to get all document types");
+
+        JsonPath actualConfigResponseJsonPath = new JsonPath(documentTypeConfigService.getDocumentTypeConfiguration(Keys.DOCUMENT_TYPE_CONFIGURATION_PATH).asString());
+        UUID getDocTypeId = UUID.fromString(actualConfigResponseJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE));
+
+        logger.info("Requesting to delete the document type by id");
+        Response actualDeleteDocumentTypeByIdResponse = documentTypeConfigService.deleteDocumentTypeByIdResponse(getDocTypeId,
+                Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
+
+        assertEquals(HttpStatus.SC_NO_CONTENT, actualDeleteDocumentTypeByIdResponse.getStatusCode());
 
     }
 }
