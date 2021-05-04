@@ -3,6 +3,9 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.FilingPackageNotFoundException;
+import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
@@ -81,29 +84,25 @@ public class GetFilingPackagesTest {
     }
 
     @Test
-    @DisplayName("403: when no universal id should return 403")
-    public void withNoUniversalIdShouldReturn403() {
+    @DisplayName("403: when no universal id should throw MissingUniversalIdException")
+    public void withNoUniversalIdShouldThrowMissingUniversalIdException() {
 
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
 
-        ResponseEntity<List<FilingPackage>> actual = sut.getFilingPackages(PARENT_APPLICATION_FOUND);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
-
+        MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.getFilingPackages(PARENT_APPLICATION_FOUND));
+        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("404: when no filling packages found return 404")
-    public void withValidRequestFilingPackageNotFound() {
+    @DisplayName("404: when no filling packages found should throw FilingPackageNotFoundException")
+    public void withValidRequestNotFoundShouldThrowFilingPackageNotFoundException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2_STRING);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<List<FilingPackage>> actual = sut.getFilingPackages(PARENT_APPLICATION_NOT_FOUND);
-
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
-
+        FilingPackageNotFoundException exception = Assertions.assertThrows(FilingPackageNotFoundException.class, () -> sut.getFilingPackages(PARENT_APPLICATION_NOT_FOUND));
+        Assertions.assertEquals(ErrorCode.FILING_PACKAGE_NOT_FOUND.toString(), exception.getErrorCode());
     }
 
 

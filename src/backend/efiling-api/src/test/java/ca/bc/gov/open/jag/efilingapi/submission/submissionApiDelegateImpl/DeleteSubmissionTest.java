@@ -5,6 +5,8 @@ import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -34,7 +36,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static ca.bc.gov.open.jag.efilingapi.TestHelpers.createDocumentList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DeleteSubmissionTest {
@@ -131,8 +132,8 @@ public class DeleteSubmissionTest {
     }
 
     @Test
-    @DisplayName("403: with no universal id is forbidden")
-    public void withUserNotHavingUniversalIdShouldReturn403() {
+    @DisplayName("403: with no universal id should throw InvalidUniversalException")
+    public void withUserNotHavingUniversalIdShouldThrowInvalidUniversalException() {
 
 
         BigDecimal test = new BigDecimal(100000000);
@@ -141,9 +142,8 @@ public class DeleteSubmissionTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,null);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity actual = sut.deleteSubmission(TestHelpers.CASE_2, UUID.randomUUID());
-
-        assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.deleteSubmission(TestHelpers.CASE_2, UUID.randomUUID()));
+        Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
 
     }
 
