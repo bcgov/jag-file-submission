@@ -38,7 +38,7 @@ function SimulateTransaction() {
         </div>
         <div className="col">
           <Dropdown 
-            items={["RCC","ABC"]}
+            items={["DEVRCC","ABC"]}
             onSelect={(e) => selectFileType(e)}
           />
         </div>
