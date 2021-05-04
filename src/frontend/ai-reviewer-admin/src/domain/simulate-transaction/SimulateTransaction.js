@@ -4,12 +4,11 @@ import { DisplayBox, Button, Dropdown } from "shared-components";
 import { v4 as uuidv4 } from "uuid";
 import { MdDescription } from "react-icons/md";
 import {submitFileForExtraction} from "./SimulateTransactionService"
+import {getDocumentTypeConfigurations} from "domain/documents/DocumentService"
 import "./SimulateTransaction.scss"
 
 function SimulateTransaction() {
   const [files, setFiles] = useState([])
-  const [submitBtnEnabled, setSubmitBtnEnabled] = useState(true);
-  const [showLoader, setShowLoader] = useState(false);
 
   const transactionId = uuidv4();
 
