@@ -6,10 +6,8 @@ import ca.bc.gov.open.bambora.payment.starter.managment.models.RecurringPaymentD
 import ca.bc.gov.open.jag.efilingapi.api.PaymentApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
-import ca.bc.gov.open.jag.efilingapi.error.EfilingErrorBuilder;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +17,8 @@ import java.util.UUID;
 
 @Service
 public class PaymentApiDelegateImpl implements PaymentApiDelegate {
+
+    private static final String URL_GENERATION_FAILURE = "failed to generate bambora card update url.";
 
     private final BamboraCardService bamboraCardService;
 
@@ -43,8 +43,7 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
                     .create()).toString());
             return ResponseEntity.ok(generateCardUrlResponse);
         } catch (BamboraException e) {
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.URL_GENERATION_FAILURE).create(), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new UrlGenerationException(URL_GENERATION_FAILURE);
         }
 
     }

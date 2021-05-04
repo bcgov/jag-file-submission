@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
+import ca.bc.gov.open.jag.efilingapi.error.DeleteDocumentException;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
@@ -94,35 +95,32 @@ public class DeleteSubmittedDocumentTest {
 
         MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_ONE));
         Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
-
     }
 
     @Test
-    @DisplayName("400: when delete failed should return 400")
-    public void withDeleteFailedShouldReturn400() {
+    @DisplayName("400: when delete failed should throw DeleteDocumentException")
+    public void withDeleteFailedShouldThrowDeleteDocumentException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<?> actual = sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO);
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-
+        DeleteDocumentException exception = Assertions.assertThrows(DeleteDocumentException.class, () -> sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO));
+        Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(), exception.getErrorCode());
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
 
     @Test
-    @DisplayName("404: when delete failed should return 404")
-    public void withDeleteAccountNotFoundFailedShouldReturn404() {
+    @DisplayName("404: when delete failed should throw DeleteDocumentException")
+    public void withDeleteAccountNotFoundFailedShouldThrowDeleteDocumentException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<?> actual = sut.deleteSubmittedDocument(BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO);
-
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
-
+        DeleteDocumentException exception = Assertions.assertThrows(DeleteDocumentException.class, () -> sut.deleteSubmittedDocument(BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO));
+        Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(), exception.getErrorCode());
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
 }
