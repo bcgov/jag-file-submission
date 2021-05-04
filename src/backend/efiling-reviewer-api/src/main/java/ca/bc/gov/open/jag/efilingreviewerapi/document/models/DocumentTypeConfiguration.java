@@ -1,16 +1,18 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.models;
 
-import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
-import ca.bc.gov.open.efilingdiligenclient.diligen.model.PropertyConfig;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.annotation.Id;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class DocumentTypeConfiguration {
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.Id;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
+import ca.bc.gov.open.efilingdiligenclient.diligen.model.PropertyConfig;
+
+public class DocumentTypeConfiguration extends Auditable {
 
     @Id
     private UUID id;
@@ -52,13 +54,25 @@ public class DocumentTypeConfiguration {
         return documentType;
     }
 
+	public void setDocumentType(String documentType) {
+		this.documentType = documentType;
+	}
+
     public String getDocumentTypeDescription() { return documentTypeDescription;  }
+    
+    public void setDocumentTypeDescription(String documentTypeDescription) {
+		this.documentTypeDescription = documentTypeDescription;
+	}
 
     public Integer getProjectId() { return projectId; }
 
     public DocumentConfig getDocumentConfig() {
         return documentConfig;
     }
+    
+    public void setDocumentConfig(DocumentConfig documentConfig) {
+		this.documentConfig = documentConfig;
+	}
 
     public DocumentTypeConfiguration(Builder builder) {
         this();
