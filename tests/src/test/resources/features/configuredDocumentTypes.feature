@@ -3,10 +3,6 @@
 
 Feature: Configure document type and properties for AI reviewer
 
-  Scenario: Validate an existing configured document type can be deleted
-    Given user deletes an existing configured document type using id
-    Then requested document type configuration is deleted
-
   Scenario: Validate a new document type can be configured
     Given user configures a new document type
     When document type config is created

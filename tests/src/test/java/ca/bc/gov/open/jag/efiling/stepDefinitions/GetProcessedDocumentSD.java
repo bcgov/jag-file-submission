@@ -134,6 +134,22 @@ public class GetProcessedDocumentSD {
 
     }
 
+    @When("document event is retrieved")
+    public void retrieveDocumentById() {
+
+        actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
+
+        Integer documentIdForInvalidDocument = actualExtractDocumentsJsonPath.get("document.documentId");
+
+        actualExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForInvalidDocument);
+
+        logger.info("Api response status code for invalid docType event: {}", actualExtractDocumentServiceResponse.getStatusCode());
+        logger.info("Api response for invalid docType event: {}", actualExtractDocumentServiceResponse.asString());
+
+        Assert.assertEquals(HttpStatus.SC_OK, actualExtractDocumentServiceResponse.getStatusCode());
+
+    }
+
     @Then("document type validation flag is not set and provides error details")
     public void verifyDocumentTypeValidationFlagIsNotSet() {
 
