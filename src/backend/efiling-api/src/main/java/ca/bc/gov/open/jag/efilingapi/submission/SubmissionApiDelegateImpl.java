@@ -43,13 +43,19 @@ import java.util.UUID;
 @EnableConfigurationProperties(NavigationProperties.class)
 public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
+    private static final String ACCOUNT_EXCEPTION = "Client has multiple CSO profiles.";
+    private static final String CACHE_ERROR = "Cache related error.";
     private static final String DOCUMENT_REQUIRED = "At least one document is required.";
-    private static final String FILE_IS_NOT_PDF = "File is not a PDF";
+    private static final String DOCUMENT_STORAGE_FAILURE = "An unknown error happened while storing documents.";
+    private static final String DOCUMENT_TYPE_ERROR = "Error while retrieving documents.";
+    private static final String FILE_TYPE_EXCEPTION = "File is not a PDF.";
     private static final String INVALID_INITIAL_SUBMISSION_PAYLOAD = "Initial Submission payload invalid, find more in the details array.";
     private static final String INVALID_UNIVERSAL_ID = "Invalid universal id.";
     private static final String INVALID_ROLE = "User does not have a valid role for this request.";
-    private static final String MISSING_APPLICATION_CODE = "Missing application code claim. Contact administrator";
+    private static final String MISSING_APPLICATION_CODE = "Missing application code claim. Contact administrator.";
     private static final String MISSING_UNIVERSAL_ID = "universal-id claim missing in jwt token.";
+    private static final String PAYMENT_FAILURE = "Error while making payment.";
+    private static final String SUBMISSION_FAILURE = "Error while submitting filing package.";
     private static final String UNIVERSAL_ID_IS_REQUIRED = "universal Id is required.";
 
     Logger logger = LoggerFactory.getLogger(SubmissionApiDelegateImpl.class);
@@ -169,8 +175,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
-            return new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-
+            throw new DocumentTypeException(DOCUMENT_TYPE_ERROR);
         }
     }
 
@@ -246,16 +251,16 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             logger.info("successfully generated return url.");
         } catch (CSOHasMultipleAccountException e) {
             logger.warn(e.getMessage(), e);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.ACCOUNTEXCEPTION), HttpStatus.BAD_REQUEST);
+            throw new AccountException(ACCOUNT_EXCEPTION);
         } catch (InvalidAccountStateException e) {
             logger.warn(e.getMessage(), e);
             throw new InvalidRoleException(INVALID_ROLE);
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.DOCUMENT_TYPE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new DocumentTypeException(DOCUMENT_TYPE_ERROR);
         } catch (StoreException e) {
             logger.warn(e.getMessage(), e);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.CACHE_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new CacheException(CACHE_ERROR);
         }
 
         return response;
@@ -382,26 +387,17 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         } catch (EfilingSubmissionServiceException e) {
             logger.error("failed package submission {}", xTransactionId);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.SUBMISSION_FAILURE), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SubmissionException(SUBMISSION_FAILURE);
 
         } catch (EfilingPaymentException e) {
             logger.error("payment failure during package submission {}", xTransactionId);
-            response = new ResponseEntity(buildEfilingError(ErrorResponse.PAYMENT_FAILURE), HttpStatus.BAD_REQUEST);
+            throw new PaymentException(PAYMENT_FAILURE);
 
         } finally {
             this.submissionStore.evict(submissionKey);
         }
 
         return response;
-    }
-
-    public EfilingError buildEfilingError(ErrorResponse errorResponse) {
-
-        EfilingError response = new EfilingError();
-        response.setError(errorResponse.getErrorCode());
-        response.setMessage(errorResponse.getErrorMessage());
-        return response;
-
     }
 
     private ResponseEntity storeDocuments(SubmissionKey submissionKey, List<MultipartFile> files) {
@@ -415,20 +411,18 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                 try {
                     clamAvService.scan(new ByteArrayInputStream(file.getBytes()));
                 } catch (VirusDetectedException e) {
-                    return new ResponseEntity(EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(),
-                            HttpStatus.BAD_GATEWAY);
+                    throw new DocumentStorageException(DOCUMENT_STORAGE_FAILURE);
                 }
 
                 if (!TikaAnalysis.isPdf(file))
-                    throw new FileTypeException(FILE_IS_NOT_PDF);
+                    throw new FileTypeException(FILE_TYPE_EXCEPTION);
             }
             for (MultipartFile file : files) {
                 documentStore.put(submissionKey, file.getResource().getFilename(), file.getBytes());
             }
 
         } catch (IOException e) {
-            return new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.DOCUMENT_STORAGE_FAILURE).create(), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new DocumentStorageException(DOCUMENT_STORAGE_FAILURE);
         }
 
         logger.info("{} stored in cache", files.size());

@@ -6,9 +6,8 @@ import ca.bc.gov.open.jag.efilingapi.api.CsoAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccountUpdateRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
-import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.slf4j.Logger;
@@ -27,9 +26,11 @@ import java.util.UUID;
 @Service
 public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
 
+    private static final String CREATE_ACCOUNT_EXCEPTION = "Error Creating CSO account.";
     private static final String INVALID_UNIVERSAL_ID = "Invalid universal id.";
     private static final String MISSING_IDENTITY_PROVIDER = "identityProviderAlias claim missing in jwt token.";
     private static final String MISSING_UNIVERSAL_ID = "universal-id claim missing in jwt token.";
+    private static final String UPDATE_CLIENT_EXCEPTION = "Error Updating CSO client account.";
 
     Logger logger = LoggerFactory.getLogger(CsoAccountApiDelegateImpl.class);
 
@@ -70,12 +71,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
         } catch (EfilingAccountServiceException e) {
 
             logger.error("Exception while trying to create a CSO Account", e);
-
-            EfilingError response = new EfilingError();
-            response.setError(ErrorResponse.CREATE_ACCOUNT_EXCEPTION.getErrorCode());
-            response.setMessage(ErrorResponse.CREATE_ACCOUNT_EXCEPTION.getErrorMessage());
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
-
+            throw new CreateAccountException(CREATE_ACCOUNT_EXCEPTION);
         }
 
     }
@@ -123,9 +119,7 @@ public class CsoAccountApiDelegateImpl implements CsoAccountApiDelegate {
             response = ResponseEntity.ok(csoAccountMapper.toCsoAccount(accountDetails));
         } catch (EfilingAccountServiceException e) {
             logger.warn(e.getMessage(), e);
-            response = new ResponseEntity(
-                    EfilingErrorBuilder.builder().errorResponse(ErrorResponse.UPDATE_CLIENT_EXCEPTION).create(),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new UpdateClientException(UPDATE_CLIENT_EXCEPTION);
         }
 
         return response;

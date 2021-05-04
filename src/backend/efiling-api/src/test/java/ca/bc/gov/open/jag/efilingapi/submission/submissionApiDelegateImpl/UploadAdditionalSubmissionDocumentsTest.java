@@ -5,14 +5,10 @@ import ca.bc.gov.open.clamav.starter.VirusDetectedException;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UploadSubmissionDocumentsResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.error.DocumentRequiredException;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
-import ca.bc.gov.open.jag.efilingapi.error.FileTypeException;
-import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
+import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
@@ -44,7 +40,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static ca.bc.gov.open.jag.efilingapi.error.ErrorResponse.DOCUMENT_STORAGE_FAILURE;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -222,11 +217,9 @@ public class UploadAdditionalSubmissionDocumentsTest {
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(multipartFileMock);
-        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
 
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentStorageException exception = Assertions.assertThrows(DocumentStorageException.class, () -> sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_STORAGE_FAILURE.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -246,11 +239,8 @@ public class UploadAdditionalSubmissionDocumentsTest {
 
         Mockito.doThrow(VirusDetectedException.class).when(clamAvServiceMock).scan(any());
 
-        ResponseEntity actual = sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files);
-
-        Assertions.assertEquals(HttpStatus.BAD_GATEWAY, actual.getStatusCode());
-        Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(DOCUMENT_STORAGE_FAILURE.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentStorageException exception = Assertions.assertThrows(DocumentStorageException.class, () -> sut.uploadAdditionalSubmissionDocuments(TestHelpers.CASE_1, UUID.randomUUID(), files));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_STORAGE_FAILURE.toString(), exception.getErrorCode());
     }
 
     @Test
