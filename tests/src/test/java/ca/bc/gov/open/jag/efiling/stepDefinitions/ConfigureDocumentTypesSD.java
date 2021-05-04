@@ -92,8 +92,8 @@ public class ConfigureDocumentTypesSD {
         Assert.assertEquals(HttpStatus.SC_OK, actualGetAllDocumentTypesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualGetAllDocumentTypesResponse.getContentType());
         Assert.assertEquals(getActualDocumentId(), UUID.fromString(actualUpdatedConfigResponseJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE)));
-        Assert.assertEquals("TEST", actualUpdatedConfigResponseJsonPath.get("documentType[0].type"));
-        Assert.assertEquals("Updated Response to Civil Claim", actualUpdatedConfigResponseJsonPath.get("documentType[0].description"));
+        Assert.assertEquals("RCC", actualUpdatedConfigResponseJsonPath.get("documentType[0].type"));
+        Assert.assertEquals("Update Document Configuration TEST", actualUpdatedConfigResponseJsonPath.get("documentType[0].description"));
         Assert.assertEquals("Updated Court", actualUpdatedConfigResponseJsonPath.get("documentConfig[0].properties.court.type"));
 
     }

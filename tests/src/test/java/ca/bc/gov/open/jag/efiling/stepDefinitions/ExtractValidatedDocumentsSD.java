@@ -2,7 +2,9 @@ package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
 import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
+import ca.bc.gov.open.jag.efiling.services.DocumentTypeConfigService;
 import ca.bc.gov.open.jag.efiling.services.ExtractDocumentService;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -26,19 +28,26 @@ import static org.junit.Assert.assertNotNull;
 public class ExtractValidatedDocumentsSD {
 
     private final ExtractDocumentService extractDocumentService;
+    private final DocumentTypeConfigService documentTypeConfigService;
     private Response actualExtractDocumentServiceResponse;
-    private UUID actualTransactionId;
+    private JsonPath actualExtractDocumentsJsonPath;
 
     private final Logger logger = LoggerFactory.getLogger(ExtractValidatedDocumentsSD.class);
 
-    public ExtractValidatedDocumentsSD(ExtractDocumentService extractDocumentService) {
+    public ExtractValidatedDocumentsSD(DocumentTypeConfigService documentTypeConfigService, ExtractDocumentService extractDocumentService) {
         this.extractDocumentService = extractDocumentService;
-        actualTransactionId = UUID.randomUUID();
+        this.documentTypeConfigService = documentTypeConfigService;
 
     }
 
     @Given("user uploaded a {string} document type")
     public void validDocumentTypeIsUploaded(String docType) throws IOException {
+
+        logger.info("Creating a new document type configuration");
+
+        Response actualCreatedConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.DOCUMENT_TYPE_CONFIG_PAYLOAD, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
+
+        logger.info("Api response status code: {}", actualCreatedConfigResponse.getStatusCode());
 
         logger.info("Submitting request to upload document");
 
@@ -47,7 +56,7 @@ public class ExtractValidatedDocumentsSD {
 
         MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_VALID_DOCUMENT_PDF);
 
-        actualExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(actualTransactionId, docType, fileSpec);
+        actualExtractDocumentServiceResponse = extractDocumentService.extractDocumentsResponse(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), docType, fileSpec);
 
         logger.info("Api response status code: {}", actualExtractDocumentServiceResponse.getStatusCode());
         logger.info("Api response: {}", actualExtractDocumentServiceResponse.asString());
@@ -64,10 +73,10 @@ public class ExtractValidatedDocumentsSD {
     public void documentFormDataIsExtracted() {
         logger.info("Asserting extract document response");
 
-        JsonPath actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
+        actualExtractDocumentsJsonPath = new JsonPath(actualExtractDocumentServiceResponse.asString());
 
         assertNotNull(actualExtractDocumentsJsonPath.get("extract.id"));
-        Assert.assertEquals(actualTransactionId, UUID.fromString(actualExtractDocumentsJsonPath.get("extract.transactionId")));
+        Assert.assertEquals(Keys.ACTUAL_X_TRANSACTION_ID, actualExtractDocumentsJsonPath.get("extract.transactionId"));
 
         Assert.assertNotNull(actualExtractDocumentsJsonPath.get("document.documentId"));
         Assert.assertTrue(actualExtractDocumentsJsonPath.get("document.documentId") instanceof Integer);
@@ -78,6 +87,20 @@ public class ExtractValidatedDocumentsSD {
 
         logger.info("Response matched requirements");
 
+    }
+
+    @And("delete the document")
+    public void deleteDocument() {
+        logger.info("Requesting to get all document types");
+
+        JsonPath actualConfigResponseJsonPath = new JsonPath(documentTypeConfigService.getDocumentTypeConfiguration(Keys.DOCUMENT_TYPE_CONFIGURATION_PATH).asString());
+        UUID getDocTypeId = UUID.fromString(actualConfigResponseJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE));
+
+        logger.info("Requesting to delete the document type by id");
+        Response actualDeleteDocumentTypeByIdResponse = documentTypeConfigService.deleteDocumentTypeByIdResponse(getDocTypeId,
+                Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
+
+        assertEquals(HttpStatus.SC_NO_CONTENT, actualDeleteDocumentTypeByIdResponse.getStatusCode());
     }
 
     @Then("document is not processed")
