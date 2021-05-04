@@ -31,6 +31,7 @@ public class GetProcessedDocumentSD {
     private Response actualInvalidExtractDocumentServiceResponse;
     private final DocumentTypeConfigService documentTypeConfigService;
     JsonPath actualExtractDocumentsJsonPath;
+    JsonPath actualExtractInvalidDocumentsJsonPath;
 
     private final Logger logger = LoggerFactory.getLogger(GetProcessedDocumentSD.class);
 
@@ -85,6 +86,8 @@ public class GetProcessedDocumentSD {
     @Then("document type validation flag is set for processing")
     public void verifyDocumentTypeValidationFlagIsSet() {
 
+        logger.info("Validating document type flag status");
+
         actualExtractDocumentsJsonPath = new JsonPath(actualValidExtractDocumentServiceResponse.asString());
 
         Assert.assertEquals(Keys.TEST_VALID_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
@@ -138,9 +141,9 @@ public class GetProcessedDocumentSD {
     @When("document event is retrieved")
     public void retrieveDocumentById() {
 
-        actualExtractDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
+        JsonPath actualExtractInvalidDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
 
-        Integer documentIdForInvalidDocument = actualExtractDocumentsJsonPath.get("document.documentId");
+        Integer documentIdForInvalidDocument = actualExtractInvalidDocumentsJsonPath.get("document.documentId");
 
         actualInvalidExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForInvalidDocument);
 
@@ -154,13 +157,15 @@ public class GetProcessedDocumentSD {
     @Then("document type validation flag is not set and provides error details")
     public void verifyDocumentTypeValidationFlagIsNotSet() {
 
-        actualExtractDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
+        logger.info("Validating document type flag status");
 
-        Assert.assertEquals(Keys.TEST_INVALID_DOCUMENT_PDF, actualExtractDocumentsJsonPath.get("document.fileName"));
-        Assert.assertEquals("DOCUMENT_TYPE", actualExtractDocumentsJsonPath.get("validation[0].type"));
-        Assert.assertEquals("Response to Civil Claim", actualExtractDocumentsJsonPath.get("validation[0].expected"));
-        Assert.assertEquals("This is invalid", actualExtractDocumentsJsonPath.get("validation[0].actual"));
-        Assert.assertEquals("1234", actualExtractDocumentsJsonPath.get("result.court.fileNumber"));
+        actualExtractInvalidDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
+
+        Assert.assertEquals(Keys.TEST_INVALID_DOCUMENT_PDF, actualExtractInvalidDocumentsJsonPath.get("document.fileName"));
+        Assert.assertEquals("DOCUMENT_TYPE", actualExtractInvalidDocumentsJsonPath.get("validation[0].type"));
+        Assert.assertEquals("Response to Civil Claim", actualExtractInvalidDocumentsJsonPath.get("validation[0].expected"));
+        Assert.assertEquals("This is invalid", actualExtractInvalidDocumentsJsonPath.get("validation[0].actual"));
+        Assert.assertEquals("1234", actualExtractInvalidDocumentsJsonPath.get("result.court.fileNumber"));
 
     }
 
