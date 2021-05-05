@@ -27,8 +27,8 @@ describe("DocumentTypeEditor test suite", () => {
     const { getAllByText } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
 
-    const sampleData = getAllByText("Response to Civil Claim")[0];
-    expect(sampleData).toBeInTheDocument();
+    const sampleData = getAllByText("Response to Civil Claim");
+    expect(sampleData.length === 2).toBeTruthy();
   });
 
   test("API GET returns 401", async () => {
