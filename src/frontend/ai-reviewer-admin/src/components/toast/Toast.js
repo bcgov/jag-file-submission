@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Toast = ({ content, setShow }) => (
-  <div className="alert alert-danger alert-dismissible fade show" role="alert">
+const Toast = ({ content, setShow, colorClass }) => (
+  <div className={`alert alert-dismissible fade show ${colorClass}`} role="alert">
     {content}
     <button
       type="button"
@@ -21,4 +21,9 @@ export default Toast;
 Toast.propTypes = {
   content: PropTypes.string.isRequired,
   setShow: PropTypes.func.isRequired,
+  colorClass: PropTypes.string
 };
+
+Toast.defaultProps = {
+  colorClass: "alert-danger"
+}

@@ -4,8 +4,7 @@ import MockAdapter from "axios-mock-adapter";
 import {
   render,
   waitFor,
-  fireEvent,
-  getByTestId,
+  fireEvent
 } from "@testing-library/react";
 import DocumentTypeEditor from "domain/documents/DocumentTypeEditor";
 import { configurations } from "domain/documents/_tests_/test-data";
@@ -25,10 +24,10 @@ describe("DocumentTypeEditor test suite", () => {
     service.getDocumentTypeConfigurations = jest.fn(() =>
       Promise.resolve(configurations)
     );
-    const { getByText } = render(<DocumentTypeEditor />);
+    const { getAllByText } = render(<DocumentTypeEditor />);
     await waitFor(() => {});
 
-    const sampleData = getByText("Response to Civil Claim");
+    const sampleData = getAllByText("Response to Civil Claim")[0];
     expect(sampleData).toBeInTheDocument();
   });
 

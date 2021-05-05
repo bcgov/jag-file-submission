@@ -16,6 +16,6 @@ describe("DocumentList test suite", () => {
     const onDelete = jest.fn();
     const { container } = render(<DocumentList configurations={configurations} onDelete={onDelete}  />);
     // should be the new entry row + both test data rows
-    expect(container.getElementsByTagName("li").length).toEqual(3);
+    expect(container.getElementsByTagName("li").length).toEqual(4);
   });
 });
