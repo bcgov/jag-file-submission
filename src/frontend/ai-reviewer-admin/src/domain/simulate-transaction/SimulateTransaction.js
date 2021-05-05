@@ -17,6 +17,7 @@ function SimulateTransaction() {
   const [errorMsg, setErrorMsg] = useState("");
   const [showErrorToast, setShowErrorToast] = useState(false);
   const [showProcessedToast, setShowProcessedToast] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const transactionId = uuidv4();
 
@@ -43,12 +44,21 @@ function SimulateTransaction() {
   };
 
   const submitDocument = () => {
+    setShowLoader(true);
     submitFileForExtraction(files[0], transactionId)
-      .then((res) =>
-        getProcessedDocument(res.document.documentId, res.extract.transactionId)
-          .then((res) => setShowProcessedToast(true))
-          .catch((err) => showError(err.message))
-      )
+      .then((res) => {
+        setTimeout(() => {
+          getProcessedDocument(
+            res.document.documentId,
+            res.extract.transactionId
+          )
+            .then((res) => {
+              setShowProcessedToast(true);
+              setShowLoader(false);
+            })
+            .catch((err) => showError(err.message));
+        }, 30000);
+      })
       .catch((err) => showError(err.message));
   };
 
@@ -127,6 +137,8 @@ function SimulateTransaction() {
       <Button
         label="Submit"
         styling="bcgov-normal-blue btn"
+        hasLoader={showLoader}
+        disabled={showLoader}
         onClick={submitDocument}
       />
     </div>
