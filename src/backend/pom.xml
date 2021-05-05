@@ -35,6 +35,7 @@
 				<module>libs/efiling-mail-it</module>
 				<module>efiling-api</module>
 				<module>efiling-reviewer-api</module>
+				<module>ai-reviewer-cso-api</module>
 			</modules>
 		</profile>
 		<profile>
