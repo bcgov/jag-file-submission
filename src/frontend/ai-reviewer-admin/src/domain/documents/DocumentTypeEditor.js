@@ -38,6 +38,9 @@ export default function DocumentTypeEditor() {
 
   const cancelConfig = () => {
     setShowAdd(false);
+    setNewConfigInput("");
+    setSubmissionError(null);
+    setInvalidJsonError(false);
   }
 
   useEffect(() => {
