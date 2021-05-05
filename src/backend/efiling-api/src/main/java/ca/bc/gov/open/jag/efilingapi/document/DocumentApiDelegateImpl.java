@@ -2,26 +2,28 @@ package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.DocumentsApiDelegate;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.api.model.CourtClassification;
+import ca.bc.gov.open.jag.efilingapi.api.model.CourtLevel;
+import ca.bc.gov.open.jag.efilingapi.api.model.DocumentType;
+import ca.bc.gov.open.jag.efilingapi.error.DocumentTypeException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.stream.Collectors;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
     Logger logger = LoggerFactory.getLogger(DocumentApiDelegateImpl.class);
 
+    private static final String DOCUMENT_TYPE_ERROR = "Error while retrieving documents";
     private final DocumentStore documentStore;
 
     public DocumentApiDelegateImpl(DocumentStore documentStore) {
@@ -36,10 +38,7 @@ public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
                     .map(this::toDocumentType).collect(Collectors.toList()));
         } catch (EfilingDocumentServiceException e) {
             logger.warn(e.getMessage(), e);
-            EfilingError response = new EfilingError();
-            response.setError(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorCode());
-            response.setMessage(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage());
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new DocumentTypeException(DOCUMENT_TYPE_ERROR);
         }
     }
 

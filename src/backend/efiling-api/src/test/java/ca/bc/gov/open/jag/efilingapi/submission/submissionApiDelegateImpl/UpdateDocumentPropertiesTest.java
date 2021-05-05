@@ -5,14 +5,13 @@ import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.UpdateDocumentResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.DocumentRequiredException;
+import ca.bc.gov.open.jag.efilingapi.error.DocumentTypeException;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
 import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
@@ -158,8 +157,8 @@ public class UpdateDocumentPropertiesTest {
     }
 
     @Test
-    @DisplayName("500")
-    public void withExceptionThrownFromSoapInternalServerError() {
+    @DisplayName("500: with exception thrown from Soap should throw DocumentTypeException")
+    public void withExceptionThrownFromSoapShouldThrowDocumentTypeException() {
 
 
 
@@ -172,11 +171,8 @@ public class UpdateDocumentPropertiesTest {
 
         Mockito.when(submissionServiceMock.updateDocuments(any(), Mockito.refEq(errorDocumentRequest), Mockito.any())).thenThrow(new EfilingDocumentServiceException("NOOOOOOO"));
 
-        ResponseEntity actual = sut.updateDocumentProperties(TestHelpers.CASE_1, UUID.randomUUID(), errorDocumentRequest);
-
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentTypeException exception = Assertions.assertThrows(DocumentTypeException.class, () -> sut.updateDocumentProperties(TestHelpers.CASE_1, UUID.randomUUID(), errorDocumentRequest));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_TYPE_ERROR.toString(), exception.getErrorCode());
     }
 
 

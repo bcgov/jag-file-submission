@@ -17,10 +17,10 @@ import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigur
 
 @Component
 public class DocumentConfigurationsEventListener extends AbstractMongoEventListener<DocumentTypeConfiguration> {
-	
+
 	@Autowired
 	private DocumentTypeConfigurationRepository documentTypeConfigurationRepository;
-	
+
 	@Autowired
 	private DocumentConfigurationAuditRepository documentConfigurationAuditRepository;
 
@@ -32,7 +32,7 @@ public class DocumentConfigurationsEventListener extends AbstractMongoEventListe
 		documentTypeConfigurationAudit.setAuditDate(new Date(event.getTimestamp()));
 		documentTypeConfigurationAudit.setDocumentTypeConfiguration(event.getSource());
 		if (event.getSource().getVersion().intValue() == 0) {
-			documentTypeConfigurationAudit.setAuditAction(AuditAction.INSERT);			
+			documentTypeConfigurationAudit.setAuditAction(AuditAction.INSERT);
 		}
 		else {
 			documentTypeConfigurationAudit.setAuditAction(AuditAction.UPDATE);
@@ -40,7 +40,7 @@ public class DocumentConfigurationsEventListener extends AbstractMongoEventListe
 
 		documentConfigurationAuditRepository.save(documentTypeConfigurationAudit);
 	}
-	
+
 	@Override
 	public void onBeforeDelete(BeforeDeleteEvent<DocumentTypeConfiguration> event) {
 		super.onBeforeDelete(event);

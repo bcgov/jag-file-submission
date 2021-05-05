@@ -226,8 +226,8 @@ public class GenerateUrlTest {
     }
 
     @Test
-    @DisplayName("400: when CSOHasMultipleAccountException should return Bad Request")
-    public void whenCSOHasMultipleAccountExceptionShouldReturnBadRequest() {
+    @DisplayName("400: when CSOHasMultipleAccountException should throw AccountException")
+    public void whenCSOHasMultipleAccountExceptionShouldThrowAccountException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -238,13 +238,8 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest);
-
-        EfilingError actualError = (EfilingError) actual.getBody();
-
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.ACCOUNTEXCEPTION.getErrorCode(), actualError.getError());
-        Assertions.assertEquals(ErrorResponse.ACCOUNTEXCEPTION.getErrorMessage(), actualError.getMessage());
+        AccountException exception = Assertions.assertThrows(AccountException.class, () -> sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_2, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.ACCOUNTEXCEPTION.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -305,8 +300,8 @@ public class GenerateUrlTest {
     }
 
     @Test
-    @DisplayName("500: when StoreException should return INTERNAL SERVER ERROR")
-    public void whenStoreExceptionShouldReturnInternalServerError() {
+    @DisplayName("500: when StoreException should throw CacheException")
+    public void whenStoreExceptionShouldThrowCacheException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -317,18 +312,13 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest);
-
-        EfilingError actualError = (EfilingError) actual.getBody();
-
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.CACHE_ERROR.getErrorCode(), actualError.getError());
-        Assertions.assertEquals(ErrorResponse.CACHE_ERROR.getErrorMessage(), actualError.getMessage());
+        CacheException exception = Assertions.assertThrows(CacheException.class, () -> sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_4, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.CACHE_ERROR.toString(), exception.getErrorCode());
     }
 
     @Test
-    @DisplayName("500: when DocumentException should return INTERNAL SERVER ERROR")
-    public void whenDocumentExceptionShouldReturnInternalServerError() {
+    @DisplayName("500: when DocumentException should throw DocumentTypeException")
+    public void whenDocumentExceptionShouldThrowDocumentTypeException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
@@ -339,13 +329,8 @@ public class GenerateUrlTest {
         initialPackage.setCourt(court);
         generateUrlRequest.setFilingPackage(initialPackage);
 
-        ResponseEntity actual = sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest);
-
-        EfilingError actualError = (EfilingError) actual.getBody();
-
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorCode(), actualError.getError());
-        Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), actualError.getMessage());
+        DocumentTypeException exception = Assertions.assertThrows(DocumentTypeException.class, () -> sut.generateUrl(UUID.randomUUID(), UUID.randomUUID().toString().replace("-", ""), TestHelpers.CASE_5, generateUrlRequest));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_TYPE_ERROR.toString(), exception.getErrorCode());
     }
 
     @Test

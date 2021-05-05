@@ -4,7 +4,7 @@ import java.util.List;
 
 public class InvalidInitialSubmissionPayloadException extends EfilingException {
 
-    private List<String> details;
+    private final List<String> details;
 
     public InvalidInitialSubmissionPayloadException(String message, List<String> details) {
         super(message, ErrorCode.INVALID_INITIAL_SUBMISSION_PAYLOAD);
