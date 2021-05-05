@@ -29,6 +29,7 @@ public class GetProcessedDocumentSD {
     private final ExtractDocumentService extractDocumentService;
     private Response actualValidExtractDocumentServiceResponse;
     private Response actualInvalidExtractDocumentServiceResponse;
+    private Response actualInvalidGetProcessedResponse;
     private final DocumentTypeConfigService documentTypeConfigService;
     JsonPath actualExtractDocumentsJsonPath;
     JsonPath actualExtractInvalidDocumentsJsonPath;
@@ -116,11 +117,9 @@ public class GetProcessedDocumentSD {
     public void invalidRCCDocumentIsUploaded(String docType) throws IOException {
 
         logger.info("Creating a new document type configuration");
-
         Response actualCreatedConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.DOCUMENT_TYPE_CONFIG_PAYLOAD, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
 
         logger.info("Api response status code: {}", actualCreatedConfigResponse.getStatusCode());
-
         logger.info("Submitting request to upload document");
 
         File resource = new ClassPathResource(
@@ -139,18 +138,20 @@ public class GetProcessedDocumentSD {
     }
 
     @When("document event is retrieved")
-    public void retrieveDocumentById() {
+    public void retrieveDocumentById() throws InterruptedException {
 
         actualExtractInvalidDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
 
         Integer documentIdForInvalidDocument = actualExtractInvalidDocumentsJsonPath.get("document.documentId");
 
-        actualInvalidExtractDocumentServiceResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForInvalidDocument);
+        Thread.sleep(1500L);
 
-        logger.info("Api response status code for invalid docType event: {}", actualInvalidExtractDocumentServiceResponse.getStatusCode());
-        logger.info("Api response for invalid docType event: {}", actualInvalidExtractDocumentServiceResponse.asString());
+        actualInvalidGetProcessedResponse = extractDocumentService.getProcessedDocumentDataById(UUID.fromString(Keys.ACTUAL_X_TRANSACTION_ID), documentIdForInvalidDocument);
 
-        Assert.assertEquals(HttpStatus.SC_OK, actualInvalidExtractDocumentServiceResponse.getStatusCode());
+        logger.info("Api response status code for invalid docType event: {}", actualInvalidGetProcessedResponse.getStatusCode());
+        logger.info("Api response for invalid docType event: {}", actualInvalidGetProcessedResponse.asString());
+
+        Assert.assertEquals(HttpStatus.SC_OK, actualInvalidGetProcessedResponse.getStatusCode());
 
     }
 
@@ -159,7 +160,7 @@ public class GetProcessedDocumentSD {
 
         logger.info("Validating document type flag status");
 
-        actualExtractInvalidDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
+        actualExtractInvalidDocumentsJsonPath = new JsonPath(actualInvalidGetProcessedResponse.asString());
 
         Assert.assertEquals(Keys.TEST_INVALID_DOCUMENT_PDF, actualExtractInvalidDocumentsJsonPath.get("document.fileName"));
         Assert.assertEquals("DOCUMENT_TYPE", actualExtractInvalidDocumentsJsonPath.get("validation[0].type"));
