@@ -10,7 +10,7 @@ export default function SafetyCheck() {
   const handleOnShow = () => setShowModal(true);
   const handleOnHide = () => setShowModal(false);
   return (
-    <div className="alert alert-success safety-check">
+    <div className="alert alert-success safety-check row">
       <div className="row justify-content-center text-warning">
         <p className="bg-primary py-0 px-2 mt-2 title">SAFETY CHECK</p>
       </div>

@@ -29,8 +29,8 @@ export default function NavDrawer(props) {
             </ListItem>
             <Divider/>
 
-            <ListItem button component={Link} to="/" >
-              <ListItemText primary="Logs" />
+            <ListItem button component={Link} to="/simulateTransaction" >
+              <ListItemText primary="Simulate A Transaction" />
             </ListItem>
             <Divider/>
         </List>

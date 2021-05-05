@@ -275,22 +275,23 @@ export default function PackageReview() {
             </Tab>
           </Tabs>
           <br />
-          <span className="fw-bold">Please Note: </span> Visit your CSO account
-          to{" "}
-          <span
-            role="button"
-            data-testid="cso-link"
-            tabIndex={0}
-            className="file-href"
-            onClick={handleCsoLink}
-            onKeyDown={handleCsoLink}
-          >
-            view all your previously submitted packages.
-          </span>
+          <div className="row note">
+            <span className="fw-bold">Please Note: </span> Visit your CSO
+            account to{" "}
+            <span
+              role="button"
+              data-testid="cso-link"
+              tabIndex={0}
+              className="file-href"
+              onClick={handleCsoLink}
+              onKeyDown={handleCsoLink}
+            >
+              view all your previously submitted packages.
+            </span>
+          </div>
           {returnUrl && validator.isURL(returnUrl) && (
             <>
-              <br />
-              <section className="buttons pt-2">
+              <section className="buttons pt-2 row">
                 <Button
                   label={returnButtonName}
                   onClick={() => window.open(returnUrl, "_self")}
@@ -299,8 +300,6 @@ export default function PackageReview() {
               </section>
             </>
           )}
-          <br />
-          <br />
           <SafefyCheck />
         </div>
         <div className="sidecard">
