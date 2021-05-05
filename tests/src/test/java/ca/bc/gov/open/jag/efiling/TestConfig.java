@@ -85,8 +85,9 @@ public class TestConfig {
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
-        options.setHeadless(true);
-        options.addArguments("--window-size=1920,1080");
+        options.setHeadless(false);
+//        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--window-maximized");
 
         return new ChromeDriver(options);
     }
@@ -149,6 +150,12 @@ public class TestConfig {
     @Scope("prototype")
     public SubmissionHistoryPage submissionHistoryPage() {
         return new SubmissionHistoryPage();
+    }
+
+    @Bean
+    @Scope("prototype")
+    public AiReviewerAdminClientPage aiReviewerAdminClientPage() {
+        return new AiReviewerAdminClientPage();
     }
 
 }
