@@ -8,7 +8,6 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccount;
 import ca.bc.gov.open.jag.efilingapi.api.model.CsoAccountUpdateRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
@@ -163,8 +162,8 @@ public class CsoAccountApiDelegateImplTest {
 
 
     @Test
-    @DisplayName("500: when exception should return 500")
-    public void createAccountWhenEfilingAccountServiceExceptionShouldReturn500() {
+    @DisplayName("500: when exception should throw CreateAccountException")
+    public void createAccountWhenEfilingAccountServiceExceptionShouldThrowCreateAccountException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
@@ -176,10 +175,9 @@ public class CsoAccountApiDelegateImplTest {
         request.setMiddleName(MIDDLE_NAME);
         request.setEmail(EMAIL);
         request.setFirstName(FIRST_NAME);
-        ResponseEntity actual = sut.createAccount(TestHelpers.CASE_2, request);
 
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-
+        CreateAccountException exception = Assertions.assertThrows(CreateAccountException.class, () -> sut.createAccount(TestHelpers.CASE_2, request));
+        Assertions.assertEquals(ErrorCode.CREATE_ACCOUNT_EXCEPTION.toString(), exception.getErrorCode());
     }
 
     @Test
@@ -264,8 +262,8 @@ public class CsoAccountApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("500: with exception in soap service throw 500")
-    public void updateAccountWithExceptionShouldReturn500() {
+    @DisplayName("500: with exception in soap service should throw UpdateClientException")
+    public void updateAccountWithExceptionShouldThrowUpdateClientException() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
@@ -274,11 +272,8 @@ public class CsoAccountApiDelegateImplTest {
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
         clientUpdateRequest.setInternalClientNumber(FAIL_INTERNAL_CLIENT_NUMBER);
 
-        ResponseEntity actual = sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        assertEquals(ErrorResponse.UPDATE_CLIENT_EXCEPTION.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        assertEquals(ErrorResponse.UPDATE_CLIENT_EXCEPTION.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
-
+        UpdateClientException exception = Assertions.assertThrows(UpdateClientException.class, () -> sut.updateCsoAccount(TestHelpers.CASE_2, clientUpdateRequest));
+        Assertions.assertEquals(ErrorCode.UPDATE_CLIENT_EXCEPTION.toString(), exception.getErrorCode());
     }
 
     @Test

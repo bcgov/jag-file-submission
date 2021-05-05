@@ -3,10 +3,10 @@ package ca.bc.gov.open.jag.efilingapi.document.documentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtClassification;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLevel;
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorResponse;
+import ca.bc.gov.open.jag.efilingapi.error.DocumentTypeException;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import org.junit.jupiter.api.*;
@@ -47,7 +47,7 @@ public class GetDocumentTypesTest {
 
     @Test
     @DisplayName("200")
-    public void withValidParamtersReturnDocumentProperties() {
+    public void withValidParametersReturnDocumentProperties() {
 
         ResponseEntity<List<ca.bc.gov.open.jag.efilingapi.api.model.DocumentType>> actual = sut.getDocumentTypes(CourtLevel.A, CourtClassification.S);
 
@@ -59,13 +59,10 @@ public class GetDocumentTypesTest {
     }
 
     @Test
-    @DisplayName("500")
-    public void withExceptionThrownFromSoapInternalServerError() {
-        ResponseEntity actual = sut.getDocumentTypes(CourtLevel.A, CourtClassification.M);
+    @DisplayName("500: exception thrown from SOAP should throw DocumentTypeException")
+    public void withExceptionThrownFromSoapShouldThrowDocumentTypeException() {
 
-        Assertions.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, actual.getStatusCode());
-        Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorCode(), ((EfilingError)actual.getBody()).getError());
-        Assertions.assertEquals(ErrorResponse.DOCUMENT_TYPE_ERROR.getErrorMessage(), ((EfilingError)actual.getBody()).getMessage());
+        DocumentTypeException exception = Assertions.assertThrows(DocumentTypeException.class, () -> sut.getDocumentTypes(CourtLevel.A, CourtClassification.M));
+        Assertions.assertEquals(ErrorCode.DOCUMENT_TYPE_ERROR.toString(), exception.getErrorCode());
     }
-
 }
