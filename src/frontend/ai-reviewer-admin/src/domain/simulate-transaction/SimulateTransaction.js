@@ -59,7 +59,11 @@ function SimulateTransaction() {
           <h4>{file.name}</h4>
         </div>
         <div className="col">
-          <Dropdown data-testid="dropdown" items={docTypes} onSelect={(e) => selectFileType(e)} />
+          <Dropdown
+            data-testid="dropdown"
+            items={docTypes}
+            onSelect={(e) => selectFileType(e)}
+          />
         </div>
         <div className="col"></div>
       </>
@@ -90,7 +94,9 @@ function SimulateTransaction() {
       </Dropzone>
       <br />
 
-      {showErrorToast && <Toast content={errorMsg} setShow={setShowErrorToast} />}
+      {showErrorToast && (
+        <Toast content={errorMsg} setShow={setShowErrorToast} />
+      )}
       {files.length > 0 && (
         <>
           <h2>Uploaded Document</h2>
