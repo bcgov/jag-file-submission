@@ -118,6 +118,7 @@ describe("Simulate Transaction Test Suite", () => {
     mockApi.onGet("/documentTypeConfigurations").reply(200, configurations);
     mockApi.onPost("/documents/extract").reply(200, resolveExtract);
     mockApi.onGet("/documents/processed/1234").reply(200, resolveProcessed);
+    jest.useFakeTimers()
 
     const { container, getByText, getByTestId } = render(
       <SimulateTransaction />
@@ -135,15 +136,15 @@ describe("Simulate Transaction Test Suite", () => {
 
     const button = getByText("Submit");
     fireEvent.click(button);
-    await waitFor(() => {});
+    await waitFor(() => getByText("Document Processed Successfuly"));
 
     expect(getByText("Document Processed Successfuly")).toBeInTheDocument();
   });
 
   test("Submit file for extraction - failure", async () => {
     mockApi.onGet("/documentTypeConfigurations").reply(200, configurations);
-    mockApi.onPost("/documents/extract").reply(200, resolveExtract);
-    mockApi.onGet("/documents/processed/1234").reply(400);
+    mockApi.onPost("/documents/extract").reply(400);
+    mockApi.onGet("/documents/processed/1234").reply(200, resolveProcessed);
 
     const { container, getByText, getByTestId, queryByText } = render(
       <SimulateTransaction />
@@ -168,12 +169,13 @@ describe("Simulate Transaction Test Suite", () => {
     ).not.toBeInTheDocument();
   });
 
-  test("Get processed document - failure", async () => {
+  test("Get Processed Document - failure", async () => {
     mockApi.onGet("/documentTypeConfigurations").reply(200, configurations);
-    mockApi.onPost("/documents/extract").reply(400);
-    mockApi.onGet("/documents/processed/1234").reply(400);
+    mockApi.onPost("/documents/extract").reply(200, resolveExtract);
+    mockApi.onGet("/documents/processed/1234").reply(400, {error: {message: "error"}});
+    jest.useFakeTimers();
 
-    const { container, getByText, getByTestId, queryByText } = render(
+    const { container, getByText, getByTestId, queryByText, getByRole } = render(
       <SimulateTransaction />
     );
     const dropzone = container.querySelector('[data-testid="dropdownzone"]');
@@ -189,7 +191,7 @@ describe("Simulate Transaction Test Suite", () => {
 
     const button = getByText("Submit");
     fireEvent.click(button);
-    await waitFor(() => {});
+    await waitFor(() => {})
 
     expect(
       queryByText("Document Processed Successfuly")
