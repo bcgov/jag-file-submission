@@ -141,7 +141,7 @@ public class GetProcessedDocumentSD {
     @When("document event is retrieved")
     public void retrieveDocumentById() {
 
-        JsonPath actualExtractInvalidDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
+        actualExtractInvalidDocumentsJsonPath = new JsonPath(actualInvalidExtractDocumentServiceResponse.asString());
 
         Integer documentIdForInvalidDocument = actualExtractInvalidDocumentsJsonPath.get("document.documentId");
 
