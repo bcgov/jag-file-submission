@@ -52,4 +52,84 @@ export const configurations = [
       },
     },
   },
+  {
+    id: "927198da-e807-4bb2-b3bd-30dfcb179f5d",
+    documentType: {
+      type: "DEVRCC",
+      description: "Response to Civil Claim"
+    },
+    projectId: 21,
+    documentConfig: {
+      properties: {
+        document: {
+          type: "object",
+          fieldId: null,
+          properties: {
+            documentType: {
+              type: "string",
+              fieldId: 634,
+              properties: {}
+            },
+            dateFiled: {
+              type: "string",
+              fieldId: 635,
+              properties: {}
+            },
+            filedBy: {
+              type: "string",
+              fieldId: 636,
+              properties: {}
+            }
+          }
+        },
+        court: {
+          type: "object",
+          fieldId: null,
+          properties: {
+            location: {
+              type: "string",
+              fieldId: 633,
+              properties: {}
+            },
+            level: {
+              type: "string",
+              fieldId: 631,
+              properties: {}
+            },
+            class: {
+              type: "string",
+              fieldId: 632,
+              properties: {}
+            },
+            division: {
+              type: "string",
+              fieldId: 210,
+              properties: {}
+            },
+            fileNumber: {
+              type: "string",
+              fieldId: 630,
+              properties: {}
+            }
+          }
+        },
+        parties: {
+          type: "object",
+          fieldId: null,
+          properties: {
+            defendants: {
+              type: "string",
+              fieldId: 648,
+              properties: {}
+            },
+            plaintiffs: {
+              type: "string",
+              fieldId: 649,
+              properties: {}
+            }
+          }
+        }
+      }
+    }
+  }
 ];
