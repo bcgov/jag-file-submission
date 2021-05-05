@@ -601,23 +601,26 @@ Duis aute irure dolor.
         </div>
       </div>
       <br />
-      <span
-        class="fw-bold"
+      <div
+        class="row note"
       >
-        Please Note: 
-      </span>
-       Visit your CSO account to 
-      <span
-        class="file-href"
-        data-testid="cso-link"
-        role="button"
-        tabindex="0"
-      >
-        view all your previously submitted packages.
-      </span>
-      <br />
+        <span
+          class="fw-bold"
+        >
+          Please Note: 
+        </span>
+         Visit your CSO account to 
+        <span
+          class="file-href"
+          data-testid="cso-link"
+          role="button"
+          tabindex="0"
+        >
+          view all your previously submitted packages.
+        </span>
+      </div>
       <section
-        class="buttons pt-2"
+        class="buttons pt-2 row"
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
@@ -627,10 +630,8 @@ Duis aute irure dolor.
           Return to Parent App
         </button>
       </section>
-      <br />
-      <br />
       <div
-        class="alert alert-success safety-check"
+        class="alert alert-success safety-check row"
       >
         <div
           class="row justify-content-center text-warning"
@@ -1322,23 +1323,26 @@ exports[`PackageReview Component Reload 1`] = `
         </div>
       </div>
       <br />
-      <span
-        class="fw-bold"
+      <div
+        class="row note"
       >
-        Please Note: 
-      </span>
-       Visit your CSO account to 
-      <span
-        class="file-href"
-        data-testid="cso-link"
-        role="button"
-        tabindex="0"
-      >
-        view all your previously submitted packages.
-      </span>
-      <br />
+        <span
+          class="fw-bold"
+        >
+          Please Note: 
+        </span>
+         Visit your CSO account to 
+        <span
+          class="file-href"
+          data-testid="cso-link"
+          role="button"
+          tabindex="0"
+        >
+          view all your previously submitted packages.
+        </span>
+      </div>
       <section
-        class="buttons pt-2"
+        class="buttons pt-2 row"
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
@@ -1348,10 +1352,8 @@ exports[`PackageReview Component Reload 1`] = `
           Return to Parent App
         </button>
       </section>
-      <br />
-      <br />
       <div
-        class="alert alert-success safety-check"
+        class="alert alert-success safety-check row"
       >
         <div
           class="row justify-content-center text-warning"
@@ -2043,23 +2045,26 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
         </div>
       </div>
       <br />
-      <span
-        class="fw-bold"
+      <div
+        class="row note"
       >
-        Please Note: 
-      </span>
-       Visit your CSO account to 
-      <span
-        class="file-href"
-        data-testid="cso-link"
-        role="button"
-        tabindex="0"
-      >
-        view all your previously submitted packages.
-      </span>
-      <br />
+        <span
+          class="fw-bold"
+        >
+          Please Note: 
+        </span>
+         Visit your CSO account to 
+        <span
+          class="file-href"
+          data-testid="cso-link"
+          role="button"
+          tabindex="0"
+        >
+          view all your previously submitted packages.
+        </span>
+      </div>
       <section
-        class="buttons pt-2"
+        class="buttons pt-2 row"
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
@@ -2069,10 +2074,8 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
           Return to Parent App
         </button>
       </section>
-      <br />
-      <br />
       <div
-        class="alert alert-success safety-check"
+        class="alert alert-success safety-check row"
       >
         <div
           class="row justify-content-center text-warning"
