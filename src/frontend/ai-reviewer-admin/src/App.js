@@ -10,6 +10,7 @@ import { Header, Footer } from "shared-components";
 import Container from "@material-ui/core/Container";
 import NavDrawer from "components/nav-drawer/NavDrawer";
 import DocumentTypeEditor from "domain/documents/DocumentTypeEditor";
+import SimulateTransaction from "domain/simulate-transaction/SimulateTransaction"
 import "./App.scss";
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <DocumentTypeEditor />
+            </Route>
+            <Route exact path="/simulateTransaction/">
+              <SimulateTransaction />
             </Route>
           </Switch>
         </Container>

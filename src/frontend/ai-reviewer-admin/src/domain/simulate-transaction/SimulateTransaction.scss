@@ -1,0 +1,32 @@
+.simulate-transaction-ct {
+  margin: 20px;
+  max-width: 1000px;
+  
+  .error {
+    color: red;
+  }
+  
+  .dropzone-outer-box {
+    border: 1px dashed #707070;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .dropzone-inner-box {
+    display: flex;
+  }
+  
+  .dropzone-inner-box span {
+    align-self: center;
+  }
+  
+  .dropzone-inner-box div {
+    text-align: center;
+  }
+  
+  .bcgov-dropdown {
+    max-width: 250px;
+  }
+
+}
