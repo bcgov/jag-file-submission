@@ -1,8 +1,7 @@
 # new feature
 # Tags: optional
 
-#Feature: Configure document type and properties for AI reviewer
-#
+Feature: Configure document type and properties for AI reviewer
 #  Scenario: Validate a new document type can be configured
 #    Given user configures a new document type
 #    When document type config is created
