@@ -105,7 +105,7 @@ exports[`Storyshots SubmissionHistory Default 1`] = `
         The View Filing Packages screen lets you view any packages you filed, and any packages that you have been given access to by other people in your organization. Packages will be available in this list for 1 year after the registry processes them.
       </p>
       <div
-        class="alert alert-success safety-check"
+        class="alert alert-success safety-check row"
       >
         <div
           class="row justify-content-center text-warning"
