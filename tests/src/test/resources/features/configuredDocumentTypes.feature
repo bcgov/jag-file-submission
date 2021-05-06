@@ -8,7 +8,6 @@ Feature: Configure document type and properties for AI reviewer
     When document type config is created
     Then document type configuration can be retrieved
 
-  @ignore
   Scenario: Validate an existing configured document type can be updated
     Given user updates an existing configured document type
     When document configuration details are updated
