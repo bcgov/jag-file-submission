@@ -1,6 +1,6 @@
 # new feature
 # Tags: optional
-
+@admin
 Feature: Configure document type and properties in AI reviewer admin client
 
   Scenario: Validate a new document type configuration can be added

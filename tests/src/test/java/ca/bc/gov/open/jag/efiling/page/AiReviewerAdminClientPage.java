@@ -4,17 +4,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 public class AiReviewerAdminClientPage extends BasePage {
-
-    @Value("${AI_REVIEWER_ADMIN_CLIENT_URL:http://localhost:3002}")
-    private String aiReviewerAdminClientUrl;
 
     private final Logger logger = LoggerFactory.getLogger(AiReviewerAdminClientPage.class);
 
     @FindBy(xpath = "//*[@data-testid='add-btn']")
-    private WebElement addConfigButton;
+    private WebElement addConfigBtn;
+
+    @FindBy(xpath = "//*[@id='root']/div/div/button[2]")
+    private WebElement submitBtn;
+
+    @FindBy(xpath = "//*[@id='root']/div/div/button[1]")
+    private WebElement cancelBtn;
+
+    @FindBy(id = "new-config-textfield")
+    private WebElement jsonInputTextArea;
+
+    @FindBy(xpath = "//*[@data-testid='update-btn']")
+    private WebElement updateConfigBtn;
+
+    @FindBy(xpath = "//*[contains(@data-testid, 'delete')]")
+    private WebElement deleteConfigBtn;
 
 
 }

@@ -1,13 +1,32 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import ca.bc.gov.open.jag.efiling.page.AiReviewerAdminClientPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 public class ConfigureDocumentTypesInAiReviewerAdminSD {
 
+    @Value("${AI_REVIEWER_ADMIN_CLIENT_URL:http://localhost:3002}")
+    private String aiReviewerAdminClientUrl;
+
+    private final AiReviewerAdminClientPage aiReviewerAdminClientPage;
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfigureDocumentTypesInAiReviewerAdminSD.class);
+
+    public ConfigureDocumentTypesInAiReviewerAdminSD(AiReviewerAdminClientPage aiReviewerAdminClientPage) {
+        this.aiReviewerAdminClientPage = aiReviewerAdminClientPage;
+
+    }
+
     @Given("user adds a new document type configuration")
     public void addANewDocumentTypeConfiguration() {
+
+        this.aiReviewerAdminClientPage.goTo(aiReviewerAdminClientUrl);
+
 
     }
 
