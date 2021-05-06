@@ -12,6 +12,9 @@
     margin-top: 10px;
     white-space: pre-line;
   }
+  .note.row, .buttons.row {
+    margin: 0px 0px 10px 0px;
+  }
 
   /* REMOVE-ME when replacing bootstrap Tabs for common-components Tabs */
   :focus {
