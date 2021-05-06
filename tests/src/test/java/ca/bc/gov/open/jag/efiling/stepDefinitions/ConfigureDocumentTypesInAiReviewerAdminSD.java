@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.IOException;
+
 public class ConfigureDocumentTypesInAiReviewerAdminSD {
 
     @Value("${AI_REVIEWER_ADMIN_CLIENT_URL:http://localhost:3002}")
@@ -23,11 +25,10 @@ public class ConfigureDocumentTypesInAiReviewerAdminSD {
     }
 
     @Given("user adds a new document type configuration")
-    public void addANewDocumentTypeConfiguration() {
+    public void addANewDocumentTypeConfiguration() throws IOException {
 
         this.aiReviewerAdminClientPage.goTo(aiReviewerAdminClientUrl);
-
-
+        this.aiReviewerAdminClientPage.addNewDocTypeConfiguration();
     }
 
     @When("document type config is submitted")
@@ -41,7 +42,9 @@ public class ConfigureDocumentTypesInAiReviewerAdminSD {
     }
 
     @Given("user updates an existing document type configuration")
-    public void updateAnExistingDocumentTypeConfiguration() {
+    public void updateAnExistingDocumentTypeConfiguration() throws IOException {
+        this.aiReviewerAdminClientPage.goTo(aiReviewerAdminClientUrl);
+        this.aiReviewerAdminClientPage.updateDocTypeConfiguration();
 
     }
 
@@ -56,7 +59,10 @@ public class ConfigureDocumentTypesInAiReviewerAdminSD {
     }
 
     @Given("user deletes an existing document type configuration")
-    public void deleteADocumentTypeConfiguration() {
+    public void deleteADocumentTypeConfiguration() throws IOException {
+
+        this.aiReviewerAdminClientPage.goTo(aiReviewerAdminClientUrl);
+        this.aiReviewerAdminClientPage.deleteDocTypeConfiguration();
 
     }
 
