@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.UUID;
 
+import static org.junit.Assert.assertEquals;
+
 public class ConfigureDocumentTypesSD {
 
     private final DocumentTypeConfigService documentTypeConfigService;
@@ -38,6 +40,20 @@ public class ConfigureDocumentTypesSD {
         logger.info("Creating a new document type configuration");
 
         actualCreatedConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.DOCUMENT_TYPE_CONFIG_PAYLOAD, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
+
+        if (actualCreatedConfigResponse.getStatusCode() == HttpStatus.SC_BAD_REQUEST) {
+            logger.info("Requesting to delete the document type by id");
+
+            actualConfigResponseJsonPath = new JsonPath(documentTypeConfigService.getDocumentTypeConfiguration(Keys.DOCUMENT_TYPE_CONFIGURATION_PATH).asString());
+            UUID getDocTypeId = UUID.fromString(actualConfigResponseJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE));
+
+            actualDeleteDocumentTypeByIdResponse = documentTypeConfigService.deleteDocumentTypeByIdResponse(getDocTypeId,
+                    Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
+
+            assertEquals(HttpStatus.SC_NO_CONTENT, actualDeleteDocumentTypeByIdResponse.getStatusCode());
+
+            actualCreatedConfigResponse = documentTypeConfigService.createDocumentTypeConfigResponse(Keys.DOCUMENT_TYPE_CONFIG_PAYLOAD, Keys.DOCUMENT_TYPE_CONFIGURATION_PATH);
+        }
 
         logger.info("Api response status code: {}", actualCreatedConfigResponse.getStatusCode());
     }
@@ -92,8 +108,8 @@ public class ConfigureDocumentTypesSD {
         Assert.assertEquals(HttpStatus.SC_OK, actualGetAllDocumentTypesResponse.getStatusCode());
         Assert.assertEquals("application/json", actualGetAllDocumentTypesResponse.getContentType());
         Assert.assertEquals(getActualDocumentId(), UUID.fromString(actualUpdatedConfigResponseJsonPath.get(Keys.ID_INDEX_FROM_RESPONSE)));
-        Assert.assertEquals("TEST", actualUpdatedConfigResponseJsonPath.get("documentType[0].type"));
-        Assert.assertEquals("Updated Response to Civil Claim", actualUpdatedConfigResponseJsonPath.get("documentType[0].description"));
+        Assert.assertEquals("RCC", actualUpdatedConfigResponseJsonPath.get("documentType[0].type"));
+        Assert.assertEquals("Update Document Configuration TEST", actualUpdatedConfigResponseJsonPath.get("documentType[0].description"));
         Assert.assertEquals("Updated Court", actualUpdatedConfigResponseJsonPath.get("documentConfig[0].properties.court.type"));
 
     }
