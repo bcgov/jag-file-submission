@@ -2,10 +2,10 @@ package ca.bc.gov.open.efilingdiligenclient.diligen.diligenAuthServiceImpl;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenAuthServiceImpl;
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2001;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2001Data;
+import org.openapitools.client.api.AuthenticationApi;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.model.InlineResponse2001;
+import org.openapitools.client.model.InlineResponse2001Data;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;

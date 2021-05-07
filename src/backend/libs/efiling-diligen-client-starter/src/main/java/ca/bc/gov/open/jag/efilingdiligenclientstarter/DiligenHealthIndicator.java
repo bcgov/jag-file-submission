@@ -1,8 +1,8 @@
 package ca.bc.gov.open.jag.efilingdiligenclientstarter;
 
-import ca.bc.gov.open.jag.efilingdiligenclient.api.HealthCheckApi;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse200;
+import org.openapitools.client.api.HealthCheckApi;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.model.InlineResponse200;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;

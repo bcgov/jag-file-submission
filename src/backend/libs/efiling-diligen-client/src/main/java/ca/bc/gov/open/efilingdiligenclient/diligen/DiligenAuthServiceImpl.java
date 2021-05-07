@@ -1,10 +1,10 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen;
 
 import ca.bc.gov.open.efilingdiligenclient.exception.DiligenAuthenticationException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.AuthenticationApi;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineObject;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2001;
+import org.openapitools.client.api.AuthenticationApi;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.model.InlineObject;
+import org.openapitools.client.model.InlineResponse2001;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package ca.bc.gov.open.efilingdiligenclient.diligen.model;
 
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
+import org.openapitools.client.model.ProjectFieldsResponse;
 
 import java.math.BigDecimal;
 import java.util.List;

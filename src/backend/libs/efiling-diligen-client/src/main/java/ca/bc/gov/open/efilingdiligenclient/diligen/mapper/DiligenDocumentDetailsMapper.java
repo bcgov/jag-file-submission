@@ -2,9 +2,9 @@ package ca.bc.gov.open.efilingdiligenclient.diligen.mapper;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenAnswerField;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DiligenDocumentDetails;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Field;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.InlineResponse2003DataFileDetails;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
+import org.openapitools.client.model.Field;
+import org.openapitools.client.model.InlineResponse2003DataFileDetails;
+import org.openapitools.client.model.ProjectFieldsResponse;
 import org.mapstruct.Mapper;
 
 import java.util.List;

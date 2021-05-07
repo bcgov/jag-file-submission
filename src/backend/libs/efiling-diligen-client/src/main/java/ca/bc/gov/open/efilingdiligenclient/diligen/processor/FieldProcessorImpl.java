@@ -2,7 +2,7 @@ package ca.bc.gov.open.efilingdiligenclient.diligen.processor;
 
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.DocumentConfig;
 import ca.bc.gov.open.efilingdiligenclient.diligen.model.PropertyConfig;
-import ca.bc.gov.open.jag.efilingdiligenclient.api.model.Field;
+import org.openapitools.client.model.Field;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.StringUtils;

@@ -1,5 +1,21 @@
 package ca.bc.gov.open.jag.efilingreviewerapi.document.documentsApiDelegateImpl;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import ca.bc.gov.open.efilingdiligenclient.diligen.DiligenService;
 import ca.bc.gov.open.efilingdiligenclient.diligen.processor.FieldProcessor;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
@@ -13,17 +29,6 @@ import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ExtractRequestMappe
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mappers.ProcessedDocumentMapperImpl;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.mocks.ExtractResponseMockFactory;
 import ca.bc.gov.open.jag.efilingreviewerapi.extract.store.ExtractStore;
-import org.junit.jupiter.api.*;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProcessedDocumentTest {
