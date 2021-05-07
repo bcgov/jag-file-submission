@@ -1,38 +1,39 @@
 {
   "documentType": {
-    "type": "TEST",
+    "type":"RCC",
     "description": "Response to Civil Claim"
   },
   "projectId": 2,
   "documentConfig": {
     "properties": {
+      "document": {
+        "type": "object",
+        "fieldId": null,
+        "properties": {
+          "documentType": {
+            "type": "string",
+            "fieldId": 232,
+            "properties": {}
+          }
+        }
+      },
       "court": {
         "type": "object",
         "fieldId": null,
         "properties": {
-          "nested": {
-            "type": "object",
-            "properties": {
-              "myLocation": {
-                "type": "string",
-                "fieldId": 230,
-                "properties": {}
-              }
-            }
-          },
-          "courtLocation": {
+          "location": {
             "type": "string",
             "fieldId": 230,
             "properties": {}
           },
-          "courtLevel": {
+          "level": {
             "type": "string",
             "fieldId": 229,
             "properties": {}
           },
-          "courtClass": {
+          "class": {
             "type": "string",
-            "fieldId": 230,
+            "fieldId": 210,
             "properties": {}
           },
           "division": {
@@ -68,6 +69,22 @@
           "classDescription": {
             "type": "string",
             "fieldId": 210,
+            "properties": {}
+          }
+        }
+      },
+      "parties" : {
+        "type": "object",
+        "fieldId": null,
+        "properties": {
+          "defedants": {
+            "type": "string",
+            "fieldId": 319,
+            "properties": {}
+          },
+          "plaintiffs": {
+            "type": "string",
+            "fieldId": 320,
             "properties": {}
           }
         }

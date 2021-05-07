@@ -9,6 +9,7 @@ public class Keys {
     // Document Service
     public static final String X_TRANSACTION_ID = "X-Transaction-Id";
     public static final String X_DOCUMENT_TYPE = "X-Document-Type";
+    public static final String ACTUAL_X_TRANSACTION_ID = "1d4e38ba-0c88-4c92-8367-c8eada8cca19";
 
     public static final String PARENT_APPLICATION = "FLA";
 
