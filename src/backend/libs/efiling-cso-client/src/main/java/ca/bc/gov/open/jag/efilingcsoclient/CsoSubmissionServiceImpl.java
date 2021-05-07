@@ -253,7 +253,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         logger.info("Update payment");
 
-        service.setFeePaidYn(String.valueOf(feePaid));
+        service.setFeePaidYn(feePaid);
         service.getTransactions().add(financialTransaction);
 
         try {

@@ -27,8 +27,6 @@
             <xs:element name="findReferenceDocumentsResponse" type="tns:findReferenceDocumentsResponse"/>
             <xs:element name="getActiveDocumentImage" type="tns:getActiveDocumentImage"/>
             <xs:element name="getActiveDocumentImageResponse" type="tns:getActiveDocumentImageResponse"/>
-            <xs:element name="getActiveDocumentURL" type="tns:getActiveDocumentURL"/>
-            <xs:element name="getActiveDocumentURLResponse" type="tns:getActiveDocumentURLResponse"/>
             <xs:element name="getActiveSuppDocImage" type="tns:getActiveSuppDocImage"/>
             <xs:element name="getActiveSuppDocImageResponse" type="tns:getActiveSuppDocImageResponse"/>
             <xs:element name="getCivilFilings" type="tns:getCivilFilings"/>
@@ -597,16 +595,6 @@
                     <xs:element minOccurs="0" name="return" type="tns:filingPackage"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="getActiveDocumentURL">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="getActiveDocumentURLResponse">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="return" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
             <xs:complexType name="findCivilAppearancesByFileNumberDate">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
@@ -995,9 +983,6 @@
     <wsdl:message name="findFilingPackageByID">
         <wsdl:part element="tns:findFilingPackageByID" name="parameters"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="getActiveDocumentURL">
-        <wsdl:part element="tns:getActiveDocumentURL" name="parameters"></wsdl:part>
-    </wsdl:message>
     <wsdl:message name="getCivilFilingsResponse">
         <wsdl:part element="tns:getCivilFilingsResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -1075,9 +1060,6 @@
     </wsdl:message>
     <wsdl:message name="findPartiesByPackageResponse">
         <wsdl:part element="tns:findPartiesByPackageResponse" name="parameters"></wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="getActiveDocumentURLResponse">
-        <wsdl:part element="tns:getActiveDocumentURLResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="sendCurrProcTimesEmailResponse">
         <wsdl:part element="tns:sendCurrProcTimesEmailResponse" name="parameters"></wsdl:part>
@@ -1179,11 +1161,6 @@
         <wsdl:operation name="findFilingPackageByID">
             <wsdl:input message="tns:findFilingPackageByID" name="findFilingPackageByID"></wsdl:input>
             <wsdl:output message="tns:findFilingPackageByIDResponse" name="findFilingPackageByIDResponse"></wsdl:output>
-            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
-        </wsdl:operation>
-        <wsdl:operation name="getActiveDocumentURL">
-            <wsdl:input message="tns:getActiveDocumentURL" name="getActiveDocumentURL"></wsdl:input>
-            <wsdl:output message="tns:getActiveDocumentURLResponse" name="getActiveDocumentURLResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="findCivilAppearancesByFileNumberDate">
@@ -1365,18 +1342,6 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findFilingPackageByIDResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-            <wsdl:fault name="NestedEjbException">
-                <soap:fault name="NestedEjbException" use="literal"/>
-            </wsdl:fault>
-        </wsdl:operation>
-        <wsdl:operation name="getActiveDocumentURL">
-            <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="getActiveDocumentURL">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="getActiveDocumentURLResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">

@@ -17,6 +17,8 @@
             <xs:element name="getActiveActsResponse" type="tns:getActiveActsResponse"/>
             <xs:element name="getActiveDocumentSchemas" type="tns:getActiveDocumentSchemas"/>
             <xs:element name="getActiveDocumentSchemasResponse" type="tns:getActiveDocumentSchemasResponse"/>
+            <xs:element name="getApplicationRecordTypes" type="tns:getApplicationRecordTypes"/>
+            <xs:element name="getApplicationRecordTypesResponse" type="tns:getApplicationRecordTypesResponse"/>
             <xs:element name="getCities" type="tns:getCities"/>
             <xs:element name="getCitiesResponse" type="tns:getCitiesResponse"/>
             <xs:element name="getCivilDataElements" type="tns:getCivilDataElements"/>
@@ -29,6 +31,8 @@
             <xs:element name="getCountriesResponse" type="tns:getCountriesResponse"/>
             <xs:element name="getCountryCodes" type="tns:getCountryCodes"/>
             <xs:element name="getCountryCodesResponse" type="tns:getCountryCodesResponse"/>
+            <xs:element name="getCriminalDivisionLevelGroupings" type="tns:getCriminalDivisionLevelGroupings"/>
+            <xs:element name="getCriminalDivisionLevelGroupingsResponse" type="tns:getCriminalDivisionLevelGroupingsResponse"/>
             <xs:element name="getDocumentElements" type="tns:getDocumentElements"/>
             <xs:element name="getDocumentElementsResponse" type="tns:getDocumentElementsResponse"/>
             <xs:element name="getDocumentRequestStatuses" type="tns:getDocumentRequestStatuses"/>
@@ -61,6 +65,22 @@
             <xs:element name="removeApplicationPreferenceResponse" type="tns:removeApplicationPreferenceResponse"/>
             <xs:element name="updateApplicationPreference" type="tns:updateApplicationPreference"/>
             <xs:element name="updateApplicationPreferenceResponse" type="tns:updateApplicationPreferenceResponse"/>
+            <xs:complexType name="getCriminalDivisionLevelGroupings">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCriminalDivisionLevelGroupingsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:criminalDivisionLevelCombination"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="criminalDivisionLevelCombination">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtDivisionCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtDivisionDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="getAccessStatusTypes">
                 <xs:sequence/>
             </xs:complexType>
@@ -375,6 +395,14 @@
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:applicationPreference"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="getApplicationRecordTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getApplicationRecordTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="createApplicationPreference">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="tns:applicationPreference"/>
@@ -481,6 +509,9 @@
     <wsdl:message name="findApplicationPreferenceByNameResponse">
         <wsdl:part element="tns:findApplicationPreferenceByNameResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getApplicationRecordTypes">
+        <wsdl:part element="tns:getApplicationRecordTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getAccessEntitlementsResponse">
         <wsdl:part element="tns:getAccessEntitlementsResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -502,6 +533,9 @@
     <wsdl:message name="getRequestItemStatuses">
         <wsdl:part element="tns:getRequestItemStatuses" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getCriminalDivisionLevelGroupings">
+        <wsdl:part element="tns:getCriminalDivisionLevelGroupings" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getAccessEntitlements">
         <wsdl:part element="tns:getAccessEntitlements" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -510,6 +544,9 @@
     </wsdl:message>
     <wsdl:message name="getLegalRepTypes">
         <wsdl:part element="tns:getLegalRepTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getApplicationRecordTypesResponse">
+        <wsdl:part element="tns:getApplicationRecordTypesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="updateApplicationPreference">
         <wsdl:part element="tns:updateApplicationPreference" name="parameters"></wsdl:part>
@@ -559,6 +596,9 @@
     <wsdl:message name="getTransactionStates">
         <wsdl:part element="tns:getTransactionStates" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getCriminalDivisionLevelGroupingsResponse">
+        <wsdl:part element="tns:getCriminalDivisionLevelGroupingsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getTransactionStatesResponse">
         <wsdl:part element="tns:getTransactionStatesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -593,6 +633,11 @@
         <wsdl:part element="tns:getServiceFeeResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:portType name="LookupFacadeBean">
+        <wsdl:operation name="getCriminalDivisionLevelGroupings">
+            <wsdl:input message="tns:getCriminalDivisionLevelGroupings" name="getCriminalDivisionLevelGroupings"></wsdl:input>
+            <wsdl:output message="tns:getCriminalDivisionLevelGroupingsResponse" name="getCriminalDivisionLevelGroupingsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="getAccessStatusTypes">
             <wsdl:input message="tns:getAccessStatusTypes" name="getAccessStatusTypes"></wsdl:input>
             <wsdl:output message="tns:getAccessStatusTypesResponse" name="getAccessStatusTypesResponse"></wsdl:output>
@@ -728,6 +773,11 @@
             <wsdl:output message="tns:findApplicationPreferenceByCriteriaResponse" name="findApplicationPreferenceByCriteriaResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="getApplicationRecordTypes">
+            <wsdl:input message="tns:getApplicationRecordTypes" name="getApplicationRecordTypes"></wsdl:input>
+            <wsdl:output message="tns:getApplicationRecordTypesResponse" name="getApplicationRecordTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="createApplicationPreference">
             <wsdl:input message="tns:createApplicationPreference" name="createApplicationPreference"></wsdl:input>
             <wsdl:output message="tns:createApplicationPreferenceResponse" name="createApplicationPreferenceResponse"></wsdl:output>
@@ -752,6 +802,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="getAccessStatusTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCriminalDivisionLevelGroupings">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCriminalDivisionLevelGroupings">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCriminalDivisionLevelGroupingsResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1064,6 +1126,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findApplicationPreferenceByCriteriaResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getApplicationRecordTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getApplicationRecordTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getApplicationRecordTypesResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
