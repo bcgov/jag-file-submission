@@ -43,7 +43,7 @@ public class ConfigureDocumentTypesInAiReviewerAdminSD {
 
     @Given("user updates and submits existing document type configuration")
     public void updateAnExistingDocumentTypeConfiguration() {
-        logger.info("Navigating to Ai reviewer admin client");
+        logger.info("Navigating to Ai reviewer admin page");
 
         this.aiReviewerAdminClientPage.goTo(aiReviewerAdminClientUrl);
         this.aiReviewerAdminClientPage.updateDocTypeConfiguration();
@@ -61,7 +61,7 @@ public class ConfigureDocumentTypesInAiReviewerAdminSD {
 
     @Given("user deletes an existing document type configuration")
     public void deleteADocumentTypeConfiguration() {
-        logger.info("Navigating to Ai reviewer admin client");
+        logger.info("Navigating to Ai reviewer admin url");
 
         this.aiReviewerAdminClientPage.goTo(aiReviewerAdminClientUrl);
         this.aiReviewerAdminClientPage.deleteDocTypeConfiguration();

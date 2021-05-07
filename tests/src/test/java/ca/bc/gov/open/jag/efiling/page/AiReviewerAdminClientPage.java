@@ -15,6 +15,8 @@ import java.text.MessageFormat;
 
 public class AiReviewerAdminClientPage extends BasePage {
 
+    private static final String DOCUMENT_TYPE_LIST = "document-type-list";
+
     @FindBy(xpath = "//*[@data-testid='add-btn']")
     private WebElement addConfigBtn;
 
@@ -43,7 +45,7 @@ public class AiReviewerAdminClientPage extends BasePage {
     private WebElement documentConfigList;
 
     public void addNewDocTypeConfiguration() throws IOException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("document-type-list")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(DOCUMENT_TYPE_LIST)));
 
         addConfigBtn.click();
 
@@ -58,7 +60,7 @@ public class AiReviewerAdminClientPage extends BasePage {
     }
 
     public void updateDocTypeConfiguration() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("document-type-list")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(DOCUMENT_TYPE_LIST)));
 
         updateConfigBtn.click();
         String actualJson = jsonInputTextArea.getText().replace("Response to Civil Claim", "Updated Response to Civil Claim");
@@ -72,22 +74,22 @@ public class AiReviewerAdminClientPage extends BasePage {
     }
 
     public void deleteDocTypeConfiguration() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("document-type-list")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(DOCUMENT_TYPE_LIST)));
         deleteConfigBtn.click();
     }
 
     public String getDocumentDescription() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("document-type-list")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(DOCUMENT_TYPE_LIST)));
         return documentDescription.getText();
     }
 
     public String getDocumentType() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("document-type-list")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(DOCUMENT_TYPE_LIST)));
         return documentType.getText();
     }
 
     public boolean verifyTheDocumentListIsEmpty() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("document-type-list")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(DOCUMENT_TYPE_LIST)));
         return documentConfigList.getText().isEmpty();
     }
 
