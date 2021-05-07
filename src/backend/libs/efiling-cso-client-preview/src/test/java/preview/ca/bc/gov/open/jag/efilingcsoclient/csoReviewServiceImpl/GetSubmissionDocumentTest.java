@@ -39,11 +39,6 @@ public class GetSubmissionDocumentTest {
 
         byte[] someBytes = "test".getBytes();
 
-        Mockito.when(filingFacadeBeanMock.getActiveDocumentURL(Mockito.eq(BigDecimal.TEN))).thenThrow(new NestedEjbException_Exception());
-
-        Mockito.when(filingFacadeBeanMock.getActiveDocumentURL(Mockito.eq(BigDecimal.ONE))).thenReturn("http://localhost/acdc/1");
-
-
         Mockito.when(restTemplateMock.getForEntity(
                 Mockito.eq("http://localhost/acdc/1"), Mockito.eq(byte[].class), Mockito.any(HttpEntity.class)))
           .thenReturn(new ResponseEntity(someBytes, HttpStatus.OK));
@@ -64,18 +59,10 @@ public class GetSubmissionDocumentTest {
     public void testWithFoundResult() {
 
         Optional<byte[]> actual = sut.getSubmittedDocument(BigDecimal.ONE);
-        Assertions.assertEquals("test", new String(actual.get()));
+        Assertions.assertFalse(actual.isPresent());
 
     }
 
-    @DisplayName("Error: it can't generate URL")
-    @Test
-    public void testWhenCantGenerateUrl() {
 
-        Assertions.assertThrows(EfilingReviewServiceException.class, () -> {
-            sut.getSubmittedDocument(BigDecimal.TEN);
-        });
-
-    }
 
 }

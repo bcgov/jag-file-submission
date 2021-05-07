@@ -165,21 +165,8 @@ public class PreviewCsoReviewServiceImpl implements EfilingReviewService {
     @Override
     public Optional<byte[]> getSubmittedDocument(BigDecimal documentIdentifier) {
 
-        String url = "";
 
-        try {
-            url = filingFacadeBean.getActiveDocumentURL(documentIdentifier);
-        } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
-            logger.error("Error in [updateDocumentStatus] call");
-            throw new EfilingReviewServiceException("Failed to retrieved document", e.getCause());
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_PDF));
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class, entity);
-
-        return Optional.of(response.getBody());
+        return Optional.empty();
 
     }
 
