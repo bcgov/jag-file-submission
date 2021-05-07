@@ -1,7 +1,7 @@
 package ca.bc.gov.ca.open.jag.bambora;
 
 import ca.bc.gov.open.jag.bambora.PaymentConstants;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardPurchaseResponse;
+import org.openapitools.client.model.CardPurchaseResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

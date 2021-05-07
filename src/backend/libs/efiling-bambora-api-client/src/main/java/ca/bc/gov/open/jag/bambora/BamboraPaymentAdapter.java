@@ -1,11 +1,11 @@
 package ca.bc.gov.open.jag.bambora;
 
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentRequest;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.ProfilePurchase;
+import org.openapitools.client.api.PaymentsApi;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.model.Custom;
+import org.openapitools.client.model.PaymentRequest;
+import org.openapitools.client.model.PaymentResponse;
+import org.openapitools.client.model.ProfilePurchase;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;

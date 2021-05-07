@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.bambora;
 
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiClient;
+import org.openapitools.client.api.PaymentsApi;
+import org.openapitools.client.ApiClient;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

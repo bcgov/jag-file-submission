@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.bambora;
 
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.CardPurchaseResponse;
+import org.openapitools.client.model.CardPurchaseResponse;
 
 import java.util.HashMap;
 import java.util.Map;
