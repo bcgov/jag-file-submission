@@ -5,8 +5,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import ca.bc.gov.open.jag.jagmailit.api.MailSendApi;
-import ca.bc.gov.open.jag.jagmailit.api.handler.ApiClient;
+import org.openapitools.client.api.MailSendApi;
+import org.openapitools.client.ApiClient;
 
 @Configuration
 @EnableConfigurationProperties(MailSendProperties.class)
