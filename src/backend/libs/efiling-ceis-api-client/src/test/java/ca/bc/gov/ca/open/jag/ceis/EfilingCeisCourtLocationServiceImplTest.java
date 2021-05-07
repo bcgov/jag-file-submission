@@ -2,10 +2,10 @@ package ca.bc.gov.ca.open.jag.ceis;
 
 import ca.bc.gov.open.jag.ceis.CeisCourtLocationMapperImpl;
 import ca.bc.gov.open.jag.ceis.CeisCourtLocationServiceImpl;
-import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
-import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation;
-import ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocations;
+import org.openapitools.client.api.DefaultApi;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.model.CourtLocation;
+import org.openapitools.client.model.CourtLocations;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtLocationServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;
 import org.junit.jupiter.api.*;
@@ -134,7 +134,7 @@ public class EfilingCeisCourtLocationServiceImplTest {
 
     private CourtLocations buildMockData() {
 
-        CourtLocation courtLocationOne = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation();
+        CourtLocation courtLocationOne = new org.openapitools.client.model.CourtLocation();
         courtLocationOne.setCourtid(BigDecimal.valueOf(1031));
         courtLocationOne.setCourtname("Campbell River");
         courtLocationOne.setCourtcode("MockCode");
@@ -147,7 +147,7 @@ public class EfilingCeisCourtLocationServiceImplTest {
         courtLocationOne.setCountryname("Canada");
 
 
-        CourtLocation courtLocationTwo = new ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation();
+        CourtLocation courtLocationTwo = new org.openapitools.client.model.CourtLocation();
         courtLocationTwo.setCourtid(BigDecimal.valueOf(3521));
         courtLocationTwo.setCourtname("Chilliwack");
         courtLocationTwo.setCourtcode("MockCode");

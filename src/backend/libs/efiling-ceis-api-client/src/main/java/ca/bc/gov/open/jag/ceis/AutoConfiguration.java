@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.ceis;
 
-import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
-import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiClient;
+import org.openapitools.client.api.DefaultApi;
+import org.openapitools.client.ApiClient;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;

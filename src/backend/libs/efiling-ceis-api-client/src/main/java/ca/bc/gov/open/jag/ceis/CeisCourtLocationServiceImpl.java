@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.ceis;
 
-import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
-import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiException;
+import org.openapitools.client.api.DefaultApi;
+import org.openapitools.client.ApiException;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtLocationServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.InternalCourtLocation;

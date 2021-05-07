@@ -19,7 +19,7 @@ public interface CeisCourtLocationMapper {
     @Mapping(target = "address.cityName", source="cityname")
     @Mapping(target = "address.provinceName", source="provincename")
     @Mapping(target = "address.countryName", source="countryname")
-    InternalCourtLocation toCourtLocation(ca.bc.gov.open.jag.efilingceisapiclient.api.model.CourtLocation courtLocation);
+    InternalCourtLocation toCourtLocation(org.openapitools.client.model.CourtLocation courtLocation);
 
 
 }
