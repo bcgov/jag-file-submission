@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
 import ca.bc.gov.open.jag.efiling.page.SubmissionHistoryPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,20 +18,18 @@ public class viewPackagesFilteredByParentAppSD {
     private static final String APPLICATION_CODE = "?applicationCode=";
 
     private final SubmissionHistoryPage submissionHistoryPage;
-    private final PackageReviewPage packageReviewPage;
 
     private final Logger logger = LoggerFactory.getLogger(viewPackagesFilteredByParentAppSD.class);
 
-    public viewPackagesFilteredByParentAppSD(SubmissionHistoryPage submissionHistoryPage, PackageReviewPage packageReviewPage) {
+    public viewPackagesFilteredByParentAppSD(SubmissionHistoryPage submissionHistoryPage) {
         this.submissionHistoryPage = submissionHistoryPage;
-        this.packageReviewPage = packageReviewPage;
     }
 
     @Given("user is on submission history page with valid application code {string}")
     public void userIsOnSubmissionHistoryPageWithValidAppCode(String appCode) {
         logger.info("Requesting with valid application code");
 
-        String urlWithValidAppCode = MessageFormat.format("{0}" + "{1}" + "{2}", submissionHistoryUrl, APPLICATION_CODE, appCode);
+        String urlWithValidAppCode = MessageFormat.format("{0}{1}{2}", submissionHistoryUrl, APPLICATION_CODE, appCode);
 
         this.submissionHistoryPage.goTo(urlWithValidAppCode);
         this.submissionHistoryPage.signIn();
@@ -50,7 +47,7 @@ public class viewPackagesFilteredByParentAppSD {
     public void userIsOnSubmissionHistoryPageWithInvalidAppCode(String appCode) {
         logger.info("Requesting with invalid application code");
 
-        String urlWithInvalidAppCode = MessageFormat.format("{0}" + "{1}" + "{2}", submissionHistoryUrl, APPLICATION_CODE, appCode);
+        String urlWithInvalidAppCode = MessageFormat.format("{0}{1}{2}", submissionHistoryUrl, APPLICATION_CODE, appCode);
 
         this.submissionHistoryPage.goTo(urlWithInvalidAppCode);
         this.submissionHistoryPage.signIn();
