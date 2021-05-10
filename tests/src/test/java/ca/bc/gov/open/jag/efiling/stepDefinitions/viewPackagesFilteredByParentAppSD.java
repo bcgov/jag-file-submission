@@ -60,7 +60,9 @@ public class viewPackagesFilteredByParentAppSD {
     public void verifyPackagesHistoryIsNotPopulated() {
         Assert.assertTrue(this.submissionHistoryPage.submissionListIsDisplayed());
         Assert.assertEquals(1, this.submissionHistoryPage.verifyTableIsNotEmpty());
-        Assert.assertEquals("Something went wrong while trying to retrieve your submissions.", this.submissionHistoryPage.getAlertText());
+
+        String actualAlertMessage = this.submissionHistoryPage.getAlertText();
+        Assert.assertTrue(actualAlertMessage.contains("Something went wrong while trying to retrieve your submissions."));
 
         logger.info("Alert message is displayed for invalid application code.");
 
