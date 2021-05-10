@@ -18,7 +18,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.3/shared-components-1.2.3.tgz",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
