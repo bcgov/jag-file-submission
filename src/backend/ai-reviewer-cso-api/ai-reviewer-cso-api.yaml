@@ -21,7 +21,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ExtracNotification"
+              $ref: "#/components/schemas/ExtractNotification"
       responses:
         "204":
           description: Extract response received
@@ -55,7 +55,7 @@ components:
           type: array
           items:
             type: string
-    ExtracNotification:
+    ExtractNotification:
       type: object
       required:
         - type
