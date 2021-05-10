@@ -58,7 +58,23 @@ paths:
               $ref: "#/components/schemas/DocumentEvent"
       responses:
         "204":
-          description: Document Event acknoledged
+          description: Document Event acknowledged
+  "/documents/webhookEvent":
+    post:
+      summary: to receive status updates on submitted documents via Diligen webhook
+      operationId: DocumentWebhookEvent
+      tags:
+        - document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentWebhookEvent"
+      responses:
+        "200":
+          description: Status update received successfully
+        "400":
+          description: Incorrectly formatted request body
   "/documents/processed/{documentId}":
     get:
       summary: to inform api on a document event
@@ -306,6 +322,21 @@ components:
         documentId:
           type: number
           format: integer
+    DocumentWebhookEvent:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                format: integer
+              status:
+                type: string
+        event:
+          type: string        
     DocumentTypeConfigurationRequest:
       type: object
       properties:
