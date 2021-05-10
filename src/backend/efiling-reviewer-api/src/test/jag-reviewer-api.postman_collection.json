@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "83cd3971-ad87-480d-9996-5098ea33e01d",
+		"_postman_id": "45a8c23a-4549-4d89-9119-996ec7331777",
 		"name": "jag-reviewer-api Copy",
 		"description": "Efiling AI Reviewer api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -41,7 +41,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/documentTypeConfigurations"
+						"url": {
+							"raw": "{{baseUrl}}/documentTypeConfigurations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documentTypeConfigurations"
+							]
+						}
 					},
 					"response": [
 						{
@@ -70,7 +78,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -110,7 +127,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -192,7 +218,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -232,7 +267,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -262,7 +306,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/documentTypeConfigurations"
+						"url": {
+							"raw": "{{baseUrl}}/documentTypeConfigurations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documentTypeConfigurations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -277,7 +329,16 @@
 								"type": "text"
 							}
 						],
-						"url": "{{baseUrl}}/documentTypeConfigurations/{{id}}"
+						"url": {
+							"raw": "{{baseUrl}}/documentTypeConfigurations/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documentTypeConfigurations",
+								"{{id}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -316,7 +377,16 @@
 								}
 							]
 						},
-						"url": "{{baseUrl}}/documents/extract"
+						"url": {
+							"raw": "{{baseUrl}}/documents/extract",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"extract"
+							]
+						}
 					},
 					"response": [
 						{
@@ -345,7 +415,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "Bad Request",
 							"code": 400,
@@ -385,7 +464,16 @@
 										}
 									]
 								},
-								"url": "{{baseUrl}}/documents/extract"
+								"url": {
+									"raw": "{{baseUrl}}/documents/extract",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"documents",
+										"extract"
+									]
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -411,7 +499,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{baseUrl}}/restrictedDocumentTypes"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes"
+							]
+						}
 					},
 					"response": []
 				},
@@ -420,7 +516,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{baseUrl}}/restrictedDocumentTypes/810edbd7-6fc1-483e-a2ff-c86ed677c6f2"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes/810edbd7-6fc1-483e-a2ff-c86ed677c6f2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes",
+								"810edbd7-6fc1-483e-a2ff-c86ed677c6f2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -438,7 +543,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/restrictedDocumentTypes"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes"
+							]
+						}
 					},
 					"response": []
 				},
@@ -456,7 +569,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/restrictedDocumentTypes"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes"
+							]
+						}
 					},
 					"response": []
 				},
@@ -465,7 +586,16 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{baseUrl}}/restrictedDocumentTypes/{{id}}"
+						"url": {
+							"raw": "{{baseUrl}}/restrictedDocumentTypes/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restrictedDocumentTypes",
+								"{{id}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -485,19 +615,79 @@
 								"type": "text"
 							}
 						],
-						"url": "{{baseUrl}}/documents/processed/1234"
+						"url": {
+							"raw": "{{baseUrl}}/documents/processed/1234",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"processed",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Document Webhook Events",
+			"item": [
+				{
+					"name": "Document Status Update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": [\r\n    {\r\n      \"id\": 2390,\r\n      \"status\": \"PROCESSED\"\r\n    }\r\n  ],\r\n  \"event\": \"FILE_PROCESSED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/documents/webhookEvent",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"webhookEvent"
+							]
+						}
 					},
 					"response": []
 				}
 			]
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "42189589-4c99-4d9a-8870-aec8ce810e78",
 			"key": "baseUrl",
-			"value": "http://localhost:8080",
-			"type": "string"
+			"value": "http://localhost:8080"
 		}
 	]
 }
