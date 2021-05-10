@@ -151,4 +151,10 @@ public class TestConfig {
         return new SubmissionHistoryPage();
     }
 
+    @Bean
+    @Scope("prototype")
+    public AiReviewerAdminClientPage aiReviewerAdminClientPage() {
+        return new AiReviewerAdminClientPage();
+    }
+
 }

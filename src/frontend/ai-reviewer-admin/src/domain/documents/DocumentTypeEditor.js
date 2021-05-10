@@ -125,11 +125,13 @@ export default function DocumentTypeEditor() {
           )}
           <Button
             label="Cancel"
+            data-testid="cancel-config-btn"
             styling="btn btn-secondary pull-left"
             onClick={cancelConfig}
           />
           <Button
             label="Submit"
+            data-testid="submit-config-btn"
             styling="btn btn-primary pull-right"
             onClick={submitConfig}
           />
