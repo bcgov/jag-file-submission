@@ -15,7 +15,7 @@
 	<description>CSO API</description>
 	<properties>
 		<java.version>1.8</java.version>
-		<default-package>ca.bc.gov.open.jag</default-package>
+		<default-package>ca.bc.gov.open.jag.aireviewercsoapi</default-package>
 	</properties>
 	<dependencies>
 

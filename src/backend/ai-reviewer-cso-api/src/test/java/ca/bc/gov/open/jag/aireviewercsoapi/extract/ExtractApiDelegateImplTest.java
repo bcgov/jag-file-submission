@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.aireviewercsoapi.extract;
 
-import ca.bc.gov.open.jag.api.model.ExtracNotification;
+import ca.bc.gov.open.jag.aireviewercsoapi.api.model.ExtracNotification;
 import org.junit.jupiter.api.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
