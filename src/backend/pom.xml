@@ -94,6 +94,7 @@
 		<profile>
 			<id>ai-reviewer-cso</id>
 			<modules>
+				<module>libs/efiling-bom</module>
 				<module>ai-reviewer-cso-api</module>
 			</modules>
 		</profile>
