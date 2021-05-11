@@ -89,7 +89,6 @@ public class AiReviewerAdminClientPage extends BasePage {
     }
 
     public boolean verifyTheDocumentListIsEmpty() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(DOCUMENT_TYPE_LIST)));
         return documentConfigList.getText().isEmpty();
     }
 
