@@ -20,6 +20,11 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 		</dependency>
@@ -37,6 +42,16 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
 		</dependency>
 
 		<dependency>
@@ -69,14 +84,11 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
+
 			<dependency>
 				<groupId>ca.bc.gov.open.jag</groupId>
 				<artifactId>efiling-bom</artifactId>
@@ -84,8 +96,35 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
 		</dependencies>
+
 	</dependencyManagement>
+	<profiles>
+
+		<profile>
+
+			<id>splunk</id>
+
+			<repositories>
+				<repository>
+					<id>splunk-artifactory</id>
+					<name>Splunk Releases</name>
+					<url>https://splunk.jfrog.io/splunk/ext-releases-local</url>
+				</repository>
+			</repositories>
+
+			<dependencies>
+				<dependency>
+					<groupId>com.splunk.logging</groupId>
+					<artifactId>splunk-library-javalogging</artifactId>
+					<version>1.8.0</version>
+				</dependency>
+			</dependencies>
+
+		</profile>
+
+	</profiles>
 	<build>
 		<plugins>
 			<!--spring boot build-->
