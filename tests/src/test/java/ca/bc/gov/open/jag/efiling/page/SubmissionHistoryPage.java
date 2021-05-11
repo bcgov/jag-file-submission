@@ -13,9 +13,6 @@ import java.util.List;
 
 public class SubmissionHistoryPage extends BasePage {
 
-    @Value("${SUBMISSION_HISTORY_URL:http://localhost:3000/efilinghub/submissionhistory}")
-    private String submissionHistoryUrl;
-
     @Value("${USERNAME_KEYCLOAK:bobross}")
     private String username;
 
@@ -42,9 +39,10 @@ public class SubmissionHistoryPage extends BasePage {
     @FindBy(className = "search-btn")
     private WebElement searchButton;
 
-    public void signIn() {
+    @FindBy(className = "alert-danger")
+    private WebElement alertMessage;
 
-        this.driver.get(submissionHistoryUrl);
+    public void signIn() {
         logger.info("Waiting for the page to load...");
         wait.until(ExpectedConditions.titleIs("Sign in to Efiling Hub"));
 
@@ -69,6 +67,11 @@ public class SubmissionHistoryPage extends BasePage {
         searchButton.click();
 
     }
+
+    public String getAlertText() {
+        return alertMessage.getText();
+    }
+
 
     public String navigateToPackageReviewFromSearchResult() {
         wait.until(ExpectedConditions.visibilityOf(submissionList));
