@@ -143,6 +143,25 @@ services:
       - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
     networks:
       - fisu-net
+      
+  #############################################################################################
+  ###                           AI reviewer cso backend app                                 ###
+  #############################################################################################
+  ai-reviewer-cso-api:
+    container_name: ai-reviewer-cso-api
+    hostname: ai-reviewer-cso-api
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.ai-reviewer-cso-api
+      args:
+        - SKIP_TESTS=true
+        - MVN_PROFILE=${MVN_PROFILE:-ai-reviewer-cso}
+        - STARTERS_V=v0.1.8
+    ports:
+      - "8686:8080"
+
+    networks:
+      - fisu-net
 
   #############################################################################################
   ###                           AI Reviewer Mock Service                                    ###
