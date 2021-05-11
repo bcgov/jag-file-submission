@@ -7,9 +7,12 @@ import ca.bc.gov.open.jag.efilingdiligenclient.api.model.ProjectFieldsResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.Keys;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentEvent;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentWebhookEvent;
+import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentWebhookEventData;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.DocumentExtractResponse;
 import ca.bc.gov.open.jag.efilingreviewerapi.api.model.ProcessedDocument;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.models.DocumentTypeConfiguration;
+import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerDocumentException;
 import ca.bc.gov.open.jag.efilingreviewerapi.error.AiReviewerInvalidTransactionIdException;
 import ca.bc.gov.open.jag.efilingreviewerapi.webhook.WebHookService;
 import ca.bc.gov.open.jag.efilingreviewerapi.document.store.DocumentTypeConfigurationRepository;
@@ -32,6 +35,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -109,7 +114,63 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
     @Override
     public ResponseEntity<Void> documentEvent(UUID xTransactionId, DocumentEvent documentEvent) {
+        return handleDocumentEvent(documentEvent);
+    }
 
+    @Override
+    public ResponseEntity<Void> documentWebhookEvent(DocumentWebhookEvent documentWebhookEvent) {
+        logger.info("Received webhook event");
+
+        ArrayList<DocumentEvent> documentEvents = new ArrayList<>();
+        List<DocumentWebhookEventData> eventList = documentWebhookEvent.getData();
+
+        if(eventList == null || eventList.size() < 1) {
+            throw new AiReviewerDocumentException("Invalid data array in request body.");
+        }
+
+        for(DocumentWebhookEventData event : eventList) {
+            DocumentEvent documentEvent = new DocumentEvent();
+            documentEvent.setDocumentId(event.getId());
+            documentEvent.setStatus(event.getStatus());
+            documentEvents.add(documentEvent);
+        }
+
+        for(DocumentEvent documentEvent : documentEvents) {
+            handleDocumentEvent(documentEvent);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ProcessedDocument> documentProcessed(UUID xTransactionId, BigDecimal documentId) {
+
+        logger.info("document {} requested ", documentId);
+
+        Optional<ExtractResponse> extractResponseCached = extractStore.getResponse(documentId);
+
+        if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
+        if (!extractResponseCached.get().getExtract().getTransactionId().equals(xTransactionId)) throw new AiReviewerInvalidTransactionIdException("Requested transaction id is not valid");
+
+        //Clear cache
+        extractStore.evict(documentId);
+        extractStore.evictResponse(documentId);
+
+        return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
+
+    }
+
+    private ObjectNode buildFormData(ProjectFieldsResponse response, DocumentTypeConfiguration config) {
+
+        if (config == null)
+            throw new AiReviewerDocumentConfigException("Document Configuration not found");
+
+        return fieldProcessor.getJson(config.getDocumentConfig(),
+                response.getData().getFields());
+
+    }
+
+    private ResponseEntity<Void> handleDocumentEvent(DocumentEvent documentEvent) {
         logger.info("document {} status has changed to {}", documentEvent.getDocumentId(), documentEvent.getStatus());
 
         if (documentEvent.getStatus().equalsIgnoreCase(Keys.PROCESSED_STATUS)) {
@@ -153,35 +214,6 @@ public class DocumentsApiDelegateImpl implements DocumentsApiDelegate {
 
         MDC.remove(Keys.DOCUMENT_TYPE);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-    }
-
-    @Override
-    public ResponseEntity<ProcessedDocument> documentProcessed(UUID xTransactionId, BigDecimal documentId) {
-
-        logger.info("document {} requested ", documentId);
-
-        Optional<ExtractResponse> extractResponseCached = extractStore.getResponse(documentId);
-
-        if (!extractResponseCached.isPresent()) throw new AiReviewerCacheException("Document not found in cache");
-        if (!extractResponseCached.get().getExtract().getTransactionId().equals(xTransactionId)) throw new AiReviewerInvalidTransactionIdException("Requested transaction id is not valid");
-
-        //Clear cache
-        extractStore.evict(documentId);
-        extractStore.evictResponse(documentId);
-
-        return ResponseEntity.ok(processedDocumentMapper.toProcessedDocument(extractResponseCached.get(), extractResponseCached.get().getDocumentValidation().getValidationResults()));
-
-    }
-
-    private ObjectNode buildFormData(ProjectFieldsResponse response, DocumentTypeConfiguration config) {
-
-        if (config == null)
-            throw new AiReviewerDocumentConfigException("Document Configuration not found");
-
-        return fieldProcessor.getJson(config.getDocumentConfig(),
-                response.getData().getFields());
-
     }
 
 }
