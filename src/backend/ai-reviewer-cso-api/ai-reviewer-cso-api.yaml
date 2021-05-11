@@ -6,7 +6,7 @@ info:
 servers:
   - url: "http://localhost:8090"
 tags:
-  - name: exrtact
+  - name: extract
     description: Endpoint to recieve extract notification
 paths:
   "/extract/notification":
@@ -14,7 +14,7 @@ paths:
       summary: Extract Notification
       operationId: ExtractNotification
       tags:
-        - exrtact
+        - extract
       parameters:
         - $ref: "#/components/parameters/xTransactionId"
       requestBody:
