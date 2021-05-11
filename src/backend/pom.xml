@@ -91,6 +91,12 @@
 				<module>ai-reviewer-mock-api</module>
 			</modules>
 		</profile>
+		<profile>
+			<id>ai-reviewer-cso</id>
+			<modules>
+				<module>ai-reviewer-cso-api</module>
+			</modules>
+		</profile>
 	</profiles>
 
 	<build>
