@@ -58,11 +58,15 @@ components:
     ExtractNotification:
       type: object
       required:
-        - type
+        - documentType
         - documentId
+        - returnUri
       properties:
         documentId:
           type: number
-        type:
+        documentType:
           type: string
+        returnUri:
+          type: string
+          format: uri
 

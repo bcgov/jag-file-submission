@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.aireviewercsoapi.model;
 
+import java.net.URI;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -7,6 +8,7 @@ public class ProcessedDocument {
     private UUID transactionId;
     private String type;
     private BigDecimal documentId;
+    private URI returnUri;
 
     public String getType() {
         return type;
@@ -20,11 +22,13 @@ public class ProcessedDocument {
         return documentId;
     }
 
+    public URI getReturnUri() { return returnUri; }
 
     public ProcessedDocument(Builder builder) {
         this.transactionId = builder.transactionId;
         this.documentId = builder.documentId;
         this.type = builder.type;
+        this.returnUri = builder.returnUri;
     }
 
     public static Builder builder() {
@@ -36,6 +40,7 @@ public class ProcessedDocument {
         private UUID transactionId;
         private String type;
         private BigDecimal documentId;
+        private URI returnUri;
 
         public Builder type(String type) {
             this.type = type;
@@ -50,6 +55,11 @@ public class ProcessedDocument {
 
         public Builder documentId(BigDecimal documentId) {
             this.documentId = documentId;
+            return this;
+        }
+
+        public Builder returnUri(URI returnUri) {
+            this.returnUri = returnUri;
             return this;
         }
 
