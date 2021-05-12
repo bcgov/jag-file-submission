@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -89,7 +90,7 @@ public class GetSubmissionDocumentTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<Resource> result = sut.getSubmittedDocument(BigDecimal.ONE, FOUND_DOCUMENT_IDENTIFIER);
+        ResponseEntity<MultipartFile> result = sut.getSubmittedDocument(BigDecimal.ONE, FOUND_DOCUMENT_IDENTIFIER);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 

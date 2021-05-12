@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -80,7 +81,7 @@ public class GetSubmissionSheetTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<Resource> result = sut.getSubmissionSheet(BigDecimal.ONE);
+        ResponseEntity<MultipartFile> result = sut.getSubmissionSheet(BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 
@@ -108,7 +109,7 @@ public class GetSubmissionSheetTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<Resource> result = sut.getSubmissionSheet(BigDecimal.TEN);
+        ResponseEntity<MultipartFile> result = sut.getSubmissionSheet(BigDecimal.TEN);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
 
