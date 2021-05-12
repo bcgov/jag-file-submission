@@ -15,19 +15,23 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
+import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -181,7 +185,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<Resource> getSubmissionDocument(UUID xTransactionId,
+    public ResponseEntity<MultipartFile> getSubmissionDocument(UUID xTransactionId,
                                                           UUID submissionId,
                                                           String filename) {
 
@@ -204,7 +208,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("successfully retrieved document for transaction [{}]", xTransactionId);
 
-        return ResponseEntity.ok(new ByteArrayResource(bytes));
+        return ResponseEntity.ok(FileUtils.createMultipartFile(filename,
+                ContentType.APPLICATION_OCTET_STREAM, new ByteArrayInputStream(bytes)));
 
     }
 
