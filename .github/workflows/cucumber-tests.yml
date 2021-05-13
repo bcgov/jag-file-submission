@@ -2,9 +2,9 @@ name: Cucumber Tests
 
 on:
   pull_request:
-    branches: [master]
+    branches: [ master ]
   push:
-    branches: [master]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -125,109 +125,20 @@ jobs:
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
 
-  efiling-reviewer-api-gcr:
-    name: Efiling Reviewer Api GCR
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull Git repo.
-        uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull efiling-reviewer-api-builder
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder || true
-
-      - name: build efiling-reviewer-api-builder
-        run: docker build ./src/backend
-          -f ./src/backend/Dockerfile.efiling-reviewer-api
-          --target build
-          -t efiling-reviewer-api:builder
-          --build-arg SERVICE_NAME=efiling-reviewer-api
-          --build-arg MVN_PROFILE=efiling-reviewer
-          --build-arg STARTERS_V=v0.1.8
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
-
-      - name: tag & push efiling-reviewer-api to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-reviewer-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-reviewer-api:builder
-
-  ai-reviewer-mock-api-gcr:
-    name: Ai Reviewer Api GCR
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull Git repo.
-        uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull ai-reviewer-mock-api-builder
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder || true
-
-      - name: build ai-reviewer-mock-api
-        run: docker build ./src/backend
-          -f ./src/backend/Dockerfile.ai-reviewer-mock-api
-          --target build
-          -t ai-reviewer-mock-api:builder
-          --build-arg SERVICE_NAME=ai-reviewer-mock-api
-          --build-arg MVN_PROFILE=ai-reviewer-mock
-          --build-arg STARTERS_V=v0.1.8
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder
-
-      - name: tag & push ai-reviewer-mock-api to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag ai-reviewer-mock-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-mock-api:builder
-
-  ai-reviewer-admin-gcr:
-    name: Ai Reviewer Admin GCR
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull Git repo.
-        uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull ai-reviewer-admin-builder
-        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-admin:builder || true
-
-      - name: build ai-reviewer-admin-builder
-        run: docker build ./src/frontend/ai-reviewer-admin
-          --target build
-          -t ai-reviewer-admin:builder
-          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-admin:builder
-
-      - name: tag & push ai-reviewer-admin to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag ai-reviewer-admin:builder docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-admin:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/ai-reviewer-admin:builder
-
   cucumber-tests:
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
-    needs: [efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr, efiling-reviewer-api-gcr, ai-reviewer-mock-api-gcr, ai-reviewer-admin-gcr]
+    needs: [ efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr ]
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
 
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
-        run: docker-compose pull -q --parallel redis clamav keycloak mongodb skywalking-oap-server
+        run: docker-compose pull -q --parallel redis clamav keycloak skywalking-oap-server
 
       - name: Standup Infra
-        run: docker-compose up -d redis clamav keycloak mongodb skywalking-oap-server
+        run: docker-compose up -d redis clamav keycloak skywalking-oap-server
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -246,16 +157,16 @@ jobs:
 
       - name: Pull images (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config efiling-reviewer-api ai-reviewer-mock-api ai-reviewer-admin
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
 
       - name: Standup Docker Pods (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend efiling-reviewer-api ai-reviewer-mock-api ai-reviewer-admin
+        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
 
 
       - name: Standup Docker Pods (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
-        run: docker-compose up -d efiling-api efiling-frontend efiling-reviewer-api ai-reviewer-mock-api ai-reviewer-admin
+        run: docker-compose up -d efiling-api efiling-frontend
 
       - name: Configure keycloak (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
@@ -282,7 +193,7 @@ jobs:
           wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-          ./dockerize -wait http://127.0.0.1:8080/actuator/health -timeout 120s -wait http://127.0.0.1:1337/api/isServerUp -timeout 120s -wait http://127.0.0.1:8090/actuator/health -timeout 120s -wait http://127.0.0.1:3002/actuator/health -timeout 120s
+          ./dockerize -wait http://127.0.0.1:8080/actuator/health -timeout 120s
           mvn verify -ntp -f tests/pom.xml
 
       # Upload Spark report for debugging purposes

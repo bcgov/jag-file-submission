@@ -60,16 +60,6 @@ public class TestConfig {
     }
 
     @Bean
-    public ExtractDocumentService extractDocumentService() {
-        return new ExtractDocumentService();
-    }
-
-    @Bean
-    public DocumentTypeConfigService documentTypeConfigService() {
-        return new DocumentTypeConfigService();
-    }
-
-    @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
         return new BrowserScopePostProcessor();
     }
@@ -149,12 +139,6 @@ public class TestConfig {
     @Scope("prototype")
     public SubmissionHistoryPage submissionHistoryPage() {
         return new SubmissionHistoryPage();
-    }
-
-    @Bean
-    @Scope("prototype")
-    public AiReviewerAdminClientPage aiReviewerAdminClientPage() {
-        return new AiReviewerAdminClientPage();
     }
 
 }
