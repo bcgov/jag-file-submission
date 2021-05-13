@@ -3,23 +3,20 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportsTypes;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.core.io.Resource;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
