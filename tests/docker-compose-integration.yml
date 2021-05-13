@@ -29,9 +29,3 @@ services:
   #############################################################################################
   ai-reviewer-mock-api:
     image: docker.pkg.github.com/bcgov/jag-file-submission/ai-reviewer-mock-api
-
-  #############################################################################################
-  ###                           AI REVIEWER ADMIN (DEMO)                                 ###
-  #############################################################################################
-  ai-reviewer-admin:
-    image: docker.pkg.github.com/bcgov/jag-file-submission/ai-reviewer-admin
