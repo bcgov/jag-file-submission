@@ -26,7 +26,7 @@ public class FileUtils {
     public static MultipartFile createMultipartFile(String name, ContentType contentType, InputStream bytes) {
 
         try {
-            return new MockMultipartFile(name, name, String.valueOf(contentType), bytes);
+            return new MockMultipartFile(name, name, contentType.toString(), bytes);
         } catch (IOException e) {
             return null;
         }

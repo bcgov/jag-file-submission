@@ -128,12 +128,12 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         if(!result.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", result.get().getFilename()));
+        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", reportRequest.getFileName()));
 
         try {
             return ResponseEntity.ok()
                     .headers(header)
-                    .body(FileUtils.createMultipartFile(result.get().getFilename(), ContentType.APPLICATION_OCTET_STREAM, result.get().getInputStream()));
+                    .body(FileUtils.createMultipartFile(reportRequest.getFileName(), ContentType.APPLICATION_OCTET_STREAM, result.get().getInputStream()));
         } catch (IOException e) {
             throw new FileTypeException("Error creating file");
         }
