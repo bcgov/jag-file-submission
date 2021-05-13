@@ -103,7 +103,7 @@ public class GetSubmissionDocumentTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<MultipartFile> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test.txt");
+        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test.txt");
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
 
@@ -117,7 +117,7 @@ public class GetSubmissionDocumentTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<MultipartFile> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test2.txt");
+        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test2.txt");
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }

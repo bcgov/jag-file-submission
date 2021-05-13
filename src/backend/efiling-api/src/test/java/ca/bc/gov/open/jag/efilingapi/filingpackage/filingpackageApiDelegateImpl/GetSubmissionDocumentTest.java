@@ -90,7 +90,7 @@ public class GetSubmissionDocumentTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<MultipartFile> result = sut.getSubmittedDocument(BigDecimal.ONE, FOUND_DOCUMENT_IDENTIFIER);
+        ResponseEntity<Resource> result = sut.getSubmittedDocument(BigDecimal.ONE, FOUND_DOCUMENT_IDENTIFIER);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 

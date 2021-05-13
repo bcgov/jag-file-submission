@@ -83,7 +83,7 @@ public class GetPaymentReceiptTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<MultipartFile> result = sut.getPaymentReceipt(BigDecimal.ONE);
+        ResponseEntity<Resource> result = sut.getPaymentReceipt(BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 
@@ -111,7 +111,7 @@ public class GetPaymentReceiptTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<MultipartFile> result = sut.getPaymentReceipt(BigDecimal.TEN);
+        ResponseEntity<Resource> result = sut.getPaymentReceipt(BigDecimal.TEN);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
 

@@ -8,11 +8,9 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 
-import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportsTypes;
-import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -20,12 +18,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.annotation.security.RolesAllowed;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.List;
@@ -81,7 +77,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<MultipartFile> getSubmissionSheet(BigDecimal packageIdentifier) {
+    public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
         logger.info("get submission sheet request received");
 
@@ -94,7 +90,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<MultipartFile> getPaymentReceipt(BigDecimal packageIdentifier) {
+    public ResponseEntity<Resource> getPaymentReceipt(BigDecimal packageIdentifier) {
 
         logger.info("get payment receipt request received");
 
@@ -107,7 +103,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<MultipartFile> getRegistryNotice(BigDecimal packageIdentifier) {
+    public ResponseEntity<Resource> getRegistryNotice(BigDecimal packageIdentifier) {
 
         logger.info("get registry notice request received");
 
@@ -118,7 +114,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     }
 
-    private ResponseEntity<MultipartFile> getReport(ReportRequest reportRequest) {
+    private ResponseEntity<Resource> getReport(ReportRequest reportRequest) {
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -128,22 +124,18 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         if(!result.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", reportRequest.getFileName()));
+        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}", result.get().getFilename()));
 
-        try {
-            return ResponseEntity.ok()
-                    .headers(header)
-                    .body(FileUtils.createMultipartFile(reportRequest.getFileName(), ContentType.APPLICATION_OCTET_STREAM, result.get().getInputStream()));
-        } catch (IOException e) {
-            throw new FileTypeException("Error creating file");
-        }
+        return ResponseEntity.ok()
+                .headers(header)
+                .body(result.get());
 
     }
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<MultipartFile> getSubmittedDocument(BigDecimal packageIdentifier,
-                                                              BigDecimal documentIdentifier) {
+    public ResponseEntity<Resource> getSubmittedDocument(BigDecimal packageIdentifier,
+                                                         BigDecimal documentIdentifier) {
 
         logger.info("get document request received");
 
@@ -158,13 +150,9 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}",result.get().getName()));
 
-        try {
-            return ResponseEntity.ok()
-                    .headers(header)
-                    .body(FileUtils.createMultipartFile(result.get().getName(), ContentType.APPLICATION_OCTET_STREAM, result.get().getData().getInputStream()));
-        } catch (IOException e) {
-            throw new FileTypeException("Error creating file");
-        }
+        return ResponseEntity.ok()
+                .headers(header)
+                .body(result.get().getData());
 
     }
 
@@ -181,7 +169,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         try {
             filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok().build();
         } catch (EfilingAccountServiceException e) {
             throw new DeleteDocumentException(DELETE_DOCUMENT_ERROR, HttpStatus.NOT_FOUND);
         } catch (Exception e) {

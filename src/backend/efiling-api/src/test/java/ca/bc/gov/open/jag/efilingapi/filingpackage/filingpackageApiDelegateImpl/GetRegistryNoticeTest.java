@@ -78,7 +78,7 @@ public class GetRegistryNoticeTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<MultipartFile> result = sut.getRegistryNotice(BigDecimal.ONE);
+        ResponseEntity<Resource> result = sut.getRegistryNotice(BigDecimal.ONE);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
 
@@ -106,7 +106,7 @@ public class GetRegistryNoticeTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<MultipartFile> result = sut.getRegistryNotice(BigDecimal.TEN);
+        ResponseEntity<Resource> result = sut.getRegistryNotice(BigDecimal.TEN);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
 
