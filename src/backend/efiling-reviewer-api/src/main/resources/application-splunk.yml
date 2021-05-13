@@ -1,3 +1,0 @@
-splunk:
-  url: ${SPLUNK_URL}
-  token: ${SPLUNK_TOKEN}

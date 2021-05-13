@@ -1,9 +1,0 @@
-server:
-  port: ${SERVER_PORT:1337}
-  tomcat:
-    uri-encoding: utf-8
-    util:
-      http:
-        parser:
-          HttpParser:
-            relaxedQueryChars : [ ]

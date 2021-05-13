@@ -16,7 +16,6 @@ The eFiling hub is a foundational component to enhance citizen experiences for t
     ├── src/                                    # application source files
     │   ├── backend                             # backend applications
     │   │   ├── efiling-api                     # efiling api
-    │   │   ├── efiling-reviewer-api            # efiling reviewer api	
     │   │   ├── libs                            # backend libraries
     │   │   |   ├── efiling-bambora-api-client  # bamabora swagger for client generation
     │   │   |   ├── efiling-bom                 # pom Bill Of Materials
@@ -37,7 +36,6 @@ The eFiling hub is a foundational component to enhance citizen experiences for t
 | ------------------- | -------------------------------------------- | -------------------------------------------------------- |
 | backend             | all server side services                     | [README](src/backend/README.md)                          |
 | efiling-api         | the main api for interating with the service | [README](src/backend/efiling-api/README.md)              |
-| efiling-reviewer-api| the efiling-hub reviewer app                 | [README](src/backend/efiling-reviewer-api/README.md)          |
 | efiling-cso-starter | soap client implementations                  | [README](src/backend/libs/efiling-cso-starter/README.md) |
 | frontend            | all client side applications                 | [README](src/frontend/README.md)                         |
 | efiling-frontend    | the frontend for uploading documents         | [README](src/frontend/efiling-frontend/README.md)        |
