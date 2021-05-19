@@ -12,6 +12,7 @@ import queryString from "query-string";
 import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SafefyCheck from "../../../components/safety-check/SafetyCheck";
+import { isParentAppFLA } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import {
   getFilingPackage,
   downloadSubmissionSheet,
@@ -300,7 +301,7 @@ export default function PackageReview() {
               </section>
             </>
           )}
-          <SafefyCheck />
+          {isParentAppFLA() && <SafefyCheck />}
         </div>
         <div className="sidecard">
           <Sidecard sideCard={csoAccountDetailsSidecard} />
