@@ -1,3 +1,5 @@
+import { FLA_PARENT_APP_CODE } from "../../../EnvConfig";
+
 const jwt = require("jsonwebtoken");
 
 /**
@@ -36,4 +38,10 @@ export function generateJWTToken(payload) {
 export function getIdentityProviderAlias() {
   const token = getJWTData();
   return token.identityProviderAlias;
+}
+
+/** Returns true if the parent application has a code of FLA, false otherwise. */
+export function isParentAppFLA() {
+  const token = getJWTData();
+  return FLA_PARENT_APP_CODE === token["cso-application-code"];
 }
