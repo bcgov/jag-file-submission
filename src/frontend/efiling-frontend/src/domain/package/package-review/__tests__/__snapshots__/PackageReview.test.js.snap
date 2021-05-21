@@ -607,9 +607,9 @@ Duis aute irure dolor.
         <span
           class="fw-bold"
         >
-          Please Note: 
+          Please Note: 
         </span>
-         Visit your CSO account to 
+         Visit your CSO account to  
         <span
           class="file-href"
           data-testid="cso-link"
@@ -1290,9 +1290,9 @@ exports[`PackageReview Component Reload 1`] = `
         <span
           class="fw-bold"
         >
-          Please Note: 
+          Please Note: 
         </span>
-         Visit your CSO account to 
+         Visit your CSO account to  
         <span
           class="file-href"
           data-testid="cso-link"
@@ -1973,9 +1973,9 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
         <span
           class="fw-bold"
         >
-          Please Note: 
+          Please Note: 
         </span>
-         Visit your CSO account to 
+         Visit your CSO account to  
         <span
           class="file-href"
           data-testid="cso-link"

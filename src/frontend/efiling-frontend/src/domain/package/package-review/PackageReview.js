@@ -277,8 +277,8 @@ export default function PackageReview() {
           </Tabs>
           <br />
           <div className="row note">
-            <span className="fw-bold">Please Note: </span> Visit your CSO
-            account to{" "}
+            <span className="fw-bold">Please Note:&nbsp;</span> Visit your CSO
+            account to&nbsp;{" "}
             <span
               role="button"
               data-testid="cso-link"
