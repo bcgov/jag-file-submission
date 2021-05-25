@@ -12,6 +12,7 @@ import queryString from "query-string";
 import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SafefyCheck from "../../../components/safety-check/SafetyCheck";
+import { isParentAppFLA } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import {
   getFilingPackage,
   downloadSubmissionSheet,
@@ -276,8 +277,8 @@ export default function PackageReview() {
           </Tabs>
           <br />
           <div className="row note">
-            <span className="fw-bold">Please Note: </span> Visit your CSO
-            account to{" "}
+            <span className="fw-bold">Please Note:&nbsp;</span> Visit your CSO
+            account to&nbsp;{" "}
             <span
               role="button"
               data-testid="cso-link"
@@ -300,7 +301,7 @@ export default function PackageReview() {
               </section>
             </>
           )}
-          <SafefyCheck />
+          {isParentAppFLA() && <SafefyCheck />}
         </div>
         <div className="sidecard">
           <Sidecard sideCard={csoAccountDetailsSidecard} />
