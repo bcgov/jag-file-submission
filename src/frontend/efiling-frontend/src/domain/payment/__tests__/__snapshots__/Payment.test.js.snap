@@ -1746,7 +1746,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
           data-testid="continue-btn"
           type="button"
         >
-          Continue to Payment
+          Continue
         </button>
       </section>
     </div>
