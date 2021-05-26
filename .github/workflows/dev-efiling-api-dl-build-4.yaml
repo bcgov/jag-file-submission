@@ -1,4 +1,4 @@
-name: Build Efiling API Image and Push to Openshift Registry
+name: Build Efiling API Dark Launch Image and Push to Openshift 4 Registry
 
 on:
   push:
