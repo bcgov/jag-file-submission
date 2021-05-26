@@ -431,7 +431,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
           data-testid="continue-btn"
           type="button"
         >
-          Continue to Payment
+          Continue
         </button>
       </section>
     </div>
@@ -1351,7 +1351,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
           data-testid="continue-btn"
           type="button"
         >
-          Continue to Payment
+          Continue
         </button>
       </section>
     </div>

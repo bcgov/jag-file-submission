@@ -170,7 +170,7 @@ export default function PackageConfirmation({
             cancelButton={confirmationPopup.cancelButton}
           />
           <Button
-            label="Continue to Payment"
+            label="Continue"
             onClick={() => setShowPayment(true)}
             styling="bcgov-normal-blue btn"
             testId="continue-btn"

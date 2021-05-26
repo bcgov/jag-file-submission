@@ -229,7 +229,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
           data-testid="continue-btn"
           type="button"
         >
-          Continue to Payment
+          Continue
         </button>
       </section>
     </div>
@@ -618,7 +618,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
           data-testid="continue-btn"
           type="button"
         >
-          Continue to Payment
+          Continue
         </button>
       </section>
     </div>
@@ -1038,7 +1038,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
           data-testid="continue-btn"
           type="button"
         >
-          Continue to Payment
+          Continue
         </button>
       </section>
     </div>

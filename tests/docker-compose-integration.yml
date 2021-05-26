@@ -17,21 +17,3 @@ services:
   # #############################################################################################
   keycloak-config:
     image: docker.pkg.github.com/bcgov/jag-file-submission/keycloak-config:demo
-
-  #############################################################################################
-  ###                           Efiling reviewer backend app                                ###
-  #############################################################################################
-  efiling-reviewer-api:
-    image: docker.pkg.github.com/bcgov/jag-file-submission/efiling-reviewer-api
-
-  #############################################################################################
-  ###                           AI Reviewer Mock Service                                 ###
-  #############################################################################################
-  ai-reviewer-mock-api:
-    image: docker.pkg.github.com/bcgov/jag-file-submission/ai-reviewer-mock-api
-
-  #############################################################################################
-  ###                           AI REVIEWER ADMIN (DEMO)                                 ###
-  #############################################################################################
-  ai-reviewer-admin:
-    image: docker.pkg.github.com/bcgov/jag-file-submission/ai-reviewer-admin

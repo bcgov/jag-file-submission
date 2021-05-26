@@ -30,12 +30,8 @@
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
-				<module>libs/efiling-diligen-client</module>
-				<module>libs/efiling-diligen-client-starter</module>
 				<module>libs/efiling-mail-it</module>
 				<module>efiling-api</module>
-				<module>efiling-reviewer-api</module>
-				<module>ai-reviewer-cso-api</module>
 			</modules>
 		</profile>
 		<profile>
@@ -48,8 +44,6 @@
 				<module>libs/efiling-cso-client-preview</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
-				<module>libs/efiling-diligen-client</module>
-				<module>libs/efiling-diligen-client-starter</module>
 				<module>libs/efiling-mail-it</module>
 			</modules>
 		</profile>
@@ -79,23 +73,7 @@
 			<id>efiling-reviewer</id>
 			<modules>
 				<module>libs/efiling-bom</module>
-				<module>libs/efiling-diligen-client</module>
-				<module>libs/efiling-diligen-client-starter</module>
 				<module>libs/efiling-mail-it</module>
-				<module>efiling-reviewer-api</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>ai-reviewer-mock</id>
-			<modules>
-				<module>ai-reviewer-mock-api</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>ai-reviewer-cso</id>
-			<modules>
-				<module>libs/efiling-bom</module>
-				<module>ai-reviewer-cso-api</module>
 			</modules>
 		</profile>
 	</profiles>

@@ -3,11 +3,12 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage;
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
-import ca.bc.gov.open.jag.efilingapi.error.*;
+import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
+import ca.bc.gov.open.jag.efilingapi.error.DeleteDocumentException;
+import ca.bc.gov.open.jag.efilingapi.error.FilingPackageNotFoundException;
+import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
-import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
-
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportsTypes;
@@ -19,9 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
 import javax.annotation.security.RolesAllowed;
-
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.List;
@@ -169,7 +168,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         try {
             filingPackageService.deleteSubmittedDocument(universalId.get(), packageIdentifier, documentIdentifier);
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok().build();
         } catch (EfilingAccountServiceException e) {
             throw new DeleteDocumentException(DELETE_DOCUMENT_ERROR, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
