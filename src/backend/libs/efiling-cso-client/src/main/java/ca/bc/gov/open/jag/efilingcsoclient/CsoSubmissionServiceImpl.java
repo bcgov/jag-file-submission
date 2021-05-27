@@ -112,12 +112,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
             String documentTypeCd = document.getDocumentTypeCd();
             for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
-                if(documentTypeDetail.getType().equals(documentTypeCd)) {
-                    if(documentTypeDetail.isAutoProcessing()) {
-                        csoFilingPackage.setAutomatedProcessYn(true);
-                        autoProcess = true;
-                        break;
-                    }
+                if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
+                    csoFilingPackage.setAutomatedProcessYn(true);
+                    autoProcess = true;
+                    break;
                 }
             }
         }

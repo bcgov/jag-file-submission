@@ -110,8 +110,8 @@ public class SubmitFilingPackageTest {
                 .calculateSubmittedDate(any(), Mockito.eq(BAD_LOCATION));
 
 
-        DocumentTypeDetails documentTypeDetailsNoRush = new DocumentTypeDetails("description", "type1", new BigDecimal(1.0), false, false, false);
-        DocumentTypeDetails documentTypeDetailsRush = new DocumentTypeDetails("description", "type2", new BigDecimal(1.0), false, false, true);
+        DocumentTypeDetails documentTypeDetailsNoRush = new DocumentTypeDetails("description", "type1", new BigDecimal("1"), false, false, false);
+        DocumentTypeDetails documentTypeDetailsRush = new DocumentTypeDetails("description", "type2", new BigDecimal("1"), false, false, true);
         List<DocumentTypeDetails> documentTypeDetailsList = Arrays.asList(documentTypeDetailsNoRush, documentTypeDetailsRush);
         Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString())).thenReturn(documentTypeDetailsList);
 
