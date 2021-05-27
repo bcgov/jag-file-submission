@@ -6,6 +6,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SubmissionList from "./SubmissionList";
 import SafefyCheck from "../../../components/safety-check/SafetyCheck";
 import { getSubmissionHistory } from "./SubmissionHistoryService";
+import { isParentAppFLA } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import "./SubmissionHistory.scss";
 import { Toast } from "../../../components/toast/Toast";
 
@@ -95,7 +96,7 @@ export default function SubmissionHistory() {
           your organization. Packages will be available in this list for 1 year
           after the registry processes them.
         </p>
-        <SafefyCheck />
+        {isParentAppFLA() && <SafefyCheck />}
       </div>
 
       <div className="sidecard">

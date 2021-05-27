@@ -103,7 +103,7 @@ describe("PackageConfirmation Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("On click of continue to payment button, it redirects to the payment page", async () => {
+  test("On click of Continue button, it redirects to the payment page", async () => {
     mock
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
@@ -117,7 +117,7 @@ describe("PackageConfirmation Component", () => {
 
     await waitFor(() => {});
 
-    fireEvent.click(getByText(container, "Continue to Payment"));
+    fireEvent.click(getByText(container, "Continue"));
 
     expect(asFragment()).toMatchSnapshot();
   });

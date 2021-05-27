@@ -1242,7 +1242,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           data-testid="continue-btn"
           type="button"
         >
-          Continue to Payment
+          Continue
         </button>
       </section>
     </div>

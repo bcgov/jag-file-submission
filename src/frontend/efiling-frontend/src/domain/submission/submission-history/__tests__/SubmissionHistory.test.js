@@ -129,4 +129,32 @@ describe("Submission History Component", () => {
 
     expect(window.open).not.toHaveBeenCalled();
   });
+
+  test("Filter SafetyCheck - parent app from FLA", async () => {
+    const token = generateJWTToken({
+      preferred_username: "username@bceid",
+      email: "username@example.com",
+      identityProviderAlias: "bcsc",
+      "cso-application-code": "FLA",
+    });
+    localStorage.setItem("jwt", token);
+
+    const { queryByText } = render(<SubmissionHistory />);
+    await waitFor(() => {});
+    expect(queryByText(/SAFETY CHECK/i)).toBeInTheDocument();
+  });
+
+  test("Filter SafetyCheck - parent app not from FLA", async () => {
+    const token = generateJWTToken({
+      preferred_username: "username@bceid",
+      email: "username@example.com",
+      identityProviderAlias: "bcsc",
+      "cso-application-code": "DEMO",
+    });
+    localStorage.setItem("jwt", token);
+
+    const { queryByText } = render(<SubmissionHistory />);
+    await waitFor(() => {});
+    expect(queryByText(/SAFETY CHECK/i)).not.toBeInTheDocument();
+  });
 });
