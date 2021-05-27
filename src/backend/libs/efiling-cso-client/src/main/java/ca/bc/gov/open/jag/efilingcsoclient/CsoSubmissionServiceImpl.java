@@ -99,26 +99,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails));
         }
 
-        String courtClass = efilingPackage.getCourt().getCourtClass();
-        String courtLevel = efilingPackage.getCourt().getLevel();
-        List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
-
-        List<CivilDocument> documents = csoFilingPackage.getDocuments();
-        boolean autoProcess = false;
-        for(CivilDocument document : documents) {
-            if(autoProcess) {
-                break;
-            }
-
-            String documentTypeCd = document.getDocumentTypeCd();
-            for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
-                if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
-                    csoFilingPackage.setAutomatedProcessYn(true);
-                    autoProcess = true;
-                    break;
-                }
-            }
-        }
+        determineAutoProcessingFlagFromDocuments(efilingPackage, csoFilingPackage);
 
         BigDecimal filingResult = filePackage(csoFilingPackage);
 
@@ -334,6 +315,30 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         }
 
     }
+
+    private void determineAutoProcessingFlagFromDocuments(FilingPackage efilingPackage, ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage) {
+        String courtClass = efilingPackage.getCourt().getCourtClass();
+        String courtLevel = efilingPackage.getCourt().getLevel();
+        List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
+
+        List<CivilDocument> documents = csoFilingPackage.getDocuments();
+        boolean autoProcess = false;
+        for(CivilDocument document : documents) {
+            if(autoProcess) {
+                break;
+            }
+
+            String documentTypeCd = document.getDocumentTypeCd();
+            for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
+                if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
+                    csoFilingPackage.setAutomatedProcessYn(true);
+                    autoProcess = true;
+                    break;
+                }
+            }
+        }
+    }
+
     //This function will be used when cso has the valid flag available
     private Boolean validateJson(Object json) {
 
