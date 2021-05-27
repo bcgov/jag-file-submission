@@ -3,8 +3,11 @@ package ca.bc.gov.open.jag.efilingcsoclient;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.filing.ProcessItemStatus;
 import ca.bc.gov.ag.csows.filing.*;
+import ca.bc.gov.ag.csows.filing.status.GetDocumentStatusTypes;
+import ca.bc.gov.ag.csows.filing.status.GetDocumentStatusTypesResponse;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
@@ -41,6 +44,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private final DocumentMapper documentMapper;
     private final CsoPartyMapper csoPartyMapper;
     private final PackageAuthorityMapper packageAuthorityMapper;
+    private final EfilingDocumentService efilingDocumentService;
 
     public CsoSubmissionServiceImpl(FilingFacadeBean filingFacadeBean,
                                     ServiceFacadeBean serviceFacadeBean,
@@ -48,7 +52,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                                     FilingPackageMapper filingPackageMapper,
                                     FinancialTransactionMapper financialTransactionMapper,
                                     CsoProperties csoProperties,
-                                    DocumentMapper documentMapper, CsoPartyMapper csoPartyMapper, PackageAuthorityMapper packageAuthorityMapper) {
+                                    DocumentMapper documentMapper, CsoPartyMapper csoPartyMapper, PackageAuthorityMapper packageAuthorityMapper, EfilingDocumentService efilingDocumentService) {
         this.filingFacadeBean = filingFacadeBean;
         this.serviceFacadeBean = serviceFacadeBean;
         this.serviceMapper = serviceMapper;
@@ -58,6 +62,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         this.documentMapper = documentMapper;
         this.csoPartyMapper = csoPartyMapper;
         this.packageAuthorityMapper = packageAuthorityMapper;
+        this.efilingDocumentService = efilingDocumentService;
     }
 
     @Override
@@ -92,6 +97,29 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         if (efilingPackage.isRushedSubmission()) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails));
+        }
+
+        String courtClass = efilingPackage.getCourt().getCourtClass();
+        String courtLevel = efilingPackage.getCourt().getLevel();
+        List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
+
+        List<CivilDocument> documents = csoFilingPackage.getDocuments();
+        boolean autoProcess = false;
+        for(CivilDocument document : documents) {
+            if(autoProcess) {
+                break;
+            }
+
+            String documentTypeCd = document.getDocumentTypeCd();
+            for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
+                if(documentTypeDetail.getType().equals(documentTypeCd)) {
+                    if(documentTypeDetail.isAutoProcessing()) {
+                        csoFilingPackage.setAutomatedProcessYn(true);
+                        autoProcess = true;
+                        break;
+                    }
+                }
+            }
         }
 
         BigDecimal filingResult = filePackage(csoFilingPackage);

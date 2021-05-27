@@ -1,9 +1,11 @@
 package ca.bc.gov.open.jag.efilingcsoclient.csoSubmissionServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
+import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
@@ -21,11 +23,10 @@ import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.UUID;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Efiling Submission Test")
@@ -74,6 +75,9 @@ public class SubmitFilingPackageTest {
     @Mock
     private CsoProperties csoPropertiesMock;
 
+    @Mock
+    private EfilingDocumentService efilingDocumentServiceMock;
+
     @BeforeEach
     public void beforeEach() throws NestedEjbException_Exception, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception {
 
@@ -105,7 +109,13 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(ca.bc.gov.ag.csows.filing.NestedEjbException_Exception.class).when(filingFacadeBeanMock)
                 .calculateSubmittedDate(any(), Mockito.eq(BAD_LOCATION));
 
-        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper, csoPartyMapper, new PackageAuthorityMapperImpl());
+
+        DocumentTypeDetails documentTypeDetailsNoRush = new DocumentTypeDetails("description", "type1", new BigDecimal(1.0), false, false, false);
+        DocumentTypeDetails documentTypeDetailsRush = new DocumentTypeDetails("description", "type2", new BigDecimal(1.0), false, false, true);
+        List<DocumentTypeDetails> documentTypeDetailsList = Arrays.asList(documentTypeDetailsNoRush, documentTypeDetailsRush);
+        Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString())).thenReturn(documentTypeDetailsList);
+
+        sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper, csoPartyMapper, new PackageAuthorityMapperImpl(), efilingDocumentServiceMock);
 
     }
 
@@ -476,6 +486,87 @@ public class SubmitFilingPackageTest {
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
         Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+    }
+
+    @DisplayName("OK: set auto processing flag if package contains auto processing document type")
+    @Test
+    public void testWithAutoProcessingDocumentTypes() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception, DatatypeConfigurationException {
+        Mockito.when(filingFacadeBeanMock.submitFiling(argThat(filingPackage -> filingPackage.isAutomatedProcessYn() == true))).thenReturn(BigDecimal.ONE);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                .name(DOCUMENT)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .type("type2")
+                                .subType(TYPE)
+                                .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                .create(),
+                                Document.builder()
+                                .name(DOCUMENT)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .type("type1")
+                                .subType(TYPE)
+                                .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                .create()))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Assertions.assertEquals(BigDecimal.ONE, actual.getTransactionId());
+    }
+
+    @DisplayName("OK: don't set auto processing flag if package does not contains auto processing document type")
+    @Test
+    public void testWithoutAutoProcessingDocumentTypes() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception, DatatypeConfigurationException {
+        Mockito.when(filingFacadeBeanMock.submitFiling(argThat(filingPackage -> filingPackage.isAutomatedProcessYn() == false))).thenReturn(BigDecimal.TEN);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                .name(DOCUMENT)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .type("type1")
+                                .subType(TYPE)
+                                .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                .create()))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
     }
 
     @DisplayName("Exception: payment to bambora throw exception")
