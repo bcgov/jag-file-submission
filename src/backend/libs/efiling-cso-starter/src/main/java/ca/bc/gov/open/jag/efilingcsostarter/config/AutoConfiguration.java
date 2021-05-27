@@ -240,7 +240,8 @@ public class AutoConfiguration {
                                                              FinancialTransactionMapper financialTransactionMapper,
                                                              DocumentMapper documentMapper,
                                                              CsoPartyMapper csoPartyMapper,
-                                                             PackageAuthorityMapper packageAuthorityMapper) {
+                                                             PackageAuthorityMapper packageAuthorityMapper,
+                                                             EfilingDocumentService efilingDocumentService) {
 
         return new CsoSubmissionServiceImpl(
                 filingFacadeBean,
@@ -251,7 +252,8 @@ public class AutoConfiguration {
                 csoProperties,
                 documentMapper,
                 csoPartyMapper,
-                packageAuthorityMapper); }
+                packageAuthorityMapper,
+                efilingDocumentService); }
 
 
 

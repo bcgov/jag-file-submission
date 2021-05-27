@@ -69,7 +69,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
             logger.info("Calling soap findStatusBySearchCriteria by client id and package service ");
 
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null);
+                    .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null, null);
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
@@ -103,7 +103,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
             DateTime startDate = endDate.minusYears(1);
 
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null);
+                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null, null);
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
