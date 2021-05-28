@@ -14,7 +14,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           docker_name: 'owasp/zap2docker-stable'
-          target: 'http://react-web-app-qzaydf-dev.pathfinder.gov.bc.ca/efiling'
+          target: 'https://react-web-app-fc726a-dev.apps.silver.devops.gov.bc.ca/efilinghub'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
           fail_action: true
