@@ -11,7 +11,7 @@ public class PaymentConstants {
     }
     public static final String COURT_SERVICES = "COURT SERVICES";
     public static final Integer CARD_ID = 1;
-    public static final Integer BAMBORA_APPROVAL_RESPONSE = 1;
+    public static final String BAMBORA_APPROVAL_RESPONSE = "1";
 
     public static final String TRANSACTION_STATE_DECLINED = "DEC";
     public static final String TRANSACTION_STATE_APPROVED = "APP";
