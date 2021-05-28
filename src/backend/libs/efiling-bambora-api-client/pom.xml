@@ -154,8 +154,6 @@
 							<configOptions>
 								<dateLibrary>joda</dateLibrary>
 								<validateSpec>false</validateSpec>
-								<legacyDiscriminatorBehavior>false</legacyDiscriminatorBehavior>
-								<serializationLibrary>gson</serializationLibrary>
 							</configOptions>
 							<library>jersey2</library>
 							<apiPackage>${default-package}.api</apiPackage>

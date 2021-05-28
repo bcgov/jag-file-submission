@@ -41,7 +41,7 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
             result.setInvoiceNo(response.getOrderNumber());
             result.setTransactonDtm(DateTime.now());
             result.setTransactionAmt(BigDecimal.valueOf(response.getAmount()));
-            if (response.getApproved().equals(PaymentConstants.BAMBORA_APPROVAL_RESPONSE)) {
+            if (response.getApproved().equals(PaymentConstants.BAMBORA_APPROVAL_RESPONSE.toString())) {
                 MDC.put(PaymentConstants.MDC_EFILING_SUBMISSION_FEE, response.getAmount().toString());
                 logger.info("Successful payment of [{}]", response.getAmount());
                 MDC.remove(PaymentConstants.MDC_EFILING_SUBMISSION_FEE);
