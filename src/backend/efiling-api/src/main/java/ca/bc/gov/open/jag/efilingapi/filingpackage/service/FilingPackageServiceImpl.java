@@ -47,8 +47,6 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
-        filingPackage.get().getDocuments().removeIf(document -> StringUtils.equals(document.getStatusCode(), ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD));
-
         return filingPackage.map(filingPackageMapper::toResponseFilingPackage);
 
     }

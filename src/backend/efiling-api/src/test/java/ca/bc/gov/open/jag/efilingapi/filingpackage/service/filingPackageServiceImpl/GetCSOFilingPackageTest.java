@@ -104,7 +104,7 @@ public class GetCSOFilingPackageTest {
     }
 
     @Test
-    @DisplayName("Ok: a filing package was returned ensure withdrawn excluded")
+    @DisplayName("Ok: a filing package was returned ensure withdrawn included")
     public void withValidRequestReturnFilingPackageWithWithdrawnExcluded() {
 
         ReviewFilingPackage reviewFilingPackage = TestHelpers.createFilingPackage();
@@ -128,7 +128,7 @@ public class GetCSOFilingPackageTest {
         Assertions.assertTrue(result.isPresent());
         //FilingPackage
         //Document
-        Assertions.assertEquals(2, result.get().getDocuments().size());
+        Assertions.assertEquals(3, result.get().getDocuments().size());
 
     }
 
