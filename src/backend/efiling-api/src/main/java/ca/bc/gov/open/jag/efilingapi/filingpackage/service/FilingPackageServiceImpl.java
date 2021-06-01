@@ -12,7 +12,6 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
@@ -46,8 +45,6 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         Optional<ReviewFilingPackage> filingPackage = efilingReviewService.findStatusByPackage(request.get());
 
         if (!filingPackage.isPresent()) return Optional.empty();
-
-        filingPackage.get().getDocuments().removeIf(document -> StringUtils.equals(document.getStatusCode(), ca.bc.gov.open.jag.efilingcommons.Keys.WITHDRAWN_STATUS_CD));
 
         return filingPackage.map(filingPackageMapper::toResponseFilingPackage);
 
