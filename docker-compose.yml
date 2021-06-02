@@ -95,9 +95,6 @@ services:
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
 
-      - SW_AGENT_NAME=efiling-api
-      - SW_AGENT_COLLECTOR_BACKEND_SERVICES=skywalking-oap-server:11800
-
     networks:
       - fisu-net
 
@@ -168,41 +165,6 @@ services:
       - "3310:3310"
     networks:
       - fisu-net
-
-  #############################################################################################
-  ###                             skywalking-oap-server                                     ###
-  #############################################################################################
-
-  skywalking-oap-server:
-    image: apache/skywalking-oap-server:8.5.0-es7
-    container_name: skywalking-oap-server
-    restart: always
-    ports:
-      - 11800:11800
-      - 12800:12800
-    environment:
-      SW_HEALTH_CHECKER: default
-    networks:
-      - fisu-net
-  
-  #############################################################################################
-  ###                             skywalking-ui                                              ###
-  #############################################################################################
-
-  skywalking-ui:
-    image: apache/skywalking-ui:8.5.0
-    container_name: skywalking-ui
-    depends_on:
-      - skywalking-oap-server
-    links:
-      - skywalking-oap-server
-    restart: always
-    ports:
-      - 8070:8080
-    environment:
-      SW_OAP_ADDRESS: skywalking-oap-server:12800
-    networks:
-      - fisu-net 
  
   #############################################################################################
   ###                                 MAIL HOG                                              ###
@@ -231,33 +193,6 @@ services:
       - JMT_SPRING_EMAIL_PORT=1025
     networks:
         - fisu-net
-  
-  #############################################################################################
-  ###                             MONGO DB                                                  ###
-  #############################################################################################
-  mongodb:
-    image: 'mongo:latest'
-    container_name: 'mongodb'
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD:-admin}
-    volumes:
-      - mongo-volume:/data/db
-    ports:
-      - 27017:27017
-    networks:
-      - fisu-net
-
-  mongo-express:
-    image: 'mongo-express'
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USERNAME:-admin}
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD:-admin}
-    ports:
-      - 8001:8081
-    networks:
-      - fisu-net
 
 volumes:
   data-redis:

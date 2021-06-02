@@ -7,11 +7,9 @@ ARG MVN_PROFILE
 ARG SERVICE_NAME=efiling-api
 ARG SKIP_TESTS=false
 ARG STARTERS_V
-ARG SW_V=8.5.0
 
 ENV SERVICE_NAME=${SERVICE_NAME}
 ENV STARTERS_V=${STARTERS_V}
-ENV SW_V=${SW_V}
 
 RUN mkdir /root/.ssh && \
     chmod 0700 /root/.ssh  && \
@@ -27,17 +25,6 @@ WORKDIR /libs/spring-boot-starters
 
 RUN git checkout $STARTERS_V  && \
     mvn install -P all -f src/pom.xml
-
-
-# install skywalking agent
-WORKDIR /skywalking
-
-RUN wget https://mirror.csclub.uwaterloo.ca/apache/skywalking/$SW_V/apache-skywalking-apm-$SW_V.tar.gz && \
-    tar -xzvf apache-skywalking-apm-$SW_V.tar.gz && \
-    rm apache-skywalking-apm-$SW_V.tar.gz
-
-# add spring boot plugin
-RUN mv apache-skywalking-apm-bin/agent/optional-plugins/apm-spring-annotation-plugin-8.5.0.jar apache-skywalking-apm-bin/agent/plugins/apm-spring-annotation-plugin-8.5.0.jar
 
 WORKDIR /
 
@@ -57,9 +44,7 @@ FROM openjdk:8-jdk-slim
 # ARG MVN_PROFILES
 ARG SERVICE_NAME=efiling-api
 
-COPY --from=build ./skywalking/apache-skywalking-apm-bin/agent /app/agent
-
 COPY --from=build ./${SERVICE_NAME}/target/${SERVICE_NAME}-*.jar /app/service.jar
 
-CMD ["java", "-javaagent:/app/agent/skywalking-agent.jar", "-jar", "/app/service.jar"]
+CMD ["java", "-jar", "/app/service.jar"]
 #############################################################################################
