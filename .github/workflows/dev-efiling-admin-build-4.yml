@@ -3,8 +3,12 @@ name: Build Efiling Admin Docker Image and Push to Openshift Image Registry
 on:
   push:
     branches: [master]
+    paths:
+      - "src/frontend/efiling-demo/**"
+      - ".github/workflows/dev-efiling-admin-build-4.yml"
   workflow_dispatch:
     branches: [master]
+
 
 jobs:
   build:
