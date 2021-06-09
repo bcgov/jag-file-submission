@@ -16,6 +16,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           docker_name: 'owasp/zap2docker-stable'
-          target: 'test.justice.gov.bc.ca/efiling'
+          target: 'https://test.justice.gov.bc.ca/efilinghub'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
