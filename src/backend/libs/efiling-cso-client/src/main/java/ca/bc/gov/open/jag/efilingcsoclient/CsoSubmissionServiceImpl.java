@@ -29,6 +29,8 @@ import java.text.MessageFormat;
 import java.util.*;
 
 import static ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers.xmlGregorian2Date;
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_ACTUAL_SUBMITTED_DATE;
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_CALCULATED_SUBMITTED_DATE;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
@@ -339,9 +341,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         Calendar actualSubmittedCalendar = Calendar.getInstance();
         Calendar calculatedCalendar = Calendar.getInstance();
         for(Milestones milestone : milestones) {
-            if(milestone.getMilestoneTypeCd().equals("ASUB")) {
+            if(milestone.getMilestoneTypeCd().equals(CSO_ACTUAL_SUBMITTED_DATE)) {
                 actualSubmittedCalendar.setTime(xmlGregorian2Date(milestone.getMilestoneDtm()));
-            } else if (milestone.getMilestoneTypeCd().equals("CSUB")) {
+            } else if (milestone.getMilestoneTypeCd().equals(CSO_CALCULATED_SUBMITTED_DATE)) {
                 calculatedCalendar.setTime(xmlGregorian2Date(milestone.getMilestoneDtm()));
             }
         }

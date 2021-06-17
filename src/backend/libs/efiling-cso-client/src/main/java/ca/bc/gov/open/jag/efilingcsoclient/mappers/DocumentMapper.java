@@ -14,6 +14,9 @@ import org.mapstruct.Mapping;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.List;
 
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_ACTUAL_SUBMITTED_DATE;
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_CALCULATED_SUBMITTED_DATE;
+
 @Mapper
 public interface DocumentMapper {
 
@@ -47,14 +50,14 @@ public interface DocumentMapper {
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "milestoneDtm", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
-    @Mapping(target = "milestoneTypeCd",  constant = "ASUB")
+    @Mapping(target = "milestoneTypeCd",  constant = CSO_ACTUAL_SUBMITTED_DATE)
     @Mapping(target = "milestoneSeqNo",  constant = "1")
     Milestones toActualSubmittedDate(AccountDetails accountDetails);
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "milestoneDtm",  source = "submittedDate")
-    @Mapping(target = "milestoneTypeCd",  constant = "CSUB")
+    @Mapping(target = "milestoneTypeCd",  constant = CSO_CALCULATED_SUBMITTED_DATE)
     @Mapping(target = "milestoneSeqNo",  constant = "2")
     Milestones toComputedSubmittedDate(AccountDetails accountDetails, XMLGregorianCalendar submittedDate);
 
