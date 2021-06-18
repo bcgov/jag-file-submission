@@ -116,7 +116,10 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         for (InitialDocument initialDocument : generateUrlRequest.getFilingPackage().getDocuments()) {
             DocumentTypeDetails documentTypeDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), initialDocument.getType());
-            if (documentTypeDetails.isAutoProcessing()) return true;
+            if (documentTypeDetails.isAutoProcessing()) {
+                logger.info("We are setting autoprocessing");
+                return true;
+            }
         }
         return false;
 

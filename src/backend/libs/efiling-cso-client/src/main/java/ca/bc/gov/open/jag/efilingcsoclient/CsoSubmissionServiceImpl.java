@@ -96,6 +96,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService);
 
+        logger.info("pre determine Autoprocessing is {}", csoFilingPackage.isAutomatedProcessYn());
+
         if (efilingPackage.isRushedSubmission()) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails));
         }
@@ -339,6 +341,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 }
             }
         }
+        logger.info("determine Autoprocessing is {}", csoFilingPackage.isAutomatedProcessYn());
     }
 
     private Boolean determineDelayProcessing(CivilDocument document) {
