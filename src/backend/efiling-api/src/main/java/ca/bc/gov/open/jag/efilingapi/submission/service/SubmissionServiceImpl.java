@@ -112,19 +112,6 @@ public class SubmissionServiceImpl implements SubmissionService {
         return false;
     }
 
-    private boolean isAutoProcessing(GenerateUrlRequest generateUrlRequest) {
-
-        for (InitialDocument initialDocument : generateUrlRequest.getFilingPackage().getDocuments()) {
-            DocumentTypeDetails documentTypeDetails = documentStore.getDocumentDetails(generateUrlRequest.getFilingPackage().getCourt().getLevel(), generateUrlRequest.getFilingPackage().getCourt().getCourtClass(), initialDocument.getType());
-            if (documentTypeDetails.isAutoProcessing()) {
-                logger.info("We are setting autoprocessing");
-                return true;
-            }
-        }
-        return false;
-
-    }
-
     @Override
     public SubmitResponse createSubmission(Submission submission, AccountDetails accountDetails, Boolean isEarlyAdopter) {
 
@@ -209,7 +196,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .collect(Collectors.toList()))
                 .rushedSubmission(isRushedSubmission(request))
                 .applicationCode(applicationCode)
-                .autoProcessing(isAutoProcessing(request))
+                .autoProcessing(false)
                 .create();
 
     }
