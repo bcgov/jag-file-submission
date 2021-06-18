@@ -319,16 +319,20 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void determineAutoProcessingFlagFromDocuments(FilingPackage efilingPackage, ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage) {
+        logger.info("Determining whether auto processing flag needs to be set");
         String courtClass = efilingPackage.getCourt().getCourtClass();
         String courtLevel = efilingPackage.getCourt().getLevel();
         List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
+        logger.info("Total number of document type details to iterate through: " + documentTypeDetailsList.size());
 
         List<CivilDocument> documents = csoFilingPackage.getDocuments();
+        logger.info("Total documents in CSO filing package: " + documents.size());
         for(CivilDocument document : documents) {
             String documentTypeCd = document.getDocumentTypeCd();
+            logger.info("Document type code for current document: " + documentTypeCd);
             for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
                 if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
-                    logger.info("Document type code " + documentTypeCd + ": setting auto processing flag to true");
+                    logger.info("setting auto processing flag to true");
                     csoFilingPackage.setAutomatedProcessYn(true);
                     csoFilingPackage.setDelayProcessing(determineDelayProcessing(document));
                     return;
