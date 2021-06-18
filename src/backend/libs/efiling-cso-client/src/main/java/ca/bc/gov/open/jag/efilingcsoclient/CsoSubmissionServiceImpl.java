@@ -96,8 +96,6 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService);
 
-        logger.info("pre determine Autoprocessing is {}", csoFilingPackage.isAutomatedProcessYn());
-
         if (efilingPackage.isRushedSubmission()) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails));
         }
@@ -325,23 +323,18 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         String courtClass = efilingPackage.getCourt().getCourtClass();
         String courtLevel = efilingPackage.getCourt().getLevel();
         List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
-        logger.info("Total number of document type details to iterate through: " + documentTypeDetailsList.size());
 
         List<CivilDocument> documents = csoFilingPackage.getDocuments();
-        logger.info("Total documents in CSO filing package: " + documents.size());
         for(CivilDocument document : documents) {
             String documentTypeCd = document.getDocumentTypeCd();
-            logger.info("Document type code for current document: " + documentTypeCd);
             for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
                 if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
-                    logger.info("setting auto processing flag to true");
                     csoFilingPackage.setAutomatedProcessYn(true);
                     csoFilingPackage.setDelayProcessing(determineDelayProcessing(document));
                     return;
                 }
             }
         }
-        logger.info("determine Autoprocessing is {}", csoFilingPackage.isAutomatedProcessYn());
     }
 
     private Boolean determineDelayProcessing(CivilDocument document) {
