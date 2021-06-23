@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingcsoclient;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -32,5 +33,20 @@ public class CsoHelpers {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
         return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+    }
+
+    /**
+     * Helper function to convert an XMLGregorianCalendar date to a Date
+     * @param gCalendar
+     * @return Date
+     */
+    public static Date xmlGregorian2Date(XMLGregorianCalendar gCalendar) {
+
+        if (gCalendar != null) {
+            Calendar calendarInstance = Calendar.getInstance();
+            calendarInstance.setTime(gCalendar.toGregorianCalendar().getTime());
+            return calendarInstance.getTime();
+        }
+        return null;
     }
 }

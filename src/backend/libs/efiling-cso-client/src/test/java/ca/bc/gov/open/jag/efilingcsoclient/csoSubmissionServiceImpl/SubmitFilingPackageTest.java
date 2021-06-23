@@ -22,6 +22,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -109,10 +110,9 @@ public class SubmitFilingPackageTest {
         Mockito.doThrow(ca.bc.gov.ag.csows.filing.NestedEjbException_Exception.class).when(filingFacadeBeanMock)
                 .calculateSubmittedDate(any(), Mockito.eq(BAD_LOCATION));
 
-
-        DocumentTypeDetails documentTypeDetailsNoRush = new DocumentTypeDetails("description", "type1", BigDecimal.ONE, false, false, false);
-        DocumentTypeDetails documentTypeDetailsRush = new DocumentTypeDetails("description", "type2", BigDecimal.ONE, false, false, true);
-        List<DocumentTypeDetails> documentTypeDetailsList = Arrays.asList(documentTypeDetailsNoRush, documentTypeDetailsRush);
+        DocumentTypeDetails documentTypeDetailsNoAutoProcessing = new DocumentTypeDetails("description", "type1", BigDecimal.ONE, false, false, false);
+        DocumentTypeDetails documentTypeDetailsAutoProcessing = new DocumentTypeDetails("description", "type2", BigDecimal.ONE, false, false, true);
+        List<DocumentTypeDetails> documentTypeDetailsList = Arrays.asList(documentTypeDetailsNoAutoProcessing, documentTypeDetailsAutoProcessing);
         Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString())).thenReturn(documentTypeDetailsList);
 
         sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper, csoPartyMapper, new PackageAuthorityMapperImpl(), efilingDocumentServiceMock);
@@ -567,6 +567,55 @@ public class SubmitFilingPackageTest {
                 efilingPaymentServiceMock);
 
         Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+    }
+
+    @DisplayName("OK: set delay processing flag if document calculated submitted date does not match the actual submitted date")
+    @Test
+    public void testWithDelayProcessing() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception, DatatypeConfigurationException {
+        Mockito.when(filingFacadeBeanMock.submitFiling(argThat(filingPackage -> filingPackage.isDelayProcessing()))).thenReturn(BigDecimal.ONE);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        XMLGregorianCalendar mockDate = DateUtils.getCurrentXmlDate();
+        mockDate.setYear(mockDate.getYear() + 5000);
+        Mockito.doReturn(mockDate).when(filingFacadeBeanMock)
+                .calculateSubmittedDate(any(), Mockito.eq(LOCATION));
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                        .name(DOCUMENT)
+                                        .serverFileName(SERVERFILENAME)
+                                        .isAmendment(IS_AMENDMENT)
+                                        .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                        .type("type2")
+                                        .subType(TYPE)
+                                        .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                        .create(),
+                                Document.builder()
+                                        .name(DOCUMENT)
+                                        .serverFileName(SERVERFILENAME)
+                                        .isAmendment(IS_AMENDMENT)
+                                        .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                        .type("type1")
+                                        .subType(TYPE)
+                                        .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                        .create()))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Assertions.assertEquals(BigDecimal.ONE, actual.getTransactionId());
     }
 
     @DisplayName("Exception: payment to bambora throw exception")
