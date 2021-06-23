@@ -43,6 +43,8 @@ public class Keys {
     public static final String CSO_USER_ROLE_CAEF = "CAEF";
     public static final String CSO_USER_ROLE_IND = "IND";
     public static final String BCSC_IDENTITY_PROVIDER = "BCSC";
+    public static final String CSO_ACTUAL_SUBMITTED_DATE = "ASUB";
+    public static final String CSO_CALCULATED_SUBMITTED_DATE = "CSUB";
 
 
 }
