@@ -26,10 +26,11 @@ import org.slf4j.LoggerFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers.xmlGregorian2Date;
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_ACTUAL_SUBMITTED_DATE;
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_CALCULATED_SUBMITTED_DATE;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
@@ -114,13 +115,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, Service createdService) {
-        XMLGregorianCalendar submittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
+        XMLGregorianCalendar submittedDate = ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate();
+        XMLGregorianCalendar computedSubmittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
         return filingPackageMapper.toFilingPackage(
                         efilingPackage,
                         accountDetails,
                         createdService.getServiceId(),
                         submittedDate,
-                        buildCivilDocuments(accountDetails, efilingPackage, submittedDate),
+                        buildCivilDocuments(accountDetails, efilingPackage, computedSubmittedDate),
                         buildCsoParties(accountDetails, efilingPackage),
                         buildPackageAuthorities(accountDetails));
     }
@@ -159,7 +161,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
 
-    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar submittedDate) {
+    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar computedSubmittedDate) {
 
         List<CivilDocument> documents = new ArrayList<>();
 
@@ -168,7 +170,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     ((efilingPackage.getDocuments().get(i).getStatutoryFeeAmount() == null || efilingPackage.getDocuments().get(i).getStatutoryFeeAmount().equals(BigDecimal.ZERO))
                             ? Keys.NOT_REQUIRED_PAYMENT_STATUS_CD : Keys.NOT_PROCESSED_PAYMENT_STATUS_CD)));
             List<Milestones> milestones = Arrays.asList(documentMapper.toActualSubmittedDate(accountDetails),
-                    documentMapper.toComputedSubmittedDate(accountDetails, submittedDate));
+                    documentMapper.toComputedSubmittedDate(accountDetails, computedSubmittedDate));
             List<DocumentStatuses> statuses = Collections.singletonList(documentMapper.toEfilingDocumentStatus(efilingPackage.getDocuments().get(i), accountDetails));
 
 
@@ -317,6 +319,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void determineAutoProcessingFlagFromDocuments(FilingPackage efilingPackage, ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage) {
+        logger.info("Determining whether auto processing flag needs to be set");
         String courtClass = efilingPackage.getCourt().getCourtClass();
         String courtLevel = efilingPackage.getCourt().getLevel();
         List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
@@ -327,10 +330,28 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
                 if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
                     csoFilingPackage.setAutomatedProcessYn(true);
+                    csoFilingPackage.setDelayProcessing(determineDelayProcessing(document));
                     return;
                 }
             }
         }
+    }
+
+    private Boolean determineDelayProcessing(CivilDocument document) {
+        List<Milestones> milestones = document.getMilestones();
+        Calendar actualSubmittedCalendar = Calendar.getInstance();
+        Calendar calculatedCalendar = Calendar.getInstance();
+        for(Milestones milestone : milestones) {
+            if(milestone.getMilestoneTypeCd().equals(CSO_ACTUAL_SUBMITTED_DATE)) {
+                actualSubmittedCalendar.setTime(xmlGregorian2Date(milestone.getMilestoneDtm()));
+            } else if (milestone.getMilestoneTypeCd().equals(CSO_CALCULATED_SUBMITTED_DATE)) {
+                calculatedCalendar.setTime(xmlGregorian2Date(milestone.getMilestoneDtm()));
+            }
+        }
+
+        return (actualSubmittedCalendar.get(Calendar.YEAR) != calculatedCalendar.get(Calendar.YEAR)) ||
+                (actualSubmittedCalendar.get(Calendar.MONTH) != calculatedCalendar.get(Calendar.MONTH)) ||
+                (actualSubmittedCalendar.get(Calendar.DATE) != calculatedCalendar.get(Calendar.DATE));
     }
 
     //This function will be used when cso has the valid flag available
