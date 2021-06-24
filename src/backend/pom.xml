@@ -26,7 +26,6 @@
 				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-commons</module>
 				<module>libs/efiling-cso-client</module>
-				<module>libs/efiling-cso-client-preview</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
@@ -41,7 +40,6 @@
 				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-commons</module>
 				<module>libs/efiling-cso-client</module>
-				<module>libs/efiling-cso-client-preview</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-mail-it</module>
@@ -64,7 +62,6 @@
 				<module>libs/efiling-bambora-api-client</module>
 				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-cso-client</module>
-				<module>libs/efiling-cso-client-preview</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>efiling-api</module>
 			</modules>
