@@ -39,6 +39,7 @@ public class FindPackagesByClientIdTest {
     public static final String LAST_NAME = "LASTNAME";
     public static final String PACKAGE_NO = "PACKAGENO";
     public static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
+    private static final String PARENT_APPLICATION = "PARENTAPP";
 
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
@@ -76,7 +77,7 @@ public class FindPackagesByClientIdTest {
     @DisplayName("OK: packages found")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
-        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(SUCCESS_CLIENT, null, ""));
+        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(SUCCESS_CLIENT, null, PARENT_APPLICATION));
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals(COURT_FILE_NO, result.get(0).getCourt().getFileNumber());
@@ -91,7 +92,7 @@ public class FindPackagesByClientIdTest {
     @DisplayName("Ok: no packages found")
     @Test
     public void testWithNoResult() {
-        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(NOTFOUND_CLIENT, null, ""));
+        List<ReviewFilingPackage> result = sut.findStatusByClient(new FilingPackageRequest(NOTFOUND_CLIENT, null, PARENT_APPLICATION));
 
         Assertions.assertTrue(result.isEmpty());
 
@@ -100,7 +101,7 @@ public class FindPackagesByClientIdTest {
     @DisplayName("Exception: filing status facade throws an exception")
     @Test
     public void testWithException() {
-        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByClient(new FilingPackageRequest(EXCEPTION_CLIENT, null, "")));
+        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByClient(new FilingPackageRequest(EXCEPTION_CLIENT, null, PARENT_APPLICATION)));
     }
 
     private FilingStatus createFilingStatus() {

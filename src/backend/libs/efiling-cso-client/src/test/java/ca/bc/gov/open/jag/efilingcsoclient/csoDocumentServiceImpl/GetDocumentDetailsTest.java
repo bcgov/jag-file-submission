@@ -42,6 +42,8 @@ public class GetDocumentDetailsTest {
         documentType.setDefaultStatutoryFee(BigDecimal.TEN);
         documentType.setOrderDocumentYn(true);
         documentType.setRushRequiredYn(true);
+        documentType.setAutoProcessYn(false);
+
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
@@ -59,6 +61,7 @@ public class GetDocumentDetailsTest {
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
         Assertions.assertTrue(result.isOrderDocument());
         Assertions.assertTrue(result.isRushRequired());
+        Assertions.assertFalse(result.isAutoProcessing());
     }
 
     @DisplayName("Exception: when not finding document should throw exception")
