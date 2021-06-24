@@ -103,7 +103,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
             DateTime startDate = endDate.minusYears(1);
 
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null, null);
+                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null, filingPackageRequest.getParentApplication());
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 

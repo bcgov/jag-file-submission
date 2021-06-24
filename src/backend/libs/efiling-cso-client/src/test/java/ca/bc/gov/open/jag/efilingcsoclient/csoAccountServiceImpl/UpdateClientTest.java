@@ -6,6 +6,7 @@ import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -20,7 +21,7 @@ public class UpdateClientTest {
 
     private static final String INTERNAL_CLIENT_NUMBER = "123";
     private static final String FAIL_INTERNAL_CLIENT_NUMBER = "1234";
-    
+
     CsoAccountServiceImpl sut;
 
     @Mock
@@ -33,7 +34,7 @@ public class UpdateClientTest {
         MockitoAnnotations.openMocks(this);
         initAccountFacadeMocks();
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null, new ClientProfileMapperImpl());
     }
 
     private void initAccountFacadeMocks() throws NestedEjbException_Exception {

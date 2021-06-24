@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcsoclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapperImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -41,7 +42,6 @@ public class CreateAccountTest {
     public static final String APPLICATION = "CSO";
     public static final String IDENTIFIER_TYPE = "CAP";
     public static final String BCEID = "BCEID";
-    public static final String BCSC = "BCSC";
     public static final String IDENTITY_PROVIDER = "TEST";
 
     @Mock
@@ -55,7 +55,7 @@ public class CreateAccountTest {
 
     private CsoAccountServiceImpl sut;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() throws NestedEjbException_Exception, DatatypeConfigurationException {
 
         MockitoAnnotations.openMocks(this);
@@ -67,7 +67,7 @@ public class CreateAccountTest {
         UserRoles userRolesWithFileRole = new UserRoles();
         userRolesWithFileRole.getRoles().add(fileRole);
         Mockito.when(roleRegistryPortTypeMock.getRolesForIdentifier(DOMAIN, APPLICATION, CsoHelpers.formatUserGuid(UNIVERSAL_ID), IDENTIFIER_TYPE)).thenReturn(userRolesWithFileRole);
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapperMock, new ClientProfileMapperImpl());
     }
 
     @Test
@@ -141,19 +141,9 @@ public class CreateAccountTest {
     }
 
     @Test
-    @DisplayName("Success bceid account created ")
-    public void withValidBCEIDAccountRequestAccountCreated() {
-        AccountDetails result = sut.createAccount(createAccountRequest(BCEID));
-        Assertions.assertEquals(UNIVERSAL_ID, result.getUniversalId());
-        Assertions.assertTrue(result.isFileRolePresent());
-        Assertions.assertEquals(BigDecimal.TEN, result.getAccountId());
-        Assertions.assertEquals(BigDecimal.TEN, result.getClientId());
-    }
-
-    @Test
-    @DisplayName("Success bcsc account created ")
-    public void withValidBCSCAccountRequestAccountCreated() {
-        AccountDetails result = sut.createAccount(createAccountRequest(BCSC));
+    @DisplayName("Success account created ")
+    public void withValidAccountRequestAccountCreated() {
+        AccountDetails result = sut.createAccount(createAccountRequest());
         Assertions.assertEquals(UNIVERSAL_ID, result.getUniversalId());
         Assertions.assertTrue(result.isFileRolePresent());
         Assertions.assertEquals(BigDecimal.TEN, result.getAccountId());
@@ -164,17 +154,17 @@ public class CreateAccountTest {
     @DisplayName("Facade throws exception")
     public void withValidValuesFacadeThrowsException() throws NestedEjbException_Exception {
         Mockito.when(accountFacadeBeanMock.createAccount(any(), any(), any())).thenThrow(NestedEjbException_Exception.class);
-        Assertions.assertThrows(EfilingAccountServiceException.class, () -> sut.createAccount(createAccountRequest(BCSC)));
+        Assertions.assertThrows(EfilingAccountServiceException.class, () -> sut.createAccount(createAccountRequest()));
     }
 
-    private CreateAccountRequest createAccountRequest(String identityProvider) {
+    private CreateAccountRequest createAccountRequest() {
         return CreateAccountRequest.builder()
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .email(EMAIL)
                 .middleName(MIDDLE_NAME)
                 .universalId(UNIVERSAL_ID)
-                .identityProvider(identityProvider)
+                .identityProvider(BCEID)
                 .create();
     }
 

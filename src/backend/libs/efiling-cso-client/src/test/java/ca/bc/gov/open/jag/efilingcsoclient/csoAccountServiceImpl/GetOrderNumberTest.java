@@ -4,6 +4,7 @@ import ca.bc.gov.ag.csows.accounts.AccountFacadeBean;
 import ca.bc.gov.ag.csows.accounts.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoAccountServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -29,7 +30,7 @@ public class GetOrderNumberTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, null, null, new ClientProfileMapperImpl());
     }
 
 

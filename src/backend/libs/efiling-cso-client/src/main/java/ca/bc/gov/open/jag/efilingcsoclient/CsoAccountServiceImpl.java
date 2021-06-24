@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.CreateAccountRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapper;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -22,17 +23,20 @@ import java.util.List;
 
 public class CsoAccountServiceImpl implements EfilingAccountService {
 
+
     private final AccountFacadeBean accountFacadeBean;
     private final RoleRegistryPortType roleRegistryPortType;
     private final AccountDetailsMapper accountDetailsMapper;
+    private final ClientProfileMapper clientProfileMapper;
 
     public CsoAccountServiceImpl(AccountFacadeBean accountFacadeBean,
                                  RoleRegistryPortType roleRegistryPortType,
-                                 AccountDetailsMapper accountDetailsMapper) {
+                                 AccountDetailsMapper accountDetailsMapper, ClientProfileMapper clientProfileMapper) {
 
         this.accountFacadeBean = accountFacadeBean;
         this.roleRegistryPortType = roleRegistryPortType;
         this.accountDetailsMapper = accountDetailsMapper;
+        this.clientProfileMapper = clientProfileMapper;
 
     }
 
@@ -59,12 +63,14 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
 
             Account account = setCreateAccountDetails(createAccountRequest);
             Client client = setCreateAccountClientDetails(createAccountRequest);
-            List<RoleAssignment> roles = setCreateAccountRoles(createAccountRequest.getIdentityProvider());
+            List<RoleAssignment> roles = setCreateAccountRoles();
             ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
+
+
             if (null != clientProfile) {
                 accountDetails = accountDetailsMapper.toAccountDetails(
                         createAccountRequest.getUniversalId(),
-                        clientProfile,
+                        clientProfileMapper.toClientProfile(clientProfile),
                         hasFileRole(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId())));
             }
         }
@@ -116,20 +122,22 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         }
         // An account must have only one profile associated with it to proceed
         if (profiles.size() == 1) {
-            accountDetails = accountDetailsMapper.toAccountDetails(universalId, profiles.get(0), hasFileRole(CsoHelpers.formatUserGuid(universalId)));
+            accountDetails = accountDetailsMapper.toAccountDetails(universalId, clientProfileMapper.toClientProfile(profiles.get(0)), hasFileRole(CsoHelpers.formatUserGuid(universalId)));
         }
         else if (profiles.size() > 1) {
             throw new CSOHasMultipleAccountException(profiles.get(0).getClientId().toString());
         }
 
         return accountDetails;
+
     }
 
     public boolean hasFileRole(String userGuid) {
 
         UserRoles userRoles = roleRegistryPortType.getRolesForIdentifier("Courts", "CSO", userGuid, "CAP");
         List<RegisteredRole> roles = userRoles.getRoles();
-        return roles != null && roles.stream().anyMatch(r -> r.getCode().equals("FILE"));
+        return roles != null && roles.stream().anyMatch(r -> r.getCode().equals(Keys.CSO_USER_ROLE_FILE));
+
     }
 
 
@@ -148,6 +156,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         account.setRegisteredCreditCardYnBoolean(false);
 
         return account;
+
     }
 
     private Client setCreateAccountClientDetails(CreateAccountRequest createAccountRequest) throws DatatypeConfigurationException {
@@ -155,6 +164,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         XMLGregorianCalendar date =  CsoHelpers.date2XMLGregorian(new Date());
 
         client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(createAccountRequest.getUniversalId()));
+        client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider().toUpperCase()));
         client.setClientPrefixTxt("CS");
         client.setClientStatusCd("ACT");
         client.setEmailTxt(createAccountRequest.getEmail());
@@ -166,14 +176,15 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         client.setSurnameNm(createAccountRequest.getLastName());
 
         return client;
+
     }
 
-    private List<RoleAssignment> setCreateAccountRoles(String identityProvider) {
+    private List<RoleAssignment> setCreateAccountRoles() {
 
         List<RoleAssignment> roles = new ArrayList<>();
         RoleAssignment roleInd = new RoleAssignment();
         roleInd.setActiveYn(true);
-        roleInd.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_IND);
+        roleInd.setRegisteredClientRoleCd(Keys.INDIVIDUAL_ROLE_TYPE_CD);
         roles.add(roleInd);
 
         RoleAssignment roleCaef = new RoleAssignment();
@@ -186,13 +197,8 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         roleFile.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_FILE);
         roles.add(roleFile);
 
-        if (identityProvider.equalsIgnoreCase(Keys.BCSC_IDENTITY_PROVIDER)) {
-            RoleAssignment roleVind = new RoleAssignment();
-            roleVind.setActiveYn(true);
-            roleVind.setRegisteredClientRoleCd(Keys.CSO_USER_ROLE_VIND);
-            roles.add(roleVind);
-        }
-
         return roles;
+
     }
+
 }

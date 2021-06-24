@@ -46,7 +46,7 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(restTemplateMock.getForEntity(
                 Mockito.eq("http://localhost/acdc/1"), Mockito.eq(byte[].class), Mockito.any(HttpEntity.class)))
-          .thenReturn(new ResponseEntity(someBytes, HttpStatus.OK));
+                .thenReturn(new ResponseEntity(someBytes, HttpStatus.OK));
 
         Mockito.when(restTemplateMock.getForEntity(
                 Mockito.eq("http://localhost/acdc/1"), Mockito.eq(byte[].class), Mockito.any(HttpEntity.class)))

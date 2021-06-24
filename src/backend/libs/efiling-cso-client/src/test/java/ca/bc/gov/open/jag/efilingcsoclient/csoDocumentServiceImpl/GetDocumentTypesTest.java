@@ -40,8 +40,9 @@ public class GetDocumentTypesTest {
         documentType.setDocumentTypeCd(DOCUMENT_TYPE_CD);
         documentType.setDocumentTypeDesc(DESCRIPTION);
         documentType.setDefaultStatutoryFee(BigDecimal.TEN);
-        documentType.setOrderDocumentYn(false);
-        documentType.setRushRequiredYn(false);
+        documentType.setOrderDocumentYn(true);
+        documentType.setRushRequiredYn(true);
+        documentType.setAutoProcessYn(false);
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());

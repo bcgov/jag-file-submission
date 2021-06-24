@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingcsoclient.CsoAccountServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapper;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.AccountDetailsMapperImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -61,7 +62,7 @@ public class GetAccountDetailsTest {
 
         accountDetailsMapper = new AccountDetailsMapperImpl();
 
-        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapper);
+        sut = new CsoAccountServiceImpl(accountFacadeBeanMock, roleRegistryPortTypeMock, accountDetailsMapper, new ClientProfileMapperImpl());
 
     }
 

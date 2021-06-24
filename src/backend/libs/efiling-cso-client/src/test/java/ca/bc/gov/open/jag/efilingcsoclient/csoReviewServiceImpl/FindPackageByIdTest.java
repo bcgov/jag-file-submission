@@ -81,7 +81,7 @@ public class FindPackageByIdTest {
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
 
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE, ""));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE, null));
 
         Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
         Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
@@ -95,7 +95,7 @@ public class FindPackageByIdTest {
     @Test
     public void testWithNoResult() {
 
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE, ""));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE, null));
         Assertions.assertFalse(result.isPresent());
 
     }
@@ -103,7 +103,7 @@ public class FindPackageByIdTest {
     @DisplayName("Exception: filing status facade throws an exception")
     @Test
     public void testWithException() {
-        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByPackage(new FilingPackageRequest(EXCEPTION_CLIENT, EXCEPTION_PACKAGE, "")));
+        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByPackage(new FilingPackageRequest(EXCEPTION_CLIENT, EXCEPTION_PACKAGE, null)));
     }
 
     private FilingStatus createFilingStatus() {
