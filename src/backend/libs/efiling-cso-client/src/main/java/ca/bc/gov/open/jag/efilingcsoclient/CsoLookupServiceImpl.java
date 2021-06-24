@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,12 +30,22 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
 
         // NOTE- "DCFL" is the only string that will work here until we get our service types setup
         if (StringUtils.isEmpty(submissionFeeRequest.getServiceType())) throw new IllegalArgumentException("service type is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getApplication())) throw new IllegalArgumentException("application code is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getClassification())) throw new IllegalArgumentException("class code is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getDivision())) throw new IllegalArgumentException("division code is required");
+        if (StringUtils.isEmpty(submissionFeeRequest.getLevel())) throw new IllegalArgumentException("level code is required");
 
         try {
-            ServiceFee fee = lookupFacade.getServiceFee(submissionFeeRequest.getServiceType(),
-                    CsoHelpers.date2XMLGregorian(new Date()));
+            ServiceFee fee = lookupFacade.getServiceFeeByClassification(submissionFeeRequest.getServiceType(),
+                    CsoHelpers.date2XMLGregorian(new Date()),
+                    submissionFeeRequest.getApplication(),
+                    submissionFeeRequest.getDivision(),
+                    submissionFeeRequest.getLevel(),
+                    submissionFeeRequest.getClassification());
             if (fee == null)
-                throw new EfilingLookupServiceException("Fee not found");
+                return new ServiceFees(
+                        BigDecimal.ZERO,
+                        null);
 
             return new ServiceFees(
                     fee.getFeeAmt(),
