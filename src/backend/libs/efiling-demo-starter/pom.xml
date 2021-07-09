@@ -65,7 +65,7 @@
         <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>spring-sftp-starter</artifactId>
-            <version>0.1.8</version>
+            <version>0.2.0</version>
         </dependency>
 
     </dependencies>
