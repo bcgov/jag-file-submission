@@ -143,15 +143,15 @@ jobs:
       ACTION_DEBUG: true
 
     steps:
-      - name: Checkout Spring SFTP Starter Repository
+      - name: Checkout Spring Starters Repository
         uses: actions/checkout@v2
         with:
           repository: bcgov/spring-boot-starters
           path: spring-boot-starters
-          ref: v0.1.8
+          ref: v0.2.1
 
       # TODO REMOVE AFTER SFTP IS IN MAVEN CENTRAL
-      - name: Build Spring SFTP Starter
+      - name: Build Spring Starters
         run: mvn install -P all --file ./spring-boot-starters/src/pom.xml
 
       - name: Checkout File Submission Repository
