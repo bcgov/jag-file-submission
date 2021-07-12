@@ -88,9 +88,10 @@ A [redis-commander](http://joeferner.github.io/redis-commander/) instance to que
 
 A [keycloak](https://www.keycloak.org/) instance accessible at [http://localhost:8081/auth](http://localhost:8081/auth)
 
+#### Spring starter update
 
-#### Skywalking ui
-
-A [Skywalking](https://skywalking.apache.org/) instance accessible at [http://localhost:8070](http://localhost:8070)
+When updating the spring starter ensure all hardcoded references are updated.
+[Code Climate] (https://github.com/bcgov/jag-file-submission/blob/master/.github/workflows/code-climate-coverage-aggregation.yml)
+[Docker File] (https://github.com/bcgov/jag-file-submission/blob/master/docker-compose.override.yml)
 
 ## Github action
