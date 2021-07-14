@@ -28,7 +28,7 @@ public class ReviewFilingPackage {
     private String packageNo;
     private List<ReviewPackageRequest> packageRequests;
     private List<PackagePayment> payments;
-    //TODO: protected RushOrderRequest procRequest;
+    private ReviewRushOrder procRequest;
     private DateTime submittedDate;
     private PackageLinks packageLinks;
 
@@ -181,4 +181,8 @@ public class ReviewFilingPackage {
     public List<Organization> getOrganizations() { return organizations; }
 
     public void setOrganizations(List<Organization> organizations) { this.organizations = organizations; }
+
+    public ReviewRushOrder getProcRequest() { return procRequest;  }
+
+    public void setProcRequest(ReviewRushOrder procRequest) {  this.procRequest = procRequest; }
 }

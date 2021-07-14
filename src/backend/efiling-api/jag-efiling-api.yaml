@@ -835,6 +835,8 @@ components:
         hasRegistryNotice:
           type: boolean
           description: this filing package has a registry notice
+        rush:
+          $ref: "#/components/schemas/Rush"
     SubmissionFilingPackage:
       type: object
       description: Submitted
@@ -920,6 +922,27 @@ components:
         classDescription:
           type: string
           description: the court location description
+    Rush:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: first name of rush party
+        lastName:
+          type: string
+          description: last name of rush party
+        organization:
+          type: string
+          description: organization
+        phoneNumber:
+          type: string
+          description: phone number
+        country:
+          type: string
+          description: country
+        reason:
+          type: string
+          description: clear and detailed reason
     CsoAccount:
       type: object
       description: a CsoAccount
