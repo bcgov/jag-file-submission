@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocum
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.RushDocument;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 
@@ -175,6 +176,36 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals(new BigDecimal(3), result.get().getPayments().get(1).getPaymentCategory());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
         Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
+
+
+        Assertions.assertEquals(new BigDecimal(1), result.get().getRushOrder().getPackageId());
+        Assertions.assertNotNull(result.get().getRushOrder().getCourtOrderDt());
+        Assertions.assertEquals("This is a reason. This is a reason. This is a reason. This is a reason.", result.get().getRushOrder().getRushFilingReasonTxt());
+        Assertions.assertEquals(2, result.get().getRushOrder().getSupportDocs().size());
+
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(0).getClientFileNm());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(0).getEntDtm());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(0).getEntUserId());
+        Assertions.assertEquals("www.google.com",result.get().getRushOrder().getSupportDocs().get(0).getFileServer());
+        Assertions.assertEquals("9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8", result.get().getRushOrder().getSupportDocs().get(0).getObjectGuid());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(0).getProcessItemSeqNo());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(0).getProcessRequestId());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(0).getProcessSupportDocSeqNo());
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(0).getTempFileName());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(0).getUpdUserId());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(0).getUpdDtm());
+
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(1).getClientFileNm());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(1).getEntDtm());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(1).getEntUserId());
+        Assertions.assertEquals("www.google.com",result.get().getRushOrder().getSupportDocs().get(1).getFileServer());
+        Assertions.assertEquals("9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8", result.get().getRushOrder().getSupportDocs().get(1).getObjectGuid());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(1).getProcessItemSeqNo());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(1).getProcessRequestId());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(1).getProcessSupportDocSeqNo());
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(1).getTempFileName());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(1).getUpdUserId());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(1).getUpdDtm());
 
         Assertions.assertEquals("http://localhost:8080/wherearemypackage", result.get().getPackageLinks().getPackageHistoryUrl());
 

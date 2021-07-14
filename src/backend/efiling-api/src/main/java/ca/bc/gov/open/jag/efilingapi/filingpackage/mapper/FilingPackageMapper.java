@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.PackagePayment;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewRushOrder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -30,6 +31,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "filingComments", source = "filingCommentsTxt")
     @Mapping(target = "links.packageHistoryUrl", source = "packageLinks.packageHistoryUrl")
     @Mapping(target = "organizationParties", source = "organizations")
+    @Mapping(target = "rush", source = "rushOrder")
     FilingPackage toResponseFilingPackage(ReviewFilingPackage filingPackage);
 
     List<Document> toDocuments(List<ReviewDocument> file);
@@ -69,5 +71,13 @@ public interface FilingPackageMapper {
     @Mapping(target = "serviceIdentifier", source = "serviceId")
     @Mapping(target = "transactionDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(payment.getTransactionDtm()))")
     Payment toPayment(PackagePayment payment);
+
+    @Mapping(target = "reason", source = "rushFilingReasonTxt")
+    @Mapping(target = "supportingDocuments", source = "supportDocs")
+    Rush toRush(ReviewRushOrder reviewRushOrder);
+
+    @Mapping(target = "fileName", source = "clientFileNm")
+    @Mapping(target = "identifier", source = "objectGuid")
+    RushDocument toRushDocument(ca.bc.gov.open.jag.efilingcommons.submission.models.review.RushDocument rushDocument);
 
 }

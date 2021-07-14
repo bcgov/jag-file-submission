@@ -94,6 +94,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewFilingPackage.setPayments(createPayment());
         reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/wherearemypackage").create());
         reviewFilingPackage.setOrganizations(createOrganizations());
+        reviewFilingPackage.setRushOrder(createRushOrder());
         return reviewFilingPackage;
     }
 
@@ -215,5 +216,45 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         packagePaymentThree.setSubmittedAmt(BigDecimal.ONE);
         packagePaymentThree.setTransactionDesc("Affidavit");
         return Arrays.asList(packagePaymentOne, packagePaymentTwo, packagePaymentThree);
+    }
+
+    private ReviewRushOrder createRushOrder() {
+        ReviewRushOrder reviewRushOrder = new ReviewRushOrder();
+        reviewRushOrder.setCourtOrderDt(new DateTime());
+        reviewRushOrder.setPackageId(BigDecimal.ONE);
+        reviewRushOrder.setRushFilingReasonTxt("This is a reason. This is a reason. This is a reason. This is a reason.");
+        reviewRushOrder.setSupportDocs(createRushDocuments());
+        return reviewRushOrder;
+    }
+
+    private List<RushDocument> createRushDocuments() {
+        RushDocument rushDocumentOne = new RushDocument();
+        rushDocumentOne.setClientFileNm("Test.pdf");
+        rushDocumentOne.setEntDtm(new DateTime());
+        rushDocumentOne.setEntUserId("1");
+        rushDocumentOne.setFileServer("www.google.com");
+        rushDocumentOne.setObjectGuid("9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8");
+        rushDocumentOne.setProcessItemSeqNo(BigDecimal.ONE);
+        rushDocumentOne.setProcessRequestId(BigDecimal.ONE);
+        rushDocumentOne.setProcessSupportDocSeqNo(BigDecimal.ONE);
+        rushDocumentOne.setTempFileName("Test.pdf");
+        rushDocumentOne.setUpdUserId("1");
+        rushDocumentOne.setUpdDtm(new DateTime());
+
+        RushDocument rushDocumentTwo = new RushDocument();
+        rushDocumentTwo.setClientFileNm("Test.pdf");
+        rushDocumentTwo.setEntDtm(new DateTime());
+        rushDocumentTwo.setEntUserId("1");
+        rushDocumentTwo.setFileServer("www.google.com");
+        rushDocumentTwo.setObjectGuid("9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8");
+        rushDocumentTwo.setProcessItemSeqNo(BigDecimal.ONE);
+        rushDocumentTwo.setProcessRequestId(BigDecimal.ONE);
+        rushDocumentTwo.setProcessSupportDocSeqNo(BigDecimal.ONE);
+        rushDocumentTwo.setTempFileName("Test.pdf");
+        rushDocumentTwo.setUpdUserId("1");
+        rushDocumentTwo.setUpdDtm(new DateTime());
+
+        return Arrays.asList(rushDocumentOne, rushDocumentTwo);
+
     }
 }

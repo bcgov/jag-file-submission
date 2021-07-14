@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingcsoclient.mappers;
 
 import ca.bc.gov.ag.csows.filing.status.File;
 import ca.bc.gov.ag.csows.filing.status.PackageParties;
+import ca.bc.gov.ag.csows.filing.status.RushOrderRequestItem;
 import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
@@ -25,7 +26,8 @@ public interface FilePackageMapper {
     @Mapping(target = "packageLinks.packageHistoryUrl", source = "csoHistoryLink")
     @Mapping(target = "parties", source = "individuals")
     @Mapping(target = "organizations", source = "organizations")
-    ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage, String csoHistoryLink, List<Individual> individuals, List<Organization> organizations);
+    @Mapping(target = "rushOrder", source = "rushOrderRequestItem")
+    ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage, String csoHistoryLink, List<Individual> individuals, List<Organization> organizations, RushOrderRequestItem rushOrderRequestItem);
 
     List<ReviewDocument> toDocuments(List<File> file);
 

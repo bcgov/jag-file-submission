@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
 
-import ca.bc.gov.ag.csows.filing.status.FilePackage;
-import ca.bc.gov.ag.csows.filing.status.FilingStatus;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.filing.status.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
@@ -38,6 +35,7 @@ public class FindPackageByIdTest {
     public static final String FIRST_NAME = "FIRSTNAME";
     public static final String LAST_NAME = "LASTNAME";
     public static final String PACKAGE_NO = "PACKAGENO";
+    private static final String REASON_TXT = "ReasonTxt";
     public static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
@@ -88,6 +86,10 @@ public class FindPackageByIdTest {
         Assertions.assertEquals(COURT_LEVEL_CD, result.get().getCourt().getLevel());
         Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourt().getLocationCd());
         Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
+        Assertions.assertEquals(REASON_TXT, result.get().getRushOrder().getRushFilingReasonTxt());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getPackageId());
+
 
     }
 
@@ -130,7 +132,22 @@ public class FindPackageByIdTest {
         filePackage.setHasRegistryNotice(true);
         filePackage.setLastName(LAST_NAME);
         filePackage.setPackageNo(PACKAGE_NO);
+
+        filePackage.setProcRequest(createRushOrderRequest());
         filePackage.setSubmittedDate(DateUtils.getXmlDate(SUBMITED_DATE));
         return filePackage;
     }
+
+    private RushOrderRequest createRushOrderRequest() {
+        RushOrderRequest rushOrderRequest = new RushOrderRequest();
+        RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
+
+        rushOrderRequestItem.setPackageId(BigDecimal.ONE);
+        rushOrderRequestItem.setRushFilingReasonTxt(REASON_TXT);
+
+        rushOrderRequest.setItem(rushOrderRequestItem);
+
+        return rushOrderRequest;
+    }
+
 }
