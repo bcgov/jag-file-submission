@@ -943,6 +943,19 @@ components:
         reason:
           type: string
           description: clear and detailed reason
+        supportingDocuments:
+          type: array
+          items:
+            $ref: "#/components/schemas/RushDocument"
+    RushDocument:
+      type: object
+      properties:
+        fileName:
+          type: string
+          description: file name of document
+        identifier:
+          type: string
+          description: guid of file
     CsoAccount:
       type: object
       description: a CsoAccount
