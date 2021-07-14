@@ -343,6 +343,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DocumentTypes"
+  "/countries":
+    get:
+      summary: Get countries
+      operationId: GetCountries
+      description: A list of countries
+      tags:
+        - lookup
+      responses:
+        "200":
+          description: List of countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CountryCode"
   "/courts":
     get:
       summary: Get court locations
@@ -1362,3 +1378,13 @@ components:
         lastName:
           type: string
           description: last name
+    CountryCode:
+      description: Country Code Table Entry
+      type: object
+      properties:
+        code:
+          type: string
+          description: code value
+        description:
+          type: string
+          description: country name

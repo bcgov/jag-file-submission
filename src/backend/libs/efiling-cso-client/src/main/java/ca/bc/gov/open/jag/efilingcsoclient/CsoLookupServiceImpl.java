@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingLookupServiceExceptio
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFeeRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CsoLookupServiceImpl implements EfilingLookupService {
 
@@ -74,4 +76,17 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
             throw new EfilingLookupServiceException("Exception while getting party roles", e.getCause());
         }
     }
+
+    @Override
+    public List<LookupItem> getCountries() {
+        try {
+            List<CodeValue> countries = lookupFacade.getCountries();
+            return countries.stream()
+                    .map(country -> LookupItem.builder().code(country.getCode()).description(country.getDescription()).create())
+                    .collect(Collectors.toList());
+        } catch(NestedEjbException_Exception e) {
+            throw new EfilingLookupServiceException("Exception while getting countries", e.getCause());
+        }
+    }
+
 }
