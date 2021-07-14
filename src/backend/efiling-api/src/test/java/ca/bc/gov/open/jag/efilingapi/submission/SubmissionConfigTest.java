@@ -20,6 +20,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -109,6 +110,11 @@ public class SubmissionConfigTest {
 
         @Override
         public List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes) {
+            return null;
+        }
+
+        @Override
+        public List<LookupItem> getCountries() {
             return null;
         }
     }

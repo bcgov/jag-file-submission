@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class CountriesApiDelegateImpl implements CountriesApiDelegate {
     }
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<List<CountryCode>> getCountries() {
 
         logger.info("Get countries list request received");
