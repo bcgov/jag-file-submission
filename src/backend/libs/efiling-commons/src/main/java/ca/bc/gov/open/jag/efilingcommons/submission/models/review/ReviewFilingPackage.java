@@ -28,7 +28,7 @@ public class ReviewFilingPackage {
     private String packageNo;
     private List<ReviewPackageRequest> packageRequests;
     private List<PackagePayment> payments;
-    private ReviewRushOrder procRequest;
+    private ReviewRushOrder rushOrder;
     private DateTime submittedDate;
     private PackageLinks packageLinks;
 
@@ -182,7 +182,7 @@ public class ReviewFilingPackage {
 
     public void setOrganizations(List<Organization> organizations) { this.organizations = organizations; }
 
-    public ReviewRushOrder getProcRequest() { return procRequest;  }
+    public ReviewRushOrder getRushOrder() { return rushOrder;  }
 
-    public void setProcRequest(ReviewRushOrder procRequest) {  this.procRequest = procRequest; }
+    public void setRushOrder(ReviewRushOrder rushOrder) {  this.rushOrder = rushOrder; }
 }

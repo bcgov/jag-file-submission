@@ -2,9 +2,7 @@ package ca.bc.gov.open.jag.efilingcsoclient;
 
 import ca.bc.gov.ag.csows.filing.DocumentStatuses;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.FilingStatus;
-import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
+import ca.bc.gov.ag.csows.filing.status.*;
 import ca.bc.gov.ag.csows.reports.Report;
 import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
@@ -83,7 +81,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                     filingStatus.getFilePackages().get(0).getParties().stream()
                             .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
                             .map(filePackageMapper::toOrganization)
-                            .collect(Collectors.toList())));
+                            .collect(Collectors.toList()),
+                    getRushOrderItem(filingStatus.getFilePackages().get(0))));
 
         } catch (NestedEjbException_Exception e) {
 
@@ -116,8 +115,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                     filePackage.getParties().stream()
                             .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
                             .map(filePackageMapper::toOrganization)
-                            .collect(Collectors.toList())
-                    )).collect(Collectors.toList());
+                            .collect(Collectors.toList()),
+                    getRushOrderItem(filingStatus.getFilePackages().get(0)))).collect(Collectors.toList());
 
         } catch (NestedEjbException_Exception | DatatypeConfigurationException e) {
 
@@ -245,6 +244,13 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     private String getViewAllPackagesUrl() {
         return MessageFormat.format("{0}/{1}", csoProperties.getCsoBasePath(),  Keys.VIEW_ALL_PACKAGE_SUBPATH);
+    }
+
+    private RushOrderRequestItem getRushOrderItem(FilePackage filePackage) {
+        if (filePackage.getProcRequest() == null) return new RushOrderRequestItem();
+
+        return filePackage.getProcRequest().getItem();
+
     }
 
 }
