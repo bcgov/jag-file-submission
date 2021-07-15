@@ -230,6 +230,25 @@ paths:
                 format: binary
         "404":
           description: Document not found
+  "/submission/{submissionId}/rushProcessing":
+    post:
+      summary: add rush processing to package
+      operationId: PostRushProcessing
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: filing submit parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rush"
+      responses:
+        "201":
+          description: Rush created
   "/csoAccount":
     post:
       summary: Create a CSO account
