@@ -106,7 +106,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("attempting to upload original document [{}]", submissionKey.getSubmissionId());
 
-        ResponseEntity response = storeDocuments(submissionKey, files);
+        ResponseEntity response = storeDocuments(submissionKey, files, false);
 
         logger.info("successfully uploaded original document [{}]", submissionKey.getSubmissionId());
 
@@ -135,7 +135,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("attempting to upload new document for transaction [{}]", submissionId);
 
-        ResponseEntity responseEntity = storeDocuments(submissionKey, files);
+        ResponseEntity responseEntity = storeDocuments(submissionKey, files, false);
 
         logger.info("successfully uploaded new document for transaction [{}]", submissionId);
 
@@ -404,7 +404,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         return response;
     }
 
-    private ResponseEntity storeDocuments(SubmissionKey submissionKey, List<MultipartFile> files) {
+    private ResponseEntity storeDocuments(SubmissionKey submissionKey, List<MultipartFile> files, boolean rush) {
 
         if (files == null || files.isEmpty())
             throw new DocumentRequiredException(DOCUMENT_REQUIRED);
@@ -422,7 +422,11 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
                     throw new FileTypeException(FILE_TYPE_EXCEPTION);
             }
             for (MultipartFile file : files) {
-                documentStore.put(submissionKey, file.getResource().getFilename(), file.getBytes());
+                if (!rush) {
+                    documentStore.put(submissionKey, file.getResource().getFilename(), file.getBytes());
+                } else {
+                    documentStore.putRushDocument(submissionKey, file.getResource().getFilename(), file.getBytes());
+                }
             }
 
         } catch (IOException e) {
@@ -464,5 +468,32 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         return ResponseEntity.created(null).build();
 
+    }
+
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<UploadSubmissionDocumentsResponse> uploadRushDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
+        }
+
+        SubmissionKey submissionKey = new SubmissionKey(
+                universalId.get(),
+                xTransactionId,
+                UUID.randomUUID());
+
+        logger.info("attempting to upload rush document [{}]", submissionKey.getSubmissionId());
+
+        ResponseEntity response = storeDocuments(submissionKey, files, true);
+
+        logger.info("successfully uploaded rush document [{}]", submissionKey.getSubmissionId());
+
+        return response;
     }
 }
