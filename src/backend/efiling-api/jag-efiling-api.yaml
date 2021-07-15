@@ -249,6 +249,8 @@ paths:
       responses:
         "201":
           description: Rush created
+        "404":
+          description: Submission not found
   "/csoAccount":
     post:
       summary: Create a CSO account
