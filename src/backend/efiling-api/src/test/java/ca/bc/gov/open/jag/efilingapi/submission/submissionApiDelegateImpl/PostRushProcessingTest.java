@@ -2,7 +2,9 @@ package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
@@ -10,7 +12,9 @@ import ca.bc.gov.open.jag.efilingapi.error.InvalidUniversalException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
-import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.RushProcessingMapperImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
@@ -18,24 +22,30 @@ import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GetSubmissionDocumentTest {
+public class PostRushProcessingTest {
 
-    public static final String CONTENT = "content";
+    private static final String FILE_PDF = "file.pdf";
+    private static final String COUNTRY = "COUNTRY";
+    private static final String COUNTRY_CODE = "CD";
+    private static final String FIRST_NAME = "FIRSTNAME";
+    private static final String LAST_NAME = "LASTNAME";
+    private static final String ORGANIZATION = "ORGANIZATION";
+    private static final String REASON = "REASON";
+    private static final String PHONE_NUMBER = "1231231234";
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -43,6 +53,12 @@ public class GetSubmissionDocumentTest {
 
     @Mock
     private SubmissionStore submissionStoreMock;
+
+    @Mock
+    private GenerateUrlResponseMapper generateUrlResponseMapperMock;
+
+    @Mock
+    private NavigationProperties navigationProperties;
 
     @Mock
     private DocumentStore documentStoreMock;
@@ -71,10 +87,9 @@ public class GetSubmissionDocumentTest {
     @Mock
     private GenerateUrlRequestValidator generateUrlRequestValidator;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
-
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
@@ -83,51 +98,65 @@ public class GetSubmissionDocumentTest {
 
         SecurityContextHolder.setContext(securityContextMock);
 
-        NavigationProperties navigationProperties = new NavigationProperties();
-        navigationProperties.setBaseUrl("http://localhost");
-
-        Mockito.when(documentStoreMock.get(Mockito.any(), Mockito.endsWith("test.txt"))).thenReturn(CONTENT.getBytes());
-
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator, null);
-
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator, new RushProcessingMapperImpl());
     }
 
-
     @Test
-    @DisplayName("200: when document in cache should return 200")
-    public void withDocumentInCacheShouldReturn200() {
+    @DisplayName("201")
+    public void withValidParamtersReturnDocumentProperties() {
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test.txt");
 
-        Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
+        Submission submission = TestHelpers.buildSubmission();
+
+        Mockito.when(submissionStoreMock.get(Mockito.any())).thenReturn(Optional.of(submission));
+
+        Rush rush = new Rush();
+        rush.setCountry(COUNTRY);
+        rush.setCountryCode(COUNTRY_CODE);
+        rush.setFirstName(FIRST_NAME);
+        rush.setLastName(LAST_NAME);
+        rush.setOrganization(ORGANIZATION);
+        rush.setPhoneNumber(PHONE_NUMBER);
+        rush.setReason(REASON);
+        RushDocument document = new RushDocument();
+        document.setFileName(FILE_PDF);
+        rush.setSupportingDocuments(Arrays.asList(document));
+
+        ResponseEntity<Void> actual = sut.postRushProcessing(TestHelpers.CASE_1, UUID.randomUUID(), rush);
+
+        Assertions.assertEquals(HttpStatus.CREATED, actual.getStatusCode());
 
     }
 
     @Test
-    @DisplayName("404: when document is missing should return 404")
-    public void withNoDocumentShouldReturn404() {
+    @DisplayName("404")
+    public void withNoSubmissionReturnNotFound() {
+
 
         Map<String, Object> otherClaims = new HashMap<>();
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<Resource> actual = sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test2.txt");
+        ResponseEntity actual = sut.postRushProcessing(TestHelpers.CASE_2, UUID.randomUUID(), null);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
+
     @Test
-    @DisplayName("403: without universal id should throw InvalidUniversalException")
-    public void withNoUniversalIdShouldThrowInvalidUniversalException() {
+    @DisplayName("403: with no universal id should throw InvalidUniversalException")
+    public void withUserNotHavingUniversalIdShouldThrowInvalidUniversalException() {
 
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
+        Map<String, Object> otherClaims = new HashMap<>();
+        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,null);
+        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.getSubmissionDocument(UUID.randomUUID(), UUID.randomUUID(), "test2.txt"));
+        InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.postRushProcessing(TestHelpers.CASE_2, UUID.randomUUID(), null));
         Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
 }

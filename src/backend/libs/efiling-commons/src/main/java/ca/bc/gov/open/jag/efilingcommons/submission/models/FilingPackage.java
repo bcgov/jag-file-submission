@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.submission.models;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Court;
-import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.Individual;
-import ca.bc.gov.open.jag.efilingcommons.model.Organization;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
@@ -17,6 +14,7 @@ public class FilingPackage {
     private List<Document> documents = new ArrayList<>();
     private List<Individual> parties = new ArrayList<>();
     private List<Organization> organizations = new ArrayList<>();
+    private RushProcessing rush;
     private boolean rushedSubmission = false;
     private boolean autoProcessing = false;
     private String applicationCode;
@@ -27,6 +25,7 @@ public class FilingPackage {
             @JsonProperty("documents") List<Document> documents,
             @JsonProperty("parties") List<Individual> parties,
             @JsonProperty("organizations") List<Organization> organizations,
+            @JsonProperty("rush") RushProcessing rush,
             @JsonProperty("rushedSubmission") boolean rushedSubmission,
             @JsonProperty("autoProcessing") boolean autoProcessing,
             @JsonProperty("applicationCode") String applicationCode
@@ -37,6 +36,7 @@ public class FilingPackage {
         this.documents.addAll(documents);
         this.parties.addAll(parties);
         this.organizations.addAll(organizations);
+        this.rush = rush;
         this.applicationCode = applicationCode;
         this.rushedSubmission = rushedSubmission;
         this.autoProcessing = autoProcessing;
@@ -48,6 +48,7 @@ public class FilingPackage {
         this.documents.addAll(builder.documents);
         this.parties.addAll(builder.parties);
         this.organizations.addAll(builder.organizations);
+        this.rush = builder().rush;
         this.applicationCode = builder.applicationCode;
         this.rushedSubmission = builder.rushedSubmission;
         this.autoProcessing = builder.autoProcessing;
@@ -69,9 +70,9 @@ public class FilingPackage {
         return parties;
     }
 
-    public List<Organization> getOrganizations() {
-        return organizations;
-    }
+    public List<Organization> getOrganizations() {  return organizations; }
+
+    public RushProcessing getRush() { return rush; }
 
     public boolean isRushedSubmission() { return rushedSubmission; }
 
@@ -114,6 +115,8 @@ public class FilingPackage {
         this.applicationCode = applicationCode;
     }
 
+    public void setRush(RushProcessing rush) { this.rush = rush; }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -130,6 +133,7 @@ public class FilingPackage {
         private List<Document> documents = new ArrayList<>();
         private List<Individual> parties = new ArrayList<>();
         private List<Organization> organizations = new ArrayList<>();
+        private RushProcessing rush;
         private String applicationCode;
         private boolean rushedSubmission;
         private boolean autoProcessing;
@@ -156,6 +160,11 @@ public class FilingPackage {
 
         public Builder court(Court court) {
             this.court = court;
+            return this;
+        }
+
+        public Builder rush(RushProcessing rush) {
+            this.rush = rush;
             return this;
         }
 

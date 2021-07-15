@@ -230,6 +230,27 @@ paths:
                 format: binary
         "404":
           description: Document not found
+  "/submission/{submissionId}/rushProcessing":
+    post:
+      summary: add rush processing to package
+      operationId: PostRushProcessing
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: filing submit parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rush"
+      responses:
+        "201":
+          description: Rush created
+        "404":
+          description: Submission not found
   "/csoAccount":
     post:
       summary: Create a CSO account
@@ -892,6 +913,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Payment"
+        rush:
+          $ref: "#/components/schemas/Rush"
     CourtBase:
       type: object
       description: "Court related information"
@@ -956,6 +979,9 @@ components:
         country:
           type: string
           description: country
+        countryCode:
+          type: string
+          description: code value for country
         reason:
           type: string
           description: clear and detailed reason

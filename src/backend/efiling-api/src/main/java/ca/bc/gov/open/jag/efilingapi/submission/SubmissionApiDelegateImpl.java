@@ -12,6 +12,7 @@ import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.RushProcessingMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
@@ -69,13 +70,14 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     private final ClamAvService clamAvService;
     private final FilingPackageMapper filingPackageMapper;
     private final GenerateUrlRequestValidator generateUrlRequestValidator;
+    private final RushProcessingMapper rushProcessingMapper;
 
     public SubmissionApiDelegateImpl(
             SubmissionService submissionService,
             AccountService accountService,
             GenerateUrlResponseMapper generateUrlResponseMapper,
             NavigationProperties navigationProperties,
-            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService, FilingPackageMapper filingPackageMapper, GenerateUrlRequestValidator generateUrlRequestValidator) {
+            SubmissionStore submissionStore, DocumentStore documentStore, ClamAvService clamAvService, FilingPackageMapper filingPackageMapper, GenerateUrlRequestValidator generateUrlRequestValidator, RushProcessingMapper rushProcessingMapper) {
         this.submissionService = submissionService;
         this.accountService = accountService;
         this.generateUrlResponseMapper = generateUrlResponseMapper;
@@ -85,6 +87,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         this.clamAvService = clamAvService;
         this.filingPackageMapper = filingPackageMapper;
         this.generateUrlRequestValidator = generateUrlRequestValidator;
+        this.rushProcessingMapper = rushProcessingMapper;
     }
 
     @Override
@@ -366,6 +369,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -430,4 +434,35 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionKey.getSubmissionId()).received(new BigDecimal(files.size())));
     }
 
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Void> postRushProcessing(UUID xTransactionId, UUID submissionId, Rush rush) {
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
+        }
+
+        SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
+
+        logger.info("attempting to add rush processing to efiling package for transaction [{}]", xTransactionId);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionKey);
+
+        if (!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
+
+        fromCacheSubmission.get().getFilingPackage().setRushedSubmission(true);
+
+        fromCacheSubmission.get().getFilingPackage().setRush(rushProcessingMapper.toRushProcessing(rush));
+
+        return ResponseEntity.created(null).build();
+
+    }
 }
