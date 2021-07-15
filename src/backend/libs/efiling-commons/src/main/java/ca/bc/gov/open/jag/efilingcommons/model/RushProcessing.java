@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RushProcessing {
@@ -14,7 +15,7 @@ public class RushProcessing {
     private String country;
     private String countryCode;
     private String reason;
-    private List<Document> supportingDocuments;
+    private List<Document> supportingDocuments = new ArrayList<>();
 
     public RushProcessing(RushProcessing.Builder builder) {
         this.firstName = builder.firstName;
@@ -92,7 +93,7 @@ public class RushProcessing {
         private String country;
         private String countryCode;
         private String reason;
-        private List<Document> supportingDocuments;
+        private List<Document> supportingDocuments = new ArrayList<>();
 
         public RushProcessing.Builder firstName(String firstName) {
             this.firstName = firstName;
