@@ -977,6 +977,9 @@ components:
         country:
           type: string
           description: country
+        countryCode:
+          type: string
+          description: code value for country
         reason:
           type: string
           description: clear and detailed reason

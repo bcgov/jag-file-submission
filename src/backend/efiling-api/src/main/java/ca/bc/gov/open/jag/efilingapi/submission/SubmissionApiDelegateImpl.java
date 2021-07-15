@@ -366,6 +366,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -430,4 +431,33 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionKey.getSubmissionId()).received(new BigDecimal(files.size())));
     }
 
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Void> postRushProcessing(UUID xTransactionId, UUID submissionId, Rush rush) {
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) {
+
+            logger.error(UNIVERSAL_ID_IS_REQUIRED);
+            throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
+        }
+
+        SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
+
+        logger.info("attempting to add rush processing to efiling package for transaction [{}]", xTransactionId);
+
+        Optional<Submission> fromCacheSubmission = this.submissionStore.get(submissionKey);
+
+        if (!fromCacheSubmission.isPresent())
+            return ResponseEntity.notFound().build();
+
+        MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
+
+        fromCacheSubmission.get().getFilingPackage().setRushedSubmission(true);
+
+
+        return null;
+    }
 }
