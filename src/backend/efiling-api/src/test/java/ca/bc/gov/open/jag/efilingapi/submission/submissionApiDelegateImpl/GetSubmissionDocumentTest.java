@@ -89,7 +89,7 @@ public class GetSubmissionDocumentTest {
         Mockito.when(documentStoreMock.get(Mockito.any(), Mockito.endsWith("test.txt"))).thenReturn(CONTENT.getBytes());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator, null);
 
     }
 

@@ -144,7 +144,7 @@ public class SubmitTest {
         Mockito.doThrow(EfilingPaymentException.class).when(submissionServiceMock).createSubmission(ArgumentMatchers.argThat(x -> x.getId().equals(TestHelpers.CASE_4)), Mockito.any(), Mockito.any());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator);
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationPropertiesMock, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator, null);
 
     }
 
