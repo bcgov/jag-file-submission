@@ -486,7 +486,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         SubmissionKey submissionKey = new SubmissionKey(
                 universalId.get(),
                 xTransactionId,
-                UUID.randomUUID());
+                submissionId);
 
         logger.info("attempting to upload rush document [{}]", submissionKey.getSubmissionId());
 
