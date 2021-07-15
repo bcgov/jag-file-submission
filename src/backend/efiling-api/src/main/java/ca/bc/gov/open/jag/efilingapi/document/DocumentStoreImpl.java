@@ -45,4 +45,24 @@ public class DocumentStoreImpl implements DocumentStore {
     public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
         return this.efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
     }
+
+    @Override
+    @CachePut(cacheNames = "rushDocument", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    public byte[] putRushDocument(SubmissionKey submissionKey, String fileName, byte[] content) {
+        return content;
+    }
+
+    @Override
+    @Cacheable(cacheNames = "rushDocument", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager", unless = "#result == null")
+    public byte[] getRushDocument(SubmissionKey submissionKey, String fileName) {
+        return null;
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "rushDocument", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    public void evictRushDocument(SubmissionKey submissionKey, String fileName) {
+        //This implements Redis delete no code required
+    }
+
+
 }

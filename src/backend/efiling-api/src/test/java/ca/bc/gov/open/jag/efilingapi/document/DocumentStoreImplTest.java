@@ -27,7 +27,7 @@ public class DocumentStoreImplTest {
 
     @BeforeAll
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         DocumentTypeDetails docummentDetails = new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, true, true, true);
 
@@ -64,6 +64,27 @@ public class DocumentStoreImplTest {
     @DisplayName("OK: evict should delete submission")
     public void withoutCacheNotThrowException() {
         Assertions.assertDoesNotThrow(() -> sut.evict(new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
+    }
+
+    @Test
+    @DisplayName("OK: put document should return byte array")
+    public void withRushCacheShouldReturnIt() {
+
+        byte[] actual = sut.putRushDocument(new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt", DUMMY_CONTENT.getBytes());
+
+        Assertions.assertEquals(DUMMY_CONTENT, new String(actual));
+    }
+
+    @Test
+    @DisplayName("OK: get document by Id should return null")
+    public void withRushCacheShouldReturnNull() {
+        Assertions.assertNull(sut.getRushDocument(new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
+    }
+
+    @Test
+    @DisplayName("OK: evict should delete submission")
+    public void withRushCacheNotThrowException() {
+        Assertions.assertDoesNotThrow(() -> sut.evictRushDocument(new SubmissionKey(UUID.randomUUID().toString(), UUID.randomUUID(), UUID.randomUUID()), "filename.txt"));
     }
 
     @Test
