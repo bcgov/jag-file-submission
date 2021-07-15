@@ -85,7 +85,7 @@ public class FindPackagesByClientIdTest {
         Assertions.assertEquals(COURT_LEVEL_CD, result.get(0).getCourt().getLevel());
         Assertions.assertEquals(COURT_LOCATION_CD, result.get(0).getCourt().getLocationCd());
         Assertions.assertEquals(COURT_LOCATION_NAME, result.get(0).getCourt().getLocationName());
-        Assertions.assertEquals("http://locahost:8080/filing/status/display.do?actionType=filterStatus&useFilter=ALL", result.get(0).getPackageLinks().getPackageHistoryUrl());
+        Assertions.assertEquals("http://locahost:8080/accounts/filingStatus.do?actionType=filterStatus&useFilter=ALL", result.get(0).getPackageLinks().getPackageHistoryUrl());
 
     }
 
