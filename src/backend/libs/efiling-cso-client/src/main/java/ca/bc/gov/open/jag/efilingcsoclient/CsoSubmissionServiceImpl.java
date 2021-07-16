@@ -97,7 +97,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService);
 
         if (efilingPackage.isRushedSubmission()) {
-            csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails));
+            csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails, efilingPackage.getRush()));
         }
 
         determineAutoProcessingFlagFromDocuments(efilingPackage, csoFilingPackage);
@@ -190,7 +190,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private RushOrderRequest buildRushedOrderRequest(AccountDetails accountDetails) {
+    private RushOrderRequest buildRushedOrderRequest(AccountDetails accountDetails, RushProcessing rushProcessing) {
         RushOrderRequest processRequest = new RushOrderRequest();
         processRequest.setEntDtm(DateUtils.getCurrentXmlDate());
         processRequest.setEntUserId(accountDetails.getClientId().toString());
@@ -198,11 +198,24 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
         rushOrderRequestItem.setEntDtm(DateUtils.getCurrentXmlDate());
         rushOrderRequestItem.setEntUserId(accountDetails.getClientId().toString());
+        rushOrderRequestItem.setRushFilingReasonTxt(rushProcessing.getReason());
         rushOrderRequestItem.setProcessReasonCd(Keys.RUSH_PROCESS_REASON_CD);
         rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusRequest(accountDetails));
         rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusApproved(accountDetails));
+        rushOrderRequestItem.getSupportDocs().addAll(buildSupportingDocuments(accountDetails, rushProcessing.getSupportingDocuments()));
         processRequest.setItem(rushOrderRequestItem);
         return processRequest;
+    }
+
+    private List<ProcessSupportDocument> buildSupportingDocuments(AccountDetails accountDetails, List<Document> documents) {
+
+        List<ProcessSupportDocument> supportDocuments = new ArrayList<>();
+        for (int i = 0; i < documents.size(); i++) {
+            supportDocuments.add(documentMapper.toEfilingRushProcessingDocument(i+1, documents.get(i), accountDetails, ""));
+        }
+
+        return supportDocuments;
+        
     }
 
     private ProcessItemStatus getProcessItemStatusRequest(AccountDetails accountDetails) {
