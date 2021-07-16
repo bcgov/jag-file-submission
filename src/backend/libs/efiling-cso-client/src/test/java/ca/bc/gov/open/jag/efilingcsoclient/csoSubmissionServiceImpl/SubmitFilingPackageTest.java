@@ -59,6 +59,13 @@ public class SubmitFilingPackageTest {
     private static final boolean IS_AMENDMENT = true;
     private static final boolean IS_SUPREME_COURT_SCHEDULING = false;
     private static final String APP_CODE = "APP_CODE";
+    private static final String COUNTRY = "COUNTRY";
+    private static final String COUNTRY_CODE = "COUNTRYCODE";
+    private static final String FIRST_NAME = "FIRSTNAME";
+    private static final String LAST_NAME = "LASTNAME";
+    private static final String ORGANIZATION = "ORGANIZATION";
+    private static final String PHONE_NUMBER = "1231231234";
+    private static final String REASON = "REASON";
     private final String TYPE = "type";
     private static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
 
@@ -275,6 +282,16 @@ public class SubmitFilingPackageTest {
                 FilingPackage.builder()
                         .applicationCode(APP_CODE)
                         .rushedSubmission(true)
+                        .rush(RushProcessing.builder()
+                                .country(COUNTRY)
+                                .countryCode(COUNTRY_CODE)
+                                .firstName(FIRST_NAME)
+                                .lastName(LAST_NAME)
+                                .organization(ORGANIZATION)
+                                .phoneNumber(PHONE_NUMBER)
+                                .reason(REASON)
+                                .supportingDocuments(new ArrayList<>())
+                                .create())
                         .court(Court.builder()
                                 .location(LOCATION)
                                 .agencyId(AGENCY_ID)

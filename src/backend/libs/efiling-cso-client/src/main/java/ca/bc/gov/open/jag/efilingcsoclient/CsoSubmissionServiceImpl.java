@@ -211,11 +211,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         List<ProcessSupportDocument> supportDocuments = new ArrayList<>();
         for (int i = 0; i < documents.size(); i++) {
-            supportDocuments.add(documentMapper.toEfilingRushProcessingDocument(i+1, documents.get(i), accountDetails, ""));
+            supportDocuments.add(documentMapper.toEfilingRushProcessingDocument(i+1,
+                    documents.get(i),
+                    accountDetails,
+                    csoProperties.getFileServerHost()));
         }
 
         return supportDocuments;
-        
+
     }
 
     private ProcessItemStatus getProcessItemStatusRequest(AccountDetails accountDetails) {

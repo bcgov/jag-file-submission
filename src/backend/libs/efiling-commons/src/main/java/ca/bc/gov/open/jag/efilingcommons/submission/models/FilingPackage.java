@@ -48,7 +48,7 @@ public class FilingPackage {
         this.documents.addAll(builder.documents);
         this.parties.addAll(builder.parties);
         this.organizations.addAll(builder.organizations);
-        this.rush = builder().rush;
+        this.rush = builder.rush;
         this.applicationCode = builder.applicationCode;
         this.rushedSubmission = builder.rushedSubmission;
         this.autoProcessing = builder.autoProcessing;
