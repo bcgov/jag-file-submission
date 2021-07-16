@@ -60,7 +60,7 @@ public class SubmitFilingPackageTest {
     private static final boolean IS_SUPREME_COURT_SCHEDULING = false;
     private static final String APP_CODE = "APP_CODE";
     private static final String COUNTRY = "COUNTRY";
-    private static final String COUNTRY_CODE = "COUNTRYCODE";
+    private static final String COUNTRY_CODE = "123";
     private static final String FIRST_NAME = "FIRSTNAME";
     private static final String LAST_NAME = "LASTNAME";
     private static final String ORGANIZATION = "ORGANIZATION";

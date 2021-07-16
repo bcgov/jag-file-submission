@@ -193,6 +193,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     private RushOrderRequest buildRushedOrderRequest(AccountDetails accountDetails, RushProcessing rushProcessing) {
         RushOrderRequest processRequest = new RushOrderRequest();
         processRequest.setEntDtm(DateUtils.getCurrentXmlDate());
+        processRequest.setContactFirstGivenNm(rushProcessing.getFirstName());
+        processRequest.setContactSurnameNm(rushProcessing.getLastName());
+        processRequest.setContactPhoneNo(rushProcessing.getPhoneNumber());
+        processRequest.setCtryId(new BigDecimal(rushProcessing.getCountryCode()));
         processRequest.setEntUserId(accountDetails.getClientId().toString());
         processRequest.setRequestDt(DateUtils.getCurrentXmlDate());
         RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
