@@ -263,10 +263,19 @@ public class SubmissionServiceImpl implements SubmissionService {
     }
 
     private void uploadFiles(Submission submission) {
+        //Upload submission documents
+        logger.info("Uploading submission documents");
         submission.getFilingPackage().getDocuments().forEach(
                 document ->
                         redisStoreToSftpStore(document, submission));
 
+        //Upload supporting documents when there is a rush with documents
+        if (submission.getFilingPackage().getRush() != null && submission.getFilingPackage().getRush().getSupportingDocuments().size() > 0) {
+            logger.info("Uploading rush supporting documents");
+            submission.getFilingPackage().getRush().getSupportingDocuments().forEach(
+                    document ->
+                            redisRushStoreToSftpStore(document, submission));
+        }
     }
 
     private void redisStoreToSftpStore(Document document, Submission submission) {
@@ -280,6 +289,19 @@ public class SubmissionServiceImpl implements SubmissionService {
         documentStore.evict(submissionKey, document.getName());
 
     }
+
+    private void redisRushStoreToSftpStore(Document document, Submission submission) {
+
+        SubmissionKey submissionKey = new SubmissionKey(submission.getUniversalId(), submission.getTransactionId(), submission.getId());
+
+        sftpService.put(new ByteArrayInputStream(documentStore.getRushDocument(submissionKey, document.getName())),
+                document.getServerFileName());
+
+        //Delete file from cache
+        documentStore.evictRushDocument(submissionKey, document.getName());
+
+    }
+
 
     private BigDecimal getSubmissionFeeAmount(SubmissionFeeRequest submissionFeeRequest ) {
 
