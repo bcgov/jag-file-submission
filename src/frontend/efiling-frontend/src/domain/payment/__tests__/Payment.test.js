@@ -268,6 +268,7 @@ describe("Payment Component", () => {
   });
 
   test("Submit on success redirects to success page", async () => {
+    jest.useFakeTimers();
     sessionStorage.setItem("successUrl", "success.com");
 
     mock
@@ -279,12 +280,12 @@ describe("Payment Component", () => {
     fireEvent.click(getByRole(container, "checkbox"));
     fireEvent.click(getByText(container, "Submit"));
 
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledWith(
-      "success.com?packageRef=packageRef",
-      "_self"
-    );
+    await waitFor(() => {
+      expect(window.open).toHaveBeenCalledWith(
+        "success.com?packageRef=packageRef",
+        "_self"
+      );
+    });
   });
 
   test("Submit on error generates toast message", async () => {

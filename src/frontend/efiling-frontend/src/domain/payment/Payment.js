@@ -19,6 +19,7 @@ import PackageConfirmation from "../package/package-confirmation/PackageConfirma
 import { generateFileSummaryData } from "../../modules/helpers/generateFileSummaryData";
 
 import "./Payment.scss";
+import { timeout } from "../../modules/helpers/timeout";
 
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;
@@ -86,7 +87,8 @@ const submitPackage = (
 
   axios
     .post(`/submission/${submissionId}/submit`, {})
-    .then(({ data: { packageRef } }) => {
+    .then(({ data: { packageRef } }) => timeout(60000, packageRef))
+    .then((packageRef) => {
       const redirectUrl = `${sessionStorage.getItem(
         "successUrl"
       )}?packageRef=${packageRef}`;
@@ -94,7 +96,10 @@ const submitPackage = (
       sessionStorage.setItem("validExit", true);
       window.open(redirectUrl, "_self");
     })
-    .catch(() => setShowToast(true));
+    .catch(() => {
+      setShowToast(true);
+      setShowLoader(false);
+    });
 };
 
 const hasSubmissionFee = (submissionFee) => submissionFee !== 0;
