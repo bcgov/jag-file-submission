@@ -130,4 +130,20 @@ public class GetFilingPackagesSD {
         logger.info("Response matches the requirements");
     }
 
+    @Then("rush processing and supporting documents are returned")
+    public void validateRushProcessAndSupportingDoc() {
+        logger.info("Asserting rush object and supporting documents");
+
+        Assert.assertNull( actualFilingPackagesResponseJsonPath.get("rush.firstName[0]"));
+        Assert.assertNull( actualFilingPackagesResponseJsonPath.get("rush.lastName[0]"));
+        Assert.assertNull(actualFilingPackagesResponseJsonPath.get("rush.organization[0]"));
+        Assert.assertNull( actualFilingPackagesResponseJsonPath.get("rush.phoneNumber[0]"));
+        Assert.assertNull(actualFilingPackagesResponseJsonPath.get("rush.country[0]"));
+        Assert.assertNull( actualFilingPackagesResponseJsonPath.get("rush.countryCode[0]"));
+        Assert.assertEquals("This is a reason. This is a reason. This is a reason. This is a reason.", actualFilingPackagesResponseJsonPath.get("rush.reason[0]"));
+        Assert.assertEquals("Test.pdf", actualFilingPackagesResponseJsonPath.get("rush.supportingDocuments[0].fileName[0]"));
+        Assert.assertEquals("9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8", actualFilingPackagesResponseJsonPath.get("rush.supportingDocuments[0].identifier[0]"));
+
+    }
+
 }
