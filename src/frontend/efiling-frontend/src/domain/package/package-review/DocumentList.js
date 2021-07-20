@@ -102,34 +102,35 @@ export default function DocumentList({
               </span>
               <span className="label col-sm-4 d-lg-none">Action (s):</span>
               <span className="col-sm-8 col-lg-2 file-cell">
-                {document.status.code && !["WDRN", "REJ", "REF", "FIL"].some((i) =>
-                  document.status.code.match(i)
-                ) && (
-                  <>
-                    <span
-                      id={`withdraw_${document.identifier}`}
-                      className="file-href"
-                      role="button"
-                      tabIndex={0}
-                      onClick={(e) => handleWithdrawFileEvent(e, document)}
-                      onKeyDown={(e) => handleWithdrawFileEvent(e, document)}
-                    >
-                      withdraw
-                    </span>
-                    <MdHelp
-                      style={{
-                        fontSize: "20px",
-                        marginLeft: "10px",
-                        color: "#7598ca",
-                      }}
-                      id="withdraw-tooltip"
-                    />
-                    <BcGovTooltip
-                      target={`withdraw-tooltip`}
-                      content={withdrawTooltipData}
-                    />
-                  </>
-                )}
+                {document.status.code &&
+                  !["WDRN", "REJ", "REF", "FIL"].some((i) =>
+                    document.status.code.match(i)
+                  ) && (
+                    <>
+                      <span
+                        id={`withdraw_${document.identifier}`}
+                        className="file-href"
+                        role="button"
+                        tabIndex={0}
+                        onClick={(e) => handleWithdrawFileEvent(e, document)}
+                        onKeyDown={(e) => handleWithdrawFileEvent(e, document)}
+                      >
+                        withdraw
+                      </span>
+                      <MdHelp
+                        style={{
+                          fontSize: "20px",
+                          marginLeft: "10px",
+                          color: "#7598ca",
+                        }}
+                        id="withdraw-tooltip"
+                      />
+                      <BcGovTooltip
+                        target={`withdraw-tooltip`}
+                        content={withdrawTooltipData}
+                      />
+                    </>
+                  )}
               </span>
             </li>
           ))}
