@@ -167,6 +167,23 @@ public class SubmissionConfigTest {
         public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
             return null;
         }
+
+        @Override
+        public byte[] putRushDocument(SubmissionKey submissionKey, String fileName, byte[] content) {
+            return new byte[0];
+        }
+
+        @Override
+        public byte[] getRushDocument(SubmissionKey submissionKey, String fileName) {
+            return new byte[0];
+        }
+
+        @Override
+        public void evictRushDocument(SubmissionKey submissionKey, String fileName) {
+
+        }
+
+
     }
 
     public static class PaymentAdapterTest implements PaymentAdapter {
