@@ -10,7 +10,6 @@ import {
   DisplayBox,
   Table,
   Dropdown,
-  Radio,
 } from "shared-components";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
