@@ -7,6 +7,7 @@ export const documents = [
     },
     status: {
       description: "Submitted",
+      code: "SUB",
     },
     filingDate: "2020-05-05T00:00:00.000Z",
   },
