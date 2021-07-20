@@ -16,6 +16,7 @@ describe("DocumentList Component Testsuite", () => {
       },
       status: {
         description: "Submitted",
+        code: "SUB",
       },
     },
   ];
