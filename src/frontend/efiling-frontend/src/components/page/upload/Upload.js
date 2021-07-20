@@ -129,29 +129,44 @@ const identifySelectedFile = (fileName) => {
 
 const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
   const file = identifySelectedFile(fileName);
+  file[type] = false;
 
   return (
     <div className="table-value">
       <div className="minor-margin-right">
-        <Radio
-          id={`no-${type}-${fileName}`}
+        <label className="bcgov-radio" htmlFor={`no-${type}-${fileName}`}>
+         No
+        <input
+          type="radio"
           name={`${type}-${fileName}`}
-          label="No"
-          onSelect={() => {
-            file[type] = false;
-            setContinueBtnEnabled(checkValidityOfUploadedFiles());
+          id={`no-${type}-${fileName}`}
+          checked
+          onChange={(e) => {
+            if(e.target.checked) {
+              file[type] = false;
+            }
           }}
+  
         />
+        <span className="bcgov-dot" />
+      </label>
+  
       </div>
-      <Radio
-        id={`yes-${type}-${fileName}`}
-        name={`${type}-${fileName}`}
-        label="Yes"
-        onSelect={() => {
-          file[type] = true;
-          setContinueBtnEnabled(checkValidityOfUploadedFiles());
-        }}
-      />
+      <label className="bcgov-radio" htmlFor={`yes-${type}-${fileName}`}>
+         Yes
+        <input
+          type="radio"
+          name={`${type}-${fileName}`}
+          id={`yes-${type}-${fileName}`}
+          onChange={(e) => {
+            if(e.target.checked) {
+              file[type] = true;
+            }
+          }}
+  
+        />
+        <span className="bcgov-dot" />
+      </label>
     </div>
   );
 };
@@ -187,7 +202,7 @@ const generateTable = (
 ) => {
   if (!filesToUpload.documents.some((f) => f.name === file.name)) {
     filesToUpload.documents.push({ name: file.name, type: "AFF" });
-    setContinueBtnEnabled(checkValidityOfUploadedFiles());
+    setContinueBtnEnabled(true);
   }
 
   return [
