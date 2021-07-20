@@ -252,7 +252,7 @@ describe("Upload Component", () => {
     const button = getByText(container, "Continue");
     const dropdown = getAllByTestId(container, "dropdown");
 
-    expect(button).toBeDisabled();
+    expect(button).toBeEnabled();
 
     fireEvent.change(dropdown[0], {
       target: { value: "Case Conference Brief" },

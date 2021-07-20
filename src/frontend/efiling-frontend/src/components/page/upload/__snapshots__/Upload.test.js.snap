@@ -795,6 +795,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                         >
                           No
                           <input
+                            checked=""
                             id="no-isAmendment-ping.json"
                             name="isAmendment-ping.json"
                             type="radio"
@@ -848,6 +849,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                         >
                           No
                           <input
+                            checked=""
                             id="no-isSupremeCourtScheduling-ping.json"
                             name="isSupremeCourtScheduling-ping.json"
                             type="radio"
@@ -893,7 +895,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         <button
           class="bcgov-button bcgov-normal-blue btn"
           data-testid="continue-upload-btn"
-          disabled=""
           type="button"
         >
           Continue

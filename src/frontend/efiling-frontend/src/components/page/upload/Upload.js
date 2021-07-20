@@ -126,7 +126,7 @@ const identifySelectedFile = (fileName) => {
   return file;
 };
 
-const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
+const generateRadioButtonJSX = (fileName, type) => {
   const file = identifySelectedFile(fileName);
   file[type] = false;
 
@@ -134,35 +134,32 @@ const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
     <div className="table-value">
       <div className="minor-margin-right">
         <label className="bcgov-radio" htmlFor={`no-${type}-${fileName}`}>
-         No
-        <input
-          type="radio"
-          name={`${type}-${fileName}`}
-          id={`no-${type}-${fileName}`}
-          checked
-          onChange={(e) => {
-            if(e.target.checked) {
-              file[type] = false;
-            }
-          }}
-  
-        />
-        <span className="bcgov-dot" />
-      </label>
-  
+          No
+          <input
+            type="radio"
+            name={`${type}-${fileName}`}
+            id={`no-${type}-${fileName}`}
+            checked
+            onChange={(e) => {
+              if (e.target.checked) {
+                file[type] = false;
+              }
+            }}
+          />
+          <span className="bcgov-dot" />
+        </label>
       </div>
       <label className="bcgov-radio" htmlFor={`yes-${type}-${fileName}`}>
-         Yes
+        Yes
         <input
           type="radio"
           name={`${type}-${fileName}`}
           id={`yes-${type}-${fileName}`}
           onChange={(e) => {
-            if(e.target.checked) {
+            if (e.target.checked) {
               file[type] = true;
             }
           }}
-  
         />
         <span className="bcgov-dot" />
       </label>
