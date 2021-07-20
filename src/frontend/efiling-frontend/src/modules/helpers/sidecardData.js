@@ -34,12 +34,12 @@ const csoAccountDetails = () => {
     heading: "Your CSO Account",
     content: [
       <p key="csoAccountDetails">
-        CSO account <strong>{localStorage.getItem("csoAccountId")}</strong> is
+        CSO account <strong>{sessionStorage.getItem("csoAccountId")}</strong> is
         linked to your Basic BCeID account&nbsp;
         <strong>{username}</strong>
         &nbsp;and will be used to file documents.&nbsp;
         <a
-          href={`${sessionStorage.getItem(
+          href={`${localStorage.getItem(
             "csoBaseUrl"
           )}/accounts/editProfile.do`}
           target="_blank"
