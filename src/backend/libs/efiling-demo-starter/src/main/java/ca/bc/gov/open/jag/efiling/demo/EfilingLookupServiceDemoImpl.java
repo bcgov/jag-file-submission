@@ -15,8 +15,8 @@ public class EfilingLookupServiceDemoImpl implements EfilingLookupService {
     @Override
     public List<LookupItem> getCountries() {
         return Arrays.asList(
-                LookupItem.builder().code("CDN").description("Canada").create(),
-                LookupItem.builder().code("USA").description("United States").create());
+                LookupItem.builder().code(BigDecimal.ONE.toEngineeringString()).description("Canada").create(),
+                LookupItem.builder().code(BigDecimal.TEN.toEngineeringString()).description("United States").create());
     }
 
     @Override
