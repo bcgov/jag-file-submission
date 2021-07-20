@@ -39,9 +39,7 @@ const csoAccountDetails = () => {
         <strong>{username}</strong>
         &nbsp;and will be used to file documents.&nbsp;
         <a
-          href={`${localStorage.getItem(
-            "csoBaseUrl"
-          )}/accounts/editProfile.do`}
+          href={`${localStorage.getItem("csoBaseUrl")}/accounts/editProfile.do`}
           target="_blank"
           rel="noopener noreferrer"
         >
