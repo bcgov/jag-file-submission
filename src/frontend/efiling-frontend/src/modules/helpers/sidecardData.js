@@ -11,7 +11,7 @@ const aboutCso = () => ({
       file documents with the Courts of British Columbia via Court Services
       Online.&nbsp;
       <a
-        href={`${sessionStorage.getItem("csoBaseUrl")}/about/index.do`}
+        href={`${localStorage.getItem("csoBaseUrl")}/about/index.do`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -34,7 +34,7 @@ const csoAccountDetails = () => {
     heading: "Your CSO Account",
     content: [
       <p key="csoAccountDetails">
-        CSO account <strong>{sessionStorage.getItem("csoAccountId")}</strong> is
+        CSO account <strong>{localStorage.getItem("csoAccountId")}</strong> is
         linked to your Basic BCeID account&nbsp;
         <strong>{username}</strong>
         &nbsp;and will be used to file documents.&nbsp;
