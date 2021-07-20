@@ -102,7 +102,7 @@ export default function DocumentList({
               </span>
               <span className="label col-sm-4 d-lg-none">Action (s):</span>
               <span className="col-sm-8 col-lg-2 file-cell">
-                {!["WDRN", "REJ", "REF", "FIL"].some((i) =>
+                {document.status.code && !["WDRN", "REJ", "REF", "FIL"].some((i) =>
                   document.status.code.match(i)
                 ) && (
                   <>
