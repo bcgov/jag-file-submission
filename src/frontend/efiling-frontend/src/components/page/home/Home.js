@@ -47,7 +47,7 @@ export const saveUrlsToSessionStorage = (
   sessionStorage.setItem("cancelUrl", cancel);
   sessionStorage.setItem("successUrl", success);
   sessionStorage.setItem("errorUrl", error);
-  sessionStorage.setItem("csoBaseUrl", csoBaseUrl);
+  localStorage.setItem("csoBaseUrl", csoBaseUrl);
 };
 
 const addUserInfo = (firstName, middleName, lastName) => {
