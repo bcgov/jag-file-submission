@@ -123,7 +123,7 @@ describe("Home", () => {
       navigationUrls.success
     );
     expect(sessionStorage.getItem("errorUrl")).toBeFalsy();
-    expect(sessionStorage.getItem("csoBaseUrl")).toEqual(csoBaseUrl);
+    expect(localStorage.getItem("csoBaseUrl")).toEqual(csoBaseUrl);
 
     sessionStorage.clear();
 
@@ -140,7 +140,7 @@ describe("Home", () => {
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
     expect(sessionStorage.getItem("successUrl")).toBeFalsy();
     expect(sessionStorage.getItem("errorUrl")).toEqual("error.com");
-    expect(sessionStorage.getItem("csoBaseUrl")).toEqual(csoBaseUrl);
+    expect(localStorage.getItem("csoBaseUrl")).toEqual(csoBaseUrl);
   });
 
   test("Redirects to error page when lookup to bceid call fails", async () => {
