@@ -3,13 +3,16 @@ package ca.bc.gov.open.jag.efilingcsoclient;
 import ca.bc.gov.ag.csows.filing.DocumentStatuses;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.*;
+import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.reports.Report;
 import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
@@ -49,7 +52,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     private final RestTemplate restTemplate;
 
-    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper, CsoProperties csoProperties, RestTemplate restTemplate) {
+    private final EfilingLookupService lookupService;
+
+    public CsoReviewServiceImpl(FilingStatusFacadeBean filingStatusFacadeBean, ReportService reportService, FilingFacadeBean filingFacadeBean, FilePackageMapper filePackageMapper, CsoProperties csoProperties, RestTemplate restTemplate, EfilingLookupService lookupService) {
 
         this.filingStatusFacadeBean = filingStatusFacadeBean;
         this.reportService = reportService;
@@ -57,6 +62,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         this.filePackageMapper = filePackageMapper;
         this.csoProperties = csoProperties;
         this.restTemplate = restTemplate;
+        this.lookupService = lookupService;
+
     }
 
     @Override
@@ -82,7 +89,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
                             .map(filePackageMapper::toOrganization)
                             .collect(Collectors.toList()),
-                    getRushOrderItem(filingStatus.getFilePackages().get(0))));
+                    getRushOrderItem(filingStatus.getFilePackages().get(0)),
+                    getCountryDescription(filingStatus.getFilePackages().get(0))));
 
         } catch (NestedEjbException_Exception e) {
 
@@ -116,7 +124,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .filter(individual -> individual.getPartyTypeCd().equalsIgnoreCase(Keys.ORGANIZATION_ROLE_TYPE_CD))
                             .map(filePackageMapper::toOrganization)
                             .collect(Collectors.toList()),
-                    getRushOrderItem(filingStatus.getFilePackages().get(0)))).collect(Collectors.toList());
+                    getRushOrderItem(filingStatus.getFilePackages().get(0)),
+                    getCountryDescription(filingStatus.getFilePackages().get(0)))).collect(Collectors.toList());
 
         } catch (NestedEjbException_Exception | DatatypeConfigurationException e) {
 
@@ -250,6 +259,17 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         if (filePackage.getProcRequest() == null) return new RushOrderRequestItem();
 
         return filePackage.getProcRequest().getItem();
+
+    }
+
+    private String getCountryDescription(FilePackage filePackage) {
+        if (filePackage.getProcRequest() == null) return null;
+
+        Optional<LookupItem> countryItem = lookupService.getCountries().stream()
+                .filter(country -> country.getCode().equals(filePackage.getProcRequest().getCtryId().toEngineeringString()))
+                .findFirst();
+
+        return countryItem.map(LookupItem::getDescription).orElse(null);
 
     }
 

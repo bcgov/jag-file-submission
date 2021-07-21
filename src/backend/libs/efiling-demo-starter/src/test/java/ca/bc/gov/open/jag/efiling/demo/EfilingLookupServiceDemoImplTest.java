@@ -39,10 +39,10 @@ public class EfilingLookupServiceDemoImplTest {
 
         Assertions.assertEquals(2, actual.size());
 
-        Assertions.assertEquals("CDN", actual.get(0).getCode());
+        Assertions.assertEquals(BigDecimal.ONE.toEngineeringString(), actual.get(0).getCode());
         Assertions.assertEquals("Canada", actual.get(0).getDescription());
 
-        Assertions.assertEquals("USA", actual.get(1).getCode());
+        Assertions.assertEquals(BigDecimal.TEN.toEngineeringString(), actual.get(1).getCode());
         Assertions.assertEquals("United States", actual.get(1).getDescription());
 
     }

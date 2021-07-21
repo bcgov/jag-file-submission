@@ -53,6 +53,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("123", result.get().getCourt().getFileNumber());
         Assertions.assertFalse(result.get().getCourt().getExistingFileYN());
 
+        //Documents
         Assertions.assertEquals(7, result.get().getDocuments().size());
         Assertions.assertEquals(DateTime.parse("2020-5-5"), result.get().getDocuments().get(0).getDateFiled());
         Assertions.assertEquals("1", result.get().getDocuments().get(0).getDocumentId());
@@ -71,6 +72,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertFalse(result.get().getDocuments().get(0).getTrialDivision());
         Assertions.assertFalse(result.get().getDocuments().get(0).getXmlDoc());
 
+        //Parties
         Assertions.assertEquals(2, result.get().getParties().size());
         Assertions.assertEquals("Bob", result.get().getParties().get(0).getFirstName());
         Assertions.assertEquals("Q", result.get().getParties().get(0).getMiddleName());
@@ -79,12 +81,14 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("Applicant", result.get().getParties().get(0).getRoleTypeDesc());
         Assertions.assertEquals("Individual", result.get().getParties().get(0).getPartyTypeDesc());
 
+        //Organization
         Assertions.assertEquals(2, result.get().getOrganizations().size());
         Assertions.assertEquals("The Organization Org.", result.get().getOrganizations().get(0).getName());
         Assertions.assertEquals("APP", result.get().getOrganizations().get(0).getRoleTypeCd());
         Assertions.assertEquals("Applicant", result.get().getOrganizations().get(0).getRoleTypeDesc());
         Assertions.assertEquals("Organization", result.get().getOrganizations().get(0).getPartyTypeDesc());
 
+        //Payments
         Assertions.assertEquals(3, result.get().getPayments().size());
         Assertions.assertFalse(result.get().getPayments().get(0).getFeeExmpt());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
@@ -97,6 +101,46 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals(new BigDecimal(3), result.get().getPayments().get(1).getPaymentCategory());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(1).getSubmittedAmt());
         Assertions.assertEquals("Affidavit", result.get().getPayments().get(1).getTransactionDesc());
+
+        //Rush
+        Assertions.assertEquals("hello@hello.com", result.get().getRushOrder().getContactEmailTxt());
+        Assertions.assertEquals("Bob", result.get().getRushOrder().getContactFirstGivenNm());
+        Assertions.assertEquals("Ross", result.get().getRushOrder().getContactSurnameNm());
+        Assertions.assertEquals("Paint It", result.get().getRushOrder().getContactOrganizationNm());
+        Assertions.assertEquals("1231231234", result.get().getRushOrder().getContactPhoneNo());
+        Assertions.assertEquals("Processing", result.get().getRushOrder().getCurrentStatusDsc());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getCtryId());
+        Assertions.assertEquals("Canada", result.get().getRushOrder().getCountryDsc());
+        Assertions.assertNotNull(result.get().getRushOrder().getCourtOrderDt());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getPackageId());
+        Assertions.assertEquals("This is a reason. This is a reason. This is a reason. This is a reason.", result.get().getRushOrder().getRushFilingReasonTxt());
+
+        //Rush Documents
+        Assertions.assertEquals(2, result.get().getRushOrder().getSupportDocs().size());
+
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(0).getClientFileNm());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(0).getEntDtm());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(0).getEntUserId());
+        Assertions.assertEquals("www.google.com", result.get().getRushOrder().getSupportDocs().get(0).getFileServer());
+        Assertions.assertEquals("9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8", result.get().getRushOrder().getSupportDocs().get(0).getObjectGuid());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(0).getProcessItemSeqNo());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(0).getProcessRequestId());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(0).getProcessSupportDocSeqNo());
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(0).getTempFileName());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(0).getUpdUserId());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(0));
+
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(1).getClientFileNm());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(1).getEntDtm());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(1).getEntUserId());
+        Assertions.assertEquals("www.google.com", result.get().getRushOrder().getSupportDocs().get(1).getFileServer());
+        Assertions.assertEquals("9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8", result.get().getRushOrder().getSupportDocs().get(1).getObjectGuid());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(1).getProcessItemSeqNo());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(1).getProcessRequestId());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getSupportDocs().get(1).getProcessSupportDocSeqNo());
+        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(1).getTempFileName());
+        Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(1).getUpdUserId());
+        Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(1).getUpdDtm());
 
         Assertions.assertEquals("http://localhost:8080/wherearemypackage", result.get().getPackageLinks().getPackageHistoryUrl());
 

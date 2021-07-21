@@ -2,7 +2,9 @@ package ca.bc.gov.open.jag.efilingcsoclient.csoReviewServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.status.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
@@ -18,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -37,11 +41,18 @@ public class FindPackageByIdTest {
     public static final String PACKAGE_NO = "PACKAGENO";
     private static final String REASON_TXT = "ReasonTxt";
     public static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
+    private static final String EMAIL = "EMAIL";
+    private static final String PHONE = "PHONE";
+    private static final String COUNTRY_ONE = "COUNTRY ONE";
+    private static final String COUNTRY_TEN = "COUNTRY TEN";
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
 
     @Mock
     private RestTemplate restTemplateMock;
+
+    @Mock
+    private EfilingLookupService efilingLookupService;
 
     private final BigDecimal SUCCESS_CLIENT = BigDecimal.ONE;
     private final BigDecimal SUCCESS_PACKAGE = BigDecimal.ONE;
@@ -69,10 +80,12 @@ public class FindPackageByIdTest {
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
+        Mockito.when(efilingLookupService.getCountries()).thenReturn(createCountryList());
+
         CsoProperties csoProperties = new CsoProperties();
         csoProperties.setCsoBasePath("http://locahost:8080");
 
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock, efilingLookupService);
     }
 
     @DisplayName("OK: package found")
@@ -88,6 +101,11 @@ public class FindPackageByIdTest {
         Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
         Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
         Assertions.assertEquals(REASON_TXT, result.get().getRushOrder().getRushFilingReasonTxt());
+        Assertions.assertEquals(COUNTRY_ONE, result.get().getRushOrder().getCountryDsc());
+        Assertions.assertEquals(EMAIL, result.get().getRushOrder().getContactEmailTxt());
+        Assertions.assertEquals(FIRST_NAME, result.get().getRushOrder().getContactFirstGivenNm());
+        Assertions.assertEquals(PHONE, result.get().getRushOrder().getContactPhoneNo());
+        Assertions.assertEquals(LAST_NAME, result.get().getRushOrder().getContactSurnameNm());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getPackageId());
 
 
@@ -140,6 +158,13 @@ public class FindPackageByIdTest {
 
     private RushOrderRequest createRushOrderRequest() {
         RushOrderRequest rushOrderRequest = new RushOrderRequest();
+
+        rushOrderRequest.setContactEmailTxt(EMAIL);
+        rushOrderRequest.setContactFirstGivenNm(FIRST_NAME);
+        rushOrderRequest.setContactPhoneNo(PHONE);
+        rushOrderRequest.setContactSurnameNm(LAST_NAME);
+        rushOrderRequest.setCtryId(BigDecimal.ONE);
+
         RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
 
         rushOrderRequestItem.setPackageId(BigDecimal.ONE);
@@ -148,6 +173,17 @@ public class FindPackageByIdTest {
         rushOrderRequest.setItem(rushOrderRequestItem);
 
         return rushOrderRequest;
+    }
+
+    private List<LookupItem> createCountryList() {
+        return Arrays.asList(LookupItem.builder()
+                .code(BigDecimal.ONE.toEngineeringString())
+                .description(COUNTRY_ONE)
+                .create(),
+                LookupItem.builder()
+                .code(BigDecimal.TEN.toEngineeringString())
+                .description(COUNTRY_TEN)
+                .create());
     }
 
 }
