@@ -29,8 +29,7 @@ import java.text.MessageFormat;
 import java.util.*;
 
 import static ca.bc.gov.open.jag.efilingcsoclient.CsoHelpers.xmlGregorian2Date;
-import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_ACTUAL_SUBMITTED_DATE;
-import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_CALCULATED_SUBMITTED_DATE;
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.*;
 
 public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
@@ -96,7 +95,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService);
 
-        if (efilingPackage.isRushedSubmission()) {
+        if (efilingPackage.isRushedSubmission() || efilingPackage.getRush() != null) {
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails, efilingPackage.getRush()));
         }
 
@@ -191,22 +190,30 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private RushOrderRequest buildRushedOrderRequest(AccountDetails accountDetails, RushProcessing rushProcessing) {
+
+        logger.info("build rush processing object");
+
         RushOrderRequest processRequest = new RushOrderRequest();
         processRequest.setEntDtm(DateUtils.getCurrentXmlDate());
-        processRequest.setContactFirstGivenNm(rushProcessing.getFirstName());
-        processRequest.setContactSurnameNm(rushProcessing.getLastName());
-        processRequest.setContactPhoneNo(rushProcessing.getPhoneNumber());
-        processRequest.setCtryId(new BigDecimal(rushProcessing.getCountryCode()));
+        processRequest.setContactFirstGivenNm((rushProcessing != null ? rushProcessing.getFirstName() : null));
+        processRequest.setContactSurnameNm((rushProcessing != null ? rushProcessing.getLastName() : null));
+        processRequest.setContactPhoneNo((rushProcessing != null ? rushProcessing.getPhoneNumber() : null));
+        processRequest.setCtryId((rushProcessing != null ? new BigDecimal(rushProcessing.getCountryCode()) : null));
+        processRequest.setContactEmailTxt((rushProcessing != null ? rushProcessing.getEmail() : null));
         processRequest.setEntUserId(accountDetails.getClientId().toString());
         processRequest.setRequestDt(DateUtils.getCurrentXmlDate());
         RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
         rushOrderRequestItem.setEntDtm(DateUtils.getCurrentXmlDate());
         rushOrderRequestItem.setEntUserId(accountDetails.getClientId().toString());
-        rushOrderRequestItem.setRushFilingReasonTxt(rushProcessing.getReason());
-        rushOrderRequestItem.setProcessReasonCd(Keys.RUSH_PROCESS_REASON_CD);
+        rushOrderRequestItem.setRushFilingReasonTxt((rushProcessing != null ? rushProcessing.getReason() : null));
+        rushOrderRequestItem.setProcessReasonCd((rushProcessing != null ? RUSH_TYPES.get(rushProcessing.getRushType().toUpperCase()): RUSH_TYPES.get(RUSH_PROCESS_REASON_CD)));
         rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusRequest(accountDetails));
         rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusApproved(accountDetails));
-        rushOrderRequestItem.getSupportDocs().addAll(buildSupportingDocuments(accountDetails, rushProcessing.getSupportingDocuments()));
+
+        if (rushProcessing != null) {
+            rushOrderRequestItem.getSupportDocs().addAll(buildSupportingDocuments(accountDetails, rushProcessing.getSupportingDocuments()));
+        }
+
         processRequest.setItem(rushOrderRequestItem);
         return processRequest;
     }

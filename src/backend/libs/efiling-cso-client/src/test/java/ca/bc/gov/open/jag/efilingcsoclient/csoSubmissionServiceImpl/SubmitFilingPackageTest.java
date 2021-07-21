@@ -26,6 +26,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.RUSH_TYPES;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 
@@ -66,6 +67,7 @@ public class SubmitFilingPackageTest {
     private static final String ORGANIZATION = "ORGANIZATION";
     private static final String PHONE_NUMBER = "1231231234";
     private static final String REASON = "REASON";
+    private static final String RUSH_TYPE = "RULE";
     private final String TYPE = "type";
     private static final BigDecimal STATUTORY_FEE_AMOUNT = BigDecimal.TEN;
 
@@ -283,6 +285,7 @@ public class SubmitFilingPackageTest {
                         .applicationCode(APP_CODE)
                         .rushedSubmission(true)
                         .rush(RushProcessing.builder()
+                                .rushType(RUSH_TYPE)
                                 .country(COUNTRY)
                                 .countryCode(COUNTRY_CODE)
                                 .firstName(FIRST_NAME)
@@ -313,13 +316,13 @@ public class SubmitFilingPackageTest {
 
         Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
                 .submitFiling(ArgumentMatchers.argThat(filingPackage ->
-                        filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(Keys.RUSH_PROCESS_REASON_CD) &&
+                        filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(RUSH_TYPES.get(RUSH_TYPE)) &&
                                 filingPackage.getProcRequest().getEntDtm().compare(DateUtils.getCurrentXmlDate()) == -1 &&
                                 filingPackage.getProcRequest().getEntUserId().equals(accountDetails.getClientId().toString()) &&
                                 filingPackage.getProcRequest().getRequestDt().compare(DateUtils.getCurrentXmlDate()) == -1 &&
                                 filingPackage.getProcRequest().getItem().getEntDtm().compare(DateUtils.getCurrentXmlDate()) == -1 &&
                                 filingPackage.getProcRequest().getItem().getEntUserId().equals(accountDetails.getClientId().toString()) &&
-                                filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(Keys.RUSH_PROCESS_REASON_CD) &&
+                                filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(RUSH_TYPES.get(RUSH_TYPE)) &&
                                 filingPackage.getApplicationCd().equals(APP_CODE) &&
                                 filingPackage.getCourtFileNo().equals(FILE_NUMBER) &&
                                 filingPackage.getLdcxCourtClassCd().equals(COURT_CLASS) &&

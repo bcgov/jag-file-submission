@@ -43,7 +43,7 @@ public class GetCountriesTest {
     public void testGetCountriesNoError() throws NestedEjbException_Exception {
 
         Mockito
-                .when(lookupFacadeBeanMock.getCountries())
+                .when(lookupFacadeBeanMock.getCountryCodes())
                 .thenReturn(createCodeList());
 
         List<LookupItem> actual = sut.getCountries();
@@ -63,7 +63,7 @@ public class GetCountriesTest {
 
 
         Mockito
-                .when(lookupFacadeBeanMock.getCountries())
+                .when(lookupFacadeBeanMock.getCountryCodes())
                 .thenThrow(new NestedEjbException_Exception("random"));
 
         Assertions.assertThrows(EfilingLookupServiceException.class, () -> sut.getCountries());
