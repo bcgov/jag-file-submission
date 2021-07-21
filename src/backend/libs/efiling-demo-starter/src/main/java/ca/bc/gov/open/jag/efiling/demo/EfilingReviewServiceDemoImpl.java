@@ -220,6 +220,14 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
 
     private ReviewRushOrder createRushOrder() {
         ReviewRushOrder reviewRushOrder = new ReviewRushOrder();
+        reviewRushOrder.setContactEmailTxt("hello@hello.com");
+        reviewRushOrder.setContactFirstGivenNm("Bob");
+        reviewRushOrder.setContactSurnameNm("Ross");
+        reviewRushOrder.setContactOrganizationNm("Paint It");
+        reviewRushOrder.setContactPhoneNo("1231231234");
+        reviewRushOrder.setCurrentStatusDsc("Processing");
+        reviewRushOrder.setCtryId(BigDecimal.ONE);
+        reviewRushOrder.setCountryDsc("Canada");
         reviewRushOrder.setCourtOrderDt(new DateTime());
         reviewRushOrder.setPackageId(BigDecimal.ONE);
         reviewRushOrder.setRushFilingReasonTxt("This is a reason. This is a reason. This is a reason. This is a reason.");
