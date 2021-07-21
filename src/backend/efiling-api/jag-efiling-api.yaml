@@ -992,7 +992,25 @@ components:
           description: the court location description
     Rush:
       type: object
+      required:
+        - rushType
+        - firstName
+        - lastName
+        - phoneNumber
       properties:
+        rushType:
+          type: string
+          description: >
+            rush type code
+               * `rule` - Application is made under rule 8-5 (1) SCR
+               * `court` - The court directed that the order be processeed on an urgent basis
+               * `other` - Other
+          enum:
+            [
+                rule,
+                court,
+                other
+            ]
         firstName:
           type: string
           description: first name of rush party
@@ -1005,6 +1023,9 @@ components:
         phoneNumber:
           type: string
           description: phone number
+        email:
+          type: string
+          description: email address
         country:
           type: string
           description: country
@@ -1014,6 +1035,9 @@ components:
         reason:
           type: string
           description: clear and detailed reason
+        status:
+          type: string
+          description: current status of the rush request
         supportingDocuments:
           type: array
           items:
@@ -1121,7 +1145,7 @@ components:
                * `ITV` - Intervener
                * `MOT` - Mother
                * `NIS` - Nisga'a Lisims Government
-               * `OPAR` - Party
+               * `OPAR` - Other Party
                * `PAR` - Party
                * `PAR1` - Party 1
                * `PA1` - Party 1 Joint Divorce Form127A
