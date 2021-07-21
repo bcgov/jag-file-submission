@@ -39,7 +39,7 @@ public class GetReportTest {
         CsoProperties csoProperties = new CsoProperties();
         csoProperties.setCsoBasePath("http://locahost:8080");
 
-        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
+        sut = new CsoReviewServiceImpl(null, reportServiceMock, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock, null);
     }
 
     @DisplayName("OK: submission sheet return")

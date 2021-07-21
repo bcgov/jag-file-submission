@@ -8,8 +8,10 @@ import java.util.List;
 
 public class RushProcessing {
 
+    private String rushType;
     private String firstName;
     private String lastName;
+    private String email;
     private String organization;
     private String phoneNumber;
     private String country;
@@ -18,8 +20,10 @@ public class RushProcessing {
     private List<Document> supportingDocuments = new ArrayList<>();
 
     public RushProcessing(RushProcessing.Builder builder) {
+        this.rushType = builder.rushType;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
+        this.email = builder.email;
         this.organization = builder.organization;
         this.phoneNumber = builder.phoneNumber;
         this.country = builder.country;
@@ -30,16 +34,20 @@ public class RushProcessing {
 
     @JsonCreator
     public RushProcessing(
+            @JsonProperty("rushType") String rushType,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
+            @JsonProperty("email") String email,
             @JsonProperty("organization") String organization,
             @JsonProperty("phoneNumber") String phoneNumber,
             @JsonProperty("country") String country,
             @JsonProperty("countryCode") String countryCode,
             @JsonProperty("reason") String reason,
             @JsonProperty("supportingDocuments") List<Document> supportingDocuments) {
+        this.rushType = rushType;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.organization = organization;
         this.phoneNumber = phoneNumber;
         this.country = country;
@@ -48,6 +56,8 @@ public class RushProcessing {
         this.supportingDocuments.addAll(supportingDocuments);
     }
 
+    public String getRushType() { return rushType;  }
+
     public String getFirstName() {
         return firstName;
     }
@@ -55,6 +65,8 @@ public class RushProcessing {
     public String getLastName() {
         return lastName;
     }
+
+    public String getEmail() { return email; }
 
     public String getOrganization() {
         return organization;
@@ -86,14 +98,21 @@ public class RushProcessing {
 
     public static class Builder {
 
+        private String rushType;
         private String firstName;
         private String lastName;
+        private String email;
         private String organization;
         private String phoneNumber;
         private String country;
         private String countryCode;
         private String reason;
         private List<Document> supportingDocuments = new ArrayList<>();
+
+        public RushProcessing.Builder rushType(String rushType) {
+            this.rushType = rushType;
+            return this;
+        }
 
         public RushProcessing.Builder firstName(String firstName) {
             this.firstName = firstName;
@@ -102,6 +121,11 @@ public class RushProcessing {
 
         public RushProcessing.Builder lastName(String lastName) {
             this.lastName = lastName;
+            return this;
+        }
+
+        public RushProcessing.Builder email(String email) {
+            this.email = email;
             return this;
         }
 
