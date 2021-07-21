@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface RushProcessingMapper {
 
+    @Mapping(target="rushType", source="rushType", defaultValue = "")
     @Mapping(target="phoneNumber", source="phoneNumber", defaultValue = "")
     @Mapping(target="reason", source="reason", defaultValue = "")
     @Mapping(target="organization", source="organization", defaultValue = "")
