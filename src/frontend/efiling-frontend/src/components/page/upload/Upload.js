@@ -141,9 +141,9 @@ const generateRadioButtonJSX = (fileName, type) => {
             id={`no-${type}-${fileName}`}
             defaultChecked
             onChange={(e) => {
-                if (e.target.checked) {
-                  file[type] = false;
-                }
+              if (e.target.checked) {
+                file[type] = false;
+              }
             }}
           />
           <span className="bcgov-dot" />
