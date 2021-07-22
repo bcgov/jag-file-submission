@@ -5,7 +5,9 @@ import ca.bc.gov.ag.csows.filing.status.FilingStatus;
 import ca.bc.gov.ag.csows.filing.status.FilingStatusFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
@@ -21,6 +23,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -47,6 +51,9 @@ public class FindPackagesByClientIdTest {
     @Mock
     private RestTemplate restTemplateMock;
 
+    @Mock
+    private EfilingLookupService efilingLookupService;
+
     private final BigDecimal SUCCESS_CLIENT = BigDecimal.ONE;
 
     private final BigDecimal EXCEPTION_CLIENT = BigDecimal.TEN;
@@ -71,7 +78,7 @@ public class FindPackagesByClientIdTest {
 
         CsoProperties csoProperties = new CsoProperties();
         csoProperties.setCsoBasePath("http://locahost:8080");
-        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock);
+        sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock, null);
     }
 
     @DisplayName("OK: packages found")

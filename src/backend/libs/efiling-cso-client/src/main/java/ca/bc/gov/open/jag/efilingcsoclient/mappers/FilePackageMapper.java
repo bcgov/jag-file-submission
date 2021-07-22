@@ -27,7 +27,14 @@ public interface FilePackageMapper {
     @Mapping(target = "parties", source = "individuals")
     @Mapping(target = "organizations", source = "organizations")
     @Mapping(target = "rushOrder", source = "rushOrderRequestItem")
-    ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage, String csoHistoryLink, List<Individual> individuals, List<Organization> organizations, RushOrderRequestItem rushOrderRequestItem);
+    @Mapping(target = "rushOrder.contactEmailTxt", source = "filePackage.procRequest.contactEmailTxt")
+    @Mapping(target = "rushOrder.contactFirstGivenNm", source = "filePackage.procRequest.contactFirstGivenNm")
+    @Mapping(target = "rushOrder.contactOrganizationNm", source = "filePackage.procRequest.contactOrganizationNm")
+    @Mapping(target = "rushOrder.contactPhoneNo", source = "filePackage.procRequest.contactPhoneNo")
+    @Mapping(target = "rushOrder.contactSurnameNm", source = "filePackage.procRequest.contactSurnameNm")
+    @Mapping(target = "rushOrder.ctryId", source = "filePackage.procRequest.ctryId")
+    @Mapping(target = "rushOrder.countryDsc", source = "countryDsc")
+    ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage, String csoHistoryLink, List<Individual> individuals, List<Organization> organizations, RushOrderRequestItem rushOrderRequestItem, String countryDsc);
 
     List<ReviewDocument> toDocuments(List<File> file);
 
