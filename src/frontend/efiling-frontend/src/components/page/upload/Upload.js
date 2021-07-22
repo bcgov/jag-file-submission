@@ -32,7 +32,7 @@ const checkValidityOfUploadedFiles = () => {
     );
 
   if (
-    filesToUpload.documents.length > 0 &&
+    filesToUpload.documents.length > 1 &&
     filesToUpload.documents.every(isValid)
   )
     return true;
@@ -139,11 +139,11 @@ const generateRadioButtonJSX = (fileName, type) => {
             type="radio"
             name={`${type}-${fileName}`}
             id={`no-${type}-${fileName}`}
-            checked
+            defaultChecked
             onChange={(e) => {
-              if (e.target.checked) {
-                file[type] = false;
-              }
+                if (e.target.checked) {
+                  file[type] = false;
+                }
             }}
           />
           <span className="bcgov-dot" />

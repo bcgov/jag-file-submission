@@ -86,6 +86,95 @@ describe("Upload Component", () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
+  test("Radio buttons working as expected", async () => {
+    mock.onPost(`/submission/${submissionId}/documents`).reply(200);
+
+    mock.onPost(`/submission/${submissionId}/update-documents`).reply(200);
+
+    const updatedDocuments = [
+      ...documents,
+      {
+        description: "file description ping",
+        statutoryFeeAmount: 0,
+        isAmendment: true,
+        isSupremeCourtScheduling: true,
+        mimeType: "application/pdf",
+        documentProperties: {
+          name: "ping.json",
+          type: "file type ping",
+        },
+      },
+      {
+        description: "file description ping2",
+        statutoryFeeAmount: 0,
+        isAmendment: true,
+        isSupremeCourtScheduling: true,
+        mimeType: "application/pdf",
+        documentProperties: {
+          name: "ping2.json",
+          type: "file type ping2",
+        },
+      },
+    ];
+
+    mock.onGet(`/submission/${submissionId}/filing-package`).reply(200, {
+      documents: updatedDocuments,
+      court,
+      submissionFeeAmount,
+    });
+
+    const files = [];
+    const file1 = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const file2 = new File([JSON.stringify({ ping: true })], "ping2.json", {
+      type: "application/json",
+    });
+
+    files.push(file1);
+    files.push(file2);
+
+    const data = mockData(files);
+    const ui = <Upload upload={upload} />;
+    const { container, asFragment } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    // test opening file link in new tab on click
+    const fileLink = getByTestId(container, "file-link-ping.json");
+    fireEvent.click(fileLink);
+
+    expect(window.open).toHaveBeenCalled();
+
+    const radio = getAllByRole(container, "radio");
+    const button = getByText(container, "Continue");
+    const dropdown = getAllByTestId(container, "dropdown");
+
+    expect(button).toBeEnabled();
+
+    fireEvent.change(dropdown[0], {
+      target: { value: "Case Conference Brief" },
+    });
+
+    fireEvent.click(radio[1]);
+    fireEvent.click(radio[0]);
+    fireEvent.click(radio[3]);
+    fireEvent.click(radio[5]);
+    fireEvent.click(radio[6]);
+
+    expect(button).not.toBeDisabled();
+
+    fireEvent.click(button);
+
+    await waitFor(() => {});
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   test("On cancel upload button click, it redirects to the package confirmation page", async () => {
     mock
       .onGet(apiRequest)
@@ -251,8 +340,6 @@ describe("Upload Component", () => {
     const radio = getAllByRole(container, "radio");
     const button = getByText(container, "Continue");
     const dropdown = getAllByTestId(container, "dropdown");
-
-    expect(button).toBeEnabled();
 
     fireEvent.change(dropdown[0], {
       target: { value: "Case Conference Brief" },
