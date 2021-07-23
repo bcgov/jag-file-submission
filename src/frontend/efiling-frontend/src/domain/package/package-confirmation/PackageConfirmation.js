@@ -27,7 +27,8 @@ const getFilingPackageData = (
   setCourtData,
   setSubmissionFee,
   setShowPayment,
-  setShowToast
+  setShowToast,
+  setToastMessage
 ) => {
   if (files.length > 0) return;
 
@@ -40,7 +41,28 @@ const getFilingPackageData = (
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
     })
-    .catch(() => setShowToast(true));
+    .catch(() => {
+      setToastMessage(
+        "Something went wrong while trying to retrieve your filing package."
+      );
+      setShowToast(true);
+    });
+};
+
+const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
+  if (files && files.length > 0) {
+    const filenames = [];
+    files.forEach((file) => {
+      const filename = file.documentProperties.name;
+      if (filenames.includes(filename)) {
+        setToastMessage(
+          "This package contains duplicate file names. File names must be unique within a filing package."
+        );
+        setShowToast(true);
+      }
+      filenames.push(file.documentProperties.name);
+    });
+  }
 };
 
 export default function PackageConfirmation({
@@ -53,6 +75,7 @@ export default function PackageConfirmation({
   const [showPayment, setShowPayment] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -79,8 +102,11 @@ export default function PackageConfirmation({
       setCourtData,
       setSubmissionFee,
       setShowPayment,
-      setShowToast
+      setShowToast,
+      setToastMessage
     );
+
+    checkDuplicateFileNames(files, setShowToast, setToastMessage);
   }, [files, submissionId]);
 
   function handleUploadFile(e) {
@@ -121,12 +147,7 @@ export default function PackageConfirmation({
           </>
         )}
         <h1>Package Confirmation</h1>
-        {showToast && (
-          <Toast
-            content="Something went wrong while trying to retrieve your filing package."
-            setShow={setShowToast}
-          />
-        )}
+        {showToast && <Toast content={toastMessage} setShow={setShowToast} />}
         <span>
           Review your package for accuracy and upload any additional or
           supporting documents.
