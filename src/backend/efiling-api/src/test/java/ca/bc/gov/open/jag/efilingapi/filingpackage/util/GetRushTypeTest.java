@@ -48,7 +48,7 @@ public class GetRushTypeTest {
     public void testMappingUnknown() {
 
         Assertions.assertNull(RushMappingUtils.getRushType("UNKOWN"));
-        
+
     }
 
 

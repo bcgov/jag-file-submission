@@ -230,6 +230,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewRushOrder.setCountryDsc("Canada");
         reviewRushOrder.setCourtOrderDt(new DateTime());
         reviewRushOrder.setPackageId(BigDecimal.ONE);
+        reviewRushOrder.setProcessReasonCd("OTHR");
         reviewRushOrder.setRushFilingReasonTxt("This is a reason. This is a reason. This is a reason. This is a reason.");
         reviewRushOrder.setSupportDocs(createRushDocuments());
         return reviewRushOrder;
