@@ -52,7 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.13.16",
+    "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.4",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
