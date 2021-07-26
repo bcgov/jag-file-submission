@@ -31,7 +31,6 @@ describe("Rush Component", () => {
     },
   });
   localStorage.setItem("jwt", token);
-  sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
   window.scrollTo = jest.fn();
 
   test("Matches the snapshot", () => {

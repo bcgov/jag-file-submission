@@ -19,7 +19,6 @@ const setCsoAccountStatus = action("setCso");
 
 const mock = new MockAdapter(axios);
 const API_REQUEST = "/csoAccount";
-sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
 const CreateAccount = (props) => {
   mock.onPost(API_REQUEST).reply(201, {
