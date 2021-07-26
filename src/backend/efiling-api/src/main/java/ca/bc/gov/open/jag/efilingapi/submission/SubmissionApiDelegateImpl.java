@@ -462,8 +462,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
 
-        fromCacheSubmission.get().getFilingPackage().setRushedSubmission(true);
-
         fromCacheSubmission.get().getFilingPackage().setRush(rushProcessingMapper.toRushProcessing(rush));
 
         return ResponseEntity.created(null).build();
