@@ -42,4 +42,6 @@ public class Keys {
     public static final String SUBMISSION_DOCUMENTS_PATH = "submission/documents";
     public static final String GENERATE_URL_PATH = "generateUrl";
     public static final String SUBMISSION_PATH = "submission";
+    public static final String COUNTRIES_PATH = "countries";
+
 }
