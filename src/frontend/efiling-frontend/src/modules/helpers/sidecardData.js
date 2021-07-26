@@ -11,7 +11,11 @@ const aboutCso = () => ({
       file documents with the Courts of British Columbia via Court Services
       Online.&nbsp;
       <a
-        href={`${process.env.REACT_APP_CSO_BASE_URL}/about/index.do`}
+        href={`${
+          window.env
+            ? window.env.REACT_APP_CSO_BASE_URL
+            : process.env.REACT_APP_CSO_BASE_URL
+        }/about/index.do`}
         target="_blank"
         rel="noopener noreferrer"
       >
