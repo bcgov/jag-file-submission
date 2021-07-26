@@ -11,7 +11,7 @@ const aboutCso = () => ({
       file documents with the Courts of British Columbia via Court Services
       Online.&nbsp;
       <a
-        href={`${localStorage.getItem("csoBaseUrl")}/about/index.do`}
+        href={`${process.env.REACT_APP_CSO_BASE_URL}/about/index.do`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -39,7 +39,7 @@ const csoAccountDetails = () => {
         <strong>{username}</strong>
         &nbsp;and will be used to file documents.&nbsp;
         <a
-          href={`${localStorage.getItem("csoBaseUrl")}/accounts/editProfile.do`}
+          href={`${process.env.REACT_APP_CSO_BASE_URL}/accounts/editProfile.do`}
           target="_blank"
           rel="noopener noreferrer"
         >
