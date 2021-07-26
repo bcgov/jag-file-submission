@@ -43,7 +43,11 @@ const csoAccountDetails = () => {
         <strong>{username}</strong>
         &nbsp;and will be used to file documents.&nbsp;
         <a
-          href={`${process.env.REACT_APP_CSO_BASE_URL}/accounts/editProfile.do`}
+          href={`${
+            window.env
+              ? window.env.REACT_APP_CSO_BASE_URL
+              : process.env.REACT_APP_CSO_BASE_URL
+          }/accounts/editProfile.do`}
           target="_blank"
           rel="noopener noreferrer"
         >
