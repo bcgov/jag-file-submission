@@ -73,7 +73,7 @@ public interface FilingPackageMapper {
     Payment toPayment(PackagePayment payment);
 
     @Mapping(target = "reason", source = "rushFilingReasonTxt")
-    @Mapping(target = "rushType", expression = "java(ca.bc.gov.open.jag.efilingapi.api.model.Rush.RushTypeEnum.OTHER)")
+    @Mapping(target = "rushType", expression = "java(ca.bc.gov.open.jag.efilingapi.filingpackage.util.RushMappingUtils.getRushType(reviewRushOrder.getProcessReasonCd()))")
     @Mapping(target = "status", source = "currentStatusDsc")
     @Mapping(target = "email", source = "contactEmailTxt")
     @Mapping(target = "firstName", source = "contactFirstGivenNm")
