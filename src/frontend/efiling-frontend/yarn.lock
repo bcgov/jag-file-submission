@@ -5787,10 +5787,10 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dinero.js@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/dinero.js/-/dinero.js-1.8.1.tgz#775a647629b4195af9d02f46e9b7fa1fd81e906d"
-  integrity sha512-AQ09MDKonkGUrhBZZFx4tPTVcVJuHJ0VEA73LvcBoBB2eQSi1DbapeXj4wnUUpx1hVnPdyev1xPNnNMGy/Au0g==
+dinero.js@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/dinero.js/-/dinero.js-1.9.0.tgz#15cd6b8290538077cf80c35f4a26884d8806050f"
+  integrity sha512-gbDFhCCe/ba9pU2P232FS54LFPCLeGTb8vcrgsjmXHknu/VDHIgFecA8mxLYQsqVKkHoHSCUq95ojYOakzuweA==
 
 dir-glob@2.0.0:
   version "2.0.0"
