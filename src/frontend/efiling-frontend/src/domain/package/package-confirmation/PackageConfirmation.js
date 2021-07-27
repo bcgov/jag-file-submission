@@ -28,9 +28,13 @@ const getFilingPackageData = (
   setSubmissionFee,
   setShowPayment,
   setShowToast,
-  setToastMessage
+  setToastMessage,
+  refreshFiles,
+  setRefreshFiles
 ) => {
-  if (files.length > 0) return;
+  if (refreshFiles === false) {
+    return;
+  }
 
   axios
     .get(`/submission/${submissionId}/filing-package`)
@@ -40,6 +44,7 @@ const getFilingPackageData = (
       setFiles(documents);
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
+      setRefreshFiles(false);
     })
     .catch(() => {
       setToastMessage(
@@ -76,6 +81,7 @@ export default function PackageConfirmation({
   const [showUpload, setShowUpload] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [refreshFiles, setRefreshFiles] = useState(true);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -103,11 +109,13 @@ export default function PackageConfirmation({
       setSubmissionFee,
       setShowPayment,
       setShowToast,
-      setToastMessage
+      setToastMessage,
+      refreshFiles,
+      setRefreshFiles
     );
 
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
-  }, [files, submissionId]);
+  }, [files, submissionId, showUpload, refreshFiles]);
 
   function handleUploadFile(e) {
     if (isClick(e) || isEnter(e)) {
@@ -130,7 +138,18 @@ export default function PackageConfirmation({
   }
 
   if (showUpload)
-    return <Upload upload={{ confirmationPopup, submissionId, courtData }} />;
+    return (
+      <Upload
+        upload={{
+          confirmationPopup,
+          submissionId,
+          courtData,
+          setShowUpload,
+          setRefreshFiles,
+          files,
+        }}
+      />
+    );
 
   return (
     <div className="ct-package-confirmation page">

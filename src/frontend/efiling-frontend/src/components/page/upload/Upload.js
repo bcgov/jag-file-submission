@@ -17,10 +17,9 @@ import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
 import "./Upload.scss";
-import PackageConfirmation from "../../../domain/package/package-confirmation/PackageConfirmation";
 import { getDocumentTypes } from "../../../domain/documents/DocumentService";
 
-const filesToUpload = {
+let filesToUpload = {
   documents: [],
 };
 
@@ -247,9 +246,10 @@ const handleError = (error, setShowLoader, setContinueBtnEnabled) => {
 export const uploadDocuments = (
   submissionId,
   acceptedFiles,
-  setShowPackageConfirmation,
+  setShowUpload,
   setShowLoader,
-  setContinueBtnEnabled
+  setContinueBtnEnabled,
+  setRefreshFiles
 ) => {
   axios
     .post(
@@ -262,7 +262,13 @@ export const uploadDocuments = (
     .then(() => {
       axios
         .post(`/submission/${submissionId}/update-documents`, filesToUpload)
-        .then(() => setShowPackageConfirmation(true))
+        .then(() => {
+          filesToUpload = {
+            documents: [],
+          };
+          setShowUpload(false);
+          setRefreshFiles(true);
+        })
         .catch((error) =>
           handleError(error, setShowLoader, setContinueBtnEnabled)
         );
@@ -270,24 +276,41 @@ export const uploadDocuments = (
     .catch((err) => handleError(err, setShowLoader, setContinueBtnEnabled));
 };
 
-const checkForDuplicateFiles = (droppedFiles, acceptedFiles) => {
+const checkForDuplicateFiles = (
+  droppedFiles,
+  acceptedFiles,
+  previouslyUploadedFiles
+) => {
   let isDuplicate = false;
 
   for (let i = 0; i < acceptedFiles.length; i += 1) {
     isDuplicate = droppedFiles.some((df) => df.name === acceptedFiles[i].name);
-    if (isDuplicate) break;
+    if (isDuplicate) return isDuplicate;
+  }
+
+  for (let i = 0; i < previouslyUploadedFiles.length; i += 1) {
+    isDuplicate = droppedFiles.some(
+      (df) => df.name === previouslyUploadedFiles[i].name
+    );
+    if (isDuplicate) return isDuplicate;
   }
 
   return isDuplicate;
 };
 
 export default function Upload({
-  upload: { confirmationPopup, submissionId, courtData },
+  upload: {
+    confirmationPopup,
+    submissionId,
+    courtData,
+    setShowUpload,
+    setRefreshFiles,
+    files: previouslyUploadedFiles,
+  },
 }) {
   const amendmentsSidecard = getSidecardData().amendments;
   const supremeCourtSchedulingSidecard = getSidecardData()
     .supremeCourtScheduling;
-  const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [items, setItems] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
@@ -300,15 +323,6 @@ export default function Upload({
     setDropdownItems(courtData, setItems);
   }, []);
 
-  if (showPackageConfirmation) {
-    return (
-      <PackageConfirmation
-        packageConfirmation={{ confirmationPopup, submissionId }}
-        csoAccountStatus={{ isNew: false }}
-      />
-    );
-  }
-
   return (
     <div className="ct-upload page">
       <div className="content col-md-8">
@@ -317,7 +331,8 @@ export default function Upload({
           onDrop={(droppedFiles) => {
             const hasDuplicates = checkForDuplicateFiles(
               droppedFiles,
-              acceptedFiles
+              acceptedFiles,
+              previouslyUploadedFiles
             );
             if (!hasDuplicates) {
               setAcceptedFiles(acceptedFiles.concat(droppedFiles));
@@ -381,7 +396,12 @@ export default function Upload({
           <Button
             label="Cancel Upload"
             testId="cancel-upload-btn"
-            onClick={() => setShowPackageConfirmation(true)}
+            onClick={() => {
+              filesToUpload = {
+                documents: [],
+              };
+              setShowUpload(false);
+            }}
             styling="bcgov-normal-white btn"
           />
           <Button
@@ -393,9 +413,10 @@ export default function Upload({
               uploadDocuments(
                 submissionId,
                 acceptedFiles,
-                setShowPackageConfirmation,
+                setShowUpload,
                 setShowLoader,
-                setContinueBtnEnabled
+                setContinueBtnEnabled,
+                setRefreshFiles
               );
             }}
             styling="bcgov-normal-blue btn"
@@ -417,5 +438,8 @@ Upload.propTypes = {
     confirmationPopup: propTypes.confirmationPopup,
     submissionId: PropTypes.string.isRequired,
     courtData: PropTypes.object.isRequired,
+    setShowUpload: PropTypes.func.isRequired,
+    setRefreshFiles: PropTypes.func.isRequired,
+    files: PropTypes.arrayOf(propTypes.file.isRequired).isRequired,
   }).isRequired,
 };
