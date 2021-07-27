@@ -1004,11 +1004,13 @@ components:
             rush type code
                * `rule` - Application is made under rule 8-5 (1) SCR
                * `court` - The court directed that the order be processeed on an urgent basis
+               * `pro` - This is based on a document type
                * `other` - Other
           enum:
             [
                 rule,
                 court,
+                pro,
                 other
             ]
         firstName:

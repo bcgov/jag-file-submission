@@ -464,6 +464,8 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         fromCacheSubmission.get().getFilingPackage().setRush(rushProcessingMapper.toRushProcessing(rush));
 
+        submissionStore.put(fromCacheSubmission.get());
+
         return ResponseEntity.created(null).build();
 
     }
