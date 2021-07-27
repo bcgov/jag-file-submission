@@ -168,13 +168,13 @@ export default function PackageConfirmation({
         <h1>Package Confirmation</h1>
         {showToast && <Toast content={toastMessage} setShow={setShowToast} />}
         <span>
-          Review your package for accuracy and upload any additional or
+          Review your documents for accuracy and upload any additional or
           supporting documents.
         </span>
         <br />
         <span>
-          If there are any errors in these documents, please Cancel this process
-          and re-submit.
+          If there are any errors, please Cancel and re-submit through the{" "}
+          <b>FLA Protection Order</b> website.
         </span>
         <br />
         <br />
@@ -214,6 +214,7 @@ export default function PackageConfirmation({
             onClick={() => setShowPayment(true)}
             styling="bcgov-normal-blue btn"
             testId="continue-btn"
+            disabled={toastMessage !== null}
           />
         </section>
       </div>
