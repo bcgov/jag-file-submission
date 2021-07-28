@@ -43,5 +43,6 @@ public class Keys {
     public static final String GENERATE_URL_PATH = "generateUrl";
     public static final String SUBMISSION_PATH = "submission";
     public static final String COUNTRIES_PATH = "countries";
+    public static final String RUSH_PROCESSING_PATH = "rushProcessing";
 
 }

@@ -6,6 +6,8 @@ import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -173,6 +175,30 @@ public class SubmissionService {
                 .contentType(ContentType.JSON)
                 .header(Keys.X_TRANSACTION_ID, transactionId)
                 .body(PayloadHelper.updateDocumentProperties(Keys.TEST_DOCUMENT_PDF));
+
+        return request
+                .when()
+                .post(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
+                .then()
+                .extract()
+                .response();
+
+    }
+
+    public Response addRushProcessingResponse(String accessToken, UUID transactionId, String submissionId, String path) {
+
+        logger.info("Submitting request to create rush processing to the host {}", eFilingHost);
+
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken)
+                .contentType(ContentType.JSON)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
+                .body(PayloadHelper.addRushProcessing());
 
         return request
                 .when()
