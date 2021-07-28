@@ -8,9 +8,10 @@ import ca.bc.gov.open.jag.efiling.services.SubmissionService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
+import org.apache.http.HttpStatus;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -66,15 +67,14 @@ public class AddRushProcessingSD {
                 actualSubmissionId, Keys.RUSH_PROCESSING_PATH);
 
         logger.info("Api response status code: {}", actualRushProcessResponse.getStatusCode());
-        logger.info("Api response: {}", actualRushProcessResponse.asString());
     }
 
-    @Then("rush processing is added to the package")
-    public void verifyFilingPackageIsUpdated() {
+    @Then("rush processing is created")
+    public void verifyRushPackageIsCreated() {
 
         logger.info("Asserting add rush processing submission response");
 
-        JsonPath rushProcessingResponseJsonPath = new JsonPath(actualRushProcessResponse.asString());
+        Assert.assertEquals(HttpStatus.SC_CREATED, actualRushProcessResponse.getStatusCode());
 
         logger.info("Response matches the requirements");
 

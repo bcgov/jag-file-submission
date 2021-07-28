@@ -100,8 +100,8 @@ public class PayloadHelper {
 
    public static String addRushProcessing() {
 
-       return  "      \"rush\": {\n" +
-               "      \"rushType\":\"Other\"," +
+       return  " {" +
+               "      \"rushType\":\"rule\"," +
                "      \"firstName\":\"Efile\"," +
                "      \"lastName\":\"Tester\"," +
                "      \"organization\":\"AG\"," +
@@ -117,6 +117,6 @@ public class PayloadHelper {
                "      \"identifier\":\"9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c9\"" +
                "              }\n" +
                "           ]\n" +
-               "   }";
+               " }";
    }
 }

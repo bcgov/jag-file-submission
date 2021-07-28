@@ -6,8 +6,6 @@ import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -188,8 +186,6 @@ public class SubmissionService {
     public Response addRushProcessingResponse(String accessToken, UUID transactionId, String submissionId, String path) {
 
         logger.info("Submitting request to create rush processing to the host {}", eFilingHost);
-
-        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
         RequestSpecification request = RestAssured
                 .given()
