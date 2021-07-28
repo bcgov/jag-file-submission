@@ -98,4 +98,25 @@ public class PayloadHelper {
 
     }
 
+   public static String addRushProcessing() {
+
+       return  " {" +
+               "      \"rushType\":\"rule\"," +
+               "      \"firstName\":\"Efile\"," +
+               "      \"lastName\":\"Tester\"," +
+               "      \"organization\":\"AG\"," +
+               "      \"phoneNumber\":\"2365498745\"," +
+               "      \"email\":\"efiletester@test.com\"," +
+               "      \"country\":\"Canada\"," +
+               "      \"countryCode\":\"1\"," +
+               "      \"reason\":\"Urgent need to process\"," +
+               "      \"status\":\"Processing\"," +
+               "      \"supportingDocuments\":[\n" +
+               "                           {\n" +
+               "      \"fileName\":\"test-document.pdf\"," +
+               "      \"identifier\":\"9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c9\"" +
+               "              }\n" +
+               "           ]\n" +
+               " }";
+   }
 }
