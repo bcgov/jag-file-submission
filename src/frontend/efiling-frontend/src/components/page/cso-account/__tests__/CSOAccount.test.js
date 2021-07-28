@@ -32,7 +32,6 @@ describe("CSOAccount Component", () => {
   });
 
   localStorage.setItem("jwt", token);
-  sessionStorage.setItem("csoBaseUrl", "https://dev.justice.gov.bc.ca/cso");
 
   test("Matches the snapshot", () => {
     const { asFragment } = render(

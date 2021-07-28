@@ -80,7 +80,7 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
     @Override
     public List<LookupItem> getCountries() {
         try {
-            List<CodeValue> countries = lookupFacade.getCountries();
+            List<CodeValue> countries = lookupFacade.getCountryCodes();
             return countries.stream()
                     .map(country -> LookupItem.builder().code(country.getCode()).description(country.getDescription()).create())
                     .collect(Collectors.toList());

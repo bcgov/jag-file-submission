@@ -552,7 +552,7 @@ exports[`Storyshots PackageReview Default 1`] = `
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="null/accounts/editProfile.do"
+                    href="undefined/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -622,7 +622,7 @@ exports[`Storyshots PackageReview Default 1`] = `
                 <p>
                   E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
-                    href="null/about/index.do"
+                    href="undefined/about/index.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -1192,7 +1192,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="null/accounts/editProfile.do"
+                    href="undefined/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -1262,7 +1262,7 @@ exports[`Storyshots PackageReview Mobile 1`] = `
                 <p>
                   E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
-                    href="null/about/index.do"
+                    href="undefined/about/index.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
