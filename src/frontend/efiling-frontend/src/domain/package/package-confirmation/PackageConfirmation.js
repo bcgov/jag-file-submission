@@ -141,7 +141,6 @@ export default function PackageConfirmation({
     return (
       <Upload
         upload={{
-          confirmationPopup,
           submissionId,
           courtData,
           setShowUpload,

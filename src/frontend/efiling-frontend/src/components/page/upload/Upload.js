@@ -311,7 +311,6 @@ const checkForDuplicateFiles = (
 
 export default function Upload({
   upload: {
-    confirmationPopup,
     submissionId,
     courtData,
     setShowUpload,

@@ -53,7 +53,6 @@ function mockData(files) {
 }
 
 describe("Upload Component", () => {
-  const confirmationPopup = getTestData();
   const submissionId = "abc123";
   const documents = getDocumentsData();
   const court = getCourtData();
@@ -64,7 +63,6 @@ describe("Upload Component", () => {
   const files = getJsonDocumentsData();
 
   const upload = {
-    confirmationPopup,
     submissionId,
     courtData: court,
     setShowUpload,
@@ -131,7 +129,7 @@ describe("Upload Component", () => {
       submissionFeeAmount,
     });
 
-    const files = [];
+    const fileList = [];
     const file1 = new File([JSON.stringify({ ping: true })], "ping.json", {
       type: "application/json",
     });
@@ -139,10 +137,10 @@ describe("Upload Component", () => {
       type: "application/json",
     });
 
-    files.push(file1);
-    files.push(file2);
+    fileList.push(file1);
+    fileList.push(file2);
 
-    const data = mockData(files);
+    const data = mockData(fileList);
     const ui = <Upload upload={upload} />;
     const { container, asFragment } = render(ui);
     const dropzone = container.querySelector('[data-testid="dropdownzone"]');
@@ -232,7 +230,6 @@ describe("Upload Component", () => {
     };
 
     const upload2 = {
-      confirmationPopup,
       submissionId,
       courtData: court2,
     };
