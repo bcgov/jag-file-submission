@@ -4,7 +4,10 @@ import FileSaver from "file-saver";
 import MockAdapter from "axios-mock-adapter";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import { getTestData } from "../../../../modules/test-data/confirmationPopupTestData";
-import { getDocumentsData } from "../../../../modules/test-data/documentTestData";
+import {
+  getDocumentsData,
+  getDuplicateDocumentsData,
+} from "../../../../modules/test-data/documentTestData";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
@@ -17,6 +20,8 @@ describe("PackageConfirmation Component", () => {
   const packageConfirmation = { confirmationPopup, submissionId };
   const csoAccountStatus = { isNew: false };
   const documents = getDocumentsData();
+  const duplicateDocuments = getDuplicateDocumentsData();
+
   const file = {
     documentProperties: {
       name: "file name 1",
@@ -100,6 +105,28 @@ describe("PackageConfirmation Component", () => {
       queryByText(
         "Something went wrong while trying to retrieve your filing package."
       )
+    ).toBeInTheDocument();
+  });
+
+  test("When filing package contains multiple documents with the same name, display a toast error and disable continuing", async () => {
+    mock.onGet(apiRequest).reply(200, {
+      documents: duplicateDocuments,
+      court,
+      submissionFeeAmount,
+    });
+
+    const { container } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await waitFor(() => expect(mock.history.get.length).toBe(1));
+
+    expect(getByText(container, "Continue")).toBeDisabled();
+    expect(
+      getByText(container, /This package contains duplicate file names/i)
     ).toBeInTheDocument();
   });
 

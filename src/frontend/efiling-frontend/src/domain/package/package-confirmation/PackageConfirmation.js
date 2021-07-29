@@ -173,8 +173,8 @@ export default function PackageConfirmation({
         </span>
         <br />
         <span>
-          If there are any errors, please Cancel and re-submit through the{" "}
-          <b>FLA Protection Order</b> website.
+          If there are any errors in these documents, please Cancel this process
+          and re-submit.
         </span>
         <br />
         <br />

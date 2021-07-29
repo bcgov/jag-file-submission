@@ -12,7 +12,7 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -401,7 +401,7 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -821,7 +821,7 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>

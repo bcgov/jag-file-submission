@@ -13,7 +13,10 @@ import {
 } from "@testing-library/react";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
-import { getDocumentsData } from "../../../modules/test-data/documentTestData";
+import {
+  getDocumentsData,
+  getJsonDocumentsData,
+} from "../../../modules/test-data/documentTestData";
 import { generateJWTToken } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 import Upload, { uploadDocuments } from "./Upload";
@@ -56,11 +59,17 @@ describe("Upload Component", () => {
   const court = getCourtData();
   const submissionFeeAmount = 25.5;
   const setShowLoader = jest.fn();
+  const setShowUpload = jest.fn();
+  const setRefreshFiles = jest.fn();
+  const files = getJsonDocumentsData();
 
   const upload = {
     confirmationPopup,
     submissionId,
     courtData: court,
+    setShowUpload,
+    setRefreshFiles,
+    files,
   };
 
   const token = generateJWTToken({ preferred_username: "username@bceid" });
@@ -221,7 +230,7 @@ describe("Upload Component", () => {
       submissionFeeAmount,
     });
 
-    const files = [];
+    const fileList = [];
     const file1 = new File([JSON.stringify({ ping: true })], "ping.json", {
       type: "application/json",
     });
@@ -229,10 +238,10 @@ describe("Upload Component", () => {
       type: "application/json",
     });
 
-    files.push(file1);
-    files.push(file2);
+    fileList.push(file1);
+    fileList.push(file2);
 
-    const data = mockData(files);
+    const data = mockData(fileList);
     const ui = <Upload upload={upload} />;
     const { container, asFragment } = render(ui);
     const dropzone = container.querySelector('[data-testid="dropdownzone"]');
@@ -332,6 +341,7 @@ describe("Upload Component", () => {
     const newFile = new File([JSON.stringify({ ping: true })], "ping2.json", {
       type: "application/json",
     });
+    console.log(newFile.name);
     const newData = mockData([newFile]);
 
     dispatchEvt(dropzone, "drop", newData);
@@ -345,5 +355,28 @@ describe("Upload Component", () => {
         "You cannot upload multiple files with the same name."
       )
     ).not.toBeInTheDocument();
+  });
+
+  test("files uploaded with same name as filing package files shows error message", async () => {
+    const ui = <Upload upload={upload} />;
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    const file = new File([JSON.stringify({ ping: true })], "ping3.json", {
+      type: "application/json",
+    });
+    const data = mockData([file]);
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(
+      getByText(
+        container,
+        "You cannot upload multiple files with the same name."
+      )
+    ).toBeInTheDocument();
   });
 });
