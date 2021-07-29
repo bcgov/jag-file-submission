@@ -82,6 +82,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "lastName", source = "contactSurnameNm")
     @Mapping(target = "countryCode", source = "ctryId")
     @Mapping(target = "country", source = "countryDsc")
+    @Mapping(target = "statusReason", source = "processingCommentTxt")
     @Mapping(target = "supportingDocuments", source = "supportDocs")
     Rush toRush(ReviewRushOrder reviewRushOrder);
 

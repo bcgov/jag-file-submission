@@ -1040,6 +1040,9 @@ components:
         status:
           type: string
           description: current status of the rush request
+        statusReason:
+          type: string
+          description: current registry reason text
         supportingDocuments:
           type: array
           items:

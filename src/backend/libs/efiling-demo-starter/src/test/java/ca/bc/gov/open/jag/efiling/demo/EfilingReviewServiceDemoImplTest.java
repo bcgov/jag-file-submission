@@ -113,6 +113,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("Canada", result.get().getRushOrder().getCountryDsc());
         Assertions.assertNotNull(result.get().getRushOrder().getCourtOrderDt());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getPackageId());
+        Assertions.assertEquals("Registry notice reason text", result.get().getRushOrder().getProcessingCommentTxt());
         Assertions.assertEquals("This is a reason. This is a reason. This is a reason. This is a reason.", result.get().getRushOrder().getRushFilingReasonTxt());
 
         //Rush Documents
