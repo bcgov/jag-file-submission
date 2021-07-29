@@ -335,6 +335,74 @@ public class SubmitFilingPackageTest {
         Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
     }
 
+    @DisplayName("OK: submitFilingPackage called with a invalid court date")
+    @Test
+    public void withInvalidCourDateNullIsApplied() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {
+
+        Mockito.when(filingFacadeBeanMock.submitFiling(any())).thenReturn(BigDecimal.TEN);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .rushedSubmission(true)
+                        .rush(RushProcessing.builder()
+                                .rushType(RUSH_TYPE)
+                                .courtDate(new DateTime())
+                                .country(COUNTRY)
+                                .countryCode(COUNTRY_CODE)
+                                .firstName(FIRST_NAME)
+                                .lastName(LAST_NAME)
+                                .organization(ORGANIZATION)
+                                .phoneNumber(PHONE_NUMBER)
+                                .reason(REASON)
+                                .supportingDocuments(new ArrayList<>())
+                                .create())
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                .name(DOCUMENT)
+                                .serverFileName(SERVERFILENAME)
+                                .isAmendment(IS_AMENDMENT)
+                                .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                .subType(TYPE)
+                                .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                .create()))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Mockito.verify(filingFacadeBeanMock, Mockito.times(1))
+                .submitFiling(ArgumentMatchers.argThat(filingPackage ->
+                        filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(RUSH_TYPES.get(RUSH_TYPE)) &&
+                                filingPackage.getProcRequest().getEntDtm().compare(DateUtils.getCurrentXmlDate()) == -1 &&
+                                filingPackage.getProcRequest().getEntUserId().equals(accountDetails.getClientId().toString()) &&
+                                filingPackage.getProcRequest().getRequestDt().compare(DateUtils.getCurrentXmlDate()) == -1 &&
+                                filingPackage.getProcRequest().getItem().getEntDtm().compare(DateUtils.getCurrentXmlDate()) == -1 &&
+                                filingPackage.getProcRequest().getItem().getEntUserId().equals(accountDetails.getClientId().toString()) &&
+                                filingPackage.getProcRequest().getItem().getProcessReasonCd().equals(RUSH_TYPES.get(RUSH_TYPE)) &&
+                                filingPackage.getApplicationCd().equals(APP_CODE) &&
+                                filingPackage.getCourtFileNo().equals(FILE_NUMBER) &&
+                                filingPackage.getLdcxCourtClassCd().equals(COURT_CLASS) &&
+                                filingPackage.getLdcxCourtDivisionCd().equals(DIVISION) &&
+                                filingPackage.getLdcxCourtLevelCd().equals(LEVEL) &&
+                                filingPackage.getSubmittedToAgenId().equals(AGENCY_ID) &&
+                                filingPackage.getDocuments().get(0).getPayments().get(0).getStatutoryFeeAmt().equals(STATUTORY_FEE_AMOUNT)));
+
+        Assertions.assertEquals(BigDecimal.TEN, actual.getTransactionId());
+        Assertions.assertEquals("http://cso/accounts/bceidNotification.do?packageNo=10", actual.getPackageLink());
+    }
+
+
     @DisplayName("OK: with no fees should default to 0")
     @Test
     public void withNoFeeShouldDefaultToZero() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {

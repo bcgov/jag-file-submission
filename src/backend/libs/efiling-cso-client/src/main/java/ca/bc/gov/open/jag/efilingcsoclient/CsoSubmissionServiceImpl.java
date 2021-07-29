@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
@@ -201,7 +202,15 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         processRequest.setCtryId((rushProcessing != null ? new BigDecimal(rushProcessing.getCountryCode()) : null));
         processRequest.setContactEmailTxt((rushProcessing != null ? rushProcessing.getEmail() : null));
         processRequest.setEntUserId(accountDetails.getClientId().toString());
-        processRequest.setRequestDt(DateUtils.getCurrentXmlDate());
+        if (rushProcessing != null && rushProcessing.getCourtDate() != null) {
+            try {
+                processRequest.setRequestDt(DateUtils.getXmlDate(rushProcessing.getCourtDate()));
+            } catch (DatatypeConfigurationException e) {
+                logger.error("Court date is invalid");
+            }
+        } else {
+            processRequest.setRequestDt(DateUtils.getCurrentXmlDate());
+        }
         RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
         rushOrderRequestItem.setEntDtm(DateUtils.getCurrentXmlDate());
         rushOrderRequestItem.setEntUserId(accountDetails.getClientId().toString());
