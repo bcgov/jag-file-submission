@@ -11,7 +11,6 @@ import {
   queryByText,
   getAllByTestId,
 } from "@testing-library/react";
-import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
 import {
   getDocumentsData,
