@@ -12,7 +12,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -432,7 +432,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -1517,7 +1517,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>

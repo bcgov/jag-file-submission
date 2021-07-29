@@ -205,214 +205,50 @@ exports[`Upload Component Matches the snapshot 1`] = `
 exports[`Upload Component On cancel upload button click, it redirects to the package confirmation page 1`] = `
 <DocumentFragment>
   <div
-    class="ct-package-confirmation page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
     >
       <h1>
-        Package Confirmation
+        Document Upload
       </h1>
-      <span>
-        Review your package for accuracy and upload any additional or supporting documents.
-      </span>
-      <br />
-      <span>
-        If there are any errors in these documents, please Cancel this process and re-submit.
-      </span>
-      <br />
-      <br />
       <div
-        class="ct-file-list "
+        class="dropzone-outer-box"
+        data-testid="dropdownzone"
+        tabindex="0"
       >
         <div
-          class="header"
+          class="dropzone-inner-box"
         >
-          <span
-            class="d-none d-lg-inline col-lg-6"
-          >
-            Document Name
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Statutory Fee
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Document Type
-          </span>
-        </div>
-        <ul>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
+          <input
+            autocomplete="off"
+            multiple=""
+            style="display: none;"
+            tabindex="-1"
+            type="file"
+          />
+          <span>
+            <h2
+              class="text-center-alignment"
             >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
+              Drag and drop or 
+              <span
+                class="file-href"
               >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 1
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $40.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 1
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 2
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 2
-            </span>
-          </li>
-        </ul>
-      </div>
-      <br />
-      <h4>
-        Do you have additional documents to upload? 
-        <span
-          class="file-href"
-          data-test-id="upload-link"
-          role="button"
-          tabindex="0"
-        >
-          Upload them now.
-        </span>
-      </h4>
-      <br />
-      <h2>
-        Summary
-      </h2>
-      <p />
-      <div
-        class="near-half-width"
-      >
-        <div
-          class="bcgov-table "
-        >
-          <b />
-          <div
-            class="bcgov-table-body"
-          >
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Number of Documents in Package:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  2
-                </b>
-              </div>
+                choose documents
+              </span>
+            </h2>
+            <div>
+              <span>
+                to upload additional documents to your package
+              </span>
+              <br />
+              <span>
+                (max 10mb per document)
+              </span>
             </div>
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Statutory Fees:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  $40.00
-                </b>
-              </div>
-            </div>
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Submission Fee:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  $25.50
-                </b>
-              </div>
-            </div>
-          </div>
+          </span>
         </div>
       </div>
       <br />
@@ -421,14 +257,15 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-testid="cancel-upload-btn"
           type="button"
         >
-          Cancel
+          Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
+          data-testid="continue-upload-btn"
+          disabled=""
           type="button"
         >
           Continue
@@ -449,83 +286,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
           <p />
           <section
             class="bcgov-bluegrey-container"
-            id="csoAccountDetailsCard"
-          >
-            <div
-              class="bcgov-container-background bcgov-bluegrey-heading"
-            >
-              <h2
-                class="bcgov-heading-style"
-              >
-                <div
-                  class="bcgov-side-card-row"
-                >
-                  <div
-                    class="bcgov-round-icon-wrapper"
-                  >
-                    <svg
-                      class="bcgov-side-card-icon"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="bcgov-side-card-title"
-                  >
-                    Your CSO Account
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              class="bcgov-bluegrey-content"
-            >
-              <span
-                class="bcgov-content-style"
-              >
-                <p>
-                  CSO account 
-                  <strong />
-                   is linked to your Basic BCeID account 
-                  <strong>
-                    username
-                  </strong>
-                   and will be used to file documents. 
-                  <a
-                    href="undefined/accounts/editProfile.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    View your CSO account details
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
-        </div>
-      </div>
-      <div
-        class="bcgov-wide-dashboard-spacing"
-        style="position: relative;"
-      >
-        <div
-          class="col-12 pt-2"
-          style="position: relative;"
-        >
-          <p />
-          <section
-            class="bcgov-bluegrey-container"
-            id="aboutCsoCard"
+            id="amendmentsCard"
           >
             <div
               class="bcgov-container-background bcgov-bluegrey-heading"
@@ -557,7 +318,7 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                   <div
                     class="bcgov-side-card-title"
                   >
-                    About E-File Submission
+                    Amendments
                   </div>
                 </div>
               </h2>
@@ -569,15 +330,69 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
-                  <a
-                    href="undefined/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="supremeCourtSchedulingCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
                   >
-                    Learn more about CSO
-                  </a>
-                  .
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Supreme Court Scheduling
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  Please indicate if your document upload has been approved for Supreme Court Scheduling...
                 </p>
               </span>
             </div>
@@ -592,323 +407,559 @@ exports[`Upload Component On cancel upload button click, it redirects to the pac
 exports[`Upload Component Radio buttons working as expected 1`] = `
 <DocumentFragment>
   <div
-    class="ct-package-confirmation page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
     >
       <h1>
-        Package Confirmation
+        Document Upload
       </h1>
-      <span>
-        Review your package for accuracy and upload any additional or supporting documents.
-      </span>
-      <br />
-      <span>
-        If there are any errors in these documents, please Cancel this process and re-submit.
-      </span>
-      <br />
-      <br />
       <div
-        class="ct-file-list "
+        class="dropzone-outer-box"
+        data-testid="dropdownzone"
+        tabindex="0"
       >
         <div
-          class="header"
+          class="dropzone-inner-box"
         >
-          <span
-            class="d-none d-lg-inline col-lg-6"
-          >
-            Document Name
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Statutory Fee
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Document Type
+          <input
+            autocomplete="off"
+            multiple=""
+            style="display: none;"
+            tabindex="-1"
+            type="file"
+          />
+          <span>
+            <h2
+              class="text-center-alignment"
+            >
+              Drag and drop or 
+              <span
+                class="file-href"
+              >
+                choose documents
+              </span>
+            </h2>
+            <div>
+              <span>
+                to upload additional documents to your package
+              </span>
+              <br />
+              <span>
+                (max 10mb per document)
+              </span>
+            </div>
           </span>
         </div>
-        <ul>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 1
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $40.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 1
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 2
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 2
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              ping.json
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description ping
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              ping2.json
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description ping2
-            </span>
-          </li>
-        </ul>
       </div>
       <br />
-      <h4>
-        Do you have additional documents to upload? 
-        <span
-          class="file-href"
-          data-test-id="upload-link"
-          role="button"
-          tabindex="0"
-        >
-          Upload them now.
-        </span>
-      </h4>
-      <br />
       <h2>
-        Summary
+        Select Description for each uploaded document to continue
       </h2>
-      <p />
-      <div
-        class="near-half-width"
-      >
+      <br />
+      <div>
         <div
-          class="bcgov-table "
+          class="bcgov-display-box bcgov-border-background"
         >
-          <b />
           <div
-            class="bcgov-table-body"
+            class="bcgov-display-right-element"
           >
             <div
-              class="bcgov-row "
+              class="bcgov-table "
             >
+              <b />
               <div
-                class="bcgov-fill-width"
+                class="bcgov-table-body"
               >
-                Number of Documents in Package:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  4
-                </b>
-              </div>
-            </div>
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Statutory Fees:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  $40.00
-                </b>
-              </div>
-            </div>
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Submission Fee:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  $25.50
-                </b>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="center-alignment fill-space"
+                    >
+                      <div
+                        style="color: rgb(252, 186, 25);"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="32"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="file-href minor-margin-left"
+                        data-testid="file-link-ping.json"
+                        role="button"
+                        tabindex="0"
+                      >
+                        ping.json
+                      </span>
+                      <svg
+                        class="minor-margin-left pointer"
+                        data-testid="remove-icon"
+                        fill="currentColor"
+                        height="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value top-spacing"
+                    >
+                      <div
+                        class="bcgov-form"
+                      >
+                        <label
+                          class="bcgov-dropdown-label"
+                          for="dropdown"
+                        >
+                          Description:
+                        </label>
+                        <div
+                          class="bcgov-dropdown-wrapper"
+                        >
+                          <svg
+                            class="fa-chevron-down"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                            />
+                          </svg>
+                          <select
+                            class="bcgov-dropdown"
+                            data-testid="dropdown"
+                            id="dropdown"
+                            name="options"
+                          >
+                            <option
+                              value="Affidavit"
+                            >
+                              Affidavit
+                            </option>
+                            <option
+                              value="Affidavit of Attempted Service"
+                            >
+                              Affidavit of Attempted Service
+                            </option>
+                            <option
+                              value="Case Conference Brief"
+                            >
+                              Case Conference Brief
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document an amendment?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isAmendment-ping.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isAmendment-ping.json"
+                            name="isAmendment-ping.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isAmendment-ping.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isAmendment-ping.json"
+                          name="isAmendment-ping.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document that needs to go to supreme court scheduling?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isSupremeCourtScheduling-ping.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isSupremeCourtScheduling-ping.json"
+                            name="isSupremeCourtScheduling-ping.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isSupremeCourtScheduling-ping.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isSupremeCourtScheduling-ping.json"
+                          name="isSupremeCourtScheduling-ping.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <br />
       </div>
-      <br />
+      <div>
+        <div
+          class="bcgov-display-box bcgov-border-background"
+        >
+          <div
+            class="bcgov-display-right-element"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="center-alignment fill-space"
+                    >
+                      <div
+                        style="color: rgb(252, 186, 25);"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="32"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="file-href minor-margin-left"
+                        data-testid="file-link-ping2.json"
+                        role="button"
+                        tabindex="0"
+                      >
+                        ping2.json
+                      </span>
+                      <svg
+                        class="minor-margin-left pointer"
+                        data-testid="remove-icon"
+                        fill="currentColor"
+                        height="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value top-spacing"
+                    >
+                      <div
+                        class="bcgov-form"
+                      >
+                        <label
+                          class="bcgov-dropdown-label"
+                          for="dropdown"
+                        >
+                          Description:
+                        </label>
+                        <div
+                          class="bcgov-dropdown-wrapper"
+                        >
+                          <svg
+                            class="fa-chevron-down"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                            />
+                          </svg>
+                          <select
+                            class="bcgov-dropdown"
+                            data-testid="dropdown"
+                            id="dropdown"
+                            name="options"
+                          >
+                            <option
+                              value="Affidavit"
+                            >
+                              Affidavit
+                            </option>
+                            <option
+                              value="Affidavit of Attempted Service"
+                            >
+                              Affidavit of Attempted Service
+                            </option>
+                            <option
+                              value="Case Conference Brief"
+                            >
+                              Case Conference Brief
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document an amendment?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isAmendment-ping2.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isAmendment-ping2.json"
+                            name="isAmendment-ping2.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isAmendment-ping2.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isAmendment-ping2.json"
+                          name="isAmendment-ping2.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document that needs to go to supreme court scheduling?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isSupremeCourtScheduling-ping2.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isSupremeCourtScheduling-ping2.json"
+                            name="isSupremeCourtScheduling-ping2.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isSupremeCourtScheduling-ping2.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isSupremeCourtScheduling-ping2.json"
+                          name="isSupremeCourtScheduling-ping2.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
       <section
         class="buttons pt-2"
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-testid="cancel-upload-btn"
           type="button"
         >
-          Cancel
+          Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
+          data-testid="continue-upload-btn"
+          disabled=""
           type="button"
         >
           Continue
+          <div
+            class="bcgov-loader-show"
+          >
+            <div
+              class="bcgov-btn-loader"
+            />
+          </div>
         </button>
       </section>
     </div>
@@ -926,83 +977,7 @@ exports[`Upload Component Radio buttons working as expected 1`] = `
           <p />
           <section
             class="bcgov-bluegrey-container"
-            id="csoAccountDetailsCard"
-          >
-            <div
-              class="bcgov-container-background bcgov-bluegrey-heading"
-            >
-              <h2
-                class="bcgov-heading-style"
-              >
-                <div
-                  class="bcgov-side-card-row"
-                >
-                  <div
-                    class="bcgov-round-icon-wrapper"
-                  >
-                    <svg
-                      class="bcgov-side-card-icon"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="bcgov-side-card-title"
-                  >
-                    Your CSO Account
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              class="bcgov-bluegrey-content"
-            >
-              <span
-                class="bcgov-content-style"
-              >
-                <p>
-                  CSO account 
-                  <strong />
-                   is linked to your Basic BCeID account 
-                  <strong>
-                    username
-                  </strong>
-                   and will be used to file documents. 
-                  <a
-                    href="undefined/accounts/editProfile.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    View your CSO account details
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
-        </div>
-      </div>
-      <div
-        class="bcgov-wide-dashboard-spacing"
-        style="position: relative;"
-      >
-        <div
-          class="col-12 pt-2"
-          style="position: relative;"
-        >
-          <p />
-          <section
-            class="bcgov-bluegrey-container"
-            id="aboutCsoCard"
+            id="amendmentsCard"
           >
             <div
               class="bcgov-container-background bcgov-bluegrey-heading"
@@ -1034,7 +1009,7 @@ exports[`Upload Component Radio buttons working as expected 1`] = `
                   <div
                     class="bcgov-side-card-title"
                   >
-                    About E-File Submission
+                    Amendments
                   </div>
                 </div>
               </h2>
@@ -1046,15 +1021,69 @@ exports[`Upload Component Radio buttons working as expected 1`] = `
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
-                  <a
-                    href="undefined/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="supremeCourtSchedulingCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
                   >
-                    Learn more about CSO
-                  </a>
-                  .
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Supreme Court Scheduling
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  Please indicate if your document upload has been approved for Supreme Court Scheduling...
                 </p>
               </span>
             </div>
@@ -1372,7 +1401,6 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
         <button
           class="bcgov-button bcgov-normal-blue btn"
           data-testid="continue-upload-btn"
-          disabled=""
           type="button"
         >
           Continue
@@ -1514,323 +1542,559 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
 exports[`Upload Component successful document upload works as expected 1`] = `
 <DocumentFragment>
   <div
-    class="ct-package-confirmation page"
+    class="ct-upload page"
   >
     <div
       class="content col-md-8"
     >
       <h1>
-        Package Confirmation
+        Document Upload
       </h1>
-      <span>
-        Review your package for accuracy and upload any additional or supporting documents.
-      </span>
-      <br />
-      <span>
-        If there are any errors in these documents, please Cancel this process and re-submit.
-      </span>
-      <br />
-      <br />
       <div
-        class="ct-file-list "
+        class="dropzone-outer-box"
+        data-testid="dropdownzone"
+        tabindex="0"
       >
         <div
-          class="header"
+          class="dropzone-inner-box"
         >
-          <span
-            class="d-none d-lg-inline col-lg-6"
-          >
-            Document Name
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Statutory Fee
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Document Type
+          <input
+            autocomplete="off"
+            multiple=""
+            style="display: none;"
+            tabindex="-1"
+            type="file"
+          />
+          <span>
+            <h2
+              class="text-center-alignment"
+            >
+              Drag and drop or 
+              <span
+                class="file-href"
+              >
+                choose documents
+              </span>
+            </h2>
+            <div>
+              <span>
+                to upload additional documents to your package
+              </span>
+              <br />
+              <span>
+                (max 10mb per document)
+              </span>
+            </div>
           </span>
         </div>
-        <ul>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 1
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $40.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 1
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 2
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 2
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              ping.json
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description ping
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              ping2.json
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description ping2
-            </span>
-          </li>
-        </ul>
       </div>
       <br />
-      <h4>
-        Do you have additional documents to upload? 
-        <span
-          class="file-href"
-          data-test-id="upload-link"
-          role="button"
-          tabindex="0"
-        >
-          Upload them now.
-        </span>
-      </h4>
-      <br />
       <h2>
-        Summary
+        Select Description for each uploaded document to continue
       </h2>
-      <p />
-      <div
-        class="near-half-width"
-      >
+      <br />
+      <div>
         <div
-          class="bcgov-table "
+          class="bcgov-display-box bcgov-border-background"
         >
-          <b />
           <div
-            class="bcgov-table-body"
+            class="bcgov-display-right-element"
           >
             <div
-              class="bcgov-row "
+              class="bcgov-table "
             >
+              <b />
               <div
-                class="bcgov-fill-width"
+                class="bcgov-table-body"
               >
-                Number of Documents in Package:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  4
-                </b>
-              </div>
-            </div>
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Statutory Fees:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  $40.00
-                </b>
-              </div>
-            </div>
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Submission Fee:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  $25.50
-                </b>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="center-alignment fill-space"
+                    >
+                      <div
+                        style="color: rgb(252, 186, 25);"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="32"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="file-href minor-margin-left"
+                        data-testid="file-link-ping.json"
+                        role="button"
+                        tabindex="0"
+                      >
+                        ping.json
+                      </span>
+                      <svg
+                        class="minor-margin-left pointer"
+                        data-testid="remove-icon"
+                        fill="currentColor"
+                        height="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value top-spacing"
+                    >
+                      <div
+                        class="bcgov-form"
+                      >
+                        <label
+                          class="bcgov-dropdown-label"
+                          for="dropdown"
+                        >
+                          Description:
+                        </label>
+                        <div
+                          class="bcgov-dropdown-wrapper"
+                        >
+                          <svg
+                            class="fa-chevron-down"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                            />
+                          </svg>
+                          <select
+                            class="bcgov-dropdown"
+                            data-testid="dropdown"
+                            id="dropdown"
+                            name="options"
+                          >
+                            <option
+                              value="Affidavit"
+                            >
+                              Affidavit
+                            </option>
+                            <option
+                              value="Affidavit of Attempted Service"
+                            >
+                              Affidavit of Attempted Service
+                            </option>
+                            <option
+                              value="Case Conference Brief"
+                            >
+                              Case Conference Brief
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document an amendment?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isAmendment-ping.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isAmendment-ping.json"
+                            name="isAmendment-ping.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isAmendment-ping.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isAmendment-ping.json"
+                          name="isAmendment-ping.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document that needs to go to supreme court scheduling?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isSupremeCourtScheduling-ping.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isSupremeCourtScheduling-ping.json"
+                            name="isSupremeCourtScheduling-ping.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isSupremeCourtScheduling-ping.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isSupremeCourtScheduling-ping.json"
+                          name="isSupremeCourtScheduling-ping.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <br />
       </div>
-      <br />
+      <div>
+        <div
+          class="bcgov-display-box bcgov-border-background"
+        >
+          <div
+            class="bcgov-display-right-element"
+          >
+            <div
+              class="bcgov-table "
+            >
+              <b />
+              <div
+                class="bcgov-table-body"
+              >
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="center-alignment fill-space"
+                    >
+                      <div
+                        style="color: rgb(252, 186, 25);"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="32"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="32"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        class="file-href minor-margin-left"
+                        data-testid="file-link-ping2.json"
+                        role="button"
+                        tabindex="0"
+                      >
+                        ping2.json
+                      </span>
+                      <svg
+                        class="minor-margin-left pointer"
+                        data-testid="remove-icon"
+                        fill="currentColor"
+                        height="32"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="32"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value top-spacing"
+                    >
+                      <div
+                        class="bcgov-form"
+                      >
+                        <label
+                          class="bcgov-dropdown-label"
+                          for="dropdown"
+                        >
+                          Description:
+                        </label>
+                        <div
+                          class="bcgov-dropdown-wrapper"
+                        >
+                          <svg
+                            class="fa-chevron-down"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                            />
+                          </svg>
+                          <select
+                            class="bcgov-dropdown"
+                            data-testid="dropdown"
+                            id="dropdown"
+                            name="options"
+                          >
+                            <option
+                              value="Affidavit"
+                            >
+                              Affidavit
+                            </option>
+                            <option
+                              value="Affidavit of Attempted Service"
+                            >
+                              Affidavit of Attempted Service
+                            </option>
+                            <option
+                              value="Case Conference Brief"
+                            >
+                              Case Conference Brief
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document an amendment?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isAmendment-ping2.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isAmendment-ping2.json"
+                            name="isAmendment-ping2.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isAmendment-ping2.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isAmendment-ping2.json"
+                          name="isAmendment-ping2.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bcgov-row "
+                >
+                  <div
+                    class="bcgov-fill-width"
+                  >
+                    <div
+                      class="major-padding-left"
+                    >
+                      Is this document that needs to go to supreme court scheduling?
+                    </div>
+                  </div>
+                  <div
+                    class="bcgov-table-value "
+                  >
+                    <div
+                      class="table-value"
+                    >
+                      <div
+                        class="minor-margin-right"
+                      >
+                        <label
+                          class="bcgov-radio"
+                          for="no-isSupremeCourtScheduling-ping2.json"
+                        >
+                          No
+                          <input
+                            checked=""
+                            id="no-isSupremeCourtScheduling-ping2.json"
+                            name="isSupremeCourtScheduling-ping2.json"
+                            type="radio"
+                          />
+                          <span
+                            class="bcgov-dot"
+                          />
+                        </label>
+                      </div>
+                      <label
+                        class="bcgov-radio"
+                        for="yes-isSupremeCourtScheduling-ping2.json"
+                      >
+                        Yes
+                        <input
+                          id="yes-isSupremeCourtScheduling-ping2.json"
+                          name="isSupremeCourtScheduling-ping2.json"
+                          type="radio"
+                        />
+                        <span
+                          class="bcgov-dot"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
       <section
         class="buttons pt-2"
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-testid="cancel-upload-btn"
           type="button"
         >
-          Cancel
+          Cancel Upload
         </button>
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
+          data-testid="continue-upload-btn"
+          disabled=""
           type="button"
         >
           Continue
+          <div
+            class="bcgov-loader-show"
+          >
+            <div
+              class="bcgov-btn-loader"
+            />
+          </div>
         </button>
       </section>
     </div>
@@ -1848,83 +2112,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
           <p />
           <section
             class="bcgov-bluegrey-container"
-            id="csoAccountDetailsCard"
-          >
-            <div
-              class="bcgov-container-background bcgov-bluegrey-heading"
-            >
-              <h2
-                class="bcgov-heading-style"
-              >
-                <div
-                  class="bcgov-side-card-row"
-                >
-                  <div
-                    class="bcgov-round-icon-wrapper"
-                  >
-                    <svg
-                      class="bcgov-side-card-icon"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="bcgov-side-card-title"
-                  >
-                    Your CSO Account
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              class="bcgov-bluegrey-content"
-            >
-              <span
-                class="bcgov-content-style"
-              >
-                <p>
-                  CSO account 
-                  <strong />
-                   is linked to your Basic BCeID account 
-                  <strong>
-                    username
-                  </strong>
-                   and will be used to file documents. 
-                  <a
-                    href="undefined/accounts/editProfile.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    View your CSO account details
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
-        </div>
-      </div>
-      <div
-        class="bcgov-wide-dashboard-spacing"
-        style="position: relative;"
-      >
-        <div
-          class="col-12 pt-2"
-          style="position: relative;"
-        >
-          <p />
-          <section
-            class="bcgov-bluegrey-container"
-            id="aboutCsoCard"
+            id="amendmentsCard"
           >
             <div
               class="bcgov-container-background bcgov-bluegrey-heading"
@@ -1956,7 +2144,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                   <div
                     class="bcgov-side-card-title"
                   >
-                    About E-File Submission
+                    Amendments
                   </div>
                 </div>
               </h2>
@@ -1968,15 +2156,69 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                 class="bcgov-content-style"
               >
                 <p>
-                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
-                  <a
-                    href="undefined/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  Please indicate document uploads that are amendments - changes or alterations to existing, previously submitted documents.
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="supremeCourtSchedulingCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
                   >
-                    Learn more about CSO
-                  </a>
-                  .
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Supreme Court Scheduling
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  Please indicate if your document upload has been approved for Supreme Court Scheduling...
                 </p>
               </span>
             </div>
