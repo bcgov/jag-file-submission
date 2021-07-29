@@ -18,6 +18,7 @@ public class ReviewRushOrder {
     protected String countryDsc;
     protected String currentStatusDsc;
     protected String processReasonCd;
+    protected String processingCommentTxt;
     protected List<RushDocument> supportDocs;
 
     public ReviewRushOrder() {}
@@ -81,6 +82,10 @@ public class ReviewRushOrder {
     public String getProcessReasonCd() { return processReasonCd;  }
 
     public void setProcessReasonCd(String processReasonCd) { this.processReasonCd = processReasonCd;  }
+
+    public String getProcessingCommentTxt() { return processingCommentTxt; }
+
+    public void setProcessingCommentTxt(String processingCommentTxt) { this.processingCommentTxt = processingCommentTxt; }
 
     public List<RushDocument> getSupportDocs() {
         return supportDocs;

@@ -33,6 +33,7 @@ public interface FilePackageMapper {
     @Mapping(target = "rushOrder.contactPhoneNo", source = "filePackage.procRequest.contactPhoneNo")
     @Mapping(target = "rushOrder.contactSurnameNm", source = "filePackage.procRequest.contactSurnameNm")
     @Mapping(target = "rushOrder.ctryId", source = "filePackage.procRequest.ctryId")
+    @Mapping(target = "rushOrder.processingCommentTxt", source = "filePackage.procRequest.processingCommentTxt")
     @Mapping(target = "rushOrder.countryDsc", source = "countryDsc")
     ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage, String csoHistoryLink, List<Individual> individuals, List<Organization> organizations, RushOrderRequestItem rushOrderRequestItem, String countryDsc);
 
