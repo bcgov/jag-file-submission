@@ -17,14 +17,18 @@ const files = getDocumentsData();
 const upload = { confirmationPopup, submissionId, courtData, files };
 
 export const Default = () => {
+  // eslint-disable-next-line no-unused-vars
   const [showUpload, setShowUpload] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [refreshFiles, setRefreshFiles] = useState(false);
   const uploadWithStates = { ...upload, setShowUpload, setRefreshFiles };
   return <Upload upload={uploadWithStates} />;
 };
 
 export const Mobile = () => {
+  // eslint-disable-next-line no-unused-vars
   const [showUpload, setShowUpload] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [refreshFiles, setRefreshFiles] = useState(false);
   const uploadWithStates = { ...upload, setShowUpload, setRefreshFiles };
   return <Upload upload={uploadWithStates} />;

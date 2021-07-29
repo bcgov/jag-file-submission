@@ -341,7 +341,6 @@ describe("Upload Component", () => {
     const newFile = new File([JSON.stringify({ ping: true })], "ping2.json", {
       type: "application/json",
     });
-    console.log(newFile.name);
     const newData = mockData([newFile]);
 
     dispatchEvt(dropzone, "drop", newData);
