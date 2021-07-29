@@ -43,5 +43,12 @@ public class Keys {
     public static final String CSO_ACTUAL_SUBMITTED_DATE = "ASUB";
     public static final String CSO_CALCULATED_SUBMITTED_DATE = "CSUB";
 
+    public static final Map<String, String> RUSH_TYPES = Stream.of(
+            new AbstractMap.SimpleImmutableEntry<>( "PRO", "PRO" ),
+            new AbstractMap.SimpleImmutableEntry<>( "RULE",  "CRTR" ),
+            new AbstractMap.SimpleImmutableEntry<>( "COURT",  "CRTD" ),
+            new AbstractMap.SimpleImmutableEntry<>( "OTHER",  "OTHR" ))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
 
 }

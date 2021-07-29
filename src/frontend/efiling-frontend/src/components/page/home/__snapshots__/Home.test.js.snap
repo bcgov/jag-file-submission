@@ -995,7 +995,7 @@ exports[`Home Component matches the snapshot when user cso account does not exis
                 <p>
                   E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
-                    href="https://dev.justice.gov.bc.ca/cso/about/index.do"
+                    href="undefined/about/index.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -1314,7 +1314,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                   </strong>
                    and will be used to file documents. 
                   <a
-                    href="https://dev.justice.gov.bc.ca/cso/accounts/editProfile.do"
+                    href="undefined/accounts/editProfile.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -1384,7 +1384,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
                 <p>
                   E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
-                    href="https://dev.justice.gov.bc.ca/cso/about/index.do"
+                    href="undefined/about/index.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -2311,7 +2311,7 @@ exports[`Home When user has authenticated with BCSC with no CSO account, retriev
                 <p>
                   E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
                   <a
-                    href="https://dev.justice.gov.bc.ca/cso/about/index.do"
+                    href="undefined/about/index.do"
                     rel="noopener noreferrer"
                     target="_blank"
                   >

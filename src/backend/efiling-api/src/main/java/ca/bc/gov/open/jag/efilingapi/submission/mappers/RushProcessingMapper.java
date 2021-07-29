@@ -18,7 +18,8 @@ public interface RushProcessingMapper {
     @Mapping(target="countryCode", source="countryCode", defaultValue = "")
     RushProcessing toRushProcessing(Rush rush);
 
-    @Mapping(target = "name", source="fileName")
+    @Mapping(target = "name", source = "fileName")
+    @Mapping(target = "serverFileName", source = "fileName")
     Document toDocument(RushDocument rushDocument);
 
 }

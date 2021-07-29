@@ -10,7 +10,6 @@ import {
   DisplayBox,
   Table,
   Dropdown,
-  Radio,
 } from "shared-components";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
@@ -32,7 +31,7 @@ const checkValidityOfUploadedFiles = () => {
     );
 
   if (
-    filesToUpload.documents.length > 0 &&
+    filesToUpload.documents.length > 1 &&
     filesToUpload.documents.every(isValid)
   )
     return true;
@@ -126,31 +125,43 @@ const identifySelectedFile = (fileName) => {
   return file;
 };
 
-const generateRadioButtonJSX = (fileName, type, setContinueBtnEnabled) => {
+const generateRadioButtonJSX = (fileName, type) => {
   const file = identifySelectedFile(fileName);
+  file[type] = false;
 
   return (
     <div className="table-value">
       <div className="minor-margin-right">
-        <Radio
-          id={`no-${type}-${fileName}`}
+        <label className="bcgov-radio" htmlFor={`no-${type}-${fileName}`}>
+          No
+          <input
+            type="radio"
+            name={`${type}-${fileName}`}
+            id={`no-${type}-${fileName}`}
+            defaultChecked
+            onChange={(e) => {
+              if (e.target.checked) {
+                file[type] = false;
+              }
+            }}
+          />
+          <span className="bcgov-dot" />
+        </label>
+      </div>
+      <label className="bcgov-radio" htmlFor={`yes-${type}-${fileName}`}>
+        Yes
+        <input
+          type="radio"
           name={`${type}-${fileName}`}
-          label="No"
-          onSelect={() => {
-            file[type] = false;
-            setContinueBtnEnabled(checkValidityOfUploadedFiles());
+          id={`yes-${type}-${fileName}`}
+          onChange={(e) => {
+            if (e.target.checked) {
+              file[type] = true;
+            }
           }}
         />
-      </div>
-      <Radio
-        id={`yes-${type}-${fileName}`}
-        name={`${type}-${fileName}`}
-        label="Yes"
-        onSelect={() => {
-          file[type] = true;
-          setContinueBtnEnabled(checkValidityOfUploadedFiles());
-        }}
-      />
+        <span className="bcgov-dot" />
+      </label>
     </div>
   );
 };
@@ -186,7 +197,7 @@ const generateTable = (
 ) => {
   if (!filesToUpload.documents.some((f) => f.name === file.name)) {
     filesToUpload.documents.push({ name: file.name, type: "AFF" });
-    setContinueBtnEnabled(checkValidityOfUploadedFiles());
+    setContinueBtnEnabled(true);
   }
 
   return [

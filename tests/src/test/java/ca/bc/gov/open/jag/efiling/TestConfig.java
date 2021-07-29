@@ -60,6 +60,11 @@ public class TestConfig {
     }
 
     @Bean
+    public CountryService countryService() {
+        return new CountryService();
+    }
+
+    @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
         return new BrowserScopePostProcessor();
     }

@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsoclient.mappers;
 
-import ca.bc.gov.ag.csows.filing.CivilDocument;
-import ca.bc.gov.ag.csows.filing.DocumentPayments;
-import ca.bc.gov.ag.csows.filing.DocumentStatuses;
-import ca.bc.gov.ag.csows.filing.Milestones;
+import ca.bc.gov.ag.csows.filing.*;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
@@ -19,9 +16,7 @@ import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_CALCULATED_SUBMITTED_
 
 @Mapper
 public interface DocumentMapper {
-
-
-
+    //Civil Document Mappings
     @Mapping(target = "packageSeqNo", source = "index")
     @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment", defaultValue = "false")
     @Mapping(target = "clientFileNameTxt", source = "document.name")
@@ -74,5 +69,17 @@ public interface DocumentMapper {
     @Mapping(target = "documentStatusTypeCd",  constant = Keys.SUBMISSION_DOCUMENT_STATUS_TYPE_CD)
     @Mapping(target = "documentStatusSeqNo",  constant = "1")
     DocumentStatuses toEfilingDocumentStatus(Document document, AccountDetails accountDetails);
+
+    //Rush Processing Document
+    @Mapping(target = "processItemSeqNo", source = "index")
+    @Mapping(target = "clientFileNm", source = "document.name")
+    @Mapping(target = "entUserId", source = "accountDetails.clientId")
+    @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
+    @Mapping(target = "fileServer", source = "serverHost")
+    ProcessSupportDocument toEfilingRushProcessingDocument(
+            Integer index,
+            Document document,
+            AccountDetails accountDetails,
+            String serverHost);
 
 }

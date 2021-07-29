@@ -2,12 +2,14 @@ package ca.bc.gov.open.jag.efilingcsoclient.mappers;
 
 import ca.bc.gov.ag.csows.filing.status.File;
 import ca.bc.gov.ag.csows.filing.status.PackageParties;
+import ca.bc.gov.ag.csows.filing.status.ProcessSupportDocument;
 import ca.bc.gov.ag.csows.filing.status.RushOrderRequestItem;
 import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.RushDocument;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -33,6 +35,7 @@ public interface FilePackageMapper {
     @Mapping(target = "rushOrder.contactPhoneNo", source = "filePackage.procRequest.contactPhoneNo")
     @Mapping(target = "rushOrder.contactSurnameNm", source = "filePackage.procRequest.contactSurnameNm")
     @Mapping(target = "rushOrder.ctryId", source = "filePackage.procRequest.ctryId")
+    @Mapping(target = "rushOrder.processingCommentTxt", source = "filePackage.procRequest.processingCommentTxt")
     @Mapping(target = "rushOrder.countryDsc", source = "countryDsc")
     ReviewFilingPackage toFilingPackage(ca.bc.gov.ag.csows.filing.status.FilePackage filePackage, String csoHistoryLink, List<Individual> individuals, List<Organization> organizations, RushOrderRequestItem rushOrderRequestItem, String countryDsc);
 
@@ -49,5 +52,7 @@ public interface FilePackageMapper {
 
     @Mapping(target = "name", source = "organizationName")
     Organization toOrganization(PackageParties packageParties);
+
+    RushDocument toRushDocument(ProcessSupportDocument processSupportDocument);
 
 }

@@ -183,6 +183,28 @@ public class SubmissionService {
 
     }
 
+    public Response addRushProcessingResponse(String accessToken, UUID transactionId, String submissionId, String path) {
+
+        logger.info("Submitting request to create rush processing to the host {}", eFilingHost);
+
+        RequestSpecification request = RestAssured
+                .given()
+                .auth()
+                .preemptive()
+                .oauth2(accessToken)
+                .contentType(ContentType.JSON)
+                .header(Keys.X_TRANSACTION_ID, transactionId)
+                .body(PayloadHelper.addRushProcessing());
+
+        return request
+                .when()
+                .post(MessageFormat.format(MESSAGE_FORMAT_PARAMS, eFilingHost, Keys.SUBMISSION_PATH, submissionId, path))
+                .then()
+                .extract()
+                .response();
+
+    }
+
     public String getSubmissionId(Response documentResponse) {
 
         JsonPath submissionIdJsonPath = new JsonPath(documentResponse.asString());

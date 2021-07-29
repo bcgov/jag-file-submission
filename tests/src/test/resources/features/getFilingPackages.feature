@@ -9,3 +9,4 @@ Feature: Filing packages history can be retrieved from CSO
     Then valid packages history is returned
     And valid document and court details are returned
     And valid parties, org and payment details are returned
+    Then rush processing and supporting documents are returned

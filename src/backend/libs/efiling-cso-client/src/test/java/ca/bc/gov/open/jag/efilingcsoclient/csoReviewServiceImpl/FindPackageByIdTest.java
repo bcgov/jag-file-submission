@@ -23,28 +23,33 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Review Service Test Suite")
 public class FindPackageByIdTest {
-    public static final String CLIENT_FILE_NO = "CLIENTFILENO";
-    public static final String COURT_CLASS_CD = "CLASSCD";
-    public static final String COURT_FILE_NO = "FILENO";
-    public static final String COURT_LEVEL_CD = "LEVELCD";
-    public static final String COURT_LOCATION_CD = "LOCATIONCD";
-    public static final String COURT_LOCATION_NAME = "LOCATIONAME";
-    public static final String FILING_COMMENTS_TXT = "COMMENTSTXT";
-    public static final String FIRST_NAME = "FIRSTNAME";
-    public static final String LAST_NAME = "LASTNAME";
-    public static final String PACKAGE_NO = "PACKAGENO";
+    private static final String CLIENT_FILE_NO = "CLIENTFILENO";
+    private static final String COURT_CLASS_CD = "CLASSCD";
+    private static final String COURT_FILE_NO = "FILENO";
+    private static final String COURT_LEVEL_CD = "LEVELCD";
+    private static final String COURT_LOCATION_CD = "LOCATIONCD";
+    private static final String COURT_LOCATION_NAME = "LOCATIONAME";
+    private static final String FILING_COMMENTS_TXT = "COMMENTSTXT";
+    private static final String FIRST_NAME = "FIRSTNAME";
+    private static final String LAST_NAME = "LASTNAME";
+    private static final String PACKAGE_NO = "PACKAGENO";
     private static final String REASON_TXT = "ReasonTxt";
-    public static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
+    private static final DateTime SUBMITED_DATE = new DateTime(2020, 12, 12, 1, 1);
     private static final String EMAIL = "EMAIL";
     private static final String PHONE = "PHONE";
     private static final String COUNTRY_ONE = "COUNTRY ONE";
     private static final String COUNTRY_TEN = "COUNTRY TEN";
+    private static final String PROCESSING_COMMENT_TXT = "PROCESSTEXT";
+    private static final String FILE_GUID = UUID.randomUUID().toString();
+    private static final String FILE_PDF = "FILE.pdf";
+
     @Mock
     FilingStatusFacadeBean filingStatusFacadeBean;
 
@@ -107,7 +112,10 @@ public class FindPackageByIdTest {
         Assertions.assertEquals(PHONE, result.get().getRushOrder().getContactPhoneNo());
         Assertions.assertEquals(LAST_NAME, result.get().getRushOrder().getContactSurnameNm());
         Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getPackageId());
-
+        Assertions.assertEquals(PROCESSING_COMMENT_TXT, result.get().getRushOrder().getProcessingCommentTxt());
+        Assertions.assertEquals(1, result.get().getRushOrder().getSupportDocs().size());
+        Assertions.assertEquals(FILE_GUID, result.get().getRushOrder().getSupportDocs().get(0).getObjectGuid());
+        Assertions.assertEquals(FILE_PDF, result.get().getRushOrder().getSupportDocs().get(0).getClientFileNm());
 
     }
 
@@ -164,11 +172,17 @@ public class FindPackageByIdTest {
         rushOrderRequest.setContactPhoneNo(PHONE);
         rushOrderRequest.setContactSurnameNm(LAST_NAME);
         rushOrderRequest.setCtryId(BigDecimal.ONE);
+        rushOrderRequest.setProcessingCommentTxt(PROCESSING_COMMENT_TXT);
 
         RushOrderRequestItem rushOrderRequestItem = new RushOrderRequestItem();
 
         rushOrderRequestItem.setPackageId(BigDecimal.ONE);
         rushOrderRequestItem.setRushFilingReasonTxt(REASON_TXT);
+
+        ProcessSupportDocument processSupportDocument = new ProcessSupportDocument();
+        processSupportDocument.setClientFileNm(FILE_PDF);
+        processSupportDocument.setObjectGuid(FILE_GUID);
+        rushOrderRequestItem.getSupportDocs().add(processSupportDocument);
 
         rushOrderRequest.setItem(rushOrderRequestItem);
 
