@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class RushProcessing {
     private String email;
     private String organization;
     private String phoneNumber;
+    private DateTime courtDate;
     private String country;
     private String countryCode;
     private String reason;
@@ -26,6 +28,7 @@ public class RushProcessing {
         this.email = builder.email;
         this.organization = builder.organization;
         this.phoneNumber = builder.phoneNumber;
+        this.courtDate = builder.courtDate;
         this.country = builder.country;
         this.countryCode = builder.countryCode;
         this.reason = builder.reason;
@@ -40,6 +43,7 @@ public class RushProcessing {
             @JsonProperty("email") String email,
             @JsonProperty("organization") String organization,
             @JsonProperty("phoneNumber") String phoneNumber,
+            @JsonProperty("courtDate") DateTime courtDate,
             @JsonProperty("country") String country,
             @JsonProperty("countryCode") String countryCode,
             @JsonProperty("reason") String reason,
@@ -50,6 +54,7 @@ public class RushProcessing {
         this.email = email;
         this.organization = organization;
         this.phoneNumber = phoneNumber;
+        this.courtDate = courtDate;
         this.country = country;
         this.countryCode = countryCode;
         this.reason = reason;
@@ -75,6 +80,8 @@ public class RushProcessing {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public DateTime getCourtDate() {  return courtDate;  }
 
     public String getCountry() {
         return country;
@@ -104,6 +111,7 @@ public class RushProcessing {
         private String email;
         private String organization;
         private String phoneNumber;
+        private DateTime courtDate;
         private String country;
         private String countryCode;
         private String reason;
@@ -136,6 +144,11 @@ public class RushProcessing {
 
         public RushProcessing.Builder phoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public RushProcessing.Builder courtDate(DateTime courtDate) {
+            this.courtDate = courtDate;
             return this;
         }
 

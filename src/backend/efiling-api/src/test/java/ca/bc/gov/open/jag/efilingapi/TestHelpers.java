@@ -64,6 +64,16 @@ public class TestHelpers {
     public static final String PARTY_TYPE_DESC = "PARTY_TYPE_DESC";
     public static final String ROLE_TYPE_DESC = "ROLE_TYPE_DESC";
     public static final String TRANSACTION_DESC = "TRANSACTION_DESC";
+    public static final String CONTACT_EMAIL_TXT = "hello@hello.com";
+    public static final String ORGANIZATION_NM = "Paint It";
+    public static final String CONTACT_PHONE_NO = "1231231234";
+    public static final String CURRENT_STATUS_DSC = "Processing";
+    public static final String COUNTRY_DSC = "Canada";
+    public static final String PROCESS_REASON_CD = "OTHR";
+    public static final String NOTICE_REASON_TEXT = "Registry notice reason text";
+    public static final String RUSH_FILING_REASON_TXT = "This is a reason. This is a reason. This is a reason. This is a reason.";
+    public static final String CLIENT_FILE_NM = "Test.pdf";
+    public static final String OBJECT_GUID = "9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8";
 
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.CourtBase court, List<InitialDocument> initialDocuments) {
@@ -253,6 +263,7 @@ public class TestHelpers {
         reviewFilingPackage.setParties(Collections.singletonList(createParty()));
         reviewFilingPackage.setPayments(Collections.singletonList(createPayment()));
         reviewFilingPackage.setPackageLinks(PackageLinks.builder().packageHistoryUrl("http://localhost:8080/showmustgoon").create());
+        reviewFilingPackage.setRushOrder(createReviewRushOrder());
         return reviewFilingPackage;
 
     }
@@ -331,4 +342,53 @@ public class TestHelpers {
 
     }
 
+    public static ReviewRushOrder createReviewRushOrder() {
+        ReviewRushOrder reviewRushOrder = new ReviewRushOrder();
+        reviewRushOrder.setContactEmailTxt(CONTACT_EMAIL_TXT);
+        reviewRushOrder.setContactFirstGivenNm(FIRST_NAME);
+        reviewRushOrder.setContactSurnameNm(LAST_NAME);
+        reviewRushOrder.setContactOrganizationNm(ORGANIZATION_NM);
+        reviewRushOrder.setContactPhoneNo(CONTACT_PHONE_NO);
+        reviewRushOrder.setCurrentStatusDsc(CURRENT_STATUS_DSC);
+        reviewRushOrder.setCtryId(BigDecimal.ONE);
+        reviewRushOrder.setCountryDsc(COUNTRY_DSC);
+        reviewRushOrder.setCourtOrderDt(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
+        reviewRushOrder.setPackageId(BigDecimal.ONE);
+        reviewRushOrder.setProcessReasonCd(PROCESS_REASON_CD);
+        reviewRushOrder.setProcessingCommentTxt(NOTICE_REASON_TEXT);
+        reviewRushOrder.setRushFilingReasonTxt(RUSH_FILING_REASON_TXT);
+        reviewRushOrder.setSupportDocs(createRushDocuments());
+        return reviewRushOrder;
+    }
+
+    private static List<RushDocument> createRushDocuments() {
+        RushDocument rushDocumentOne = new RushDocument();
+        rushDocumentOne.setClientFileNm(CLIENT_FILE_NM);
+        rushDocumentOne.setEntDtm(new DateTime());
+        rushDocumentOne.setEntUserId("1");
+        rushDocumentOne.setFileServer("www.google.com");
+        rushDocumentOne.setObjectGuid(OBJECT_GUID);
+        rushDocumentOne.setProcessItemSeqNo(BigDecimal.ONE);
+        rushDocumentOne.setProcessRequestId(BigDecimal.ONE);
+        rushDocumentOne.setProcessSupportDocSeqNo(BigDecimal.ONE);
+        rushDocumentOne.setTempFileName("Test.pdf");
+        rushDocumentOne.setUpdUserId("1");
+        rushDocumentOne.setUpdDtm(new DateTime());
+
+        RushDocument rushDocumentTwo = new RushDocument();
+        rushDocumentTwo.setClientFileNm(CLIENT_FILE_NM);
+        rushDocumentTwo.setEntDtm(new DateTime());
+        rushDocumentTwo.setEntUserId("1");
+        rushDocumentTwo.setFileServer("www.google.com");
+        rushDocumentTwo.setObjectGuid(OBJECT_GUID);
+        rushDocumentTwo.setProcessItemSeqNo(BigDecimal.ONE);
+        rushDocumentTwo.setProcessRequestId(BigDecimal.ONE);
+        rushDocumentTwo.setProcessSupportDocSeqNo(BigDecimal.ONE);
+        rushDocumentTwo.setTempFileName("Test.pdf");
+        rushDocumentTwo.setUpdUserId("1");
+        rushDocumentTwo.setUpdDtm(new DateTime());
+
+        return Arrays.asList(rushDocumentOne, rushDocumentTwo);
+
+    }
 }
