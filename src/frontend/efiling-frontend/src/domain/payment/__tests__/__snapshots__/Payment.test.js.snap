@@ -1529,7 +1529,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>

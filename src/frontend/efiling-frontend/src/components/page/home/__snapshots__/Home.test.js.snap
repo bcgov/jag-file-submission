@@ -1025,7 +1025,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         Package Confirmation
       </h1>
       <span>
-        Review your package for accuracy and upload any additional or supporting documents.
+        Review your documents for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
