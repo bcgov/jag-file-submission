@@ -83,6 +83,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "countryCode", source = "ctryId")
     @Mapping(target = "country", source = "countryDsc")
     @Mapping(target = "statusReason", source = "processingCommentTxt")
+    @Mapping(target = "courtDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(reviewRushOrder.getCourtOrderDt()))")
     @Mapping(target = "supportingDocuments", source = "supportDocs")
     Rush toRush(ReviewRushOrder reviewRushOrder);
 

@@ -228,7 +228,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         reviewRushOrder.setCurrentStatusDsc("Processing");
         reviewRushOrder.setCtryId(BigDecimal.ONE);
         reviewRushOrder.setCountryDsc("Canada");
-        reviewRushOrder.setCourtOrderDt(new DateTime());
+        reviewRushOrder.setCourtOrderDt(DateTime.parse("2020-12-17"));
         reviewRushOrder.setPackageId(BigDecimal.ONE);
         reviewRushOrder.setProcessReasonCd("OTHR");
         reviewRushOrder.setProcessingCommentTxt("Registry notice reason text");
