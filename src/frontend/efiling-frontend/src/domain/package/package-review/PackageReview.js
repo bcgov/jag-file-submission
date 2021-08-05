@@ -28,12 +28,31 @@ import SupportingDocumentList from "./SupportingDocumentList";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import { Toast } from "../../../components/toast/Toast";
 
-const determineIfDisabled = (isRush, isProtectionOrder) => {
+const determineIfRushTabDisabled = (isRush, isProtectionOrder) => {
   if (isRush && !isProtectionOrder) {
     return false;
   }
 
   return true;
+};
+
+const determineDefaultTabKey = (queryParamTab, isRush, isProtectionOrder) => {
+  let defaultTabKey;
+  if (
+    queryParamTab === "rush" &&
+    !determineIfRushTabDisabled(isRush, isProtectionOrder)
+  ) {
+    defaultTabKey = queryParamTab;
+  } else if (
+    queryParamTab === "rush" &&
+    determineIfRushTabDisabled(isRush, isProtectionOrder)
+  ) {
+    defaultTabKey = "documents";
+  } else {
+    defaultTabKey = queryParamTab || "documents";
+  }
+
+  return defaultTabKey;
 };
 
 export default function PackageReview() {
@@ -44,7 +63,6 @@ export default function PackageReview() {
   const queryParams = queryString.parse(location.search);
   const { returnUrl, returnAppName, defaultTab } = queryParams;
   const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
-  const defaultTabKey = defaultTab || "documents";
 
   const [error, setError] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -84,6 +102,7 @@ export default function PackageReview() {
   const [isProtectionOrder, setIsProtectionOrder] = useState(false);
   const [rushDetails, setRushDetails] = useState([]);
   const [supportingDocuments, setSupportingDocuments] = useState([]);
+  const [tabKey, setTabKey] = useState("");
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
@@ -197,8 +216,22 @@ export default function PackageReview() {
               },
             ]);
             setSupportingDocuments(rushResponse.supportingDocuments);
+
+            if (tabKey === "") {
+              setTabKey(
+                // TODO: confirm it still makes sense to hard code true and false here
+                determineDefaultTabKey(defaultTab, true, false)
+              );
+            }
           } else {
             setIsRush(false);
+
+            if (tabKey === "") {
+              setTabKey(
+                // TODO: confirm isProtectionOrder is fine here (value shouldn't matter if rush is false)
+                determineDefaultTabKey(defaultTab, false, isProtectionOrder)
+              );
+            }
           }
         } catch (err) {
           setError(true);
@@ -311,7 +344,11 @@ export default function PackageReview() {
             />
           )}
           <br />
-          <Tabs defaultActiveKey={defaultTabKey} id="uncontrolled-tab">
+          <Tabs
+            activeKey={tabKey}
+            onSelect={(key) => setTabKey(key)}
+            id="controlled-tab"
+          >
             <Tab eventKey="documents" title="Documents">
               <br />
               <DocumentList
@@ -334,7 +371,7 @@ export default function PackageReview() {
             <Tab
               eventKey="rush"
               title="Rush Details"
-              disabled={determineIfDisabled(isRush, isProtectionOrder)}
+              disabled={determineIfRushTabDisabled(isRush, isProtectionOrder)}
             >
               <br />
               <Table id="rushDetails" elements={rushDetails} />
