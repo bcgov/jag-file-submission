@@ -996,7 +996,6 @@ components:
         - rushType
         - firstName
         - lastName
-        - phoneNumber
       properties:
         rushType:
           type: string
@@ -1028,6 +1027,9 @@ components:
         email:
           type: string
           description: email address
+        courtDate:
+          type: string
+          description: court directed date
         country:
           type: string
           description: country

@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service.filingPackageService
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.Rush;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class GetCSOFilingPackageTest {
 
     public static final String EXPECTED_ISO = "2020-05-05T00:00:00.000-07:00";
+
     FilingPackageServiceImpl sut;
 
     @Mock
@@ -98,6 +100,28 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(BigDecimal.ONE, result.get().getPayments().get(0).getPaymentCategory());
         Assertions.assertEquals(TestHelpers.TRANSACTION_DESC, result.get().getPayments().get(0).getPaymentDescription());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getPayments().get(0).getTransactionDate());
+        //Rush
+        Assertions.assertEquals(Rush.RushTypeEnum.OTHER, result.get().getRush().getRushType());
+        Assertions.assertEquals(TestHelpers.CONTACT_EMAIL_TXT, result.get().getRush().getEmail());
+        Assertions.assertEquals(TestHelpers.FIRST_NAME, result.get().getRush().getFirstName());
+        Assertions.assertEquals(TestHelpers.LAST_NAME, result.get().getRush().getLastName());
+        Assertions.assertEquals(TestHelpers.ORGANIZATION_NM, result.get().getRush().getOrganization());
+        Assertions.assertEquals(TestHelpers.CONTACT_PHONE_NO, result.get().getRush().getPhoneNumber());
+        Assertions.assertEquals(TestHelpers.CURRENT_STATUS_DSC, result.get().getRush().getStatus());
+        Assertions.assertEquals(BigDecimal.ONE.toEngineeringString(), result.get().getRush().getCountryCode());
+        Assertions.assertEquals(TestHelpers.COUNTRY_DSC, result.get().getRush().getCountry());
+        Assertions.assertEquals(EXPECTED_ISO, result.get().getRush().getCourtDate());
+        Assertions.assertEquals(TestHelpers.NOTICE_REASON_TEXT, result.get().getRush().getStatusReason());
+        Assertions.assertEquals(TestHelpers.RUSH_FILING_REASON_TXT, result.get().getRush().getReason());
+
+        //Rush Documents
+        Assertions.assertEquals(2, result.get().getRush().getSupportingDocuments().size());
+
+        Assertions.assertEquals(TestHelpers.CLIENT_FILE_NM, result.get().getRush().getSupportingDocuments().get(0).getFileName());
+        Assertions.assertEquals(TestHelpers.OBJECT_GUID, result.get().getRush().getSupportingDocuments().get(0).getIdentifier());
+
+        Assertions.assertEquals(TestHelpers.CLIENT_FILE_NM, result.get().getRush().getSupportingDocuments().get(1).getFileName());
+        Assertions.assertEquals(TestHelpers.OBJECT_GUID, result.get().getRush().getSupportingDocuments().get(1).getIdentifier());
 
         Assertions.assertEquals("http://localhost:8080/showmustgoon", result.get().getLinks().getPackageHistoryUrl());
 
