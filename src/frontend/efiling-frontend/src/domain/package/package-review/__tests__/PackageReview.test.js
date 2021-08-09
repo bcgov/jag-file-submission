@@ -4,6 +4,7 @@ import { render, waitFor, fireEvent } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
+import { act } from "react-dom/test-utils";
 import api from "../../../../AxiosConfig";
 import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
@@ -24,11 +25,36 @@ describe("PackageReview Component", () => {
   const courtData = getCourtData();
   const submittedDate = new Date("2021-01-14T18:57:43.602Z").toISOString();
   const submittedBy = { firstName: "Han", lastName: "Solo" };
+  const supportingDocuments = [
+    {
+      filename: "Test1.pdf",
+      identifier: "9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8",
+    },
+    {
+      filename: "Test2.pdf",
+      identifier: "d59c1528-8415-421e-a06a-9a46a0757fb5",
+    },
+  ];
+  const rush = {
+    country: "Canada",
+    countryCode: "1",
+    email: "hello@hello.com",
+    firstName: "Bob",
+    lastName: "Ross",
+    organization: "Paint It",
+    phoneNumber: "1231231234",
+    reason:
+      "This is a reason. This is a reason. This is a reason. This is a reason.",
+    rushType: "other",
+    status: "Processing",
+    supportingDocuments,
+  };
   const filingComments =
     "Lorem ipsum dolor sit amet.<script>alert('Hi');</script>\n\nDuis aute irure dolor.";
   const { documents } = packageReviewTestData;
   const { parties } = packageReviewTestData;
   const { payments } = packageReviewTestData;
+  const { protectionOrderDocuments } = packageReviewTestData;
 
   const csoRedirectResponse = {
     links,
@@ -38,6 +64,17 @@ describe("PackageReview Component", () => {
     submittedDate,
     documents,
     hasRegistryNotice: true,
+  };
+
+  const csoRedirectResponseWithRush = {
+    ...csoRedirectResponse,
+    rush,
+  };
+
+  const csoProtectionOrderRedirectResponse = {
+    ...csoRedirectResponse,
+    documents: protectionOrderDocuments,
+    rush,
   };
 
   FileSaver.saveAs = jest.fn();
@@ -561,5 +598,46 @@ describe("PackageReview Component", () => {
     await waitFor(() => {});
 
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
+  });
+
+  test("Rush tab is clickable if package contains Rush info", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
+
+    const { getByText } = render(<PackageReview />);
+
+    await act(() => promise);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).not.toHaveAttribute("aria-disabled", "false");
+    fireEvent.click(rushTab);
+
+    expect(
+      getByText("Reason for requesting urgent (rush) filing:")
+    ).toBeInTheDocument();
+  });
+
+  test("Rush tab is disabled if package does not contain Rush info", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
+
+    const { getByText } = render(<PackageReview />);
+
+    await act(() => promise);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).toHaveAttribute("aria-disabled", "true");
+  });
+
+  test("Rush tab is disabled if package contains a POR document", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoProtectionOrderRedirectResponse);
+
+    const { getByText } = render(<PackageReview />);
+
+    await act(() => promise);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).toHaveAttribute("aria-disabled", "true");
   });
 });
