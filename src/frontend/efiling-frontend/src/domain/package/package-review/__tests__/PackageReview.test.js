@@ -671,4 +671,35 @@ describe("PackageReview Component", () => {
       getByText("Something went wrong while trying to download your file.")
     ).toBeInTheDocument();
   });
+
+  test("An error is shown when rush tab supporting documents fail to download - keydown", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
+    mock
+      .onGet(
+        `/filingpackages/${packageId}/document/${supportingDocuments[0].identifier}`
+      )
+      .reply(400, {});
+
+    const { getByText, getAllByTestId } = render(<PackageReview />);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).not.toHaveAttribute("aria-disabled", "false");
+    fireEvent.click(rushTab);
+
+    await act(() => promise);
+
+    expect(
+      getByText("Reason for requesting urgent (rush) filing:")
+    ).toBeInTheDocument();
+
+    const downloadButton = getAllByTestId("uploaded-file")[0];
+    fireEvent.keyDown(downloadButton, { key: "Enter", keyCode: "13" });
+
+    await act(() => promise);
+
+    expect(
+      getByText("Something went wrong while trying to download your file.")
+    ).toBeInTheDocument();
+  });
 });
