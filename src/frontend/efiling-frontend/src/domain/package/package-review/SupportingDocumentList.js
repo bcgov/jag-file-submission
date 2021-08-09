@@ -51,11 +51,9 @@ export default function SupportingDocumentList({ packageId, files }) {
               </span>
             </span>
             <span className="label col-md-5 d-lg-none">Status:</span>
-            <span className="col-md-5 col-lg-4">
-              {file.status ? file.status : "file.status not a propety"}
-            </span>
+            <span className="col-md-5 col-lg-4">Submitted</span>
             <span className="label col-md-5 d-lg-none">Registry Notice:</span>
-            <span className="col-md-5 col-lg-4">Yes/No</span>
+            <span className="col-md-5 col-lg-4">Registry notice goes here</span>
           </li>
         ))}
       </ul>

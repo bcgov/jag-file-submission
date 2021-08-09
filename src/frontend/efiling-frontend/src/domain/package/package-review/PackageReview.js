@@ -118,7 +118,6 @@ export default function PackageReview() {
     getFilingPackage(packageId)
       .then((response) => {
         try {
-          console.log(response);
           const packageNo = response.data.packageNumber || "";
           let submittedBy = "";
           if (response.data.submittedBy.firstName) {
