@@ -13,9 +13,7 @@ export default function SupportingDocumentList({ packageId, files }) {
 
   const handleDownloadFileEvent = (e, document) => {
     if (isClick(e) || isEnter(e)) {
-      downloadSubmittedDocument(packageId, document).catch((err) => {
-        // TODO: Remove all added console.log statements
-        console.log(err);
+      downloadSubmittedDocument(packageId, document).catch(() => {
         setShowToast(true);
       });
     }
@@ -36,7 +34,7 @@ export default function SupportingDocumentList({ packageId, files }) {
       )}
       <ul>
         {files.map((file) => (
-          // TODO: Fix the classname to be based on the document status
+          // TODO: Fix the classname to be based on the document status when supporting document statuses are added
           <li key={hash(file)} className="SUB">
             <span className="label col-md-5 d-lg-none">File Name:</span>
             <span className="col-md-5 col-lg-4 file-cell">
