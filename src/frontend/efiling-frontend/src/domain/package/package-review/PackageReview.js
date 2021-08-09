@@ -55,6 +55,14 @@ const determineDefaultTabKey = (queryParamTab, isRush, isProtectionOrder) => {
   return defaultTabKey;
 };
 
+const determineIfProtectionOrder = (documents) => {
+  for (let i = 0; i < documents.length; i += 1) {
+    if (documents[i].documentProperties.type === "POR") return true;
+  }
+
+  return false;
+};
+
 export default function PackageReview() {
   const params = useParams();
   const packageId = Number(params.packageId);
@@ -176,8 +184,14 @@ export default function PackageReview() {
           setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
           setHasRegistryNotice(response.data.hasRegistryNotice);
 
-          // TODO: Proper protection order logic
-          setIsProtectionOrder(false);
+          let protectionOrderFlag = isProtectionOrder;
+          if (response.data.documents) {
+            protectionOrderFlag = determineIfProtectionOrder(
+              response.data.documents
+            );
+            setIsProtectionOrder(protectionOrderFlag);
+          }
+
           if (response.data.rush) {
             setIsRush(true);
             const rushResponse = response.data.rush;
@@ -219,8 +233,7 @@ export default function PackageReview() {
 
             if (tabKey === "") {
               setTabKey(
-                // TODO: confirm it still makes sense to hard code true and false here
-                determineDefaultTabKey(defaultTab, true, false)
+                determineDefaultTabKey(defaultTab, true, protectionOrderFlag)
               );
             }
           } else {
@@ -228,8 +241,7 @@ export default function PackageReview() {
 
             if (tabKey === "") {
               setTabKey(
-                // TODO: confirm isProtectionOrder is fine here (value shouldn't matter if rush is false)
-                determineDefaultTabKey(defaultTab, false, isProtectionOrder)
+                determineDefaultTabKey(defaultTab, false, protectionOrderFlag)
               );
             }
           }
