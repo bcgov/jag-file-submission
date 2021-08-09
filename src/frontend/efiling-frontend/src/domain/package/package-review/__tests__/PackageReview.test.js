@@ -640,4 +640,35 @@ describe("PackageReview Component", () => {
     const rushTab = getByText("Rush Details");
     expect(rushTab).toHaveAttribute("aria-disabled", "true");
   });
+
+  test("An error is shown when rush tab supporting documents fail to download - click", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
+    mock
+      .onGet(
+        `/filingpackages/${packageId}/document/${supportingDocuments[0].identifier}`
+      )
+      .reply(400, {});
+
+    const { getByText, getAllByTestId } = render(<PackageReview />);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).not.toHaveAttribute("aria-disabled", "false");
+    fireEvent.click(rushTab);
+
+    await act(() => promise);
+
+    expect(
+      getByText("Reason for requesting urgent (rush) filing:")
+    ).toBeInTheDocument();
+
+    const downloadButton = getAllByTestId("uploaded-file")[0];
+    fireEvent.click(downloadButton);
+
+    await act(() => promise);
+
+    expect(
+      getByText("Something went wrong while trying to download your file.")
+    ).toBeInTheDocument();
+  });
 });

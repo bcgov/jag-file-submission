@@ -45,7 +45,7 @@ export default function SupportingDocumentList({ packageId, files }) {
                 tabIndex={0}
                 onKeyDown={(e) => handleDownloadFileEvent(e, file)}
                 onClick={(e) => handleDownloadFileEvent(e, file)}
-                data-test-id="uploaded-file"
+                data-testid="uploaded-file"
               >
                 {file.fileName}
               </span>
