@@ -1,6 +1,6 @@
 # new feature
 # Tags: optional
-
+@demo
 Feature: List of countries can be looked up
 
   Scenario: Validate that list of countries can be retrieved

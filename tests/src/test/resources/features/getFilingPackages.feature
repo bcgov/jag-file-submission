@@ -1,6 +1,6 @@
 # new feature
 # Tags: optional
-
+@demo
 Feature: Filing packages history can be retrieved from CSO
 
   Scenario: Validate that filing packages history is retrieved
