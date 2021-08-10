@@ -592,6 +592,31 @@ paths:
       responses:
         "200":
           description: Document was deleted
+  "/filingpackages/{packageIdentifier}/rushDocument/{documentIdentifier}":
+    get:
+      summary: Get rush document
+      operationId: GetRushDocument
+      description: get rush document
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme

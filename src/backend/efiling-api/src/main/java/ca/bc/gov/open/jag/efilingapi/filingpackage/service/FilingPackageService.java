@@ -21,5 +21,6 @@ public interface FilingPackageService {
 
     void deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
 
+    Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
 
 }

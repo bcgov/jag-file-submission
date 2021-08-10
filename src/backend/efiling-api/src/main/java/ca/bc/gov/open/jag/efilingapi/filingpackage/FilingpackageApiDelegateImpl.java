@@ -176,4 +176,26 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         }
     }
 
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<Resource> getRushDocument(BigDecimal packageIdentifier, String documentIdentifier) {
+
+        logger.info("get rush document request received");
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent()) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        Optional<SubmittedDocument> result = filingPackageService.getRushDocument(universalId.get(), packageIdentifier, documentIdentifier);
+
+        if(!result.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, MessageFormat.format("attachment; filename={0}",result.get().getName()));
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .body(result.get().getData());
+
+    }
 }
