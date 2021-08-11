@@ -197,8 +197,8 @@ exports[`Storyshots PackageReview Default 1`] = `
       >
         <a
           aria-controls="controlled-tab-tabpane-documents"
-          aria-selected="false"
-          class="nav-item nav-link"
+          aria-selected="true"
+          class="nav-item nav-link active"
           data-rb-event-key="documents"
           href="#"
           id="controlled-tab-tab-documents"
@@ -229,19 +229,6 @@ exports[`Storyshots PackageReview Default 1`] = `
           Payment Status
         </a>
         <a
-          aria-controls="controlled-tab-tabpane-rush"
-          aria-disabled="true"
-          aria-selected="false"
-          class="nav-item nav-link disabled"
-          data-rb-event-key="rush"
-          href="#"
-          id="controlled-tab-tab-rush"
-          role="tab"
-          tabindex="-1"
-        >
-          Rush Details
-        </a>
-        <a
           aria-controls="controlled-tab-tabpane-comments"
           aria-selected="false"
           class="nav-item nav-link"
@@ -257,9 +244,9 @@ exports[`Storyshots PackageReview Default 1`] = `
         class="tab-content"
       >
         <div
-          aria-hidden="true"
+          aria-hidden="false"
           aria-labelledby="controlled-tab-tab-documents"
-          class="fade tab-pane"
+          class="fade tab-pane active show"
           id="controlled-tab-tabpane-documents"
           role="tabpanel"
         >
@@ -447,48 +434,6 @@ exports[`Storyshots PackageReview Default 1`] = `
                 />
               </svg>
             </div>
-          </div>
-        </div>
-        <div
-          aria-hidden="true"
-          aria-labelledby="controlled-tab-tab-rush"
-          class="fade tab-pane"
-          id="controlled-tab-tabpane-rush"
-          role="tabpanel"
-        >
-          <br />
-          <div
-            class="bcgov-table "
-          >
-            <b />
-            <div
-              class="bcgov-table-body"
-            />
-          </div>
-          <br />
-          <div
-            class="ct-document-list"
-          >
-            <div
-              class="header"
-            >
-              <span
-                class="d-none d-lg-inline col-lg-4"
-              >
-                File Name
-              </span>
-              <span
-                class="d-none d-lg-inline col-lg-4"
-              >
-                Status
-              </span>
-              <span
-                class="d-none d-lg-inline col-lg-4"
-              >
-                Registry Notice
-              </span>
-            </div>
-            <ul />
           </div>
         </div>
         <div
@@ -892,8 +837,8 @@ exports[`Storyshots PackageReview Mobile 1`] = `
       >
         <a
           aria-controls="controlled-tab-tabpane-documents"
-          aria-selected="false"
-          class="nav-item nav-link"
+          aria-selected="true"
+          class="nav-item nav-link active"
           data-rb-event-key="documents"
           href="#"
           id="controlled-tab-tab-documents"
@@ -924,19 +869,6 @@ exports[`Storyshots PackageReview Mobile 1`] = `
           Payment Status
         </a>
         <a
-          aria-controls="controlled-tab-tabpane-rush"
-          aria-disabled="true"
-          aria-selected="false"
-          class="nav-item nav-link disabled"
-          data-rb-event-key="rush"
-          href="#"
-          id="controlled-tab-tab-rush"
-          role="tab"
-          tabindex="-1"
-        >
-          Rush Details
-        </a>
-        <a
           aria-controls="controlled-tab-tabpane-comments"
           aria-selected="false"
           class="nav-item nav-link"
@@ -952,9 +884,9 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         class="tab-content"
       >
         <div
-          aria-hidden="true"
+          aria-hidden="false"
           aria-labelledby="controlled-tab-tab-documents"
-          class="fade tab-pane"
+          class="fade tab-pane active show"
           id="controlled-tab-tabpane-documents"
           role="tabpanel"
         >
@@ -1142,48 +1074,6 @@ exports[`Storyshots PackageReview Mobile 1`] = `
                 />
               </svg>
             </div>
-          </div>
-        </div>
-        <div
-          aria-hidden="true"
-          aria-labelledby="controlled-tab-tab-rush"
-          class="fade tab-pane"
-          id="controlled-tab-tabpane-rush"
-          role="tabpanel"
-        >
-          <br />
-          <div
-            class="bcgov-table "
-          >
-            <b />
-            <div
-              class="bcgov-table-body"
-            />
-          </div>
-          <br />
-          <div
-            class="ct-document-list"
-          >
-            <div
-              class="header"
-            >
-              <span
-                class="d-none d-lg-inline col-lg-4"
-              >
-                File Name
-              </span>
-              <span
-                class="d-none d-lg-inline col-lg-4"
-              >
-                Status
-              </span>
-              <span
-                class="d-none d-lg-inline col-lg-4"
-              >
-                Registry Notice
-              </span>
-            </div>
-            <ul />
           </div>
         </div>
         <div
