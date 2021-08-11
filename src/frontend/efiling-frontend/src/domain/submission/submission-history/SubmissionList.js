@@ -11,6 +11,8 @@ export default function SubmissionList({ submissions }) {
     }
   }
 
+  console.log(submissions);
+
   return (
     <div className="ct-submission-list">
       <div className="table-responsive">
@@ -19,7 +21,8 @@ export default function SubmissionList({ submissions }) {
             <tr>
               <th scope="col">Package #</th>
               <th scope="col">Date Submitted</th>
-              <th scope="col">Application</th>
+              <th scope="col">Status</th>
+              <th scope="col">Court File Number</th>
               <th scope="col">Court Location</th>
             </tr>
           </thead>
@@ -46,7 +49,8 @@ export default function SubmissionList({ submissions }) {
                   <td>
                     {moment(submission.submittedDate).format("DD-MMM-YYYY")}
                   </td>
-                  <td>xxxxx</td>
+                  <td>{submission.status}</td>
+                  <td>{submission.court.fileNumber}</td>
                   <td className="border-right">{submission.court.location}</td>
                 </tr>
               ))}
