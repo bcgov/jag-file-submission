@@ -7,6 +7,9 @@ public class RushMappingUtils {
     private RushMappingUtils() {}
 
     public static Rush.RushTypeEnum getRushType(String code) {
+
+        if (code == null) return null;
+
         switch (code.toUpperCase()) {
             case "CRTD":
                 return Rush.RushTypeEnum.COURT;
@@ -19,6 +22,7 @@ public class RushMappingUtils {
             default:
                 return null;
         }
+
     }
 
 }
