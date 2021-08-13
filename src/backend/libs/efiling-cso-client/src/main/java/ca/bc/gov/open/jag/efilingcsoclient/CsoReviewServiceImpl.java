@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingcsoclient;
 import ca.bc.gov.ag.csows.filing.DocumentStatuses;
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
 import ca.bc.gov.ag.csows.filing.status.*;
-import ca.bc.gov.ag.csows.lookups.LookupFacadeBean;
 import ca.bc.gov.ag.csows.reports.Report;
 import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
@@ -90,7 +89,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .map(filePackageMapper::toOrganization)
                             .collect(Collectors.toList()),
                     getRushOrderItem(filingStatus.getFilePackages().get(0)),
-                    getCountryDescription(filingStatus.getFilePackages().get(0))));
+                    getCountryDescription(filingStatus.getFilePackages().get(0)),
+                    getPackageStatus(filingStatus.getFilePackages().get(0).getFiles())));
 
         } catch (NestedEjbException_Exception e) {
 
@@ -125,7 +125,8 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                             .map(filePackageMapper::toOrganization)
                             .collect(Collectors.toList()),
                     getRushOrderItem(filingStatus.getFilePackages().get(0)),
-                    getCountryDescription(filingStatus.getFilePackages().get(0)))).collect(Collectors.toList());
+                    getCountryDescription(filingStatus.getFilePackages().get(0)),
+                    getPackageStatus(filingStatus.getFilePackages().get(0).getFiles()))).collect(Collectors.toList());
 
         } catch (NestedEjbException_Exception | DatatypeConfigurationException e) {
 
@@ -270,6 +271,32 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
                 .findFirst();
 
         return countryItem.map(LookupItem::getDescription).orElse(null);
+
+    }
+
+    private String getPackageStatus(List<File> documents) {
+
+        boolean pending = false;
+
+        if (documents != null && !documents.isEmpty()) {
+            //Package status is calculated based on document status
+            for (File document : documents) {
+
+                if (document.getStatus().equalsIgnoreCase(Keys.CSO_DOCUMENT_REJECTED) ||
+                    document.getStatus().equalsIgnoreCase(Keys.CSO_DOCUMENT_COURTESY_CORRECTED))
+                    return Keys.PACKAGE_STATUS_ACTION_REQUIRED;
+
+                if (document.getStatus().equalsIgnoreCase(Keys.CSO_DOCUMENT_RE_SUBMITTED) ||
+                    document.getStatus().equalsIgnoreCase(Keys.CSO_DOCUMENT_REFERRED) ||
+                    document.getStatus().equalsIgnoreCase(Keys.CSO_DOCUMENT_SUBMITTED))
+                    pending = true;
+            }
+
+        }
+
+        if (pending) return Keys.PACKAGE_STATUS_PENDING;
+
+        return Keys.PACKAGE_STATUS_COMPLETE;
 
     }
 

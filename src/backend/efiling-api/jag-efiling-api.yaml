@@ -866,6 +866,9 @@ components:
         packageNumber:
           type: number
           description: Submitted package number
+        status:
+          type: string
+          description: Calculated status of package
         filingComments:
           type: string
           description: Filing comments

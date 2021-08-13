@@ -12,6 +12,7 @@ import java.util.List;
 public class ReviewFilingPackage {
 
     private String clientFileNo;
+    private String status;
     private BigDecimal submissionFeeAmount;
     private ReviewCourt court;
     private List<ReviewDocument> documents = new ArrayList<>();
@@ -185,4 +186,8 @@ public class ReviewFilingPackage {
     public ReviewRushOrder getRushOrder() { return rushOrder;  }
 
     public void setRushOrder(ReviewRushOrder rushOrder) {  this.rushOrder = rushOrder; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
 }
