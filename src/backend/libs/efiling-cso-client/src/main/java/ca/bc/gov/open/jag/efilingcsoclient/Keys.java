@@ -51,4 +51,13 @@ public class Keys {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 
+    public static final String CSO_DOCUMENT_REJECTED = "REJ";
+    public static final String CSO_DOCUMENT_COURTESY_CORRECTED = "CCOR";
+    public static final String CSO_DOCUMENT_SUBMITTED = "SUB";
+    public static final String CSO_DOCUMENT_RE_SUBMITTED = "RSUB";
+    public static final String CSO_DOCUMENT_REFERRED = "REF";
+    public static final String PACKAGE_STATUS_PENDING = "Pending";
+    public static final String PACKAGE_STATUS_ACTION_REQUIRED = "Action Required";
+    public static final String PACKAGE_STATUS_COMPLETE = "Complete";
+
 }
