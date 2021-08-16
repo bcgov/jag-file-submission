@@ -6,8 +6,10 @@ import ConfirmationPopup, {
   Button,
   Sidecard,
   Table,
+  Radio,
 } from "shared-components";
 import axios from "axios";
+import Rush from "../../../components/page/rush/Rush";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
@@ -27,14 +29,9 @@ const getFilingPackageData = (
   setCourtData,
   setSubmissionFee,
   setShowPayment,
-  setShowToast,
-  setToastMessage,
-  refreshFiles,
-  setRefreshFiles
+  setShowToast
 ) => {
-  if (refreshFiles === false) {
-    return;
-  }
+  if (files.length > 0) return;
 
   axios
     .get(`/submission/${submissionId}/filing-package`)
@@ -44,29 +41,17 @@ const getFilingPackageData = (
       setFiles(documents);
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
-      setRefreshFiles(false);
     })
-    .catch(() => {
-      setToastMessage(
-        "Something went wrong while trying to retrieve your filing package."
-      );
-      setShowToast(true);
-    });
+    .catch(() => setShowToast(true));
 };
 
-const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
-  if (files && files.length > 0) {
-    const filenames = [];
-    files.forEach((file) => {
-      const filename = file.documentProperties.name;
-      if (filenames.includes(filename)) {
-        setToastMessage(
-          "This package contains duplicate file names. File names must be unique within a filing package."
-        );
-        setShowToast(true);
-      }
-      filenames.push(file.documentProperties.name);
-    });
+const handleContinue = (isRush, setShowRush, setShowPayment) => {
+  if (isRush) {
+    setShowPayment(false);
+    setShowRush(true);
+  } else {
+    setShowRush(false);
+    setShowPayment(true);
   }
 };
 
@@ -80,10 +65,11 @@ export default function PackageConfirmation({
   const [showPayment, setShowPayment] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
-  const [refreshFiles, setRefreshFiles] = useState(true);
+  const [showRush, setShowRush] = useState(false);
+  const [isRush, setIsRush] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+  const rushSubmissionSidecard = getSidecardData().rushSubmission;
 
   const resetState = () => {
     setShowUpload(false);
@@ -108,14 +94,9 @@ export default function PackageConfirmation({
       setCourtData,
       setSubmissionFee,
       setShowPayment,
-      setShowToast,
-      setToastMessage,
-      refreshFiles,
-      setRefreshFiles
+      setShowToast
     );
-
-    checkDuplicateFileNames(files, setShowToast, setToastMessage);
-  }, [files, submissionId, showUpload, refreshFiles]);
+  }, [files, submissionId]);
 
   function handleUploadFile(e) {
     if (isClick(e) || isEnter(e)) {
@@ -143,9 +124,21 @@ export default function PackageConfirmation({
         upload={{
           submissionId,
           courtData,
-          setShowUpload,
-          setRefreshFiles,
           files,
+          submissionFee,
+        }}
+      />
+    );
+
+  if (showRush)
+    return (
+      <Rush
+        payment={{
+          confirmationPopup,
+          submissionId,
+          courtData,
+          files,
+          submissionFee,
         }}
       />
     );
@@ -165,9 +158,14 @@ export default function PackageConfirmation({
           </>
         )}
         <h1>Package Confirmation</h1>
-        {showToast && <Toast content={toastMessage} setShow={setShowToast} />}
+        {showToast && (
+          <Toast
+            content="Something went wrong while trying to retrieve your filing package."
+            setShow={setShowToast}
+          />
+        )}
         <span>
-          Review your documents for accuracy and upload any additional or
+          Review your package for accuracy and upload any additional or
           supporting documents.
         </span>
         <br />
@@ -193,11 +191,33 @@ export default function PackageConfirmation({
           </span>
         </h4>
         <br />
+        <div className="bcgov-row">
+          <span>
+            Do you want to request that this submission be processed on a{" "}
+            <b>rush basis?</b>
+          </span>
+          <Radio
+            id="No"
+            label="No"
+            name="rush"
+            defaultChecked
+            onSelect={() => setIsRush(false)}
+          />
+          <Radio
+            id="Yes"
+            label="Yes"
+            name="rush"
+            onSelect={() => setIsRush(true)}
+          />
+        </div>
+        <br />
         <h2>Summary</h2>
         <p />
         <div className="near-half-width">
           <Table
-            elements={generateFileSummaryData(files, submissionFee, false).data}
+            elements={
+              generateFileSummaryData(isRush, files, submissionFee, false).data
+            }
           />
         </div>
         <br />
@@ -210,14 +230,14 @@ export default function PackageConfirmation({
           />
           <Button
             label="Continue"
-            onClick={() => setShowPayment(true)}
+            onClick={() => handleContinue(isRush, setShowRush, setShowPayment)}
             styling="bcgov-normal-blue btn"
             testId="continue-btn"
-            disabled={toastMessage !== null}
           />
         </section>
       </div>
       <div className="sidecard">
+        {isRush && <Sidecard sideCard={rushSubmissionSidecard} />}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />
       </div>

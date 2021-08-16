@@ -63,23 +63,21 @@ const csoAccountDetails = () => {
   };
 };
 
-const rushSubmission = (onClick) => ({
-  heading: "Rush/Urgent Submission",
+const rushSubmission = () => ({
+  heading: "About Rush Documents",
   content: [
     <p key="rushSubmission">
-      If you wish to request that this package be submitted on an urgent (rush)
-      basis, you must provide a reason for your request to be considered.&nbsp;
-      <span
-        onKeyDown={onClick}
-        role="button"
-        tabIndex={0}
-        className="file-href"
-        onClick={onClick}
-      >
-        Request rush submission
-      </span>
-      .
+      When directed by the court, an order will be processed on an urgent(rush)
+      basis. The registry will consider specific reasons for processing an order
+      on an urgent(rush) basis.
     </p>,
+    <p>
+      <b>
+        Only request processing on an urgent(rush) basis in exceptional
+        circumstances.
+      </b>
+    </p>,
+    <span className="file-href">Learn more about rush processing.</span>,
   ],
   type: "bluegrey",
   id: "rushSubmissionCard",
@@ -115,10 +113,10 @@ const supremeCourtScheduling = () => ({
   icon: <MdInfoOutline className="bcgov-side-card-icon" />,
 });
 
-export function getSidecardData(onClick) {
+export function getSidecardData() {
   const aboutCsoCard = aboutCso();
   const csoAccountDetailsCard = csoAccountDetails();
-  const rushSubmissionCard = rushSubmission(onClick);
+  const rushSubmissionCard = rushSubmission();
   const amendmentsCard = amendments();
   const supremeCourtSchedulingCard = supremeCourtScheduling();
 

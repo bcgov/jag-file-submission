@@ -1025,7 +1025,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         Package Confirmation
       </h1>
       <span>
-        Review your documents for accuracy and upload any additional or supporting documents.
+        Review your package for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -1161,6 +1161,45 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         </span>
       </h4>
       <br />
+      <div
+        class="bcgov-row"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
       <h2>
         Summary
       </h2>
@@ -1175,6 +1214,26 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           <div
             class="bcgov-table-body"
           >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
             <div
               class="bcgov-row "
             >

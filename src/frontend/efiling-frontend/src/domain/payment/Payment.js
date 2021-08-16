@@ -134,7 +134,12 @@ export default function Payment({
   const rushSubmissionSidecard = getSidecardData(() => setShowRush(true))
     .rushSubmission;
 
-  const fileSummary = generateFileSummaryData(files, submissionFee, true);
+  const fileSummary = generateFileSummaryData(
+    showRush,
+    files,
+    submissionFee,
+    true
+  );
   const calloutText =
     fileSummary.totalFee > 0
       ? `${baseCalloutText} I agree that all fees for this filing package may be charged to the credit card registered to my account. Statutory fees will be processed when documents are filed.`

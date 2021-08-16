@@ -602,6 +602,26 @@ exports[`Payment Component Matches the snapshot with existing credit card 1`] = 
               <div
                 class="bcgov-fill-width"
               >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
                 Number of Documents in Package:
               </div>
               <div
@@ -846,7 +866,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   <div
                     class="bcgov-side-card-title"
                   >
-                    Rush/Urgent Submission
+                    About Rush Documents
                   </div>
                 </div>
               </h2>
@@ -858,16 +878,18 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <span
-                    class="file-href"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Request rush submission
-                  </span>
-                  .
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
                 </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
               </span>
             </div>
           </section>
@@ -1095,6 +1117,26 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
               <div
                 class="bcgov-fill-width"
               >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
                 Number of Documents in Package:
               </div>
               <div
@@ -1339,7 +1381,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   <div
                     class="bcgov-side-card-title"
                   >
-                    Rush/Urgent Submission
+                    About Rush Documents
                   </div>
                 </div>
               </h2>
@@ -1351,16 +1393,18 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <span
-                    class="file-href"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Request rush submission
-                  </span>
-                  .
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
                 </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
               </span>
             </div>
           </section>
@@ -1529,7 +1573,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
         Package Confirmation
       </h1>
       <span>
-        Review your documents for accuracy and upload any additional or supporting documents.
+        Review your package for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -1665,6 +1709,45 @@ exports[`Payment Component On back click, it redirects back to the package confi
         </span>
       </h4>
       <br />
+      <div
+        class="bcgov-row"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
       <h2>
         Summary
       </h2>
@@ -1679,6 +1762,26 @@ exports[`Payment Component On back click, it redirects back to the package confi
           <div
             class="bcgov-table-body"
           >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
             <div
               class="bcgov-row "
             >

@@ -12,7 +12,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         Package Confirmation
       </h1>
       <span>
-        Review your documents for accuracy and upload any additional or supporting documents.
+        Review your package for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -148,6 +148,45 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         </span>
       </h4>
       <br />
+      <div
+        class="bcgov-row"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
       <h2>
         Summary
       </h2>
@@ -162,6 +201,26 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
           <div
             class="bcgov-table-body"
           >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
             <div
               class="bcgov-row "
             >
@@ -432,7 +491,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         Package Confirmation
       </h1>
       <span>
-        Review your documents for accuracy and upload any additional or supporting documents.
+        Review your package for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -568,6 +627,45 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         </span>
       </h4>
       <br />
+      <div
+        class="bcgov-row"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
       <h2>
         Summary
       </h2>
@@ -582,6 +680,26 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
           <div
             class="bcgov-table-body"
           >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
             <div
               class="bcgov-row "
             >
@@ -879,6 +997,26 @@ exports[`PackageConfirmation Component On click of Continue button, it redirects
               <div
                 class="bcgov-fill-width"
               >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
                 Number of Documents in Package:
               </div>
               <div
@@ -1123,7 +1261,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   <div
                     class="bcgov-side-card-title"
                   >
-                    Rush/Urgent Submission
+                    About Rush Documents
                   </div>
                 </div>
               </h2>
@@ -1135,16 +1273,18 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <span
-                    class="file-href"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Request rush submission
-                  </span>
-                  .
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
                 </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
               </span>
             </div>
           </section>
@@ -1517,7 +1657,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
         Package Confirmation
       </h1>
       <span>
-        Review your documents for accuracy and upload any additional or supporting documents.
+        Review your package for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -1653,6 +1793,45 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
         </span>
       </h4>
       <br />
+      <div
+        class="bcgov-row"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
       <h2>
         Summary
       </h2>
@@ -1667,6 +1846,26 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
           <div
             class="bcgov-table-body"
           >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
             <div
               class="bcgov-row "
             >
@@ -1964,6 +2163,26 @@ exports[`PackageConfirmation Component take user directly to payment page when c
               <div
                 class="bcgov-fill-width"
               >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
                 Number of Documents in Package:
               </div>
               <div
@@ -2208,7 +2427,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   <div
                     class="bcgov-side-card-title"
                   >
-                    Rush/Urgent Submission
+                    About Rush Documents
                   </div>
                 </div>
               </h2>
@@ -2220,16 +2439,18 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <span
-                    class="file-href"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Request rush submission
-                  </span>
-                  .
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
                 </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
               </span>
             </div>
           </section>
