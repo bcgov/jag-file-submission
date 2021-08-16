@@ -50,7 +50,6 @@ export default function AuthenticationGuard(props) {
       })
       .success((authenticated) => {
         if (authenticated) {
-          console.log("auth success");
           keycloak.loadUserInfo().success();
 
           localStorage.setItem("jwt", keycloak.token);
@@ -59,13 +58,11 @@ export default function AuthenticationGuard(props) {
           window.location.href ===
           `${window.location.origin}/efilinghub/submissionhistory`
         ) {
-          console.log("auth failed but on submission history page");
           setRedirectPage("login");
         } else if (
           window.location.href !==
           `${window.location.origin}/efilinghub/submissionhistory`
         ) {
-          console.log("auth failed general");
           keycloak.login({
             idpHint: `${defaultIdentityProvider}`,
           });
