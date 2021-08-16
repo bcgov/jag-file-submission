@@ -196,45 +196,45 @@ exports[`Storyshots PackageReview Default 1`] = `
         role="tablist"
       >
         <a
-          aria-controls="uncontrolled-tab-tabpane-documents"
+          aria-controls="controlled-tab-tabpane-documents"
           aria-selected="true"
           class="nav-item nav-link active"
           data-rb-event-key="documents"
           href="#"
-          id="uncontrolled-tab-tab-documents"
+          id="controlled-tab-tab-documents"
           role="tab"
         >
           Documents
         </a>
         <a
-          aria-controls="uncontrolled-tab-tabpane-parties"
+          aria-controls="controlled-tab-tabpane-parties"
           aria-selected="false"
           class="nav-item nav-link"
           data-rb-event-key="parties"
           href="#"
-          id="uncontrolled-tab-tab-parties"
+          id="controlled-tab-tab-parties"
           role="tab"
         >
           Parties
         </a>
         <a
-          aria-controls="uncontrolled-tab-tabpane-payment"
+          aria-controls="controlled-tab-tabpane-payment"
           aria-selected="false"
           class="nav-item nav-link"
           data-rb-event-key="payment"
           href="#"
-          id="uncontrolled-tab-tab-payment"
+          id="controlled-tab-tab-payment"
           role="tab"
         >
           Payment Status
         </a>
         <a
-          aria-controls="uncontrolled-tab-tabpane-comments"
+          aria-controls="controlled-tab-tabpane-comments"
           aria-selected="false"
           class="nav-item nav-link"
           data-rb-event-key="comments"
           href="#"
-          id="uncontrolled-tab-tab-comments"
+          id="controlled-tab-tab-comments"
           role="tab"
         >
           Filing Comments
@@ -245,9 +245,9 @@ exports[`Storyshots PackageReview Default 1`] = `
       >
         <div
           aria-hidden="false"
-          aria-labelledby="uncontrolled-tab-tab-documents"
+          aria-labelledby="controlled-tab-tab-documents"
           class="fade tab-pane active show"
-          id="uncontrolled-tab-tabpane-documents"
+          id="controlled-tab-tabpane-documents"
           role="tabpanel"
         >
           <br />
@@ -283,9 +283,9 @@ exports[`Storyshots PackageReview Default 1`] = `
         </div>
         <div
           aria-hidden="true"
-          aria-labelledby="uncontrolled-tab-tab-parties"
+          aria-labelledby="controlled-tab-tab-parties"
           class="fade tab-pane"
-          id="uncontrolled-tab-tabpane-parties"
+          id="controlled-tab-tabpane-parties"
           role="tabpanel"
         >
           <br />
@@ -316,9 +316,9 @@ exports[`Storyshots PackageReview Default 1`] = `
         </div>
         <div
           aria-hidden="true"
-          aria-labelledby="uncontrolled-tab-tab-payment"
+          aria-labelledby="controlled-tab-tab-payment"
           class="fade tab-pane"
-          id="uncontrolled-tab-tabpane-payment"
+          id="controlled-tab-tabpane-payment"
           role="tabpanel"
         >
           <br />
@@ -438,9 +438,9 @@ exports[`Storyshots PackageReview Default 1`] = `
         </div>
         <div
           aria-hidden="true"
-          aria-labelledby="uncontrolled-tab-tab-comments"
+          aria-labelledby="controlled-tab-tab-comments"
           class="fade tab-pane"
-          id="uncontrolled-tab-tabpane-comments"
+          id="controlled-tab-tabpane-comments"
           role="tabpanel"
         >
           <br />
@@ -836,45 +836,45 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         role="tablist"
       >
         <a
-          aria-controls="uncontrolled-tab-tabpane-documents"
+          aria-controls="controlled-tab-tabpane-documents"
           aria-selected="true"
           class="nav-item nav-link active"
           data-rb-event-key="documents"
           href="#"
-          id="uncontrolled-tab-tab-documents"
+          id="controlled-tab-tab-documents"
           role="tab"
         >
           Documents
         </a>
         <a
-          aria-controls="uncontrolled-tab-tabpane-parties"
+          aria-controls="controlled-tab-tabpane-parties"
           aria-selected="false"
           class="nav-item nav-link"
           data-rb-event-key="parties"
           href="#"
-          id="uncontrolled-tab-tab-parties"
+          id="controlled-tab-tab-parties"
           role="tab"
         >
           Parties
         </a>
         <a
-          aria-controls="uncontrolled-tab-tabpane-payment"
+          aria-controls="controlled-tab-tabpane-payment"
           aria-selected="false"
           class="nav-item nav-link"
           data-rb-event-key="payment"
           href="#"
-          id="uncontrolled-tab-tab-payment"
+          id="controlled-tab-tab-payment"
           role="tab"
         >
           Payment Status
         </a>
         <a
-          aria-controls="uncontrolled-tab-tabpane-comments"
+          aria-controls="controlled-tab-tabpane-comments"
           aria-selected="false"
           class="nav-item nav-link"
           data-rb-event-key="comments"
           href="#"
-          id="uncontrolled-tab-tab-comments"
+          id="controlled-tab-tab-comments"
           role="tab"
         >
           Filing Comments
@@ -885,9 +885,9 @@ exports[`Storyshots PackageReview Mobile 1`] = `
       >
         <div
           aria-hidden="false"
-          aria-labelledby="uncontrolled-tab-tab-documents"
+          aria-labelledby="controlled-tab-tab-documents"
           class="fade tab-pane active show"
-          id="uncontrolled-tab-tabpane-documents"
+          id="controlled-tab-tabpane-documents"
           role="tabpanel"
         >
           <br />
@@ -923,9 +923,9 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         </div>
         <div
           aria-hidden="true"
-          aria-labelledby="uncontrolled-tab-tab-parties"
+          aria-labelledby="controlled-tab-tab-parties"
           class="fade tab-pane"
-          id="uncontrolled-tab-tabpane-parties"
+          id="controlled-tab-tabpane-parties"
           role="tabpanel"
         >
           <br />
@@ -956,9 +956,9 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         </div>
         <div
           aria-hidden="true"
-          aria-labelledby="uncontrolled-tab-tab-payment"
+          aria-labelledby="controlled-tab-tab-payment"
           class="fade tab-pane"
-          id="uncontrolled-tab-tabpane-payment"
+          id="controlled-tab-tabpane-payment"
           role="tabpanel"
         >
           <br />
@@ -1078,9 +1078,9 @@ exports[`Storyshots PackageReview Mobile 1`] = `
         </div>
         <div
           aria-hidden="true"
-          aria-labelledby="uncontrolled-tab-tab-comments"
+          aria-labelledby="controlled-tab-tab-comments"
           class="fade tab-pane"
-          id="uncontrolled-tab-tabpane-comments"
+          id="controlled-tab-tabpane-comments"
           role="tabpanel"
         >
           <br />

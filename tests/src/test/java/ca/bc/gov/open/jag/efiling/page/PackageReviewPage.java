@@ -37,31 +37,31 @@ public class PackageReviewPage extends BasePage {
     @FindBy(xpath = "//*[contains(@class,'bcgov-table-value')]/b")
     private List<WebElement> packageValueDetails;
 
-    @FindBy(id = "uncontrolled-tab-tab-documents")
+    @FindBy(id = "controlled-tab-tab-documents")
     private WebElement documentsTab;
 
     @FindBy(xpath = "//*[@data-testid='btn-download-document']")
     private WebElement downloadButton;
 
-    @FindBy(id = "uncontrolled-tab-tab-parties")
+    @FindBy(id = "controlled-tab-tab-parties")
     private WebElement partiesTab;
 
-    @FindBy(id = "uncontrolled-tab-tab-comments")
+    @FindBy(id = "controlled-tab-tab-comments")
     private WebElement filingCommentsTab;
 
-    @FindBy(id = "uncontrolled-tab-tab-payment")
+    @FindBy(id = "controlled-tab-tab-payment")
     private WebElement paymentStatusTab;
 
-    @FindBy(id = "uncontrolled-tab-tabpane-documents")
+    @FindBy(id = "controlled-tab-tabpane-documents")
     private WebElement documentPane;
 
-    @FindBy(id = "uncontrolled-tab-tabpane-payment")
+    @FindBy(id = "controlled-tab-tabpane-payment")
     private WebElement paymentPane;
 
     @FindBy(xpath = "//*[@data-testid='btn-view-receipt']")
     private WebElement viewReceiptButton;
 
-    @FindBy(id = "uncontrolled-tab-tabpane-parties")
+    @FindBy(id = "controlled-tab-tabpane-parties")
     private WebElement partiesTable;
 
     @FindBy(id = "filingComments")
@@ -96,7 +96,7 @@ public class PackageReviewPage extends BasePage {
         packageValueDetails.forEach(webElement -> {
             if (!webElement.isDisplayed()) {
                 logger.info("WebElement is still not visible. Waiting for all rows to be present: {}", webElement.isDisplayed());
-                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[contains(@class,'bcgov-table-value')]/b")));
+                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@data-test-id='detailsTable'] //*[contains(@class,'bcgov-table-value')]/b")));
             }
             logger.info("Is it visible: {}", webElement.isDisplayed());
             logger.info("Is it enabled: {}", webElement.isEnabled());

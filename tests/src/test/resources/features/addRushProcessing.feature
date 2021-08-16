@@ -1,6 +1,6 @@
 # new feature
 # Tags: optional
-
+@demo
 Feature: Rush processing data point can be added to the package
 
   Scenario: Validate the rush processing data point can be added to the package

@@ -52,4 +52,12 @@ public class GetRushTypeTest {
     }
 
 
+    @Test
+    @DisplayName("null maps to null")
+    public void testMappingNull() {
+
+        Assertions.assertNull(RushMappingUtils.getRushType(null));
+
+    }
+
 }
