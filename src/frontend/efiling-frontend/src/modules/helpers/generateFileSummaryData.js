@@ -3,13 +3,13 @@ import React from "react";
 
 function calculateTotalStatFee(files) {
   let totalStatFee = Dinero({ amount: 0 });
-    files.forEach((file) => {
-      totalStatFee = totalStatFee.add(
-        Dinero({
-          amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10),
-        })
-      );
-    });
+  files.forEach((file) => {
+    totalStatFee = totalStatFee.add(
+      Dinero({
+        amount: parseInt((file.statutoryFeeAmount * 100).toFixed(0), 10),
+      })
+    );
+  });
 
   return totalStatFee;
 }

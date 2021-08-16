@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import {ConfirmationPopup} from "shared-components";
+import PropTypes from "prop-types";
+import { ConfirmationPopup } from "shared-components";
 
-export default function RushConfirmation({setShow}) {
+export default function RushConfirmation({ setShow }) {
   const modal = {};
   const mainButton = <></>;
   const confirmButton = <></>;
@@ -15,11 +17,19 @@ export default function RushConfirmation({setShow}) {
     modal,
     mainButton: { ...mainButton, onClick: handleShow },
     confirmButton: { ...confirmButton, onClick: handleConfirm },
-    cancelButton: { ...cancelButton, onClick: handleClose }
-  }
+    cancelButton: { ...cancelButton, onClick: handleClose },
+  };
 
   return (
-    <ConfirmationPopup modal={modal} mainButton={mainButton} confirmButton={confirmButton} cancelButton={cancelButton} />
+    <ConfirmationPopup
+      modal={modal}
+      mainButton={mainButton}
+      confirmButton={confirmButton}
+      cancelButton={cancelButton}
+    />
   );
-
 }
+
+RushConfirmation.propTypes = {
+  setShow: PropTypes.func.isRequired,
+};

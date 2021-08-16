@@ -17,10 +17,7 @@ export default function RushDocumentList({ files }) {
       <ul>
         {files &&
           files.map((file) => (
-            <RushDocumentListItem
-              file={file}
-              key={hash(file)}
-            />
+            <RushDocumentListItem file={file} key={hash(file)} />
           ))}
       </ul>
     </div>

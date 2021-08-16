@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-props-no-spreading , react/no-unescaped-entities, no-unused-vars */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
@@ -60,7 +60,7 @@ export default function Rush({ payment }) {
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
   const [fields, setFields] = useState(clearFields);
-  const [numDocumentsError, setNumDocumentsError] = useState(false);
+  // const [numDocumentsError, setNumDocumentsError] = useState(false);
   const [countries, setCountries] = useState([]);
 
   const canReject = (
@@ -176,9 +176,9 @@ export default function Rush({ payment }) {
         onDrop={(droppedFiles) => {
           if (droppedFiles.length + files.length < 6) {
             setFiles(files.concat(droppedFiles));
-            setNumDocumentsError(false);
+            // setNumDocumentsError(false);
           } else {
-            setNumDocumentsError(true);
+            // setNumDocumentsError(true);
           }
         }}
       >
@@ -213,9 +213,7 @@ export default function Rush({ payment }) {
       <br />
       {canReject}
       <br />
-      {files.length > 0 && (
-        <RushDocumentList files={files} />
-      )}
+      {files.length > 0 && <RushDocumentList files={files} />}
     </>
   );
 
@@ -226,12 +224,12 @@ export default function Rush({ payment }) {
   }, []);
 
   const setRadioStatusComponents = () => {
-            setRadio1(false);
-            setRadio2(false);
-            setRadio3(false);
-            setFields(clearFields);
-            setFiles([]);
-  }
+    setRadio1(false);
+    setRadio2(false);
+    setRadio3(false);
+    setFields(clearFields);
+    setFiles([]);
+  };
 
   if (showPayment) {
     return <Payment payment={payment} />;
@@ -327,7 +325,11 @@ export default function Rush({ payment }) {
             onClick={() => setShowPayment(true)}
             styling="bcgov-normal-white btn"
           />
-          <Button label="Continue" disabled={!continueBtnEnabled} styling="bcgov-normal-blue btn" />
+          <Button
+            label="Continue"
+            disabled={!continueBtnEnabled}
+            styling="bcgov-normal-blue btn"
+          />
         </section>
       </div>
       <div className="sidecard">

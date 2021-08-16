@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { MdDescription } from "react-icons/md";
 import { isClick, isEnter } from "../../../../modules/helpers/eventUtil";
 import { propTypes } from "../../../../types/propTypes";
