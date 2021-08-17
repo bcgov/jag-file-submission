@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading , react/no-unescaped-entities, no-unused-vars */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
@@ -18,6 +18,7 @@ import Payment from "../../../domain/payment/Payment";
 import "./Rush.scss";
 import { getCountries } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
+import { Toast } from "../../toast/Toast";
 
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
 
@@ -60,8 +61,23 @@ export default function Rush({ payment }) {
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
   const [fields, setFields] = useState(clearFields);
-  // const [numDocumentsError, setNumDocumentsError] = useState(false);
+  const [numDocumentsError, setNumDocumentsError] = useState(false);
+  const [duplicateFilenamesError, setDuplicateFilenamesError] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
+
+  const checkForDuplicateFilenames = (droppedFiles, previousFiles) => {
+    let isDuplicate = false;
+    for (let i = 0; i < previousFiles.length; i += 1) {
+      isDuplicate = droppedFiles.some(
+        (droppedFile) => droppedFile.name === previousFiles[i].name
+      );
+      if (isDuplicate) return isDuplicate;
+    }
+
+    return isDuplicate;
+  };
 
   const canReject = (
     <p>
@@ -87,6 +103,7 @@ export default function Rush({ payment }) {
             ...input,
             label: "Surname",
             id: "surname",
+            value: fields.surname,
           },
           (inputs) => {
             setFields({ ...fields, surname: inputs });
@@ -97,6 +114,7 @@ export default function Rush({ payment }) {
             ...input,
             label: "First Name",
             id: "firstName",
+            value: fields.firstName,
           },
           (inputs) => {
             setFields({ ...fields, firstName: inputs });
@@ -110,6 +128,7 @@ export default function Rush({ payment }) {
             label: "Organization",
             id: "org",
             isRequired: false,
+            value: fields.org,
           },
           (inputs) => {
             setFields({ ...fields, org: inputs });
@@ -169,16 +188,29 @@ export default function Rush({ payment }) {
         Please note that documents uploaded on this screen will not be processed
         into the file.
         <br />
-        To submit a document for e-filing, upload it on the "ADD DOCUMENTS"
-        screen.
+        To submit a document for e-filing, upload it on the &quot;ADD
+        DOCUMENTS&quot; screen.
       </p>
+      {showToast && <Toast content={toastMessage} setShow={setShowToast} />}
       <Dropzone
         onDrop={(droppedFiles) => {
-          if (droppedFiles.length + files.length < 6) {
-            setFiles(files.concat(droppedFiles));
-            // setNumDocumentsError(false);
+          let hasError = false;
+          if (droppedFiles.length + files.length >= 6) {
+            setNumDocumentsError(true);
+            hasError = true;
           } else {
-            // setNumDocumentsError(true);
+            setNumDocumentsError(false);
+          }
+
+          if (checkForDuplicateFilenames(droppedFiles, files)) {
+            setDuplicateFilenamesError(true);
+            hasError = true;
+          } else {
+            setDuplicateFilenamesError(false);
+          }
+
+          if (!hasError) {
+            setFiles(files.concat(droppedFiles));
           }
         }}
       >
@@ -223,12 +255,46 @@ export default function Rush({ payment }) {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    const displayAnyDocumentErrors = () => {
+      const errors = [];
+      if (numDocumentsError) {
+        errors.push("You cannot upload more than five supporting documents.");
+      }
+
+      if (duplicateFilenamesError) {
+        errors.push(
+          "You cannot upload two supporting documents with the same filename."
+        );
+      }
+
+      if (errors.length > 0) {
+        let errorMessage = "";
+        for (let i = 0; i < errors.length; i += 1) {
+          errorMessage = errorMessage.concat(errors[i]).concat("\n");
+        }
+
+        setToastMessage(errorMessage);
+        setShowToast(true);
+      } else {
+        setShowToast(false);
+      }
+    };
+
+    displayAnyDocumentErrors();
+  }, [numDocumentsError, duplicateFilenamesError]);
+
+  const prepopulateContactInfo = () => {
+    setFields({ ...fields, firstName: "bob", surname: "ross" });
+  };
+
   const setRadioStatusComponents = () => {
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
     setFields(clearFields);
     setFiles([]);
+    prepopulateContactInfo();
   };
 
   if (showPayment) {
