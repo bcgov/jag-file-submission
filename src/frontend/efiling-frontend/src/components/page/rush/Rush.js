@@ -20,6 +20,8 @@ import { getCountries } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 
+const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
 
 const generateInputField = (input, onChange) => (
@@ -63,6 +65,7 @@ export default function Rush({ payment }) {
   const [fields, setFields] = useState(clearFields);
   const [numDocumentsError, setNumDocumentsError] = useState(false);
   const [duplicateFilenamesError, setDuplicateFilenamesError] = useState(false);
+  const [emailError, setEmailError] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
@@ -77,6 +80,26 @@ export default function Rush({ payment }) {
     }
 
     return isDuplicate;
+  };
+
+  const handleMethodOfContactChange = (e) => {
+    setFields({
+      ...fields,
+      contactMethod: contactMethods.filter((list) => list[0] === e && list)[0],
+      phoneNumber: null,
+      email: null,
+      surname: null,
+    });
+    setEmailError(null);
+  };
+
+  const handleEmailFormatting = (emailInput) => {
+    if (emailInput.search(emailRegex) === -1) {
+      setEmailError("Invalid email address");
+    } else {
+      setEmailError(null);
+    }
+    setFields({ ...fields, email: emailInput });
   };
 
   const canReject = (
@@ -150,27 +173,32 @@ export default function Rush({ payment }) {
             isRequired
             label="Method of Contact"
             items={contactMethods.map((list) => list[0])}
-            onSelect={(e) =>
-              setFields({
-                ...fields,
-                contactMethod: contactMethods.filter(
-                  (list) => list[0] === e && list
-                )[0],
-              })
-            }
+            onSelect={(e) => handleMethodOfContactChange(e)}
           />
         </div>
-        {generateInputField(
-          {
-            ...input,
-            label: fields.contactMethod[0],
-            id: fields.contactMethod[1],
-            value: fields[fields.contactMethod[1]],
-          },
-          (inputs) => {
-            setFields({ ...fields, [fields.contactMethod[1]]: inputs });
-          }
-        )}
+        {fields.contactMethod[0] === contactMethods[0][0] &&
+          generateInputField(
+            {
+              ...input,
+              label: fields.contactMethod[0],
+              id: fields.contactMethod[1],
+              value: fields[fields.contactMethod[1]],
+              errorMsg: emailError,
+            },
+            (inputs) => handleEmailFormatting(inputs)
+          )}
+        {fields.contactMethod[0] === contactMethods[1][0] &&
+          generateInputField(
+            {
+              ...input,
+              label: fields.contactMethod[0],
+              id: fields.contactMethod[1],
+              value: fields[fields.contactMethod[1]],
+            },
+            (inputs) => {
+              setFields({ ...fields, [fields.contactMethod[1]]: inputs });
+            }
+          )}
       </div>
     </>
   );
