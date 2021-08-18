@@ -492,6 +492,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FilingPackage"
+  "/filingpackages/{packageIdentifier}/actionRequiredDetails":
+    get:
+      summary: Get details for documents that require action
+      operationId: GetActionRequiredDetails
+      description: get action required details from cso
+      tags:
+        - filingPackages
+        - clientEndpoints
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: All filing package details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionRequiredDetails"
+        "404":
+          description: Package not found
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
   "/filingpackages/{packageIdentifier}/submissionSheet":
     get:
       summary: Get submission sheet for package
@@ -696,6 +721,8 @@ components:
         md5:
           type: string
           description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
+        actionDocument:
+          $ref: "#/components/schemas/ActionDocument"
     Document:
       required:
         - identifier
@@ -837,6 +864,9 @@ components:
         - documents
         - court
       properties:
+        packageIdentifier:
+          type: number
+          description: Identifer of package that is being modified
         court:
           $ref: "#/components/schemas/CourtBase"
         documents:
@@ -1481,3 +1511,31 @@ components:
         description:
           type: string
           description: country name
+    ActionRequiredDetails:
+      description: Action required details
+      type: object
+      properties:
+        userId:
+          type: string
+          description: user identifier
+        packageIdentifier:
+          type: number
+          description: package identifier
+        documents:
+          type: array
+          description: any document that requires action
+          items:
+            $ref: "#/components/schemas/ActionDocument"
+    ActionDocument:
+      description: Document that requires action
+      type: object
+      properties:
+        id:
+          type: number
+          description: document identifier
+        status:
+          type: string
+          description: document status
+        type:
+          type: string
+          description: document type
