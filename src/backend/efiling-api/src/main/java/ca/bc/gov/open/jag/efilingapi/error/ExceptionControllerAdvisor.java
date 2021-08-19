@@ -109,6 +109,11 @@ public class ExceptionControllerAdvisor {
         return new ResponseEntity<>(getEfilingError(ex), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(NoRegistryNoticeException.class)
+    public ResponseEntity<Object> handleNoRegistryNoticeException(NoRegistryNoticeException ex) {
+        return new ResponseEntity<>(getEfilingError(ex), HttpStatus.BAD_REQUEST);
+    }
+
     private EfilingError getEfilingError(EfilingException ex) {
         EfilingError efilingError = new EfilingError();
         efilingError.setError(ex.getErrorCode());

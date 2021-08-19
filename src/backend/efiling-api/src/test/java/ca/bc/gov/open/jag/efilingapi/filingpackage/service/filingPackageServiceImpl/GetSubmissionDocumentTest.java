@@ -40,7 +40,7 @@ public class GetSubmissionDocumentTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl());
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null);
     }
 
 
@@ -48,7 +48,7 @@ public class GetSubmissionDocumentTest {
     @DisplayName("Ok: a submitted document was returned")
     public void withValidRequestReturnDocument() {
 
-        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
         Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.eq(TestHelpers.DOCUMENT_ID_TWO_BD))).thenReturn(Optional.of(DOC_DATA));
 
@@ -86,7 +86,7 @@ public class GetSubmissionDocumentTest {
     @DisplayName("Not found: document not in filing package")
     public void withValidRequestButMissingDocumentInPackageReturnEmpty() {
 
-        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
         Optional<SubmittedDocument> result = sut.getSubmittedDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, DOCUMENT_NOT_FOUND);
 
@@ -98,7 +98,7 @@ public class GetSubmissionDocumentTest {
     @DisplayName("Not found: no document")
     public void withValidRequestButMissingDocumentReturnEmpty() {
 
-        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
         Mockito.when(efilingReviewServiceMock.getSubmittedDocument(Mockito.eq(TestHelpers.DOCUMENT_ID_TWO_BD))).thenReturn(Optional.empty());
 
