@@ -16,7 +16,6 @@ import { generateJWTToken } from "../../../modules/helpers/authentication-helper
 import Payment from "../Payment";
 
 describe("Payment Component", () => {
-  let realDate;
   const confirmationPopup = getTestData();
   const submissionId = "abc123";
   const apiRequest = `/submission/${submissionId}/filing-package`;
