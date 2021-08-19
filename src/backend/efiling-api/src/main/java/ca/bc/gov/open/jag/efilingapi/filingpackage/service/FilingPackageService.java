@@ -22,6 +22,12 @@ public interface FilingPackageService {
 
     void deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
 
+    /**
+     * Get the required details for a package that requires action
+     * @param universalId authorized users universal id
+     * @param packageNumber requested package identifier
+     * @return the action details for given user and package
+     */
     Optional<ActionRequiredDetails> getActionRequiredDetails(String universalId, BigDecimal packageNumber);
 
 }
