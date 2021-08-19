@@ -1515,7 +1515,7 @@ components:
       description: Action required details
       type: object
       properties:
-        userId:
+        clientId:
           type: string
           description: user identifier
         packageIdentifier:
@@ -1535,7 +1535,21 @@ components:
           description: document identifier
         status:
           type: string
-          description: document status
+          description:  >
+            document status:
+              * `SUB` - Submitted
+              * `RSUB` - Resubmitted
+              * `REF` - Referred
+              * `REJ` - Reject
+              * `CCOR` - Courtesy Correction
+          enum:
+            [
+                SUB,
+                RSUB,
+                REF,
+                REJ,
+                CCOR
+            ]
         type:
           type: string
           description: document type

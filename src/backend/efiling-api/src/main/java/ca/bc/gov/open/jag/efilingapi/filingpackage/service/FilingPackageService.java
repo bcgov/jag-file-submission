@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
 
+import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
@@ -21,5 +22,6 @@ public interface FilingPackageService {
 
     void deleteSubmittedDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
 
+    Optional<ActionRequiredDetails> getActionRequiredDetails(String universalId, BigDecimal packageNumber);
 
 }
