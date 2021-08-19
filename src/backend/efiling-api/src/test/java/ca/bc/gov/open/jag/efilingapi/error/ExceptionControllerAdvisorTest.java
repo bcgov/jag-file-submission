@@ -18,8 +18,10 @@ public class ExceptionControllerAdvisorTest {
 
     @BeforeEach
     public void beforeEach() {
+
         MockitoAnnotations.openMocks(this);
         sut = new ExceptionControllerAdvisor();
+
     }
 
     @Test
@@ -39,6 +41,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.CACHE_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -58,6 +61,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.COURT_LOCATION_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -77,6 +81,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.CREATE_ACCOUNT_EXCEPTION.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -96,6 +101,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -115,6 +121,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -134,6 +141,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.DOCUMENT_REQUIRED.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -153,6 +161,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.DOCUMENT_STORAGE_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -172,6 +181,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.DOCUMENT_TYPE_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -191,6 +201,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.FILE_TYPE_ERROR.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
 
@@ -211,6 +222,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.FILING_PACKAGE_NOT_FOUND.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -236,6 +248,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(expectedDetails, ((EfilingError) result.getBody()).getDetails());
         Assertions.assertEquals(expectedDetail1, ((EfilingError) result.getBody()).getDetails().get(0));
         Assertions.assertEquals(expectedDetail2, ((EfilingError) result.getBody()).getDetails().get(1));
+
     }
 
     @Test
@@ -255,6 +268,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.INVALIDROLE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -274,6 +288,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -293,6 +308,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.MISSING_APPLICATION_CODE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -312,6 +328,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.MISSING_IDENTITY_PROVIDER.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -331,6 +348,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -350,6 +368,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.ACCOUNTEXCEPTION.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -369,6 +388,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.PAYMENT_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -388,6 +408,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.SUBMISSION_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -407,6 +428,7 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.UPDATE_CLIENT_EXCEPTION.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
 
     @Test
@@ -426,5 +448,27 @@ public class ExceptionControllerAdvisorTest {
         Assertions.assertEquals(ErrorCode.URL_GENERATION_FAILURE.toString(),
                 ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
         Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
     }
+
+    @Test
+    @DisplayName("400: Assert No Registry Notice Exception")
+    public void testNoRegistryNoticeException() {
+
+        String expected = "Something went wrong";
+
+        //arrange
+        NoRegistryNoticeException exception = new NoRegistryNoticeException(expected);
+
+        //act
+        ResponseEntity<Object> result = sut.handleNoRegistryNoticeException(exception);
+
+        //assert
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        Assertions.assertEquals(ErrorCode.MISSING_REGISTRY_NOTICE.toString(),
+                ((EfilingError) Objects.requireNonNull(result.getBody())).getError());
+        Assertions.assertEquals(expected, ((EfilingError) result.getBody()).getMessage());
+
+    }
+
 }

@@ -43,7 +43,7 @@ public class GetFilingPackagesTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), actionRequiredDetailsMapper);
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null);
 
     }
 
@@ -51,7 +51,7 @@ public class GetFilingPackagesTest {
     @DisplayName("Ok: a filing package was returned")
     public void withValidRequestReturnFilingPackage() {
 
-        Mockito.when(efilingReviewServiceMock.findStatusByClient(ArgumentMatchers.any())).thenReturn(Collections.singletonList(TestHelpers.createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByClient(ArgumentMatchers.any())).thenReturn(Collections.singletonList(TestHelpers.createFilingPackage(true)));
 
         Optional<List<FilingPackage>> actual = sut.getFilingPackages(TestHelpers.CASE_1_STRING, PARENT_APPLICATION);
 

@@ -140,13 +140,14 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (Boolean.FALSE.equals(filingPackage.get().getHasRegistryNotice())) throw new NoRegistryNoticeException("This package does not have a registry notice");
 
-        //For phase one of enhancements rejected document are the only ones included. 
+        //For phase one of enhancements rejected document are the only ones included.
         return Optional.of(actionRequiredDetailsMapper.toActionRequiredDetails(filingPackage.get(),
                 request.get().getClientId(),
                 filingPackage.get().getDocuments().stream()
                     .filter(reviewDocument -> reviewDocument.getStatusCode().equalsIgnoreCase(Keys.REJECTED_DOCUMENT_CODE))
                     .map(actionRequiredDetailsMapper::toActionDocument)
                     .collect(Collectors.toList())));
+
     }
 
     private Optional<FilingPackageRequest> buildFilingPackageRequest(String universalId, BigDecimal packageNumber, String parentApplication) {

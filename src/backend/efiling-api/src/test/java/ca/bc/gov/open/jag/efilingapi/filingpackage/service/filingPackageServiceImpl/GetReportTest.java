@@ -29,7 +29,7 @@ public class GetReportTest {
 
         MockitoAnnotations.openMocks(this);
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, null, new FilingPackageMapperImpl(), actionRequiredDetailsMapper);
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, null, new FilingPackageMapperImpl(), null);
     }
 
     @Test
