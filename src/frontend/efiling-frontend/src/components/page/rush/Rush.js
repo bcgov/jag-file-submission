@@ -52,6 +52,7 @@ const formatPhoneNumber = (phoneNumber) => {
 };
 
 export default function Rush({ payment }) {
+  // eslint-disable-next-line no-unused-vars
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
   const input = {
