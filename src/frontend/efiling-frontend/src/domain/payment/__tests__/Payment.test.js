@@ -306,32 +306,6 @@ describe("Payment Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("Click on request rush submission opens rush submission page", async () => {
-    const currentDate = new Date("2019-05-14T11:01:58.135Z");
-    realDate = Date;
-    global.Date = class extends Date {
-      constructor() {
-        return currentDate;
-      }
-    };
-
-    mock.onGet(apiRequest).reply(200, {
-      documents: files,
-      court: courtData,
-      submissionFeeAmount: submissionFee,
-    });
-
-    const { container, asFragment } = render(<Payment payment={payment} />);
-
-    fireEvent.click(getByText(container, "Request rush submission"));
-
-    await waitFor(() => {});
-
-    expect(asFragment()).toMatchSnapshot();
-
-    global.Date = realDate;
-  });
-
   test("when coming from a successful bambora card registration, and a successful call to set-bambora-cso, set the internal client number", async () => {
     sessionStorage.setItem("internalClientNumber", null);
     sessionStorage.setItem("bamboraSuccess", "1234");
