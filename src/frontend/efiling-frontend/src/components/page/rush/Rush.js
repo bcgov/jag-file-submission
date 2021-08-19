@@ -31,13 +31,11 @@ const generateInputField = (input, onChange) => (
 );
 
 const formatPhoneNumber = (phoneNumber) => {
-  console.log(phoneNumber);
   if (!phoneNumber) {
     return phoneNumber;
   }
 
   const phoneNumberDigits = phoneNumber.replace(/[^\d]/g, "");
-  console.log(phoneNumberDigits);
 
   if (phoneNumberDigits.length < 4) {
     return phoneNumberDigits;
@@ -127,7 +125,6 @@ export default function Rush({ payment }) {
 
   const handlePhoneNumberChange = (phoneNumber) => {
     const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
-    console.log(formattedPhoneNumber);
     setFields({
       ...fields,
       phoneNumber: formattedPhoneNumber,
