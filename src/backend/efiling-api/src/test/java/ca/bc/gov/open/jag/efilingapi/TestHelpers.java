@@ -249,9 +249,10 @@ public class TestHelpers {
 
     }
 
-    public static ReviewFilingPackage createFilingPackage() {
+    public static ReviewFilingPackage createFilingPackage(Boolean hasRegistry) {
 
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
+        reviewFilingPackage.setHasRegistryNotice(hasRegistry);
         reviewFilingPackage.setClientFileNo("CLIENTFILENO");
         reviewFilingPackage.setFilingCommentsTxt(COMMENT);
         reviewFilingPackage.setPackageNo(PACKAGE_NO);
@@ -316,7 +317,7 @@ public class TestHelpers {
         reviewDocumentTwo.setDocumentTypeCd("AAB");
         reviewDocumentTwo.setDocumentType(DESCRIPTION);
         reviewDocumentTwo.setStatus(STATUS);
-        reviewDocumentTwo.setStatusCode(STATUS_CODE);
+        reviewDocumentTwo.setStatusCode(Keys.REJECTED_DOCUMENT_CODE);
         reviewDocumentTwo.setDateFiled(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocumentTwo.setStatusDate(DateTime.parse("2020-05-05T00:00:00.000-07:00"));
         reviewDocumentTwo.setPaymentProcessed(true);
