@@ -212,7 +212,17 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
             return result;
         }
 
-        return result;
+        if (!generateUrlRequest.getFilingPackage().getDocuments().isEmpty()) {
+            for (InitialDocument document: generateUrlRequest.getFilingPackage().getDocuments()) {
+                if (!filingPackage.get().getDocuments().stream().filter(document1 -> document1.getIdentifier().equals(document.getActionDocument().getId())).findFirst().isPresent()) {
+                    result.add(MessageFormat.format("Document id {0} is not present", document.getActionDocument().getId()));
+                }
+            }
+            return result;
+        } else  {
+            result.add("For given package there are no documents present");
+            return result;
+        }
 
     }
 
