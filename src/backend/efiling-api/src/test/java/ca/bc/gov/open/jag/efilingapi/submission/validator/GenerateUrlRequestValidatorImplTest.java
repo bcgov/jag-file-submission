@@ -149,7 +149,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertFalse(actual.hasError());
 
@@ -189,7 +189,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertFalse(actual.hasError());
 
@@ -227,7 +227,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setDocuments(documentList);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Navigation Urls are required.", actual.getErrors().get(0));
@@ -271,7 +271,7 @@ public class GenerateUrlRequestValidatorImplTest {
         navigationUrls.setCancel("         ");
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "";
 
 
         Assertions.assertTrue(actual.hasError());
@@ -307,7 +307,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Court with Location: [unknown], Level: [COURT_LEVEL], Classification: [COURT_CLASSIFICATION] is not a valid court.", actual.getErrors().get(0));
@@ -341,7 +341,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("FileNumber [file_number_error] does not exists.", actual.getErrors().get(0));
@@ -380,7 +380,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Court with Location: [case2], Level: [COURT_LEVEL], Classification: [COURT_CLASSIFICATION] is not a valid court.", actual.getErrors().get(0));
@@ -393,7 +393,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Initial Package is required.", actual.getErrors().get(0));
@@ -421,7 +421,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("At least 1 party is required for new submission.", actual.getErrors().get(0));
@@ -460,7 +460,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual role type [CAV] is invalid.", actual.getErrors().get(0));
@@ -500,7 +500,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual role type [CAV] is invalid.", actual.getErrors().get(0));
@@ -534,7 +534,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual role type [null] is invalid.", actual.getErrors().get(0));
@@ -578,7 +578,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Document type [TAX] is invalid.", actual.getErrors().get(0));
@@ -611,7 +611,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("At least 1 party is required for new submission.", actual.getErrors().get(0));
@@ -650,7 +650,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Organization role type [CAV] is invalid.", actual.getErrors().get(0));
@@ -688,7 +688,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Organization name is required.", actual.getErrors().get(0));
@@ -726,7 +726,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual last name is required.", actual.getErrors().get(0));

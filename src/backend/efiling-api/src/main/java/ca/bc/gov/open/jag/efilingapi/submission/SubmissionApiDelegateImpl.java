@@ -233,7 +233,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         }
 
-        Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, applicationCode.get());
+        Notification validation = generateUrlRequestValidator.validate(generateUrlRequest, applicationCode.get(), xUserId);
 
         if (validation.hasError())
             throw new InvalidInitialSubmissionPayloadException(INVALID_INITIAL_SUBMISSION_PAYLOAD, validation.getErrors());

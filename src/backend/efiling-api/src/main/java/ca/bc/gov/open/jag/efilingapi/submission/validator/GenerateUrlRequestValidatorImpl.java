@@ -41,7 +41,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
     }
 
     @Override
-    public Notification validate(GenerateUrlRequest generateUrlRequest, String applicationCode) {
+    public Notification validate(GenerateUrlRequest generateUrlRequest, String applicationCode, String universalId) {
 
         Notification notification = new Notification();
 
@@ -77,7 +77,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         //Validate package number and document ids
         if (generateUrlRequest.getFilingPackage().getPackageIdentifier() != null) {
-            notification.addError(validateActionsRequired(generateUrlRequest));
+            notification.addError(validateActionsRequired(generateUrlRequest, universalId));
         }
 
 
@@ -201,9 +201,16 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .collect(Collectors.toList());
     }
 
-    private List<String> validateActionsRequired(GenerateUrlRequest generateUrlRequest) {
+    private List<String> validateActionsRequired(GenerateUrlRequest generateUrlRequest, String universalId) {
 
         List<String> result = new ArrayList<>();
+
+        Optional<FilingPackage> filingPackage = filingPackageService.getCSOFilingPackage(universalId, generateUrlRequest.getFilingPackage().getPackageIdentifier());
+
+        if (!filingPackage.isPresent()) {
+            result.add("For given package number and universal id no record was found in cso");
+            return result;
+        }
 
         return result;
 
