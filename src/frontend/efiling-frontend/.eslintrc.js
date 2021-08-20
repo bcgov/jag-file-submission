@@ -27,8 +27,7 @@ module.exports = {
     "react/jsx-wrap-multilines": "off",
     "import/no-cycle": "off",
     "react/forbid-prop-types": "off",
-    "no-control-regex": "off",
-    "prettier/prettier": [
+\    "prettier/prettier": [
       "error",
       {
         endOfLine: "auto",

@@ -13,14 +13,13 @@ import {
 } from "shared-components";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../../../domain/payment/Payment";
+import validator from "validator";
 
 import "./Rush.scss";
 import { getCountries } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
-
-const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
 
@@ -116,7 +115,7 @@ export default function Rush({ payment }) {
   };
 
   const handleEmailChange = (email) => {
-    if (email.search(emailRegex) === -1) {
+    if (!validator.isEmail(email)) {
       setEmailError("Invalid email address");
     } else {
       setEmailError(null);
