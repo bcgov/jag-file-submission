@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.validator;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
@@ -49,8 +50,11 @@ public class GenerateUrlRequestValidatorImplTest {
     @Mock
     private DocumentService documentServiceMock;
 
+    @Mock
+    private FilingPackageService filingPackageServiceMock;
+
     @BeforeEach
-    public void setup() {
+    public void beforeEach() {
 
         MockitoAnnotations.openMocks(this);
 
@@ -104,7 +108,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
 
 
-        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock, documentServiceMock);
+        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock, documentServiceMock, filingPackageServiceMock);
 
     }
 

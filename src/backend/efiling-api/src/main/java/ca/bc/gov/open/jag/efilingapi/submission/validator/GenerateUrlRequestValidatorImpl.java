@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtRequest;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
 import ca.bc.gov.open.jag.efilingapi.document.models.GetValidDocumentTypesRequest;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.submission.models.GetValidPartyRoleRequest;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
@@ -27,12 +28,16 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
     private final SubmissionService submissionService;
     private final CourtService courtService;
     private final DocumentService documentService;
+    private final FilingPackageService filingPackageService;
 
     public GenerateUrlRequestValidatorImpl(SubmissionService submissionService,
-                                           CourtService courtService, DocumentService documentService) {
+                                           CourtService courtService,
+                                           DocumentService documentService,
+                                           FilingPackageService filingPackageService) {
         this.submissionService = submissionService;
         this.courtService = courtService;
         this.documentService = documentService;
+        this.filingPackageService = filingPackageService;
     }
 
     @Override
@@ -69,6 +74,12 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         }
 
         notification.addError(validateDocumentTypes(generateUrlRequest.getFilingPackage()));
+
+        //Validate package number and document ids
+        if (generateUrlRequest.getFilingPackage().getPackageIdentifier() != null) {
+            notification.addError(validateActionsRequired(generateUrlRequest));
+        }
+
 
         return notification;
 
@@ -188,6 +199,14 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .filter(x -> !validDocumentTypes.contains(x))
                 .map(invalidType -> MessageFormat.format("Document type [{0}] is invalid.", invalidType))
                 .collect(Collectors.toList());
+    }
+
+    private List<String> validateActionsRequired(GenerateUrlRequest generateUrlRequest) {
+
+        List<String> result = new ArrayList<>();
+
+        return result;
+
     }
 
 }
