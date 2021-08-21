@@ -71,8 +71,8 @@ export default function Rush({ payment }) {
     surname: null,
     firstName: null,
     contactMethod: contactMethods[0],
-    phoneNumber: null,
-    email: null,
+    phoneNumber: "",
+    email: "",
     org: null,
     country: null,
     details: null,
@@ -108,8 +108,8 @@ export default function Rush({ payment }) {
     setFields({
       ...fields,
       contactMethod: contactMethods.filter((list) => list[0] === e && list)[0],
-      phoneNumber: null,
-      email: null,
+      phoneNumber: "",
+      email: "",
       surname: null,
     });
     setEmailError(null);
