@@ -11,15 +11,16 @@ import {
   Sidecard,
   Dropdown,
 } from "shared-components";
+import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../../../domain/payment/Payment";
-import validator from "validator";
 
 import "./Rush.scss";
 import { getCountries } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
+import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
 
@@ -340,17 +341,26 @@ export default function Rush({ payment }) {
     displayAnyDocumentErrors();
   }, [numDocumentsError, duplicateFilenamesError]);
 
-  const prepopulateContactInfo = () => {
-    setFields({ ...fields, firstName: "bob", surname: "ross" });
+  const resetFields = () => {
+    const jwtData = getJWTData();
+    setFields({
+      ...clearFields,
+      firstName: jwtData.given_name,
+      surname: jwtData.family_name,
+      email: jwtData.email,
+    });
+
+    if (validator.isEmail(jwtData.email)) {
+      setEmailError(null);
+    }
   };
 
   const setRadioStatusComponents = () => {
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
-    setFields(clearFields);
+    resetFields();
     setFiles([]);
-    prepopulateContactInfo();
   };
 
   if (showPayment) {
