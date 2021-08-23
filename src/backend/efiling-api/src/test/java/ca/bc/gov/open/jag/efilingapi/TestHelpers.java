@@ -143,6 +143,7 @@ public class TestHelpers {
             List<Individual> parties,
             List<Organization> organizations) {
         return FilingPackage.builder()
+                .packageNumber(BigDecimal.TEN)
                 .court(court)
                 .documents(documents)
                 .parties(parties)
@@ -183,6 +184,7 @@ public class TestHelpers {
 
     public static List<Document> createDocumentList() {
         return Arrays.asList(Document.builder()
+                .documentId(BigDecimal.TEN)
                 .description(DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
