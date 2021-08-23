@@ -23,6 +23,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -265,7 +266,69 @@ public class GenerateFromRequestTest {
     }
 
     @Test
-    @DisplayName("OK: with packge id and document id should return submission")
+    @DisplayName("OK: with packge id and rejected document should return submission")
+    public void withPackageAndRejectedDocumentShouldReturnSubmission() {
+
+        GenerateUrlRequest request = new GenerateUrlRequest();
+        request.setClientAppName(CLIENT_APP_NAME);
+        request.setNavigationUrls(TestHelpers.createDefaultNavigation());
+
+        InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourtBase(), TestHelpers.createInitialDocumentsList());
+        filingPackage.setPackageIdentifier(PACKAGE_IDENTIFIER);
+
+        ActionDocument actionDocument = new ActionDocument();
+        actionDocument.setId(DOCUMENT_ID);
+        actionDocument.setType(Keys.CSO_DOCUMENT_REJECTED);
+        filingPackage.getDocuments().get(0).setActionDocument(actionDocument);
+
+        filingPackage.getCourt().setLevel("TEST2");
+        request.setFilingPackage(filingPackage);
+
+        Mockito.when(efilingCourtService.checkValidLevelClassLocation(any(), any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingCourtService.checkValidCourtFileNumber(any(), any(), any(), any(), any())).thenReturn(true);
+        Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
+
+        Submission actual = sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_1_STRING, TestHelpers.CASE_1, TestHelpers.CASE_1), request);
+
+        Assertions.assertEquals(TestHelpers.ERROR_URL, actual.getNavigationUrls().getError());
+        Assertions.assertEquals(TestHelpers.CANCEL_URL, actual.getNavigationUrls().getCancel());
+        Assertions.assertEquals(TestHelpers.SUCCESS_URL, actual.getNavigationUrls().getSuccess());
+        Assertions.assertEquals(10, actual.getExpiryDate());
+        Assertions.assertNotNull(actual.getId());
+        Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
+        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
+        Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
+        Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
+        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getCourtClass());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getCourt().getAgencyId());
+        Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
+        Assertions.assertEquals(TestHelpers.LEVEL_DESCRIPTION, actual.getFilingPackage().getCourt().getLevelDescription());
+        Assertions.assertEquals(TestHelpers.CLASS_DESCRIPTION, actual.getFilingPackage().getCourt().getClassDescription());
+        Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
+        Assertions.assertEquals(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
+        Assertions.assertEquals("application/txt", actual.getFilingPackage().getDocuments().get(0).getMimeType());
+        Assertions.assertEquals(2, actual.getFilingPackage().getParties().size());
+        Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(0).getFirstName());
+        Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(0).getMiddleName());
+        Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(0).getLastName());
+        Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(0).getNameTypeCd());
+        Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(0).getRoleTypeCd());
+
+        Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(1).getFirstName());
+        Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(1).getMiddleName());
+        Assertions.assertEquals(TestHelpers.LAST_NAME, actual.getFilingPackage().getParties().get(1).getLastName());
+        Assertions.assertEquals(TestHelpers.NAME_TYPE_CD, actual.getFilingPackage().getParties().get(1).getNameTypeCd());
+        Assertions.assertEquals(TestHelpers.ROLE_TYPE_CD, actual.getFilingPackage().getParties().get(1).getRoleTypeCd());
+
+        Assertions.assertEquals(PACKAGE_IDENTIFIER, actual.getFilingPackage().getPackageNumber());
+
+    }
+
+    @Test
+    @DisplayName("OK: with packge id and non rejected document id should return submission")
     public void withPackageAndDocumentShouldReturnSubmission() {
 
         GenerateUrlRequest request = new GenerateUrlRequest();
@@ -277,6 +340,7 @@ public class GenerateFromRequestTest {
 
         ActionDocument actionDocument = new ActionDocument();
         actionDocument.setId(DOCUMENT_ID);
+        actionDocument.setType(Keys.CSO_DOCUMENT_COURTESY_CORRECTED);
         filingPackage.getDocuments().get(0).setActionDocument(actionDocument);
 
         filingPackage.getCourt().setLevel("TEST2");
@@ -340,6 +404,7 @@ public class GenerateFromRequestTest {
         Mockito.when(efilingDocumentService.getDocumentTypes(any(), any())).thenReturn(TestHelpers.createValidDocumentTypesList());
 
         Assertions.assertThrows(StoreException.class, () -> sut.generateFromRequest(APP_CODE, new SubmissionKey(TestHelpers.CASE_2_STRING, TestHelpers.CASE_2, TestHelpers.CASE_2), request));
+
     }
 
 

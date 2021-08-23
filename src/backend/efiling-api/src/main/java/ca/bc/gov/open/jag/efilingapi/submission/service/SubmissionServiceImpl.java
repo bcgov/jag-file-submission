@@ -20,6 +20,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
+import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -230,7 +231,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return
                 Document.builder()
-                        .documentId(( initialDocument.getActionDocument() != null ? initialDocument.getActionDocument().getId() : null ))
+                        .documentId(setDocumentId(initialDocument.getActionDocument()))
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
                         .type(initialDocument.getType())
@@ -315,5 +316,15 @@ public class SubmissionServiceImpl implements SubmissionService {
     private long getExpiryDate() {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
-    
+
+    private BigDecimal setDocumentId(ActionDocument actionDocument) {
+
+        if (actionDocument == null) return null;
+
+        if (actionDocument.getType().equals(Keys.CSO_DOCUMENT_REJECTED)) return null;
+
+        return actionDocument.getId();
+
+    }
+
 }
