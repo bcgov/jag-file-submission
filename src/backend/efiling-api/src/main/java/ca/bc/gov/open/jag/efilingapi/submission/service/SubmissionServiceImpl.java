@@ -169,6 +169,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private FilingPackage toFilingPackage(String applicationCode, GenerateUrlRequest request, SubmissionKey submissionKey) {
 
         return FilingPackage.builder()
+                .packageNumber(request.getFilingPackage().getPackageIdentifier())
                 .court(populateCourtDetails(request.getFilingPackage().getCourt()))
                 .submissionFeeAmount(getSubmissionFeeAmount(SubmissionFeeRequest.builder()
                         .serviceType(SubmissionConstants.SUBMISSION_FEE_TYPE)
@@ -229,6 +230,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return
                 Document.builder()
+                        .documentId(( initialDocument.getActionDocument() != null ? initialDocument.getActionDocument().getId() : null ))
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
                         .type(initialDocument.getType())
