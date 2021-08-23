@@ -92,8 +92,6 @@ export default function Rush({ payment }) {
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
 
-  console.log(fields.surname);
-
   const checkForDuplicateFilenames = (droppedFiles, previousFiles) => {
     let isDuplicate = false;
     for (let i = 0; i < previousFiles.length; i += 1) {

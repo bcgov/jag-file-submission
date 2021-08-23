@@ -29,6 +29,9 @@ describe("Rush Component", () => {
     realm_access: {
       roles: ["rush_flag"],
     },
+    email: "bobross@paintit.com",
+    family_name: "ross",
+    given_name: "bob",
   });
   localStorage.setItem("jwt", token);
   window.scrollTo = jest.fn();
@@ -52,10 +55,88 @@ describe("Rush Component", () => {
   test("Clicking on cancel request takes user back to payment page", () => {
     const { container, asFragment } = render(<Rush payment={payment} />);
 
-    const button = getByText(container, "Cancel Request");
+    const button = getByText(container, "Cancel");
 
     fireEvent.click(button);
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Surname field is limited to 30 characters", () => {
+    // 40 characters long
+    const shortString = "asdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfb";
+
+    // 30 characters long
+    const shortStringTruncated = "asdfbasdfbasdfbasdfbasdfbasdfb";
+
+    const { getByLabelText, getByDisplayValue } = render(
+      <Rush payment={payment} />
+    );
+
+    const radioButton1 = getByLabelText(
+      "The attached application is made under Rule 8-5 (1) SCR."
+    );
+    expect(radioButton1).toBeInTheDocument();
+
+    fireEvent.click(radioButton1);
+
+    const surnameInput = getByDisplayValue("ross");
+
+    expect(surnameInput).toBeInTheDocument();
+
+    fireEvent.change(surnameInput, { target: { value: shortString } });
+    expect(surnameInput.value).toBe(shortStringTruncated);
+  });
+
+  test("First name field is limited to 30 characters", () => {
+    // 40 characters long
+    const shortString = "asdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfb";
+
+    // 30 characters long
+    const shortStringTruncated = "asdfbasdfbasdfbasdfbasdfbasdfb";
+
+    const { getByLabelText, getByDisplayValue } = render(
+      <Rush payment={payment} />
+    );
+
+    const radioButton1 = getByLabelText(
+      "The attached application is made under Rule 8-5 (1) SCR."
+    );
+    expect(radioButton1).toBeInTheDocument();
+
+    fireEvent.click(radioButton1);
+
+    const firstNameInput = getByDisplayValue("bob");
+
+    expect(firstNameInput).toBeInTheDocument();
+
+    fireEvent.change(firstNameInput, { target: { value: shortString } });
+    expect(firstNameInput.value).toBe(shortStringTruncated);
+  });
+
+  test("Organization field is limited to 150 characters", () => {
+    // 165 characters long
+    const longString =
+      "asdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfb";
+
+    // 150 characters long
+    const longStringTruncated =
+      "asdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfb";
+
+    const { getByLabelText } = render(<Rush payment={payment} />);
+
+    const radioButton1 = getByLabelText(
+      "The attached application is made under Rule 8-5 (1) SCR."
+    );
+    expect(radioButton1).toBeInTheDocument();
+
+    fireEvent.click(radioButton1);
+
+    const orgInput = getByLabelText("Organization");
+
+    expect(orgInput).toBeInTheDocument();
+
+    fireEvent.change(orgInput, { target: { value: longString } });
+    expect(orgInput.value).toBe(longStringTruncated);
   });
 });
