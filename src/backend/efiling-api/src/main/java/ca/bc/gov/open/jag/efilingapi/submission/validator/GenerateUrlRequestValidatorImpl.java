@@ -207,20 +207,23 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         Optional<FilingPackage> filingPackage = filingPackageService.getCSOFilingPackage(universalId, generateUrlRequest.getFilingPackage().getPackageIdentifier());
 
+        //Validate Package
         if (!filingPackage.isPresent()) {
             result.add("For given package number and universal id no record was found in cso");
             return result;
         }
 
+        //Validate Documents
         if (!generateUrlRequest.getFilingPackage().getDocuments().isEmpty()) {
             for (InitialDocument document: generateUrlRequest.getFilingPackage().getDocuments()) {
-                if (filingPackage.get().getDocuments().stream().noneMatch(document1 -> document1.getIdentifier().equals(document.getActionDocument().getId()))) {
+                if (filingPackage.get().getDocuments().stream().noneMatch(document1 -> document1.getIdentifier().equals(document.getActionDocument().getId().toPlainString()))) {
                     result.add(MessageFormat.format("Document id {0} is not present", document.getActionDocument().getId()));
                 }
             }
         } else  {
             result.add("For given package there are no documents present");
         }
+
         return result;
 
     }
