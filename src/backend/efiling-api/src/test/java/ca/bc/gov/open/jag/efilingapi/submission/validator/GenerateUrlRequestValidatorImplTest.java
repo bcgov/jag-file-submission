@@ -8,8 +8,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
-import org.apache.commons.lang3.text.translate.NumericEntityUnescaper;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -913,7 +911,7 @@ public class GenerateUrlRequestValidatorImplTest {
         Assertions.assertEquals("For given package there are no documents present", actual.getErrors().get(0));
 
     }
-    
+
     private FilingPackage setupPackage(BigDecimal packageNumber, BigDecimal documentNumber) {
 
         FilingPackage filingPackage = new FilingPackage();
