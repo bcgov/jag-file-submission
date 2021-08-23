@@ -68,12 +68,12 @@ export default function Rush({ payment }) {
     ["Phone Number", "phoneNumber"],
   ];
   const clearFields = {
-    surname: null,
-    firstName: null,
+    surname: "",
+    firstName: "",
     contactMethod: contactMethods[0],
     phoneNumber: "",
     email: "",
-    org: null,
+    org: "",
     country: null,
     details: null,
   };
@@ -91,6 +91,8 @@ export default function Rush({ payment }) {
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
+
+  console.log(fields.surname);
 
   const checkForDuplicateFilenames = (droppedFiles, previousFiles) => {
     let isDuplicate = false;
@@ -132,6 +134,12 @@ export default function Rush({ payment }) {
     });
   };
 
+  const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
+    const limitedValue = fieldValue.substring(0, characterLimit);
+
+    setFields({ ...fields, [fieldName]: limitedValue });
+  };
+
   const canReject = (
     <p>
       <b>
@@ -157,10 +165,9 @@ export default function Rush({ payment }) {
             label: "Surname",
             id: "surname",
             value: fields.surname,
+            isControlled: true,
           },
-          (inputs) => {
-            setFields({ ...fields, surname: inputs });
-          }
+          (inputs) => enforceCharacterLimit(inputs, "surname", 30)
         )}
         {generateInputField(
           {
@@ -168,10 +175,9 @@ export default function Rush({ payment }) {
             label: "First Name",
             id: "firstName",
             value: fields.firstName,
+            isControlled: true,
           },
-          (inputs) => {
-            setFields({ ...fields, firstName: inputs });
-          }
+          (inputs) => enforceCharacterLimit(inputs, "firstName", 30)
         )}
       </div>
       <div className="form-parent">
@@ -182,10 +188,9 @@ export default function Rush({ payment }) {
             id: "org",
             isRequired: false,
             value: fields.org,
+            isControlled: true,
           },
-          (inputs) => {
-            setFields({ ...fields, org: inputs });
-          }
+          (inputs) => enforceCharacterLimit(inputs, "org", 150)
         )}
         <div className="form-child">
           <Dropdown
