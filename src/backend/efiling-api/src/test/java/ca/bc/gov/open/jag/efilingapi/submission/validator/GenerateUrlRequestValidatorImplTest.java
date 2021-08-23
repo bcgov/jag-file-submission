@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efilingapi.submission.validator;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentService;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingcommons.model.CourtDetails;
@@ -19,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GenerateUrlRequestValidatorImplTest {
 
@@ -33,10 +36,12 @@ public class GenerateUrlRequestValidatorImplTest {
     private static final String CASE_1 = "CASE1";
     private static final String CASE_2 = "case2";
     private static final BigDecimal COURT_ID_2 = BigDecimal.TEN;
-    public static final String FILE_NUMBER_SUCCESS = "filenumber";
-    public static final String FILE_NUMBER_ERROR = "file_number_error";
-    public static final String ORGANIZATION_NAME = "ORGANIZATION NAME";
-    public static final String LAST_NAME = "LAST NAME";
+    private static final String FILE_NUMBER_SUCCESS = "filenumber";
+    private static final String FILE_NUMBER_ERROR = "file_number_error";
+    private static final String ORGANIZATION_NAME = "ORGANIZATION NAME";
+    private static final String LAST_NAME = "LAST NAME";
+    private static final BigDecimal EXISTING_PACKAGE = BigDecimal.ONE;
+    private static final BigDecimal EXISTING_DOCUMENT = BigDecimal.ONE;
 
     private GenerateUrlRequestValidatorImpl sut;
 
@@ -49,8 +54,11 @@ public class GenerateUrlRequestValidatorImplTest {
     @Mock
     private DocumentService documentServiceMock;
 
+    @Mock
+    private FilingPackageService filingPackageServiceMock;
+
     @BeforeEach
-    public void setup() {
+    public void beforeEach() {
 
         MockitoAnnotations.openMocks(this);
 
@@ -102,9 +110,11 @@ public class GenerateUrlRequestValidatorImplTest {
                 .when(documentServiceMock)
                 .getValidDocumentTypes(ArgumentMatchers.argThat(x -> x.getCourtLevel().equals(COURT_LEVEL)));
 
+        Optional<FilingPackage> optionalFilingPackage = Optional.of(setupPackage(EXISTING_PACKAGE, EXISTING_DOCUMENT));
 
+        Mockito.when(filingPackageServiceMock.getCSOFilingPackage(any(), ArgumentMatchers.eq(EXISTING_PACKAGE))).thenReturn(optionalFilingPackage);
 
-        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock, documentServiceMock);
+        sut = new GenerateUrlRequestValidatorImpl(submissionService, courtServiceMock, documentServiceMock, filingPackageServiceMock);
 
     }
 
@@ -145,7 +155,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertFalse(actual.hasError());
 
@@ -185,12 +195,55 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertFalse(actual.hasError());
 
     }
 
+    @Test
+    @DisplayName("ok: returning submission with existing should return a notification without error")
+    public void returningSubmissionWithExistingPackageErrorShouldReturnNoError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        initialFilingPackage.setPackageIdentifier(EXISTING_PACKAGE);
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        court.setFileNumber(FILE_NUMBER_SUCCESS);
+        initialFilingPackage.setCourt(court);
+
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType("ACMW");
+        ActionDocument actionDocument = new ActionDocument();
+        actionDocument.setId(EXISTING_DOCUMENT);
+        initialDocument.setActionDocument(actionDocument);
+        documentList.add(initialDocument);
+        initialFilingPackage.setDocuments(documentList);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Individual.RoleTypeEnum.APP);
+        party.setLastName(LAST_NAME);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
+
+        Assertions.assertFalse(actual.hasError());
+
+    }
 
     @Test
     @DisplayName("error: with no navigation urls should return error")
@@ -223,7 +276,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setDocuments(documentList);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Navigation Urls are required.", actual.getErrors().get(0));
@@ -267,7 +320,7 @@ public class GenerateUrlRequestValidatorImplTest {
         navigationUrls.setCancel("         ");
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
 
         Assertions.assertTrue(actual.hasError());
@@ -303,7 +356,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Court with Location: [unknown], Level: [COURT_LEVEL], Classification: [COURT_CLASSIFICATION] is not a valid court.", actual.getErrors().get(0));
@@ -337,7 +390,7 @@ public class GenerateUrlRequestValidatorImplTest {
         initialFilingPackage.setParties(parties);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("FileNumber [file_number_error] does not exists.", actual.getErrors().get(0));
@@ -376,7 +429,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Court with Location: [case2], Level: [COURT_LEVEL], Classification: [COURT_CLASSIFICATION] is not a valid court.", actual.getErrors().get(0));
@@ -389,7 +442,7 @@ public class GenerateUrlRequestValidatorImplTest {
 
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Initial Package is required.", actual.getErrors().get(0));
@@ -417,7 +470,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("At least 1 party is required for new submission.", actual.getErrors().get(0));
@@ -456,7 +509,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual role type [CAV] is invalid.", actual.getErrors().get(0));
@@ -496,7 +549,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual role type [CAV] is invalid.", actual.getErrors().get(0));
@@ -530,7 +583,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual role type [null] is invalid.", actual.getErrors().get(0));
@@ -574,7 +627,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Document type [TAX] is invalid.", actual.getErrors().get(0));
@@ -607,7 +660,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("At least 1 party is required for new submission.", actual.getErrors().get(0));
@@ -646,7 +699,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Organization role type [CAV] is invalid.", actual.getErrors().get(0));
@@ -684,7 +737,7 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Organization name is required.", actual.getErrors().get(0));
@@ -722,11 +775,158 @@ public class GenerateUrlRequestValidatorImplTest {
         generateUrlRequest.setNavigationUrls(navigationUrls);
 
         generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
 
         Assertions.assertTrue(actual.hasError());
         Assertions.assertEquals("Individual last name is required.", actual.getErrors().get(0));
         Assertions.assertEquals("Individual last name is required.", actual.getErrors().get(1));
 
     }
+
+    @Test
+    @DisplayName("error: returning submission with bad package number should return a error")
+    public void returningSubmissionWithBadPackageErrorShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        initialFilingPackage.setPackageIdentifier(BigDecimal.TEN);
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        court.setFileNumber(FILE_NUMBER_SUCCESS);
+        initialFilingPackage.setCourt(court);
+
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType("ACMW");
+        ActionDocument actionDocument = new ActionDocument();
+        actionDocument.setId(EXISTING_DOCUMENT);
+        initialDocument.setActionDocument(actionDocument);
+        documentList.add(initialDocument);
+        initialFilingPackage.setDocuments(documentList);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Individual.RoleTypeEnum.APP);
+        party.setLastName(LAST_NAME);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
+
+        Assertions.assertTrue(actual.hasError());
+
+        Assertions.assertEquals("For given package number and universal id no record was found in cso", actual.getErrors().get(0));
+
+    }
+
+    @Test
+    @DisplayName("error: returning submission with bad document number should return a error")
+    public void returningSubmissionWithBadDocumentShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        initialFilingPackage.setPackageIdentifier(EXISTING_PACKAGE);
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        court.setFileNumber(FILE_NUMBER_SUCCESS);
+        initialFilingPackage.setCourt(court);
+
+        List<InitialDocument> documentList = new ArrayList<>();
+        InitialDocument initialDocument = new InitialDocument();
+        initialDocument.setType("ACMW");
+        ActionDocument actionDocument = new ActionDocument();
+        actionDocument.setId(BigDecimal.TEN);
+        initialDocument.setActionDocument(actionDocument);
+        documentList.add(initialDocument);
+        initialFilingPackage.setDocuments(documentList);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Individual.RoleTypeEnum.APP);
+        party.setLastName(LAST_NAME);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
+
+        Assertions.assertTrue(actual.hasError());
+
+        Assertions.assertEquals("Document id 10 is not present", actual.getErrors().get(0));
+
+    }
+
+    @Test
+    @DisplayName("error: returning submission with no documents should return a error")
+    public void returningSubmissionWithNoDocumentShouldReturnError() {
+
+        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
+        InitialPackage initialFilingPackage = new InitialPackage();
+
+        initialFilingPackage.setPackageIdentifier(EXISTING_PACKAGE);
+
+        CourtBase court = new CourtBase();
+        court.setLevel(COURT_LEVEL);
+        court.setCourtClass(COURT_CLASSIFICATION);
+        court.setLocation(CASE_1);
+        court.setFileNumber(FILE_NUMBER_SUCCESS);
+        initialFilingPackage.setCourt(court);
+
+        NavigationUrls navigationUrls = new NavigationUrls();
+        navigationUrls.setError("http://error");
+        navigationUrls.setCancel("http://cancel");
+        navigationUrls.setSuccess("http://success");
+        generateUrlRequest.setNavigationUrls(navigationUrls);
+
+        List<Individual> parties = new ArrayList<>();
+        Individual party = new Individual();
+        party.setRoleType(Individual.RoleTypeEnum.APP);
+        party.setLastName(LAST_NAME);
+        initialFilingPackage.setParties(parties);
+
+        generateUrlRequest.setFilingPackage(initialFilingPackage);
+        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
+
+        Assertions.assertTrue(actual.hasError());
+
+        Assertions.assertEquals("For given package there are no documents present", actual.getErrors().get(0));
+
+    }
+
+    private FilingPackage setupPackage(BigDecimal packageNumber, BigDecimal documentNumber) {
+
+        FilingPackage filingPackage = new FilingPackage();
+
+        filingPackage.setPackageNumber(packageNumber);
+
+        Document document = new Document();
+
+        document.setIdentifier(documentNumber.toPlainString());
+
+        filingPackage.getDocuments().add(document);
+
+        return filingPackage;
+
+    }
+
+
 }
