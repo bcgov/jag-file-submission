@@ -252,6 +252,18 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
     }
 
+    @Override
+    public Optional<byte[]> getRushDocument(String documentIdentifier) {
+
+        //TODO:This method is not implemented in CSO
+
+        logger.info("Calling soap service to retrieve rush document");
+        logger.warn("CSO soap service is not yet implemented this call always return empty");
+
+        return Optional.empty();
+
+    }
+
     private String getViewAllPackagesUrl() {
         return MessageFormat.format("{0}/{1}", csoProperties.getCsoBasePath(),  Keys.VIEW_ALL_PACKAGE_SUBPATH);
     }

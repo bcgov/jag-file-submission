@@ -18,6 +18,7 @@ import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_CALCULATED_SUBMITTED_
 public interface DocumentMapper {
     //Civil Document Mappings
     @Mapping(target = "packageSeqNo", source = "index")
+    @Mapping(target = "documentId", source = "document.documentId")
     @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment", defaultValue = "false")
     @Mapping(target = "clientFileNameTxt", source = "document.name")
     @Mapping(target = "documentSubtypeCd", constant = Keys.DOCUMENT_SUB_TYPE_CD)

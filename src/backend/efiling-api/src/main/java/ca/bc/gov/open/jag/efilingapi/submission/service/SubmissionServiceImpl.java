@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -169,6 +170,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private FilingPackage toFilingPackage(String applicationCode, GenerateUrlRequest request, SubmissionKey submissionKey) {
 
         return FilingPackage.builder()
+                .packageNumber(request.getFilingPackage().getPackageIdentifier())
                 .court(populateCourtDetails(request.getFilingPackage().getCourt()))
                 .submissionFeeAmount(getSubmissionFeeAmount(SubmissionFeeRequest.builder()
                         .serviceType(SubmissionConstants.SUBMISSION_FEE_TYPE)
@@ -229,6 +231,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return
                 Document.builder()
+                        .documentId(setDocumentId(initialDocument.getActionDocument()))
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
                         .type(initialDocument.getType())
@@ -313,5 +316,15 @@ public class SubmissionServiceImpl implements SubmissionService {
     private long getExpiryDate() {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
-    
+
+    private BigDecimal setDocumentId(ActionDocument actionDocument) {
+
+        if (actionDocument == null) return null;
+
+        if (actionDocument.getType().equals(Keys.REJECTED_DOCUMENT_CODE)) return null;
+
+        return actionDocument.getId();
+
+    }
+
 }
