@@ -163,6 +163,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         >
           No
           <input
+            checked=""
             id="No"
             name="rush"
             type="radio"
@@ -642,6 +643,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         >
           No
           <input
+            checked=""
             id="No"
             name="rush"
             type="radio"
@@ -1808,6 +1810,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
         >
           No
           <input
+            checked=""
             id="No"
             name="rush"
             type="radio"

@@ -139,4 +139,21 @@ describe("Rush Component", () => {
     fireEvent.change(orgInput, { target: { value: longString } });
     expect(orgInput.value).toBe(longStringTruncated);
   });
+
+  test("Fields are prepopulated from JWT", () => {
+    const { getByLabelText, getByDisplayValue } = render(
+      <Rush payment={payment} />
+    );
+
+    const radioButton1 = getByLabelText(
+      "The attached application is made under Rule 8-5 (1) SCR."
+    );
+    expect(radioButton1).toBeInTheDocument();
+
+    fireEvent.click(radioButton1);
+
+    expect(getByDisplayValue("bob")).toBeInTheDocument();
+    expect(getByDisplayValue("ross")).toBeInTheDocument();
+    expect(getByDisplayValue("bobross@paintit.com")).toBeInTheDocument();
+  });
 });

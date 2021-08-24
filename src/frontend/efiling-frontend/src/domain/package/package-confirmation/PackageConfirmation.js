@@ -6,7 +6,6 @@ import ConfirmationPopup, {
   Button,
   Sidecard,
   Table,
-  Radio,
 } from "shared-components";
 import axios from "axios";
 import Rush from "../../../components/page/rush/Rush";
@@ -21,6 +20,7 @@ import Payment from "../../payment/Payment";
 import Upload from "../../../components/page/upload/Upload";
 import FileList from "./FileList";
 import { Toast } from "../../../components/toast/Toast";
+import { Radio } from "../../../components/radio/Radio";
 
 const getFilingPackageData = (
   submissionId,
