@@ -20,6 +20,8 @@ import { getCountries } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
+import { formatPhoneNumber } from "../../../modules/helpers/StringUtil";
+import { checkForDuplicateFilenames } from "../../../modules/helpers/filenameUtil";
 
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
 
@@ -28,27 +30,6 @@ const generateInputField = (input, onChange) => (
     <Input input={input} onChange={onChange} />
   </div>
 );
-
-const formatPhoneNumber = (phoneNumber) => {
-  if (!phoneNumber) {
-    return phoneNumber;
-  }
-
-  const phoneNumberDigits = phoneNumber.replace(/[^\d]/g, "");
-
-  if (phoneNumberDigits.length < 4) {
-    return phoneNumberDigits;
-  }
-
-  if (phoneNumberDigits.length < 7) {
-    return `${phoneNumberDigits.slice(0, 3)}-${phoneNumberDigits.slice(3)}`;
-  }
-
-  return `${phoneNumberDigits.slice(0, 3)}-${phoneNumberDigits.slice(
-    3,
-    6
-  )}-${phoneNumberDigits.slice(6, 10)}`;
-};
 
 export default function Rush({ payment }) {
   // eslint-disable-next-line no-unused-vars
@@ -90,18 +71,6 @@ export default function Rush({ payment }) {
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
-
-  const checkForDuplicateFilenames = (droppedFiles, previousFiles) => {
-    let isDuplicate = false;
-    for (let i = 0; i < previousFiles.length; i += 1) {
-      isDuplicate = droppedFiles.some(
-        (droppedFile) => droppedFile.name === previousFiles[i].name
-      );
-      if (isDuplicate) return isDuplicate;
-    }
-
-    return isDuplicate;
-  };
 
   const handleMethodOfContactChange = (e) => {
     setFields({
