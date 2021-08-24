@@ -5,6 +5,6 @@ import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 
 public interface GenerateUrlRequestValidator {
 
-    Notification validate(GenerateUrlRequest generateUrlRequest, String applicationCode);
+    Notification validate(GenerateUrlRequest generateUrlRequest, String applicationCode, String universalId);
 
 }
