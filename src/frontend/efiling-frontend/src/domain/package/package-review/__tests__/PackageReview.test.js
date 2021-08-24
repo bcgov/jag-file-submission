@@ -77,6 +77,8 @@ describe("PackageReview Component", () => {
     rush,
   };
 
+  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+
   FileSaver.saveAs = jest.fn();
 
   let mock;

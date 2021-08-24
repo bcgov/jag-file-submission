@@ -64,6 +64,10 @@ const determineIfProtectionOrder = (documents) => {
 };
 
 export default function PackageReview() {
+  const rushTabFeatureFlag = window.env
+    ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
+    : process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG;
+
   const params = useParams();
   const packageId = Number(params.packageId);
 
@@ -71,6 +75,7 @@ export default function PackageReview() {
   const queryParams = queryString.parse(location.search);
   const { returnUrl, returnAppName, defaultTab } = queryParams;
   const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
+  const defaultTabKey = defaultTab || "documents"; // TODO: Remove when removing rushTabFeatureFlag
 
   const [error, setError] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -154,26 +159,43 @@ export default function PackageReview() {
               isValueBold: true,
             },
           ]);
-          setCourtFileDetails([
-            {
-              name: "Package Number:",
-              value: `${packageNo}`,
-              isNameBold: false,
-              isValueBold: true,
-            },
-            {
-              name: "Court File Number:",
-              value: `${fileNumber}`,
-              isNameBold: false,
-              isValueBold: true,
-            },
-            {
-              name: "Rush Processing:",
-              value: isRush ? `Yes` : `No`,
-              isNameBold: false,
-              isValueBold: true,
-            },
-          ]);
+          if (rushTabFeatureFlag === "true") {
+            setCourtFileDetails([
+              {
+                name: "Package Number:",
+                value: `${packageNo}`,
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Court File Number:",
+                value: `${fileNumber}`,
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Rush Processing:",
+                value: isRush ? `Yes` : `No`,
+                isNameBold: false,
+                isValueBold: true,
+              },
+            ]);
+          } else {
+            setCourtFileDetails([
+              {
+                name: "Package Number:",
+                value: `${packageNo}`,
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Court File Number:",
+                value: `${fileNumber}`,
+                isNameBold: false,
+                isValueBold: true,
+              },
+            ]);
+          }
 
           setFilingComments(response.data.filingComments);
           setDocuments(response.data.documents);
@@ -183,65 +205,67 @@ export default function PackageReview() {
           setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
           setHasRegistryNotice(response.data.hasRegistryNotice);
 
-          let protectionOrderFlag = isProtectionOrder;
-          if (response.data.documents) {
-            protectionOrderFlag = determineIfProtectionOrder(
-              response.data.documents
-            );
-            setIsProtectionOrder(protectionOrderFlag);
-          }
-
-          if (response.data.rush) {
-            setIsRush(true);
-            const rushResponse = response.data.rush;
-            setRushDetails([
-              {
-                name: "Reason for requesting urgent (rush) filing:",
-                value: rushResponse.reason,
-                isNameBold: false,
-                isValueBold: true,
-              },
-              {
-                name: "Contact Name:",
-                value: rushResponse.firstName
-                  .concat(" ")
-                  .concat(rushResponse.lastName),
-                isNameBold: false,
-                isValueBold: true,
-              },
-              {
-                name: "Phone Number:",
-                value: rushResponse.phoneNumber,
-                isNameBold: false,
-                isValueBold: true,
-              },
-              {
-                name: "Email:",
-                value: rushResponse.email,
-                isNameBold: false,
-                isValueBold: true,
-              },
-              {
-                name: "Urgent (Rush) Request Status:",
-                value: rushResponse.status,
-                isNameBold: false,
-                isValueBold: true,
-              },
-            ]);
-            setSupportingDocuments(rushResponse.supportingDocuments);
-
-            if (tabKey === "") {
-              setTabKey(
-                determineDefaultTabKey(defaultTab, true, protectionOrderFlag)
+          if (rushTabFeatureFlag === "true") {
+            let protectionOrderFlag = isProtectionOrder;
+            if (response.data.documents) {
+              protectionOrderFlag = determineIfProtectionOrder(
+                response.data.documents
               );
+              setIsProtectionOrder(protectionOrderFlag);
             }
-          } else {
-            setIsRush(false);
 
-            if (tabKey === "") {
-              setTabKey(
-                determineDefaultTabKey(defaultTab, false, protectionOrderFlag)
-              );
+            if (response.data.rush) {
+              setIsRush(true);
+              const rushResponse = response.data.rush;
+              setRushDetails([
+                {
+                  name: "Reason for requesting urgent (rush) filing:",
+                  value: rushResponse.reason,
+                  isNameBold: false,
+                  isValueBold: true,
+                },
+                {
+                  name: "Contact Name:",
+                  value: rushResponse.firstName
+                    .concat(" ")
+                    .concat(rushResponse.lastName),
+                  isNameBold: false,
+                  isValueBold: true,
+                },
+                {
+                  name: "Phone Number:",
+                  value: rushResponse.phoneNumber,
+                  isNameBold: false,
+                  isValueBold: true,
+                },
+                {
+                  name: "Email:",
+                  value: rushResponse.email,
+                  isNameBold: false,
+                  isValueBold: true,
+                },
+                {
+                  name: "Urgent (Rush) Request Status:",
+                  value: rushResponse.status,
+                  isNameBold: false,
+                  isValueBold: true,
+                },
+              ]);
+              setSupportingDocuments(rushResponse.supportingDocuments);
+
+              if (tabKey === "") {
+                setTabKey(
+                  determineDefaultTabKey(defaultTab, true, protectionOrderFlag)
+                );
+              }
+            } else {
+              setIsRush(false);
+
+              if (tabKey === "") {
+                setTabKey(
+                  determineDefaultTabKey(defaultTab, false, protectionOrderFlag)
+                );
+              }
             }
           }
         } catch (err) {
@@ -355,51 +379,83 @@ export default function PackageReview() {
             />
           )}
           <br />
-          <Tabs
-            activeKey={tabKey}
-            onSelect={(key) => setTabKey(key)}
-            id="controlled-tab"
-          >
-            <Tab eventKey="documents" title="Documents">
-              <br />
-              <DocumentList
-                packageId={packageId}
-                documents={documents}
-                reloadDocumentList={reloadDocumentList}
-              />
-            </Tab>
-            <Tab eventKey="parties" title="Parties">
-              <br />
-              <PartyList
-                parties={parties}
-                organizationParties={organizationParties}
-              />
-            </Tab>
-            <Tab eventKey="payment" title="Payment Status">
-              <br />
-              <PaymentList payments={payments} packageId={packageId} />
-            </Tab>
-            <Tab
-              eventKey="rush"
-              title="Rush Details"
-              disabled={determineIfRushTabDisabled(isRush, isProtectionOrder)}
+          {rushTabFeatureFlag === "true" && (
+            <Tabs
+              activeKey={tabKey}
+              onSelect={(key) => setTabKey(key)}
+              id="controlled-tab"
             >
-              <br />
-              <Table id="rushDetails" elements={rushDetails} />
-              <br />
-              <SupportingDocumentList
-                packageId={packageId}
-                files={supportingDocuments}
-              />
-            </Tab>
-            <Tab eventKey="comments" title="Filing Comments">
-              <br />
-              <h4>Filing Comments</h4>
-              <div id="filingComments" className="tabContent">
-                {filingComments}
-              </div>
-            </Tab>
-          </Tabs>
+              <Tab eventKey="documents" title="Documents">
+                <br />
+                <DocumentList
+                  packageId={packageId}
+                  documents={documents}
+                  reloadDocumentList={reloadDocumentList}
+                />
+              </Tab>
+              <Tab eventKey="parties" title="Parties">
+                <br />
+                <PartyList
+                  parties={parties}
+                  organizationParties={organizationParties}
+                />
+              </Tab>
+              <Tab eventKey="payment" title="Payment Status">
+                <br />
+                <PaymentList payments={payments} packageId={packageId} />
+              </Tab>
+              <Tab
+                eventKey="rush"
+                title="Rush Details"
+                disabled={determineIfRushTabDisabled(isRush, isProtectionOrder)}
+              >
+                <br />
+                <Table id="rushDetails" elements={rushDetails} />
+                <br />
+                <SupportingDocumentList
+                  packageId={packageId}
+                  files={supportingDocuments}
+                />
+              </Tab>
+              <Tab eventKey="comments" title="Filing Comments">
+                <br />
+                <h4>Filing Comments</h4>
+                <div id="filingComments" className="tabContent">
+                  {filingComments}
+                </div>
+              </Tab>
+            </Tabs>
+          )}
+          {rushTabFeatureFlag !== "true" && (
+            <Tabs defaultActiveKey={defaultTabKey} id="controlled-tab">
+              <Tab eventKey="documents" title="Documents">
+                <br />
+                <DocumentList
+                  packageId={packageId}
+                  documents={documents}
+                  reloadDocumentList={reloadDocumentList}
+                />
+              </Tab>
+              <Tab eventKey="parties" title="Parties">
+                <br />
+                <PartyList
+                  parties={parties}
+                  organizationParties={organizationParties}
+                />
+              </Tab>
+              <Tab eventKey="payment" title="Payment Status">
+                <br />
+                <PaymentList payments={payments} packageId={packageId} />
+              </Tab>
+              <Tab eventKey="comments" title="Filing Comments">
+                <br />
+                <h4>Filing Comments</h4>
+                <div id="filingComments" className="tabContent">
+                  {filingComments}
+                </div>
+              </Tab>
+            </Tabs>
+          )}
           <br />
           <div className="row note">
             <span className="fw-bold">Please Note:&nbsp;</span> Visit your CSO

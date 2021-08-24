@@ -1,7 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.error.NoRegistryNoticeException;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.ActionRequiredDetailsMapper;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
@@ -29,10 +33,13 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     private final FilingPackageMapper filingPackageMapper;
 
-    public FilingPackageServiceImpl(EfilingReviewService efilingReviewService, AccountService accountService, FilingPackageMapper filingPackageMapper) {
+    private final ActionRequiredDetailsMapper actionRequiredDetailsMapper;
+
+    public FilingPackageServiceImpl(EfilingReviewService efilingReviewService, AccountService accountService, FilingPackageMapper filingPackageMapper, ActionRequiredDetailsMapper actionRequiredDetailsMapper) {
         this.efilingReviewService = efilingReviewService;
         this.accountService = accountService;
         this.filingPackageMapper = filingPackageMapper;
+        this.actionRequiredDetailsMapper = actionRequiredDetailsMapper;
     }
 
 
@@ -114,6 +121,29 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         if (accountDetails.getClientId() == null) throw new EfilingAccountServiceException("Account not found");
 
         efilingReviewService.deleteSubmittedDocument(new DeleteSubmissionDocumentRequest(accountDetails.getClientId(), packageNumber, null, documentIdentifier));
+
+    }
+
+    @Override
+    public Optional<ActionRequiredDetails> getActionRequiredDetails(String universalId, BigDecimal packageNumber) {
+
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber, null);
+
+        if (!request.isPresent()) return Optional.empty();
+
+        Optional<ReviewFilingPackage> filingPackage = efilingReviewService.findStatusByPackage(request.get());
+
+        if (!filingPackage.isPresent()) return Optional.empty();
+
+        if (Boolean.FALSE.equals(filingPackage.get().getHasRegistryNotice())) throw new NoRegistryNoticeException("This package does not have a registry notice");
+
+        //For phase one of enhancements rejected document are the only ones included.
+        return Optional.of(actionRequiredDetailsMapper.toActionRequiredDetails(filingPackage.get(),
+                request.get().getClientId(),
+                filingPackage.get().getDocuments().stream()
+                    .filter(reviewDocument -> reviewDocument.getStatusCode().equalsIgnoreCase(Keys.REJECTED_DOCUMENT_CODE))
+                    .map(actionRequiredDetailsMapper::toActionDocument)
+                    .collect(Collectors.toList())));
 
     }
 

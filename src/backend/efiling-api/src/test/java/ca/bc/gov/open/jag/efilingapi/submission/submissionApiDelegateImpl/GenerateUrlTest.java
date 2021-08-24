@@ -146,13 +146,13 @@ public class GenerateUrlTest {
         Mockito.doReturn(notification).when(generateUrlRequestValidatorMock)
                 .validate(
                         ArgumentMatchers.argThat(x -> x.getFilingPackage().getCourt().getLocation().equals("valid")),
-                        Mockito.anyString());
+                        Mockito.anyString(), Mockito.anyString());
 
         Notification invalidNotification = new Notification();
         invalidNotification.addError("a random error");
         Mockito.doReturn(invalidNotification).when(generateUrlRequestValidatorMock).validate(
                 ArgumentMatchers.argThat(x -> x.getFilingPackage().getCourt().getLocation().equals("invalid")),
-                Mockito.anyString());
+                Mockito.anyString(), Mockito.anyString());
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidatorMock, null);

@@ -8,6 +8,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
+import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
 import org.joda.time.DateTime;
@@ -62,6 +63,12 @@ public class FindPackageByIdTest {
     private final BigDecimal SUCCESS_CLIENT = BigDecimal.ONE;
     private final BigDecimal SUCCESS_PACKAGE = BigDecimal.ONE;
 
+    private final BigDecimal SUCCESS_REJECTED_CLIENT = BigDecimal.valueOf(11);
+    private final BigDecimal SUCCESS_REJECTED_PACKAGE = BigDecimal.valueOf(11);
+
+    private final BigDecimal SUCCESS_COMPLETE_CLIENT = BigDecimal.valueOf(12);
+    private final BigDecimal SUCCESS_COMPLETE_PACKAGE = BigDecimal.valueOf(12);
+
     private final BigDecimal EXCEPTION_CLIENT = BigDecimal.TEN;
     private final BigDecimal EXCEPTION_PACKAGE = BigDecimal.TEN;
 
@@ -77,9 +84,31 @@ public class FindPackageByIdTest {
         MockitoAnnotations.openMocks(this);
 
         FilingStatus filingStatus =  createFilingStatus();
-        filingStatus.getFilePackages().add(createFilePackage());
+        FilePackage pendingFilePackage = createFilePackage();
+        File documentPending = new File();
+        documentPending.setStatus(Keys.CSO_DOCUMENT_REFERRED);
+        pendingFilePackage.getFiles().add(documentPending);
+        filingStatus.getFilePackages().add(pendingFilePackage);
+
+        FilingStatus filingRejectedStatus =  createFilingStatus();
+        FilePackage rejectedFilePackage = createFilePackage();
+        File documentRejected = new File();
+        documentRejected.setStatus(Keys.CSO_DOCUMENT_REJECTED);
+        rejectedFilePackage.getFiles().add(documentRejected);
+        filingRejectedStatus.getFilePackages().add(rejectedFilePackage);
+
+        FilingStatus filingCompleteStatus =  createFilingStatus();
+        FilePackage completeFilePackage = createFilePackage();
+        File documentComplete = new File();
+        documentComplete.setStatus("COMPLETE");
+        rejectedFilePackage.getFiles().add(documentComplete);
+        filingCompleteStatus.getFilePackages().add(completeFilePackage);
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_PACKAGE), ArgumentMatchers.eq(SUCCESS_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingStatus);
+
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_REJECTED_PACKAGE), ArgumentMatchers.eq(SUCCESS_REJECTED_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingRejectedStatus);
+
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_COMPLETE_PACKAGE), ArgumentMatchers.eq(SUCCESS_COMPLETE_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingCompleteStatus);
 
         Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(NOTFOUND_PACKAGE), ArgumentMatchers.eq(NOTFOUND_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(createFilingStatus());
 
@@ -93,7 +122,7 @@ public class FindPackageByIdTest {
         sut = new CsoReviewServiceImpl(filingStatusFacadeBean, null, null, new FilePackageMapperImpl(), csoProperties, restTemplateMock, efilingLookupService);
     }
 
-    @DisplayName("OK: package found")
+    @DisplayName("OK: package found pending status")
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
 
@@ -116,6 +145,61 @@ public class FindPackageByIdTest {
         Assertions.assertEquals(1, result.get().getRushOrder().getSupportDocs().size());
         Assertions.assertEquals(FILE_GUID, result.get().getRushOrder().getSupportDocs().get(0).getObjectGuid());
         Assertions.assertEquals(FILE_PDF, result.get().getRushOrder().getSupportDocs().get(0).getClientFileNm());
+        Assertions.assertEquals(Keys.PACKAGE_STATUS_PENDING, result.get().getStatus());
+
+    }
+
+    @DisplayName("OK: package found rejected status")
+    @Test
+    public void testWithFoundResultRejected() throws DatatypeConfigurationException {
+
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_REJECTED_CLIENT, SUCCESS_REJECTED_PACKAGE, null));
+
+        Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
+        Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
+        Assertions.assertEquals(COURT_LEVEL_CD, result.get().getCourt().getLevel());
+        Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourt().getLocationCd());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
+        Assertions.assertEquals(REASON_TXT, result.get().getRushOrder().getRushFilingReasonTxt());
+        Assertions.assertEquals(COUNTRY_ONE, result.get().getRushOrder().getCountryDsc());
+        Assertions.assertEquals(EMAIL, result.get().getRushOrder().getContactEmailTxt());
+        Assertions.assertEquals(FIRST_NAME, result.get().getRushOrder().getContactFirstGivenNm());
+        Assertions.assertEquals(PHONE, result.get().getRushOrder().getContactPhoneNo());
+        Assertions.assertEquals(LAST_NAME, result.get().getRushOrder().getContactSurnameNm());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getPackageId());
+        Assertions.assertEquals(PROCESSING_COMMENT_TXT, result.get().getRushOrder().getProcessingCommentTxt());
+        Assertions.assertEquals(1, result.get().getRushOrder().getSupportDocs().size());
+        Assertions.assertEquals(FILE_GUID, result.get().getRushOrder().getSupportDocs().get(0).getObjectGuid());
+        Assertions.assertEquals(FILE_PDF, result.get().getRushOrder().getSupportDocs().get(0).getClientFileNm());
+        Assertions.assertEquals(Keys.PACKAGE_STATUS_ACTION_REQUIRED, result.get().getStatus());
+
+    }
+
+    @DisplayName("OK: package found complete status")
+    @Test
+    public void testWithFoundResultComplete() throws DatatypeConfigurationException {
+
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_COMPLETE_CLIENT, SUCCESS_COMPLETE_PACKAGE, null));
+
+        Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
+        Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
+        Assertions.assertEquals(COURT_LEVEL_CD, result.get().getCourt().getLevel());
+        Assertions.assertEquals(COURT_LOCATION_CD, result.get().getCourt().getLocationCd());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
+        Assertions.assertEquals(COURT_LOCATION_NAME, result.get().getCourt().getLocationName());
+        Assertions.assertEquals(REASON_TXT, result.get().getRushOrder().getRushFilingReasonTxt());
+        Assertions.assertEquals(COUNTRY_ONE, result.get().getRushOrder().getCountryDsc());
+        Assertions.assertEquals(EMAIL, result.get().getRushOrder().getContactEmailTxt());
+        Assertions.assertEquals(FIRST_NAME, result.get().getRushOrder().getContactFirstGivenNm());
+        Assertions.assertEquals(PHONE, result.get().getRushOrder().getContactPhoneNo());
+        Assertions.assertEquals(LAST_NAME, result.get().getRushOrder().getContactSurnameNm());
+        Assertions.assertEquals(BigDecimal.ONE, result.get().getRushOrder().getPackageId());
+        Assertions.assertEquals(PROCESSING_COMMENT_TXT, result.get().getRushOrder().getProcessingCommentTxt());
+        Assertions.assertEquals(1, result.get().getRushOrder().getSupportDocs().size());
+        Assertions.assertEquals(FILE_GUID, result.get().getRushOrder().getSupportDocs().get(0).getObjectGuid());
+        Assertions.assertEquals(FILE_PDF, result.get().getRushOrder().getSupportDocs().get(0).getClientFileNm());
+        Assertions.assertEquals(Keys.PACKAGE_STATUS_COMPLETE, result.get().getStatus());
 
     }
 

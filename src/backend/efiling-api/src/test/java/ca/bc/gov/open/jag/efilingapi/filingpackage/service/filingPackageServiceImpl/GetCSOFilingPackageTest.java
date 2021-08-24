@@ -42,14 +42,14 @@ public class GetCSOFilingPackageTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl());
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null);
     }
 
     @Test
     @DisplayName("Ok: a filing package was returned")
     public void withValidRequestReturnFilingPackage() {
 
-        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage()));
+        Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.ONE);
 
@@ -131,7 +131,7 @@ public class GetCSOFilingPackageTest {
     @DisplayName("Ok: a filing package was returned ensure withdrawn included")
     public void withValidRequestReturnFilingPackageWithWithdrawnExcluded() {
 
-        ReviewFilingPackage reviewFilingPackage = TestHelpers.createFilingPackage();
+        ReviewFilingPackage reviewFilingPackage = TestHelpers.createFilingPackage(true);
 
         ReviewDocument withdrawnDocument = new ReviewDocument();
         withdrawnDocument.setDocumentId("TEST");

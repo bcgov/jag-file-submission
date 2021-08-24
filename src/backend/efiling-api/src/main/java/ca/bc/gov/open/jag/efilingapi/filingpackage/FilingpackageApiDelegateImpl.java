@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
+import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.error.DeleteDocumentException;
@@ -198,4 +199,21 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
                 .body(result.get().getData());
 
     }
+    @Override
+    @RolesAllowed("efiling-user")
+    public ResponseEntity<ActionRequiredDetails> getActionRequiredDetails(BigDecimal packageIdentifier) {
+
+        logger.info("get action required details request received");
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent())
+            throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
+
+        Optional<ActionRequiredDetails> result = filingPackageService.getActionRequiredDetails(universalId.get(), packageIdentifier);
+
+        return result.map(ResponseEntity::ok).orElseThrow(() -> new FilingPackageNotFoundException(FILING_PACKAGE_NOT_FOUND));
+
+    }
+
 }
