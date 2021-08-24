@@ -158,7 +158,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (!reviewDocument.isPresent()) return Optional.empty();
 
-        Optional<byte[]> document = efilingReviewService.getRushDocument(new BigDecimal(documentIdentifier));
+        Optional<byte[]> document = efilingReviewService.getRushDocument(documentIdentifier);
 
         return document.map(bytes -> SubmittedDocument.builder()
                 .name(reviewDocument.get().getClientFileNm())

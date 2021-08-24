@@ -69,7 +69,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getRushDocument(BigDecimal documentIdentifier) {
+    public Optional<byte[]> getRushDocument(String documentIdentifier) {
 
         return getDocument();
 

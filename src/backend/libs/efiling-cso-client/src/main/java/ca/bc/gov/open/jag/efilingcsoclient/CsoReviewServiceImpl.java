@@ -253,7 +253,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getRushDocument(BigDecimal documentIdentifier) {
+    public Optional<byte[]> getRushDocument(String documentIdentifier) {
 
         //TODO:This method is not implemented in CSO
 

@@ -9,8 +9,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("GetSubmissionDocumentTest")
@@ -37,7 +37,7 @@ public class GetRushDocumentTest {
     @Test
     public void testWithFoundResult() {
 
-        Optional<byte[]> actual = sut.getRushDocument(BigDecimal.ONE);
+        Optional<byte[]> actual = sut.getRushDocument(UUID.randomUUID().toString());
         Assertions.assertFalse(actual.isPresent());
 
     }

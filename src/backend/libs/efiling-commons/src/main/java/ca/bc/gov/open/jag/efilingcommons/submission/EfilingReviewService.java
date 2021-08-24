@@ -26,6 +26,6 @@ public interface EfilingReviewService {
      * @param documentIdentifier requested document identifier
      * @return optional byte array
      */
-    Optional<byte[]> getRushDocument(BigDecimal documentIdentifier);
+    Optional<byte[]> getRushDocument(String documentIdentifier);
 
 }

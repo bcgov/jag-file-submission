@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingReviewServiceDemoImplTest {
@@ -407,7 +408,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a document byte array")
     public void withRushDocumentRequestReturnByteArray() {
 
-        Optional<byte[]> result = sut.getRushDocument(BigDecimal.ONE);
+        Optional<byte[]> result = sut.getRushDocument(UUID.randomUUID().toString());
 
         Assertions.assertTrue(result.isPresent());
 

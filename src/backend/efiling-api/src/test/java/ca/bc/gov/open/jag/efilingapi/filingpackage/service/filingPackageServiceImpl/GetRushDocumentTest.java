@@ -15,12 +15,14 @@ import org.springframework.core.io.ByteArrayResource;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
 public class GetRushDocumentTest {
     private static final byte[] DOC_DATA = "TEST".getBytes();
-    private static final BigDecimal DOCUMENT_NOT_FOUND = new BigDecimal(50);
+    private static final String DOCUMENT_NOT_FOUND = UUID.randomUUID().toString();
+
 
     FilingPackageServiceImpl sut;
 
@@ -49,12 +51,12 @@ public class GetRushDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
-        Mockito.when(efilingReviewServiceMock.getRushDocument(Mockito.eq(TestHelpers.DOCUMENT_ID_TWO_BD))).thenReturn(Optional.of(DOC_DATA));
+        Mockito.when(efilingReviewServiceMock.getRushDocument(Mockito.eq(TestHelpers.OBJECT_GUID))).thenReturn(Optional.of(DOC_DATA));
 
-        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO_BD.toPlainString());
+        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.OBJECT_GUID);
 
         Assertions.assertTrue(result.isPresent());
-        Assertions.assertEquals(TestHelpers.NAME, result.get().getName());
+        Assertions.assertEquals("Test.pdf", result.get().getName());
         Assertions.assertEquals(new ByteArrayResource(DOC_DATA), result.get().getData());
 
     }
@@ -63,7 +65,7 @@ public class GetRushDocumentTest {
     @DisplayName("Not found: missing account")
     public void withValidRequestButMissingAccountReturnEmpty() {
 
-        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO_BD.toPlainString());
+        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_2_STRING, BigDecimal.ONE, UUID.randomUUID().toString());
         Assertions.assertFalse(result.isPresent());
 
     }
@@ -75,7 +77,7 @@ public class GetRushDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
-        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO_BD.toPlainString());
+        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, UUID.randomUUID().toString());
 
         Assertions.assertFalse(result.isPresent());
 
@@ -87,7 +89,7 @@ public class GetRushDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
-        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, DOCUMENT_NOT_FOUND.toPlainString());
+        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, UUID.randomUUID().toString());
 
         Assertions.assertFalse(result.isPresent());
 
@@ -99,9 +101,9 @@ public class GetRushDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
-        Mockito.when(efilingReviewServiceMock.getRushDocument(Mockito.eq(TestHelpers.DOCUMENT_ID_TWO_BD))).thenReturn(Optional.empty());
+        Mockito.when(efilingReviewServiceMock.getRushDocument(Mockito.eq(DOCUMENT_NOT_FOUND))).thenReturn(Optional.empty());
 
-        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO_BD.toPlainString());
+        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, DOCUMENT_NOT_FOUND);
 
         Assertions.assertFalse(result.isPresent());
 

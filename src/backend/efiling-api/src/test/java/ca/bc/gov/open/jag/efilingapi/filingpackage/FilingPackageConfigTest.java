@@ -81,7 +81,7 @@ public class FilingPackageConfigTest {
                 }
 
                 @Override
-                public Optional<byte[]> getRushDocument(BigDecimal documentIdentifier) {
+                public Optional<byte[]> getRushDocument(String documentIdentifier) {
                     return Optional.empty();
                 }
             };
