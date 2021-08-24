@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -20,7 +21,6 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import ca.bc.gov.open.sftp.starter.SftpService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -321,7 +321,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         if (actionDocument == null) return null;
 
-        if (actionDocument.getType().equals(Keys.CSO_DOCUMENT_REJECTED)) return null;
+        if (actionDocument.getType().equals(Keys.REJECTED_DOCUMENT_CODE)) return null;
 
         return actionDocument.getId();
 
