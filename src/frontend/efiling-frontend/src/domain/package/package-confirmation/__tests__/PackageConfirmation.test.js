@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";
 import MockAdapter from "axios-mock-adapter";
-import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
+import { render, waitFor, fireEvent, getByText, queryByTestId } from "@testing-library/react";
 import { getTestData } from "../../../../modules/test-data/confirmationPopupTestData";
 import {
   getDocumentsData,
@@ -85,6 +85,33 @@ describe("PackageConfirmation Component", () => {
 
     expect(asFragment()).toMatchSnapshot();
   });
+
+  test("Rush radio buttons update content succesfully", async () => {
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
+
+    const { getByLabelText, getByText, queryByText } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    const rushNo = getByLabelText("No");
+    const rushYes = getByLabelText("Yes");
+    const continueBtn = getByText("Continue")
+
+    fireEvent.click(rushNo);
+    expect(queryByText("About Rush Documents")).not.toBeInTheDocument();
+
+    fireEvent.click(rushYes);
+    await waitFor(() => expect(queryByText("About Rush Documents")).toBeInTheDocument());
+
+    fireEvent.click(continueBtn)
+    await waitFor(() => expect(queryByText("Rush Details")).toBeInTheDocument())
+
+      });
 
   test("When call to retrieve filing package fails, generate toast error", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
