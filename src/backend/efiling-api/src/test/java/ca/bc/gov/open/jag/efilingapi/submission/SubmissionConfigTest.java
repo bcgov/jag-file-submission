@@ -234,6 +234,11 @@ public class SubmissionConfigTest {
             return Optional.empty();
         }
 
+        @Override
+        public Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+            return Optional.empty();
+        }
+
     }
 
 }

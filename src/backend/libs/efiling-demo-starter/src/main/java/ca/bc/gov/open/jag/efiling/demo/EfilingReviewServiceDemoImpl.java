@@ -68,6 +68,13 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
         //Do nothing
     }
 
+    @Override
+    public Optional<byte[]> getRushDocument(String documentIdentifier) {
+
+        return getDocument();
+
+    }
+
     private Optional<byte[]> getDocument() {
         try {
             InputStream initialStream = getClass().getResourceAsStream("/demo-file/test-document.pdf");

@@ -16,6 +16,7 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.review.RushDocument;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 
@@ -95,11 +96,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<SubmittedDocument> getSubmittedDocument(String universalId, BigDecimal packageNumber, BigDecimal documentIdentifier) {
 
-        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber, null);
-
-        if (!request.isPresent()) return Optional.empty();
-
-        Optional<ReviewFilingPackage> filingPackage = efilingReviewService.findStatusByPackage(request.get());
+        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
@@ -150,6 +147,26 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     }
 
+    @Override
+    public Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+
+        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
+
+        if (!filingPackage.isPresent()) return Optional.empty();
+
+        Optional<RushDocument> reviewDocument = filingPackage.get().getRushOrder().getSupportDocs().stream().filter(document -> document.getObjectGuid().equals(documentIdentifier)).findFirst();
+
+        if (!reviewDocument.isPresent()) return Optional.empty();
+
+        Optional<byte[]> document = efilingReviewService.getRushDocument(documentIdentifier);
+
+        return document.map(bytes -> SubmittedDocument.builder()
+                .name(reviewDocument.get().getClientFileNm())
+                .data(new ByteArrayResource(bytes))
+                .create());
+
+    }
+
     private Optional<FilingPackageRequest> buildFilingPackageRequest(String universalId, BigDecimal packageNumber, String parentApplication) {
 
         AccountDetails accountDetails = accountService.getCsoAccountDetails(universalId);
@@ -157,6 +174,15 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         if (accountDetails.getClientId() == null) return Optional.empty();
 
         return Optional.of(new FilingPackageRequest(accountDetails.getClientId(), packageNumber, parentApplication));
+
+    }
+
+    private Optional<ReviewFilingPackage> getFilingPackage(String universalId, BigDecimal packageNumber) {
+        Optional<FilingPackageRequest> request = buildFilingPackageRequest(universalId, packageNumber, null);
+
+        if (!request.isPresent()) return Optional.empty();
+
+        return efilingReviewService.findStatusByPackage(request.get());
 
     }
 
