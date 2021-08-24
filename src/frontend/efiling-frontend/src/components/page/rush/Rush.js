@@ -11,9 +11,9 @@ import {
   Sidecard,
   Dropdown,
 } from "shared-components";
+import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../../../domain/payment/Payment";
-import validator from "validator";
 
 import "./Rush.scss";
 import { getCountries } from "./RushService";

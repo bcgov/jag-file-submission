@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-one-expression-per-line, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React from "react";
 import { MdInfoOutline, MdPerson, MdTimer } from "react-icons/md";
 import { getJWTData } from "./authentication-helper/authenticationHelper";
@@ -77,7 +77,9 @@ const rushSubmission = (setShowRush) => ({
         circumstances.
       </b>
     </p>,
-    <span className="file-href" onClick={() => setShowRush(true)}>Learn more about rush processing.</span>,
+    <span className="file-href" onClick={() => setShowRush(true)}>
+      Learn more about rush processing.
+    </span>,
   ],
   type: "bluegrey",
   id: "rushSubmissionCard",

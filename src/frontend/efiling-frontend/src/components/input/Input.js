@@ -69,7 +69,9 @@ export const Input = ({
         />
       )}
       <br />
-      <span className="bcgov-error" data-testid="email-error">{errorMsg}</span>
+      <span className="bcgov-error" data-testid="email-error">
+        {errorMsg}
+      </span>
     </div>
   );
 };

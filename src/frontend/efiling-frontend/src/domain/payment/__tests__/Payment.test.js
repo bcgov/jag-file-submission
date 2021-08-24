@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -292,11 +294,9 @@ describe("Payment Component", () => {
       .reply(200, { packageRef: "packageRef" });
 
     const { getByText } = render(<Payment payment={payment} />);
-  
-    const rushCardBtn = getByText("Learn more about rush processing.")
-    fireEvent.click(rushCardBtn)
 
-    
+    const rushCardBtn = getByText("Learn more about rush processing.");
+    fireEvent.click(rushCardBtn);
   });
 
   test("Submit on error generates toast message", async () => {
