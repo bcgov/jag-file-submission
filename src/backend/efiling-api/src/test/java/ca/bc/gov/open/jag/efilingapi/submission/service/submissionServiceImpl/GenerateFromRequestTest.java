@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionServiceImpl;
 
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
@@ -23,7 +24,6 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
-import ca.bc.gov.open.jag.efilingcsoclient.Keys;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -47,6 +47,7 @@ public class GenerateFromRequestTest {
     public static final String APP_CODE = "CODE";
     private static final BigDecimal PACKAGE_IDENTIFIER = BigDecimal.TEN;
     private static final BigDecimal DOCUMENT_ID = BigDecimal.TEN;
+    private static final String DOCUMENT_COURTESY_CORRECTED = "CCOR";
 
     private SubmissionServiceImpl sut;
 
@@ -278,7 +279,7 @@ public class GenerateFromRequestTest {
 
         ActionDocument actionDocument = new ActionDocument();
         actionDocument.setId(DOCUMENT_ID);
-        actionDocument.setType(Keys.CSO_DOCUMENT_REJECTED);
+        actionDocument.setType(Keys.REJECTED_DOCUMENT_CODE);
         filingPackage.getDocuments().get(0).setActionDocument(actionDocument);
 
         filingPackage.getCourt().setLevel("TEST2");
@@ -340,7 +341,7 @@ public class GenerateFromRequestTest {
 
         ActionDocument actionDocument = new ActionDocument();
         actionDocument.setId(DOCUMENT_ID);
-        actionDocument.setType(Keys.CSO_DOCUMENT_COURTESY_CORRECTED);
+        actionDocument.setType(DOCUMENT_COURTESY_CORRECTED);
         filingPackage.getDocuments().get(0).setActionDocument(actionDocument);
 
         filingPackage.getCourt().setLevel("TEST2");
