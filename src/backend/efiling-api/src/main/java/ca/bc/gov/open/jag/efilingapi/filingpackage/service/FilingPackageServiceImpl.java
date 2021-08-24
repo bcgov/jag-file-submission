@@ -157,8 +157,14 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         Optional<RushDocument> reviewDocument = filingPackage.get().getRushOrder().getSupportDocs().stream().filter(document -> document.getObjectGuid().equals(documentIdentifier)).findFirst();
 
         if (!reviewDocument.isPresent()) return Optional.empty();
-        //TODO: Call is not yet implemented so document will always be not found
-        return Optional.empty();
+
+        Optional<byte[]> document = efilingReviewService.getRushDocument(new BigDecimal(documentIdentifier));
+
+        return document.map(bytes -> SubmittedDocument.builder()
+                .name(reviewDocument.get().getClientFileNm())
+                .data(new ByteArrayResource(bytes))
+                .create());
+
     }
 
     private Optional<FilingPackageRequest> buildFilingPackageRequest(String universalId, BigDecimal packageNumber, String parentApplication) {

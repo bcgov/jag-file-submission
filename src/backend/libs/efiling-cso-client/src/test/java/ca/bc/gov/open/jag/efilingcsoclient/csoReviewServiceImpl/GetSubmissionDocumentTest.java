@@ -6,10 +6,7 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceExceptio
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.FilePackageMapperImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -21,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("GetSubmissionDocumentTest")
 public class GetSubmissionDocumentTest {
 
 

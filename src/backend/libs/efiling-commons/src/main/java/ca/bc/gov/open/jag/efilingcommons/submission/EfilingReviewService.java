@@ -21,4 +21,11 @@ public interface EfilingReviewService {
 
     void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest);
 
+    /**
+     * Call cso to get the byte array
+     * @param documentIdentifier requested document identifier
+     * @return optional byte array
+     */
+    Optional<byte[]> getRushDocument(BigDecimal documentIdentifier);
+
 }

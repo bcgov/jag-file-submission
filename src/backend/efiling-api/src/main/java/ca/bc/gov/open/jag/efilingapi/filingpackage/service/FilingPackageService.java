@@ -29,6 +29,14 @@ public interface FilingPackageService {
      * @return the action details for given user and package
      */
     Optional<ActionRequiredDetails> getActionRequiredDetails(String universalId, BigDecimal packageNumber);
+
+    /**
+     * Get the file related to the record
+     * @param universalId authorized users universal id
+     * @param packageNumber  requested package identifier
+     * @param documentIdentifier required documents identifier
+     * @return the byte array and meta associated with the document
+     */
     Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
 
 }
