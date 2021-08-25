@@ -74,7 +74,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/react-hooks": "7.0.0",
     "@testing-library/user-event": "^12.8.1",
-    "axios-mock-adapter": "^1.19.0",
+    "axios-mock-adapter": "^1.20.0",
     "babel-loader": "8.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
@@ -105,8 +105,7 @@
       "!**/node_modules/**",
       "!**/vendor/**",
       "!src/modules/test-data/confirmationPopupTestData.js",
-      "!src/modules/helpers/handleBackEvent.js",
-      "!src/components/page/rush/Rush.js"
+      "!src/modules/helpers/handleBackEvent.js"
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
