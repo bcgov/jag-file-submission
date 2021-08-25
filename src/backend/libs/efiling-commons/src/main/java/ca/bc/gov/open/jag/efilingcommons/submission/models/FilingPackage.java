@@ -10,6 +10,7 @@ import java.util.List;
 public class FilingPackage {
 
     private BigDecimal submissionFeeAmount;
+    private BigDecimal packageNumber;
     private Court court;
     private List<Document> documents = new ArrayList<>();
     private List<Individual> parties = new ArrayList<>();
@@ -21,6 +22,7 @@ public class FilingPackage {
 
     public FilingPackage(
             @JsonProperty("submissionFeeAmount") BigDecimal submissionFeeAmount,
+            @JsonProperty("packageNumber") BigDecimal packageNumber,
             @JsonProperty("court") Court court,
             @JsonProperty("documents") List<Document> documents,
             @JsonProperty("parties") List<Individual> parties,
@@ -32,6 +34,7 @@ public class FilingPackage {
     ) {
 
         this.submissionFeeAmount = submissionFeeAmount;
+        this.packageNumber = packageNumber;
         this.court = court;
         this.documents.addAll(documents);
         this.parties.addAll(parties);
@@ -44,6 +47,7 @@ public class FilingPackage {
 
     public FilingPackage(Builder builder) {
         this.submissionFeeAmount = builder.submissionFeeAmount;
+        this.packageNumber = builder.packageNumber;
         this.court = builder.court;
         this.documents.addAll(builder.documents);
         this.parties.addAll(builder.parties);
@@ -57,6 +61,8 @@ public class FilingPackage {
     public BigDecimal getSubmissionFeeAmount() {
         return submissionFeeAmount;
     }
+
+    public BigDecimal getPackageNumber() { return packageNumber; }
 
     public Court getCourt() {
         return court;
@@ -86,6 +92,8 @@ public class FilingPackage {
     public void setSubmissionFeeAmount(BigDecimal submissionFeeAmount) {
         this.submissionFeeAmount = submissionFeeAmount;
     }
+
+    public void setPackageNumber(BigDecimal packageNumber) { this.packageNumber = packageNumber; }
 
     public void setCourt(Court court) {
         this.court = court;
@@ -129,6 +137,7 @@ public class FilingPackage {
     public static class Builder {
 
         private BigDecimal submissionFeeAmount;
+        private BigDecimal packageNumber;
         private Court court;
         private List<Document> documents = new ArrayList<>();
         private List<Individual> parties = new ArrayList<>();
@@ -155,6 +164,11 @@ public class FilingPackage {
 
         public Builder submissionFeeAmount(BigDecimal submissionFeeAmount) {
             this.submissionFeeAmount = submissionFeeAmount;
+            return this;
+        }
+
+        public Builder packageNumber(BigDecimal packageNumber) {
+            this.packageNumber = packageNumber;
             return this;
         }
 

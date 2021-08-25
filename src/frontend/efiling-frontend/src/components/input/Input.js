@@ -50,6 +50,7 @@ export const Input = ({
           type="text"
           id={id}
           value={value}
+          data-testid="input-test"
           placeholder={placeholder}
           readOnly={isReadOnly}
           onChange={(event) => onChange(event.target.value)}
@@ -61,13 +62,16 @@ export const Input = ({
           type="text"
           id={id}
           defaultValue={value}
+          data-testid="input-test"
           placeholder={placeholder}
           readOnly={isReadOnly}
           onChange={(event) => onChange(event.target.value)}
         />
       )}
       <br />
-      <span className="bcgov-error">{errorMsg}</span>
+      <span className="bcgov-error" data-testid="email-error">
+        {errorMsg}
+      </span>
     </div>
   );
 };

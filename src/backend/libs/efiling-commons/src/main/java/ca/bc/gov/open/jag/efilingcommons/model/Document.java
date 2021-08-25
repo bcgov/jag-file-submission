@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 public class Document {
 
+    private BigDecimal documentId;
     private String name;
     private String type;
     private String subType;
@@ -19,7 +20,8 @@ public class Document {
     private String serverFileName;
 
     @JsonCreator
-    public Document(@JsonProperty("name") String name,
+    public Document(@JsonProperty("documentId") BigDecimal documentId,
+                    @JsonProperty("name") String name,
                     @JsonProperty("type") String type,
                     @JsonProperty("subType") String subType,
                     @JsonProperty("isAmendment") Boolean isAmendment,
@@ -29,6 +31,7 @@ public class Document {
                     @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
                     @JsonProperty("mimeType") String mimeType,
                     @JsonProperty("serverFileName") String serverFileName) {
+        this.documentId = documentId;
         this.name = name;
         this.type = type;
         this.subType = subType;
@@ -42,6 +45,7 @@ public class Document {
     }
 
     public Document(Builder builder) {
+        this.documentId = builder.documentId;
         this.name = builder.name;
         this.type = builder.type;
         this.subType = builder.subType;
@@ -53,6 +57,8 @@ public class Document {
         this.mimeType = builder.mimeType;
         this.serverFileName = builder.serverFileName;
     }
+
+    public BigDecimal getDocumentId() { return documentId; }
 
     public String getName() {
         return name;
@@ -100,6 +106,7 @@ public class Document {
 
     public static class Builder {
 
+        private BigDecimal documentId;
         private String name;
         private String type;
         private String subType;
@@ -111,6 +118,10 @@ public class Document {
         private String mimeType;
         private String serverFileName;
 
+        public Builder documentId(BigDecimal documentId) {
+            this.documentId = documentId;
+            return this;
+        }
 
         public Builder name(String name) {
             this.name = name;

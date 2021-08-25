@@ -20,6 +20,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "feeExemptYn", expression = "java(!(filingPackage.getSubmissionFeeAmount() != null && filingPackage.getSubmissionFeeAmount().compareTo(BigDecimal.ZERO) > 0))")
     @Mapping(target = "cfcsaYn", constant = "false")
     @Mapping(target = "notificationRequiredYn", constant = "true")
+    @Mapping(target = "packageId", source = "filingPackage.packageNumber")
 
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
 

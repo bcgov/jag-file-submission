@@ -4,13 +4,13 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocum
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.review.RushDocument;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EfilingReviewServiceDemoImplTest {
@@ -399,6 +399,16 @@ public class EfilingReviewServiceDemoImplTest {
     public void withDocumentRequestReturnByteArray() {
 
         Optional<byte[]> result = sut.getSubmittedDocument(BigDecimal.ONE);
+
+        Assertions.assertTrue(result.isPresent());
+
+    }
+
+    @Test
+    @DisplayName("OK: demo returns a document byte array")
+    public void withRushDocumentRequestReturnByteArray() {
+
+        Optional<byte[]> result = sut.getRushDocument(UUID.randomUUID().toString());
 
         Assertions.assertTrue(result.isPresent());
 

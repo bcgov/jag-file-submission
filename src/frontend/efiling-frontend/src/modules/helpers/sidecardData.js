@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-one-expression-per-line, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React from "react";
 import { MdInfoOutline, MdPerson, MdTimer } from "react-icons/md";
 import { getJWTData } from "./authentication-helper/authenticationHelper";
@@ -63,7 +63,7 @@ const csoAccountDetails = () => {
   };
 };
 
-const rushSubmission = () => ({
+const rushSubmission = (setShowRush) => ({
   heading: "About Rush Documents",
   content: [
     <p key="rushSubmission">
@@ -77,7 +77,9 @@ const rushSubmission = () => ({
         circumstances.
       </b>
     </p>,
-    <span className="file-href">Learn more about rush processing.</span>,
+    <span className="file-href" onClick={() => setShowRush(true)}>
+      Learn more about rush processing.
+    </span>,
   ],
   type: "bluegrey",
   id: "rushSubmissionCard",
@@ -113,10 +115,10 @@ const supremeCourtScheduling = () => ({
   icon: <MdInfoOutline className="bcgov-side-card-icon" />,
 });
 
-export function getSidecardData() {
+export function getSidecardData(setShowRush) {
   const aboutCsoCard = aboutCso();
   const csoAccountDetailsCard = csoAccountDetails();
-  const rushSubmissionCard = rushSubmission();
+  const rushSubmissionCard = rushSubmission(setShowRush);
   const amendmentsCard = amendments();
   const supremeCourtSchedulingCard = supremeCourtScheduling();
 

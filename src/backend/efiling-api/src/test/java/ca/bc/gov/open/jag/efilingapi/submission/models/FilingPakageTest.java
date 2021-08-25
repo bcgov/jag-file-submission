@@ -48,6 +48,7 @@ public class FilingPakageTest {
 
 
         FilingPackage actual = new FilingPackage(
+                BigDecimal.TEN,
                 SUBMISSION_FEE_AMOUNT,
                 getCourt(),
                 getDocuments(),
@@ -132,7 +133,9 @@ public class FilingPakageTest {
 
     private List<Document> getDocuments() {
         List<Document> documents = new ArrayList<>();
-        Document document = new Document(NAME,
+        Document document = new Document(
+                BigDecimal.ONE,
+                NAME,
                 TYPE,
                 SUB_TYPE,
                 true,

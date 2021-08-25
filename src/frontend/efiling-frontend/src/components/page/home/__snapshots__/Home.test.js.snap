@@ -1176,6 +1176,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
         >
           No
           <input
+            checked=""
             id="No"
             name="rush"
             type="radio"

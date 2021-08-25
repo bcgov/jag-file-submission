@@ -105,8 +105,7 @@
       "!**/node_modules/**",
       "!**/vendor/**",
       "!src/modules/test-data/confirmationPopupTestData.js",
-      "!src/modules/helpers/handleBackEvent.js",
-      "!src/components/page/rush/Rush.js"
+      "!src/modules/helpers/handleBackEvent.js"
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"

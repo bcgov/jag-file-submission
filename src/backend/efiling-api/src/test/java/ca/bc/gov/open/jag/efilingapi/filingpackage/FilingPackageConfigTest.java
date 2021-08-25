@@ -79,6 +79,11 @@ public class FilingPackageConfigTest {
                 public void deleteSubmittedDocument(DeleteSubmissionDocumentRequest deleteSubmissionDocumentRequest) {
                     //Do nothing
                 }
+
+                @Override
+                public Optional<byte[]> getRushDocument(String documentIdentifier) {
+                    return Optional.empty();
+                }
             };
 
         }
