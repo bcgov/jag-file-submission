@@ -1,537 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Payment Component Click on request rush submission opens rush submission page 1`] = `
-<DocumentFragment>
-  <div
-    class="ct-rush page"
-  >
-    <div
-      class="content col-md-8"
-    >
-      <h1>
-        Request Rush/Urgent Submission
-      </h1>
-      <p>
-        You must provide a reason and contact information for your request for rush/urgent submission to be considered. My reason for requesting urgent (rush) filing is:
-      </p>
-      <label
-        class="bcgov-radio"
-        for="rule-85"
-      >
-        The attached application is made under Rule 8-5 (1) SCR.
-        <input
-          id="rule-85"
-          name="rush-reason"
-          type="radio"
-        />
-        <span
-          class="bcgov-dot"
-        />
-      </label>
-      <label
-        class="bcgov-radio"
-        for="court-directed"
-      >
-        The court directed that the order be processed on an urgent basis.
-        <input
-          id="court-directed"
-          name="rush-reason"
-          type="radio"
-        />
-        <span
-          class="bcgov-dot"
-        />
-      </label>
-      <label
-        class="bcgov-radio"
-        for="other"
-      >
-        Other (please explain).
-        <input
-          id="other"
-          name="rush-reason"
-          type="radio"
-        />
-        <span
-          class="bcgov-dot"
-        />
-      </label>
-      <div
-        class="bcgov-callout"
-      >
-        <p>
-          Please provide the date of when the direction was made,
-the name of the Judge who made the direction along with any additional details
-you feel are necessary.
-        </p>
-      </div>
-      <div
-        class="bcgov-input-label"
-      >
-        <label
-          for="Date"
-        >
-          Date
-        </label>
-        <span
-          class="bcgov-mandatory"
-          id="asterisk"
-        >
-          *
-        </span>
-         
-      </div>
-      <div
-        class="bcgov-flex"
-      >
-        <svg
-          class="bcgov-move-right"
-          fill="currentColor"
-          height="32"
-          size="32"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 24 24"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"
-          />
-        </svg>
-        <div
-          class="react-datepicker-wrapper"
-        >
-          <div
-            class="react-datepicker__input-container"
-          >
-            <input
-              class=""
-              type="text"
-              value="05/14/2019"
-            />
-          </div>
-        </div>
-      </div>
-      <br />
-      <div
-        class="bcgov-input-label"
-      >
-        <label
-          for="detailed-reason"
-        >
-          Clear and detailed reason(s)
-        </label>
-        <span
-          class="bcgov-mandatory"
-          id="asterisk"
-        >
-          *
-        </span>
-         
-      </div>
-      <textarea
-        class="bcgov-text-input"
-        cols="60"
-        id="detailed-reason"
-        rows="8"
-      />
-      <p>
-        I understand the registry has the discretion to reject this request.
-      </p>
-      <div
-        class="form-parent"
-      >
-        <div
-          class="form-child"
-        >
-          <div>
-            <label
-              class="bcgov-label"
-              for="lastName"
-            >
-              <div
-                class="bcgov-input-label"
-              >
-                Last Name
-              </div>
-              <span
-                class="bcgov-mandatory"
-                id="asterisk"
-              >
-                *
-              </span>
-               
-              <span
-                class="bcgov-note"
-              />
-            </label>
-            <input
-              class="bcgov-editable-white"
-              id="lastName"
-              type="text"
-              value=""
-            />
-            <br />
-            <span
-              class="bcgov-error"
-            />
-          </div>
-        </div>
-        <div
-          class="form-child"
-        >
-          <div>
-            <label
-              class="bcgov-label"
-              for="org"
-            >
-              <div
-                class="bcgov-input-label"
-              >
-                Organization
-              </div>
-               
-              <span
-                class="bcgov-note"
-              />
-            </label>
-            <input
-              class="bcgov-editable-white"
-              id="org"
-              type="text"
-              value=""
-            />
-            <br />
-            <span
-              class="bcgov-error"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-parent"
-      >
-        <div
-          class="form-child"
-        >
-          <div>
-            <label
-              class="bcgov-label"
-              for="firstName"
-            >
-              <div
-                class="bcgov-input-label"
-              >
-                First Name
-              </div>
-              <span
-                class="bcgov-mandatory"
-                id="asterisk"
-              >
-                *
-              </span>
-               
-              <span
-                class="bcgov-note"
-              />
-            </label>
-            <input
-              class="bcgov-editable-white"
-              id="firstName"
-              type="text"
-              value=""
-            />
-            <br />
-            <span
-              class="bcgov-error"
-            />
-          </div>
-        </div>
-        <div
-          class="form-child"
-        >
-          <div>
-            <label
-              class="bcgov-label"
-              for="country"
-            >
-              <div
-                class="bcgov-input-label"
-              >
-                Contact Country
-              </div>
-               
-              <span
-                class="bcgov-note"
-              />
-            </label>
-            <input
-              class="bcgov-editable-white"
-              id="country"
-              type="text"
-              value=""
-            />
-            <br />
-            <span
-              class="bcgov-error"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="form-parent"
-      >
-        <div
-          class="form-child"
-        >
-          <div>
-            <label
-              class="bcgov-label"
-              for="phoneNumber"
-            >
-              <div
-                class="bcgov-input-label"
-              >
-                Phone Number
-              </div>
-              <span
-                class="bcgov-mandatory"
-                id="asterisk"
-              >
-                *
-              </span>
-               
-              <span
-                class="bcgov-note"
-              />
-            </label>
-            <input
-              class="bcgov-editable-white"
-              id="phoneNumber"
-              type="text"
-              value=""
-            />
-            <br />
-            <span
-              class="bcgov-error"
-            />
-          </div>
-        </div>
-      </div>
-      <br />
-      <div
-        class="dropzone-outer"
-        data-testid="dropdownzone"
-        tabindex="0"
-      >
-        <div
-          class="dropzone-inner-box"
-        >
-          <input
-            autocomplete="off"
-            multiple=""
-            style="display: none;"
-            tabindex="-1"
-            type="file"
-          />
-          <span>
-            <h2
-              class="text-center-alignment"
-            >
-              Drag and drop or 
-              <span
-                class="file-href"
-              >
-                choose documents
-              </span>
-            </h2>
-            <div>
-              <span>
-                to upload supporting documents from counsel that explain the reasons for an urgent/rush order.
-              </span>
-              <br />
-              <span>
-                Please note that documents uploaded on this screen will not be processed into your eFile.
-              </span>
-            </div>
-          </span>
-        </div>
-      </div>
-      <br />
-      <section
-        class="buttons pt-2"
-      >
-        <button
-          class="bcgov-button bcgov-normal-white btn"
-          data-testid=""
-          type="button"
-        >
-          Cancel Request
-        </button>
-        <button
-          class="bcgov-button bcgov-normal-blue btn"
-          data-testid=""
-          type="button"
-        >
-          Submit Request
-        </button>
-      </section>
-    </div>
-    <div
-      class="sidecard"
-    >
-      <div
-        class="bcgov-wide-dashboard-spacing"
-        style="position: relative;"
-      >
-        <div
-          class="col-12 pt-2"
-          style="position: relative;"
-        >
-          <p />
-          <section
-            class="bcgov-bluegrey-container"
-            id="csoAccountDetailsCard"
-          >
-            <div
-              class="bcgov-container-background bcgov-bluegrey-heading"
-            >
-              <h2
-                class="bcgov-heading-style"
-              >
-                <div
-                  class="bcgov-side-card-row"
-                >
-                  <div
-                    class="bcgov-round-icon-wrapper"
-                  >
-                    <svg
-                      class="bcgov-side-card-icon"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="bcgov-side-card-title"
-                  >
-                    Your CSO Account
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              class="bcgov-bluegrey-content"
-            >
-              <span
-                class="bcgov-content-style"
-              >
-                <p>
-                  CSO account 
-                  <strong />
-                   is linked to your Basic BCeID account 
-                  <strong>
-                    username
-                  </strong>
-                   and will be used to file documents. 
-                  <a
-                    href="undefined/accounts/editProfile.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    View your CSO account details
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
-        </div>
-      </div>
-      <div
-        class="bcgov-wide-dashboard-spacing"
-        style="position: relative;"
-      >
-        <div
-          class="col-12 pt-2"
-          style="position: relative;"
-        >
-          <p />
-          <section
-            class="bcgov-bluegrey-container"
-            id="aboutCsoCard"
-          >
-            <div
-              class="bcgov-container-background bcgov-bluegrey-heading"
-            >
-              <h2
-                class="bcgov-heading-style"
-              >
-                <div
-                  class="bcgov-side-card-row"
-                >
-                  <div
-                    class="bcgov-round-icon-wrapper"
-                  >
-                    <svg
-                      class="bcgov-side-card-icon"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="bcgov-side-card-title"
-                  >
-                    About E-File Submission
-                  </div>
-                </div>
-              </h2>
-            </div>
-            <div
-              class="bcgov-bluegrey-content"
-            >
-              <span
-                class="bcgov-content-style"
-              >
-                <p>
-                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
-                  <a
-                    href="undefined/about/index.do"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    Learn more about CSO
-                  </a>
-                  .
-                </p>
-              </span>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Payment Component Matches the snapshot with existing credit card 1`] = `
 <DocumentFragment>
   <div
@@ -596,6 +64,26 @@ exports[`Payment Component Matches the snapshot with existing credit card 1`] = 
           <div
             class="bcgov-table-body"
           >
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
             <div
               class="bcgov-row-fees "
             >
@@ -846,7 +334,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   <div
                     class="bcgov-side-card-title"
                   >
-                    Rush/Urgent Submission
+                    About Rush Documents
                   </div>
                 </div>
               </h2>
@@ -858,16 +346,18 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <span
-                    class="file-href"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Request rush submission
-                  </span>
-                  .
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
                 </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
               </span>
             </div>
           </section>
@@ -1095,6 +585,26 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
               <div
                 class="bcgov-fill-width"
               >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
                 Number of Documents in Package:
               </div>
               <div
@@ -1339,7 +849,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                   <div
                     class="bcgov-side-card-title"
                   >
-                    Rush/Urgent Submission
+                    About Rush Documents
                   </div>
                 </div>
               </h2>
@@ -1351,16 +861,18 @@ package and am prepared to submit them for filing. I agree that all fees for thi
                 class="bcgov-content-style"
               >
                 <p>
-                  If you wish to request that this package be submitted on an urgent (rush) basis, you must provide a reason for your request to be considered. 
-                  <span
-                    class="file-href"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Request rush submission
-                  </span>
-                  .
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
                 </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
               </span>
             </div>
           </section>
@@ -1529,7 +1041,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
         Package Confirmation
       </h1>
       <span>
-        Review your documents for accuracy and upload any additional or supporting documents.
+        Review your package for accuracy and upload any additional or supporting documents.
       </span>
       <br />
       <span>
@@ -1665,6 +1177,45 @@ exports[`Payment Component On back click, it redirects back to the package confi
         </span>
       </h4>
       <br />
+      <div
+        class="bcgov-row"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
       <h2>
         Summary
       </h2>
@@ -1679,6 +1230,26 @@ exports[`Payment Component On back click, it redirects back to the package confi
           <div
             class="bcgov-table-body"
           >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
             <div
               class="bcgov-row "
             >

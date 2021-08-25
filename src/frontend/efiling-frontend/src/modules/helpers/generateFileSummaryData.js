@@ -1,4 +1,5 @@
 import Dinero from "dinero.js";
+import React from "react";
 
 function calculateTotalStatFee(files) {
   let totalStatFee = Dinero({ amount: 0 });
@@ -23,8 +24,26 @@ function calculateTotalFee(totalStatFee, submissionFee) {
   return total;
 }
 
-function generateTableContent(numDocuments, totalStatFee, submissionFee) {
+function generateTableContent(
+  isRush,
+  numDocuments,
+  totalStatFee,
+  submissionFee
+) {
   return [
+    {
+      name: "Rush Processing:",
+      value: isRush ? (
+        <span style={{ color: "red" }}>
+          <b>Yes</b>
+        </span>
+      ) : (
+        <span>
+          <b>No</b>
+        </span>
+      ),
+      isValueBold: true,
+    },
     {
       name: "Number of Documents in Package:",
       value: `${numDocuments}`,
@@ -45,11 +64,17 @@ function generateTableContent(numDocuments, totalStatFee, submissionFee) {
   ];
 }
 
-export function generateFileSummaryData(files, submissionFee, withTotal) {
+export function generateFileSummaryData(
+  isRush,
+  files,
+  submissionFee,
+  withTotal
+) {
   const totalStatFee = calculateTotalStatFee(files);
   const totalOverallFee = calculateTotalFee(totalStatFee, submissionFee);
   const numDocuments = files.length;
   const result = generateTableContent(
+    isRush,
     numDocuments,
     totalStatFee,
     submissionFee

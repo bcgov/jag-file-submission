@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -16,7 +18,6 @@ import { generateJWTToken } from "../../../modules/helpers/authentication-helper
 import Payment from "../Payment";
 
 describe("Payment Component", () => {
-  let realDate;
   const confirmationPopup = getTestData();
   const submissionId = "abc123";
   const apiRequest = `/submission/${submissionId}/filing-package`;
@@ -287,6 +288,17 @@ describe("Payment Component", () => {
     });
   });
 
+  test("Sidecard redirects to rush", async () => {
+    mock
+      .onPost(`/submission/${submissionId}/submit`)
+      .reply(200, { packageRef: "packageRef" });
+
+    const { getByText } = render(<Payment payment={payment} />);
+
+    const rushCardBtn = getByText("Learn more about rush processing.");
+    fireEvent.click(rushCardBtn);
+  });
+
   test("Submit on error generates toast message", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
@@ -304,32 +316,6 @@ describe("Payment Component", () => {
     expect(
       queryByText("Something went wrong while trying to submit your package.")
     ).toBeInTheDocument();
-  });
-
-  test("Click on request rush submission opens rush submission page", async () => {
-    const currentDate = new Date("2019-05-14T11:01:58.135Z");
-    realDate = Date;
-    global.Date = class extends Date {
-      constructor() {
-        return currentDate;
-      }
-    };
-
-    mock.onGet(apiRequest).reply(200, {
-      documents: files,
-      court: courtData,
-      submissionFeeAmount: submissionFee,
-    });
-
-    const { container, asFragment } = render(<Payment payment={payment} />);
-
-    fireEvent.click(getByText(container, "Request rush submission"));
-
-    await waitFor(() => {});
-
-    expect(asFragment()).toMatchSnapshot();
-
-    global.Date = realDate;
   });
 
   test("when coming from a successful bambora card registration, and a successful call to set-bambora-cso, set the internal client number", async () => {

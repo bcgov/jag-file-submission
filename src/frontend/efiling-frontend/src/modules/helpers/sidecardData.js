@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-one-expression-per-line, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React from "react";
 import { MdInfoOutline, MdPerson, MdTimer } from "react-icons/md";
 import { getJWTData } from "./authentication-helper/authenticationHelper";
@@ -63,23 +63,23 @@ const csoAccountDetails = () => {
   };
 };
 
-const rushSubmission = (onClick) => ({
-  heading: "Rush/Urgent Submission",
+const rushSubmission = (setShowRush) => ({
+  heading: "About Rush Documents",
   content: [
     <p key="rushSubmission">
-      If you wish to request that this package be submitted on an urgent (rush)
-      basis, you must provide a reason for your request to be considered.&nbsp;
-      <span
-        onKeyDown={onClick}
-        role="button"
-        tabIndex={0}
-        className="file-href"
-        onClick={onClick}
-      >
-        Request rush submission
-      </span>
-      .
+      When directed by the court, an order will be processed on an urgent(rush)
+      basis. The registry will consider specific reasons for processing an order
+      on an urgent(rush) basis.
     </p>,
+    <p>
+      <b>
+        Only request processing on an urgent(rush) basis in exceptional
+        circumstances.
+      </b>
+    </p>,
+    <span className="file-href" onClick={() => setShowRush(true)}>
+      Learn more about rush processing.
+    </span>,
   ],
   type: "bluegrey",
   id: "rushSubmissionCard",
@@ -115,10 +115,10 @@ const supremeCourtScheduling = () => ({
   icon: <MdInfoOutline className="bcgov-side-card-icon" />,
 });
 
-export function getSidecardData(onClick) {
+export function getSidecardData(setShowRush) {
   const aboutCsoCard = aboutCso();
   const csoAccountDetailsCard = csoAccountDetails();
-  const rushSubmissionCard = rushSubmission(onClick);
+  const rushSubmissionCard = rushSubmission(setShowRush);
   const amendmentsCard = amendments();
   const supremeCourtSchedulingCard = supremeCourtScheduling();
 
