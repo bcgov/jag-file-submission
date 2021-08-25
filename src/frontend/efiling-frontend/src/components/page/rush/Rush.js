@@ -20,6 +20,7 @@ import { getCountries } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
+import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { formatPhoneNumber } from "../../../modules/helpers/StringUtil";
 import { checkForDuplicateFilenames } from "../../../modules/helpers/filenameUtil";
 
@@ -48,12 +49,12 @@ export default function Rush({ payment }) {
     ["Phone Number", "phoneNumber"],
   ];
   const clearFields = {
-    surname: null,
-    firstName: null,
+    surname: "",
+    firstName: "",
     contactMethod: contactMethods[0],
-    phoneNumber: null,
-    email: null,
-    org: null,
+    phoneNumber: "",
+    email: "",
+    org: "",
     country: null,
     details: null,
   };
@@ -76,8 +77,8 @@ export default function Rush({ payment }) {
     setFields({
       ...fields,
       contactMethod: contactMethods.filter((list) => list[0] === e && list)[0],
-      phoneNumber: null,
-      email: null,
+      phoneNumber: "",
+      email: "",
       surname: null,
     });
     setEmailError(null);
@@ -98,6 +99,12 @@ export default function Rush({ payment }) {
       ...fields,
       phoneNumber: formattedPhoneNumber,
     });
+  };
+
+  const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
+    const limitedValue = fieldValue.substring(0, characterLimit);
+
+    setFields({ ...fields, [fieldName]: limitedValue });
   };
 
   const canReject = (
@@ -125,10 +132,9 @@ export default function Rush({ payment }) {
             label: "Surname",
             id: "surname",
             value: fields.surname,
+            isControlled: true,
           },
-          (inputs) => {
-            setFields({ ...fields, surname: inputs });
-          }
+          (inputs) => enforceCharacterLimit(inputs, "surname", 30)
         )}
         {generateInputField(
           {
@@ -136,10 +142,9 @@ export default function Rush({ payment }) {
             label: "First Name",
             id: "firstName",
             value: fields.firstName,
+            isControlled: true,
           },
-          (inputs) => {
-            setFields({ ...fields, firstName: inputs });
-          }
+          (inputs) => enforceCharacterLimit(inputs, "firstName", 30)
         )}
       </div>
       <div className="form-parent">
@@ -150,10 +155,9 @@ export default function Rush({ payment }) {
             id: "org",
             isRequired: false,
             value: fields.org,
+            isControlled: true,
           },
-          (inputs) => {
-            setFields({ ...fields, org: inputs });
-          }
+          (inputs) => enforceCharacterLimit(inputs, "org", 150)
         )}
         <div className="form-child">
           <Dropdown
@@ -309,17 +313,26 @@ export default function Rush({ payment }) {
     displayAnyDocumentErrors();
   }, [numDocumentsError, duplicateFilenamesError]);
 
-  const prepopulateContactInfo = () => {
-    setFields({ ...fields, firstName: "bob", surname: "ross" });
+  const resetFields = () => {
+    const jwtData = getJWTData();
+    setFields({
+      ...clearFields,
+      firstName: jwtData.given_name,
+      surname: jwtData.family_name,
+      email: jwtData.email,
+    });
+
+    if (validator.isEmail(jwtData.email)) {
+      setEmailError(null);
+    }
   };
 
   const setRadioStatusComponents = () => {
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
-    setFields(clearFields);
+    resetFields();
     setFiles([]);
-    prepopulateContactInfo();
   };
 
   if (showPayment) {
