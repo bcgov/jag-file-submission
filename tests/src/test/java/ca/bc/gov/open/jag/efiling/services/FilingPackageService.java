@@ -74,7 +74,7 @@ public class FilingPackageService {
                 .response();
     }
 
-    public Response getRushDocument(String accessToken, int packageId, int documentId) {
+    public Response getRushDocument(String accessToken, int packageId, String documentId) {
 
         RequestSpecification request = RestAssured
                 .given()
