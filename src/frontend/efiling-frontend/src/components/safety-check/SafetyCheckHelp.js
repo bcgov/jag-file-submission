@@ -9,16 +9,12 @@ import "./SafetyCheckHelp.scss";
 /** Opens up a modal popup with help content */
 export default function SafetyCheckHelp({ showModal, onHide }) {
   return (
-    <Modal
-      show={showModal}
-      onHide={onHide}
-      className="safety-check-modal modal-xl"
-    >
+    <Modal show={showModal} onHide={onHide} className="safety-check-modal">
       <Modal.Header closeButton>
         <Modal.Title>
-          <h2 className="text-primary" data-testid="help-title">
+          <h3 className="text-primary" data-testid="help-title">
             Get Help Opening and Saving PDF forms
-          </h2>
+          </h3>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
