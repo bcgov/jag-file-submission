@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.ParentAppDetails;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
 import org.springframework.core.io.Resource;
@@ -38,5 +39,13 @@ public interface FilingPackageService {
      * @return the byte array and meta associated with the document
      */
     Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
+
+    /**
+     * Get the parent app features for a package
+     * @param universalId authorized users universal id
+     * @param packageNumber  requested package identifier
+     * @return feature for the packages parent application
+     */
+    Optional<ParentAppDetails> getParentDetails(String universalId, BigDecimal packageNumber);
 
 }

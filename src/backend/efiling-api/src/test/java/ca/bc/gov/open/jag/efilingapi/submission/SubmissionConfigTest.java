@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
+import ca.bc.gov.open.jag.efilingapi.api.model.ParentAppDetails;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.fakes.CourtServiceFake;
@@ -236,6 +237,11 @@ public class SubmissionConfigTest {
 
         @Override
         public Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<ParentAppDetails> getParentDetails(String universalId, BigDecimal packageNumber) {
             return Optional.empty();
         }
 

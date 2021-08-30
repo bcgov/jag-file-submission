@@ -642,6 +642,24 @@ paths:
                 format: binary
         "404":
           description: file not found
+  "/filingpackages/{packageIdentifier}/parentDetails":
+    get:
+      summary: Get rush document
+      operationId: GetParentDetails
+      description: get parent app details for package
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: parent app details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParentAppDetails"
+        "404":
+          description: Package not found
 components:
   securitySchemes:
     bearerAuth: # arbitrary name for the security scheme
@@ -1578,3 +1596,13 @@ components:
         type:
           type: string
           description: document type
+    ParentAppDetails:
+      description: Action required details
+      type: object
+      properties:
+        returnUrl:
+          type: string
+          description: the url that users will return to
+        rejectedDocumentFeature:
+          type: boolean
+          description: the feature is enabled or disabled for this parent
