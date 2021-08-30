@@ -2,6 +2,9 @@ package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.ParentAppDetails;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.FilingPackageNotFoundException;
+import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
@@ -96,9 +99,8 @@ public class GetParentAppDetailsTest {
 
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
 
-        ResponseEntity<?> actual = sut.getParentDetails(BigDecimal.ONE);
-
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, actual.getStatusCode());
+        MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.getParentDetails(BigDecimal.ONE));
+        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
 
     }
 
@@ -112,9 +114,8 @@ public class GetParentAppDetailsTest {
         otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
         Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
 
-        ResponseEntity<?> result = sut.getParentDetails(BigDecimal.TEN);
-
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        FilingPackageNotFoundException exception = Assertions.assertThrows(FilingPackageNotFoundException.class, () -> sut.getParentDetails(BigDecimal.TEN));
+        Assertions.assertEquals(ErrorCode.FILING_PACKAGE_NOT_FOUND.toString(), exception.getErrorCode());
 
     }
 
