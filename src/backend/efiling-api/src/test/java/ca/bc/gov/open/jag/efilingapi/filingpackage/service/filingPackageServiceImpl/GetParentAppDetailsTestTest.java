@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
-public class GetParentAppDetailsTest {
+public class GetParentAppDetailsTestTest {
 
     private static final String RETURN_URL = "http://localhost:8080";
     FilingPackageServiceImpl sut;

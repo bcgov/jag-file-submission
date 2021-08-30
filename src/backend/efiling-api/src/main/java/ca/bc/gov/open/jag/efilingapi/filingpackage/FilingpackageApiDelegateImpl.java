@@ -218,6 +218,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
+    @RolesAllowed("efiling-user")
     public ResponseEntity<ParentAppDetails> getParentDetails(BigDecimal packageIdentifier) {
 
         logger.info("get parent details request");
@@ -232,4 +233,5 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
         return result.map(ResponseEntity::ok).orElseThrow(() -> new FilingPackageNotFoundException(FILING_PACKAGE_NOT_FOUND));
 
     }
+
 }
