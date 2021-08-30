@@ -20,6 +20,7 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
 public class GetRushDocumentTest {
+
     private static final byte[] DOC_DATA = "TEST".getBytes();
     private static final String DOCUMENT_NOT_FOUND = UUID.randomUUID().toString();
 
@@ -41,7 +42,7 @@ public class GetRushDocumentTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null);
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null, null);
     }
 
 

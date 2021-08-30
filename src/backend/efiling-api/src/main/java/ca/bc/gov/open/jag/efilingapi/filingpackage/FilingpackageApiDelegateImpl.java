@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.FilingpackagesApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.ParentAppDetails;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import ca.bc.gov.open.jag.efilingapi.error.DeleteDocumentException;
 import ca.bc.gov.open.jag.efilingapi.error.FilingPackageNotFoundException;
@@ -216,4 +217,19 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     }
 
+    @Override
+    public ResponseEntity<ParentAppDetails> getParentDetails(BigDecimal packageIdentifier) {
+
+        logger.info("get parent details request");
+
+        Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
+
+        if(!universalId.isPresent())
+            throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
+
+        Optional<ParentAppDetails> result = filingPackageService.getParentDetails(universalId.get(), packageIdentifier);
+
+        return result.map(ResponseEntity::ok).orElseThrow(() -> new FilingPackageNotFoundException(FILING_PACKAGE_NOT_FOUND));
+
+    }
 }
