@@ -15,6 +15,7 @@ public class PayloadHelper {
                 "    },\n" +
                 "    \"clientAppName\": \"my app\",\n" +
                 "    \"filingPackage\": {\n" +
+                "       \"packageIdentifier\": 1,\n" +
                 "        \"court\": {\n" +
                 "            \"location\": \"1211\",\n" +
                 "            \"level\": \"P\",\n" +
@@ -27,7 +28,12 @@ public class PayloadHelper {
                 "                \"type\": \"AFF\",\n" +
                 "                \"statutoryFeeAmount\": 0,\n" +
                 "                \"data\": {},\n" +
-                "                \"md5\": \"string\"\n" +
+                "                \"md5\": \"string\", \n" +
+                "                \"actionDocument\": {\n" +
+                "                   \"id\": 2,\n" +
+                "                   \"status\": \"SUB\",\n" +
+                "                   \"type\": \"F\"\n" +
+                "               }\n" +
                 "            }\n" +
                 "        ],\n" +
                 "        \"parties\": [\n" +
@@ -54,6 +60,7 @@ public class PayloadHelper {
                 "    },\n" +
                 "    \"clientAppName\": \"my app\",\n" +
                 "    \"filingPackage\": {\n" +
+                "       \"packageIdentifier\": 1,\n" +
                 "        \"court\": {\n" +
                 "            \"location\": \"1211\",\n" +
                 "            \"level\": \"A\",\n" +
@@ -66,7 +73,12 @@ public class PayloadHelper {
                 "                \"type\": \"AFF\",\n" +
                 "                \"statutoryFeeAmount\": 0,\n" +
                 "                \"data\": {},\n" +
-                "                \"md5\": \"string\"\n" +
+                "                \"md5\": \"string\", \n" +
+                "                \"actionDocument\": {\n" +
+                "                   \"id\": 2,\n" +
+                "                   \"status\": \"SUB\",\n" +
+                "                   \"type\": \"F\"\n" +
+                "               }\n" +
                 "            }\n" +
                 "        ],\n" +
                 "        \"parties\": [\n" +

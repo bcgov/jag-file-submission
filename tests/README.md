@@ -63,3 +63,9 @@ mvn verify -Dcucumber.options="--tags '@backend'"
 ```bash
 mvn verify -Dcucumber.options="--tags '@frontend'"
 ```
+### Plugins
+
+Useful cucumber plugins to write feature files
+
+* Cucumber for java from Jetbrains
+* Gherkin from Jetbrains
