@@ -92,7 +92,7 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
 
-    const { getByLabelText, getByText, queryByText } = render(
+    const { getByLabelText, getByText, queryByText, getByRole } = render(
       <PackageConfirmation
         packageConfirmation={packageConfirmation}
         csoAccountStatus={csoAccountStatus}
@@ -112,6 +112,7 @@ describe("PackageConfirmation Component", () => {
     );
 
     fireEvent.click(continueBtn);
+    fireEvent.click(getByRole("dialog"));
     await waitFor(() =>
       expect(queryByText("Rush Details")).toBeInTheDocument()
     );

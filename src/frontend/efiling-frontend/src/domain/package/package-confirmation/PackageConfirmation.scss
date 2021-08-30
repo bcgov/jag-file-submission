@@ -11,6 +11,10 @@
     margin-left: 10px;
   }
 
+  .hidden {
+    visibility: hidden !important;
+  }
+
   @media (min-width: 1200px) {
     .near-half-width {
       width: 60% !important;

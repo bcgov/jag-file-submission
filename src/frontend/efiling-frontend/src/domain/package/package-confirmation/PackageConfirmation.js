@@ -9,6 +9,7 @@ import ConfirmationPopup, {
 } from "shared-components";
 import axios from "axios";
 import Rush from "../../../components/page/rush/Rush";
+import RushConfirmation from "./RushConfirmation";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { propTypes } from "../../../types/propTypes";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
@@ -72,11 +73,18 @@ const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
   }
 };
 
-const handleContinue = (isRush, setShowRush, setShowPayment) => {
+const handleContinue = (
+  isRush,
+  setShowRush,
+  setShowPayment,
+  showModal,
+  setShowModal
+) => {
   if (isRush) {
     setShowPayment(false);
-    setShowRush(true);
+    setShowModal(true);
   } else {
+    setShowModal(false);
     setShowRush(false);
     setShowPayment(true);
   }
@@ -95,6 +103,7 @@ export default function PackageConfirmation({
   const [toastMessage, setToastMessage] = useState(null);
   const [refreshFiles, setRefreshFiles] = useState(true);
   const [showRush, setShowRush] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -180,6 +189,13 @@ export default function PackageConfirmation({
 
   return (
     <div className="ct-package-confirmation page">
+      {showModal && (
+        <RushConfirmation
+          show={showModal}
+          setShow={setShowModal}
+          setShowRush={setShowRush}
+        />
+      )}
       <div className="content col-md-8">
         {isNew && (
           <>
@@ -260,7 +276,15 @@ export default function PackageConfirmation({
           />
           <Button
             label="Continue"
-            onClick={() => handleContinue(isRush, setShowRush, setShowPayment)}
+            onClick={() =>
+              handleContinue(
+                isRush,
+                setShowRush,
+                setShowPayment,
+                showModal,
+                setShowModal
+              )
+            }
             styling="bcgov-normal-blue btn"
             testId="continue-btn"
             disabled={toastMessage !== null}
