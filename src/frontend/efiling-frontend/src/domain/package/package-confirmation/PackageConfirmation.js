@@ -77,7 +77,6 @@ const handleContinue = (
   isRush,
   setShowRush,
   setShowPayment,
-  showModal,
   setShowModal
 ) => {
   if (isRush) {
@@ -174,7 +173,7 @@ export default function PackageConfirmation({
       />
     );
 
-  if (showRush)
+  if (!showRush)
     return (
       <Rush
         payment={{

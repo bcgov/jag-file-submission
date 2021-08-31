@@ -5,6 +5,7 @@ import "./Input.scss";
 
 export const Input = ({
   input: {
+    ref,
     label,
     id,
     value,
@@ -42,7 +43,7 @@ export const Input = ({
   }
 
   return (
-    <div>
+    <div ref={ref}>
       {labelPartExists && labelPart}
       {isControlled && (
         <input
@@ -78,6 +79,7 @@ export const Input = ({
 
 Input.propTypes = {
   input: PropTypes.shape({
+    ref: PropTypes.func,
     label: PropTypes.string,
     id: PropTypes.string.isRequired,
     defaultValue: PropTypes.string,
