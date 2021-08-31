@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { MdDescription } from "react-icons/md";
+import PropTypes from "prop-types";
 import { isClick, isEnter } from "../../../../modules/helpers/eventUtil";
 import { propTypes } from "../../../../types/propTypes";
 import { Toast } from "../../../toast/Toast";
 
-export default function RushDocumentListItem({ file }) {
+export default function RushDocumentListItem({ file, onDeleteFile }) {
   const [showToast, setShowToast] = useState(false);
   const handleDownloadFile = (e) => {
     if (isClick(e) || isEnter(e)) {
       console.log("download");
       // TODO: download functionality
+    }
+  };
+  const handleDeleteFile = (e, f) => {
+    if (isClick(e) || isEnter(e)) {
+      onDeleteFile(f);
     }
   };
 
@@ -22,8 +28,11 @@ export default function RushDocumentListItem({ file }) {
         />
       )}
       <li>
+        <span className="label col-sm-4 d-lg-none mb-0 mb-sm-2">
+          Document Name:
+        </span>
         <span
-          className="file-href col-md-12 col-lg-6"
+          className="file-href col-sm-8 col-lg-10"
           role="button"
           tabIndex={0}
           onKeyDown={(e) => handleDownloadFile(e)}
@@ -33,7 +42,16 @@ export default function RushDocumentListItem({ file }) {
           <MdDescription size={30} color="#FCBA19" />
           {file.name}
         </span>
-        <span className="col-md-5 d-lg-none">Statutory Fee:</span>
+        <span className="label col-sm-4 d-lg-none">Action:</span>
+        <span
+          className="file-href col-sm-8 col-lg-2"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => handleDeleteFile(e, file)}
+          onClick={(e) => handleDeleteFile(e, file)}
+        >
+          Remove
+        </span>
       </li>
     </>
   );
@@ -41,4 +59,5 @@ export default function RushDocumentListItem({ file }) {
 
 RushDocumentListItem.propTypes = {
   file: propTypes.file.isRequired,
+  onDeleteFile: PropTypes.func.isRequired,
 };
