@@ -9,12 +9,12 @@ exports[`RushConfirmation Component Matches the snapshot 1`] = `
       class="header"
     >
       <span
-        class="d-none d-lg-inline col-lg-6"
+        class="d-none d-lg-inline col-lg-10"
       >
         Document Name
       </span>
       <span
-        class="d-none d-lg-inline col-lg-3"
+        class="d-none d-lg-inline col-lg-2"
       >
         Action
       </span>
@@ -22,7 +22,12 @@ exports[`RushConfirmation Component Matches the snapshot 1`] = `
     <ul>
       <li>
         <span
-          class="file-href col-md-12 col-lg-6"
+          class="label col-sm-4 d-lg-none mb-0 mb-sm-2"
+        >
+          Document Name:
+        </span>
+        <span
+          class="file-href col-sm-8 col-lg-10"
           data-test-id="uploaded-file"
           role="button"
           tabindex="0"
@@ -45,14 +50,26 @@ exports[`RushConfirmation Component Matches the snapshot 1`] = `
           file name 1
         </span>
         <span
-          class="col-md-5 d-lg-none"
+          class="label col-sm-4 d-lg-none"
         >
-          Statutory Fee:
+          Action:
+        </span>
+        <span
+          class="file-href col-sm-8 col-lg-2"
+          role="button"
+          tabindex="0"
+        >
+          Remove
         </span>
       </li>
       <li>
         <span
-          class="file-href col-md-12 col-lg-6"
+          class="label col-sm-4 d-lg-none mb-0 mb-sm-2"
+        >
+          Document Name:
+        </span>
+        <span
+          class="file-href col-sm-8 col-lg-10"
           data-test-id="uploaded-file"
           role="button"
           tabindex="0"
@@ -75,9 +92,16 @@ exports[`RushConfirmation Component Matches the snapshot 1`] = `
           file name 2
         </span>
         <span
-          class="col-md-5 d-lg-none"
+          class="label col-sm-4 d-lg-none"
         >
-          Statutory Fee:
+          Action:
+        </span>
+        <span
+          class="file-href col-sm-8 col-lg-2"
+          role="button"
+          tabindex="0"
+        >
+          Remove
         </span>
       </li>
     </ul>
