@@ -7,17 +7,21 @@ import "./RushDocumentList.scss";
 
 const hash = require("object-hash");
 
-export default function RushDocumentList({ files }) {
+export default function RushDocumentList({ files, onDeleteFile }) {
   return (
     <div className="ct-file-list ">
       <div className="header">
-        <span className="d-none d-lg-inline col-lg-6">Document Name</span>
-        <span className="d-none d-lg-inline col-lg-3">Action</span>
+        <span className="d-none d-lg-inline col-lg-10">Document Name</span>
+        <span className="d-none d-lg-inline col-lg-2">Action</span>
       </div>
       <ul>
         {files &&
           files.map((file) => (
-            <RushDocumentListItem file={file} key={hash(file)} />
+            <RushDocumentListItem
+              file={file}
+              key={hash(file)}
+              onDeleteFile={onDeleteFile}
+            />
           ))}
       </ul>
     </div>
@@ -26,4 +30,5 @@ export default function RushDocumentList({ files }) {
 
 RushDocumentList.propTypes = {
   files: PropTypes.arrayOf(propTypes.file.isRequired).isRequired,
+  onDeleteFile: PropTypes.func.isRequired,
 };
