@@ -124,6 +124,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -153,6 +154,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
 
@@ -169,6 +171,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return ResponseEntity.notFound().build();
 
         try {
+
             Submission submission = submissionService.updateDocuments(fromCacheSubmission.get(), updateDocumentRequest, submissionKey);
             UpdateDocumentResponse updateDocumentResponse = new UpdateDocumentResponse();
             SubmissionFilingPackage filingPackage = filingPackageMapper.toApiFilingPackage(submission.getFilingPackage());
@@ -177,8 +180,10 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
             return ResponseEntity.ok(updateDocumentResponse);
 
         } catch (EfilingDocumentServiceException e) {
+
             logger.warn(e.getMessage(), e);
             throw new DocumentTypeException(DOCUMENT_TYPE_ERROR);
+
         }
     }
 
@@ -197,6 +202,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -215,13 +221,15 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     @RolesAllowed({"efiling-client", "efiling-admin"})
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
-
         logger.info("Attempting to generate Url Request Received");
+
+        logger.info("Message recieved from client App [{}]", generateUrlRequest.getClientAppName());
 
         if (StringUtils.isBlank(xUserId)) {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
         Optional<String> applicationCode = SecurityUtils.getApplicationCode();
@@ -280,6 +288,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new MissingUniversalIdException(MISSING_UNIVERSAL_ID);
+
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -315,6 +324,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -329,6 +339,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.info("successfully retrieved submission filing package for transactionId [{}]", xTransactionId);
 
         return ResponseEntity.ok(filingPackageMapper.toApiFilingPackage(fromCacheSubmission.get().getFilingPackage()));
+
     }
 
     @Override
@@ -341,6 +352,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
             logger.error(UNIVERSAL_ID_IS_REQUIRED);
             throw new InvalidUniversalException(INVALID_UNIVERSAL_ID);
+
         }
 
         SubmissionKey submissionKey = new SubmissionKey(universalId.get(), xTransactionId, submissionId);
@@ -436,6 +448,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.info("{} stored in cache", files.size());
 
         return ResponseEntity.ok(new UploadSubmissionDocumentsResponse().submissionId(submissionKey.getSubmissionId()).received(new BigDecimal(files.size())));
+
     }
 
     @Override
@@ -495,5 +508,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         logger.info("successfully uploaded rush document [{}]", submissionKey.getSubmissionId());
 
         return response;
+        
     }
 }
