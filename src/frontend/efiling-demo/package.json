@@ -21,7 +21,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.3",
     "regenerator-runtime": "^0.13.5",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.4/shared-components-1.2.4.tgz",
     "uuid": "^8.3.1"
   },
   "scripts": {
@@ -55,7 +55,7 @@
     "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.14.4",
     "@storybook/addon-actions": "^6.2.9",
-    "@storybook/addon-links": "^6.2.9",
+    "@storybook/addon-links": "^6.3.7",
     "@storybook/addon-storyshots": "^6.2.9",
     "@storybook/addon-viewport": "^6.2.9",
     "@storybook/addons": "^6.2.3",
