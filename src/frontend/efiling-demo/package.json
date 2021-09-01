@@ -21,7 +21,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.3",
     "regenerator-runtime": "^0.13.5",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.4/shared-components-1.2.4.tgz",
     "uuid": "^8.3.1"
   },
   "scripts": {
@@ -73,7 +73,7 @@
     "enzyme-to-json": "^3.6.2",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.24.0",
