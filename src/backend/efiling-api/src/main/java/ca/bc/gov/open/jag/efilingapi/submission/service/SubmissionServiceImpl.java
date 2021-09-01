@@ -111,6 +111,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             if (documentTypeDetails.isRushRequired()) return true;
         }
         return false;
+        
     }
 
     @Override
@@ -156,15 +157,18 @@ public class SubmissionServiceImpl implements SubmissionService {
         submissionStore.put(submission);
 
         return submission;
+
     }
 
     @Override
     public List<String> getValidPartyRoles(GetValidPartyRoleRequest getValidPartyRoleRequest) {
+
         return efilingLookupService.getValidPartyRoles(
                 getValidPartyRoleRequest.getCourtLevel(),
                 getValidPartyRoleRequest.getCourtClassification(),
                 getValidPartyRoleRequest.getDocumentTypesAsString()
         );
+
     }
 
     private FilingPackage toFilingPackage(String applicationCode, GenerateUrlRequest request, SubmissionKey submissionKey) {
@@ -223,6 +227,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                 .classDescription(courtDetails.get().getClassDescription())
                 .levelDescription(courtDetails.get().getLevelDescription())
                 .create();
+
     }
 
     private Document toDocument(String courtLevel, String courtClass,  InitialDocument initialDocument, SubmissionKey submissionKey) {
@@ -322,6 +327,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         if (actionDocument == null) return null;
 
         if (actionDocument.getType().equals(Keys.REJECTED_DOCUMENT_CODE)) return null;
+
+        logger.info("setting action document id");
 
         return actionDocument.getId();
 

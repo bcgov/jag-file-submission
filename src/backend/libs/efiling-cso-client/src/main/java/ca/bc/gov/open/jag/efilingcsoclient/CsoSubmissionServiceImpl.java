@@ -3,15 +3,13 @@ package ca.bc.gov.open.jag.efilingcsoclient;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.filing.ProcessItemStatus;
 import ca.bc.gov.ag.csows.filing.*;
-import ca.bc.gov.ag.csows.filing.status.GetDocumentStatusTypes;
-import ca.bc.gov.ag.csows.filing.status.GetDocumentStatusTypesResponse;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingPaymentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
@@ -87,6 +85,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         if (efilingPackage.getSubmissionFeeAmount() != null &&
                 efilingPackage.getSubmissionFeeAmount().compareTo(BigDecimal.ZERO) > 0) {
 
+            logger.info("Fee detected making payment");
+
             updatePaymentForService(
                     createdService,
                     true,
@@ -97,7 +97,11 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage = buildFilingPackage(accountDetails, efilingPackage, createdService);
 
         if (efilingPackage.isRushedSubmission() || efilingPackage.getRush() != null) {
+
+            logger.info("Submission is a rush");
+
             csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails, efilingPackage.getRush()));
+
         }
 
         determineAutoProcessingFlagFromDocuments(efilingPackage, csoFilingPackage);
@@ -112,11 +116,14 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                         .format("{0}{1}{2}", csoProperties.getCsoBasePath(), csoProperties.getCsoPackagePath(), filingResult.toPlainString()))
                 .transactionId(filingResult)
                 .create();
+
     }
 
     private ca.bc.gov.ag.csows.filing.FilingPackage buildFilingPackage(AccountDetails accountDetails, FilingPackage efilingPackage, Service createdService) {
+
         XMLGregorianCalendar submittedDate = ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate();
         XMLGregorianCalendar computedSubmittedDate = getComputedSubmittedDate(efilingPackage.getCourt().getLocation());
+
         return filingPackageMapper.toFilingPackage(
                         efilingPackage,
                         accountDetails,
@@ -125,6 +132,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                         buildCivilDocuments(accountDetails, efilingPackage, computedSubmittedDate),
                         buildCsoParties(accountDetails, efilingPackage),
                         buildPackageAuthorities(accountDetails));
+
     }
 
     private List<PackageAuthority> buildPackageAuthorities(AccountDetails accountDetails) {
@@ -158,6 +166,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         }
 
         return csoParties;
+
     }
 
 
@@ -225,6 +234,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         processRequest.setItem(rushOrderRequestItem);
         return processRequest;
+
     }
 
     private List<ProcessSupportDocument> buildSupportingDocuments(AccountDetails accountDetails, List<Document> documents) {
@@ -242,14 +252,19 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private ProcessItemStatus getProcessItemStatusRequest(AccountDetails accountDetails) {
+
         return getProcessItemStatus(accountDetails, Keys.REQUEST_PROCESS_STATUS_CD);
+
     }
 
     private ProcessItemStatus getProcessItemStatusApproved(AccountDetails accountDetails) {
+
         return getProcessItemStatus(accountDetails, Keys.APPROVED_PROCESS_STATUS_CD);
+
     }
 
     private ProcessItemStatus getProcessItemStatus(AccountDetails accountDetails, String proccessStatusCd) {
+
         ProcessItemStatus processItemStatus = new ProcessItemStatus();
         processItemStatus.setAccountId(accountDetails.getAccountId());
         processItemStatus.setClientId(accountDetails.getClientId());
@@ -257,6 +272,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         processItemStatus.setEntUserId(accountDetails.getClientId().toString());
         processItemStatus.setProcessStatusCd(proccessStatusCd);
         return processItemStatus;
+
     }
 
     private String generateInvoiceNumber(String data) {
@@ -279,6 +295,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while getting user session", e.getCause());
         }
+
     }
 
     private Service createEfilingService(FilingPackage efilingPackage, AccountDetails accountDetails, ServiceSession serviceSession) {
@@ -292,6 +309,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         } catch (ca.bc.gov.ag.csows.services.NestedEjbException_Exception e) {
             throw new EfilingSubmissionServiceException("Exception while creating efiling service", e.getCause());
         }
+
     }
 
     private void updatePaymentForService(Service service, Boolean feePaid, FinancialTransaction financialTransaction) {
@@ -355,7 +373,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
     private void determineAutoProcessingFlagFromDocuments(FilingPackage efilingPackage, ca.bc.gov.ag.csows.filing.FilingPackage csoFilingPackage) {
+
         logger.info("Determining whether auto processing flag needs to be set");
+
         String courtClass = efilingPackage.getCourt().getCourtClass();
         String courtLevel = efilingPackage.getCourt().getLevel();
         List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
@@ -371,9 +391,11 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 }
             }
         }
+
     }
 
     private Boolean determineDelayProcessing(CivilDocument document) {
+
         List<Milestones> milestones = document.getMilestones();
         Calendar actualSubmittedCalendar = Calendar.getInstance();
         Calendar calculatedCalendar = Calendar.getInstance();
@@ -388,6 +410,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         return (actualSubmittedCalendar.get(Calendar.YEAR) != calculatedCalendar.get(Calendar.YEAR)) ||
                 (actualSubmittedCalendar.get(Calendar.MONTH) != calculatedCalendar.get(Calendar.MONTH)) ||
                 (actualSubmittedCalendar.get(Calendar.DATE) != calculatedCalendar.get(Calendar.DATE));
+
     }
 
     //This function will be used when cso has the valid flag available
