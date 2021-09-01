@@ -21,7 +21,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.3",
     "regenerator-runtime": "^0.13.5",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.1/shared-components-1.2.1.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.4/shared-components-1.2.4.tgz",
     "uuid": "^8.3.1"
   },
   "scripts": {
@@ -65,7 +65,7 @@
     "@testing-library/react": "^11.2.6",
 
     "@testing-library/react-hooks": "7.0.0",
-    "@testing-library/user-event": "^13.1.1",
+    "@testing-library/user-event": "^13.2.1",
     "axios-mock-adapter": "^1.18.1",
     "babel-loader": "8.2.2",
     "enzyme": "^3.11.0",
