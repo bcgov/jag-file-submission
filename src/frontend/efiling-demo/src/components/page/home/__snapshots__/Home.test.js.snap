@@ -106,7 +106,7 @@ exports[`Home Component matches the snapshot 1`] = `
         <br />
         <button
           class="bcgov-button bcgov-normal-blue btn"
-          data-test-id="generate-url-btn"
+          data-testid="generate-url-btn"
           type="button"
         >
           E-File my Package

@@ -68,7 +68,7 @@ exports[`Success Component matches the snapshot 1`] = `
         </p>
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Return home

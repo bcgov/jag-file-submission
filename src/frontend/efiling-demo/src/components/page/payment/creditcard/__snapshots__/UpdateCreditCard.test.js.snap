@@ -234,7 +234,7 @@ exports[`Success Component matches the snapshot 1`] = `
           >
             <button
               class="bcgov-button btn btn-success mx-auto"
-              data-test-id=""
+              data-testid=""
               type="button"
             >
               Simulate Card Update Success
@@ -245,7 +245,7 @@ exports[`Success Component matches the snapshot 1`] = `
           >
             <button
               class="bcgov-button btn btn-danger mx-auto"
-              data-test-id=""
+              data-testid=""
               type="button"
             >
               Simulate Card Update Failure

@@ -67,7 +67,7 @@ exports[`Storyshots Error Default 1`] = `
         <br />
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Return home
@@ -233,7 +233,7 @@ exports[`Storyshots Error Mobile 1`] = `
         <br />
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Return home

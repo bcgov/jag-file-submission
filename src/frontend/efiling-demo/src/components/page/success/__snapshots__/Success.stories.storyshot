@@ -68,7 +68,7 @@ exports[`Storyshots Success Default 1`] = `
         </p>
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Return home
@@ -235,7 +235,7 @@ exports[`Storyshots Success Mobile 1`] = `
         </p>
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id=""
+          data-testid=""
           type="button"
         >
           Return home
