@@ -16,6 +16,7 @@ import {
   Dropdown,
 } from "shared-components";
 import docTypeList from "../../../typeList.json";
+import actionStatusList from "../../../actionStatusList.json";
 import { getJWTData } from "../../../modules/authentication-helper/authenticationHelper";
 
 import { propTypes } from "../../../types/propTypes";
@@ -76,6 +77,11 @@ const generatePackageData = (files, filingPackage) => {
       type: files[i].data.type,
       isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling,
       isAmendment: files[i].data.isAmendment,
+      actionDocument: {
+        id: files[i].data.actionDocument.id,
+        status: files[i].data.actionDocument.status,
+        type: files[i].data.actionDocument.type,
+      },
       data: {},
       md5: document.md5,
     });
@@ -141,12 +147,23 @@ export default function Home({ page: { header } }) {
   const [showLoader, setShowLoader] = useState(false);
 
   const docTypeListIds = docTypeList.map((obj) => obj.id);
+  const actionStatusIds = actionStatusList.map((obj) => obj.id);
 
   const onSelect = (e, file) => {
     const newFiles = [...files];
     newFiles.forEach((f) => {
       if (f.name === file.name) {
         f.data.type = e;
+      }
+    });
+    setFiles(newFiles);
+  };
+
+  const onSelectStatus = (e, file) => {
+    const newFiles = [...files];
+    newFiles.forEach((f) => {
+      if (f === file) {
+        f.data.actionDocument.status = e;
       }
     });
     setFiles(newFiles);
@@ -227,6 +244,17 @@ export default function Home({ page: { header } }) {
         isNameBold: true,
       },
       {
+        name: "Action Document",
+        value: (
+          <Dropdown
+            items={actionStatusIds}
+            onSelect={(e) => onSelectStatus(e, file)}
+            testId="actionDropdown"
+          />
+        ),
+        isNameBold: true,
+      },
+      {
         name: "",
         value: (
           <button
@@ -261,6 +289,11 @@ export default function Home({ page: { header } }) {
                     type: "",
                     isSupremeCourtScheduling: false,
                     isAmmendment: false,
+                    actionDocument: {
+                      id: 0,
+                      status: "SUB",
+                      type: "",
+                    },
                   })
               );
               setFiles(files.concat(droppedFiles));
