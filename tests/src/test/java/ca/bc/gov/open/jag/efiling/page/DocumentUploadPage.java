@@ -1,5 +1,7 @@
 package ca.bc.gov.open.jag.efiling.page;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -8,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class DocumentUploadPage extends BasePage {
 
+	public static String DUPLICATE_FILE_ERROR = "You cannot upload multiple files with the same name.";
+	
     @FindBy(xpath = "//*[@data-testid='dropdownzone']/div/input")
     private WebElement selectFile;
 
@@ -25,7 +29,7 @@ public class DocumentUploadPage extends BasePage {
 
     @FindBy(xpath = "//button[@data-testid='remove-icon']")
     private WebElement removeFileIcon;
-
+    
     //Actions:
     public void selectFileToUpload(String file) {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@data-testid='dropdownzone']/div/input")));
@@ -53,4 +57,13 @@ public class DocumentUploadPage extends BasePage {
         Actions action = new Actions(driver);
         action.moveToElement(removeFileIcon).click();
     }
+    
+    /** Returns the text of a <p /> tag with an error message if it exists. */
+    public String getDuplicateFileError() {
+    	List<WebElement> elements = driver.findElements(By.xpath("//p[@data-testid='err-dup-file']"));
+    	if (elements != null && !elements.isEmpty()) {
+    		return elements.get(0).getText();
+    	}
+    	return null;
+	}
 }

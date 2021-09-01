@@ -401,7 +401,11 @@ export default function Upload({
             ))}
           </>
         )}
-        {errorMessage && <p className="error">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="error" data-testid="err-dup-file">
+            {errorMessage}
+          </p>
+        )}
         <section className="buttons pt-2">
           <Button
             label="Cancel Upload"

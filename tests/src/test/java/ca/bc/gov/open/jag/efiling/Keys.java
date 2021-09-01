@@ -13,9 +13,6 @@ public class Keys {
     // Submission Service
     public static final String X_USER_ID = "X-User-Id";
 
-    // Commons
-    public static final String TEST_DOCUMENT_PDF = "test-document.pdf";
-
     // Assertions
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String RESPONSE_NAVIGATION_URL = "http//somewhere.com";
@@ -27,7 +24,9 @@ public class Keys {
 
     // File path
     public static final String BASE_PATH = System.getProperty("user.dir");
-    public static final String SECOND_PDF_PATH = "/src/test/resources/data/test-document-additional.pdf";
+    public static final String RESOURCES_PATH = "/src/test/resources/data/";
+    public static final String TEST_DOCUMENT_PDF = "test-document.pdf";
+    public static final String SECOND_DOCUMENT_PDF = "test-document-additional.pdf";
 
     // Api endpoint Paths
     public static final String SUBMIT_PATH = "submit";
