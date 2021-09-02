@@ -56,7 +56,7 @@ exports[`Cancel Component matches the snapshot 1`] = `
         </p>
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-test-id="return-home-btn"
+          data-testid="return-home-btn"
           type="button"
         >
           Return home

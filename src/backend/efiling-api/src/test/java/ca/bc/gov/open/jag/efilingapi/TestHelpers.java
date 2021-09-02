@@ -74,6 +74,7 @@ public class TestHelpers {
     public static final String RUSH_FILING_REASON_TXT = "This is a reason. This is a reason. This is a reason. This is a reason.";
     public static final String CLIENT_FILE_NM = "Test.pdf";
     public static final String OBJECT_GUID = "9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8";
+    public static final String APPLICATION_CODE = "TESTPARENT";
 
 
     public static InitialPackage createInitalPackage(ca.bc.gov.open.jag.efilingapi.api.model.CourtBase court, List<InitialDocument> initialDocuments) {
@@ -184,7 +185,6 @@ public class TestHelpers {
 
     public static List<Document> createDocumentList() {
         return Arrays.asList(Document.builder()
-                .documentId(BigDecimal.TEN)
                 .description(DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
@@ -193,6 +193,11 @@ public class TestHelpers {
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(true)
                 .isAmendment(true)
+                .actionDocument(ActionDocument.builder()
+                        .documentId(BigDecimal.TEN)
+                        .status("REJ")
+                        .type("TEST")
+                        .create())
                 .data(new Object()).create());
     }
 
@@ -254,6 +259,7 @@ public class TestHelpers {
     public static ReviewFilingPackage createFilingPackage(Boolean hasRegistry) {
 
         ReviewFilingPackage reviewFilingPackage = new ReviewFilingPackage();
+        reviewFilingPackage.setApplicationCode(APPLICATION_CODE);
         reviewFilingPackage.setHasRegistryNotice(hasRegistry);
         reviewFilingPackage.setClientFileNo("CLIENTFILENO");
         reviewFilingPackage.setFilingCommentsTxt(COMMENT);

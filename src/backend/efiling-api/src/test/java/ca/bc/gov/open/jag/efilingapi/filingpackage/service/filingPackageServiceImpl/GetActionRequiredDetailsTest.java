@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.service.filingPackageServiceImpl;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.ActionDocument;
@@ -43,7 +42,7 @@ public class GetActionRequiredDetailsTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), new ActionRequiredDetailsMapperImpl());
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), new ActionRequiredDetailsMapperImpl(), null);
     }
 
     @Test

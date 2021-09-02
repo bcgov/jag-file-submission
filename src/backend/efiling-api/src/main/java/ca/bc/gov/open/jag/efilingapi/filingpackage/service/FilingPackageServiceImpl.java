@@ -4,10 +4,13 @@ import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
 import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
+import ca.bc.gov.open.jag.efilingapi.api.model.ParentAppDetails;
 import ca.bc.gov.open.jag.efilingapi.error.NoRegistryNoticeException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.ActionRequiredDetailsMapper;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapper;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.properties.ParentAppProperties;
+import ca.bc.gov.open.jag.efilingapi.filingpackage.properties.ParentProperties;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
@@ -35,11 +38,14 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     private final ActionRequiredDetailsMapper actionRequiredDetailsMapper;
 
-    public FilingPackageServiceImpl(EfilingReviewService efilingReviewService, AccountService accountService, FilingPackageMapper filingPackageMapper, ActionRequiredDetailsMapper actionRequiredDetailsMapper) {
+    private final ParentProperties parentProperties;
+
+    public FilingPackageServiceImpl(EfilingReviewService efilingReviewService, AccountService accountService, FilingPackageMapper filingPackageMapper, ActionRequiredDetailsMapper actionRequiredDetailsMapper, ParentProperties parentProperties) {
         this.efilingReviewService = efilingReviewService;
         this.accountService = accountService;
         this.filingPackageMapper = filingPackageMapper;
         this.actionRequiredDetailsMapper = actionRequiredDetailsMapper;
+        this.parentProperties = parentProperties;
     }
 
 
@@ -164,6 +170,28 @@ public class FilingPackageServiceImpl implements FilingPackageService {
                 .name(reviewDocument.get().getClientFileNm())
                 .data(new ByteArrayResource(bytes))
                 .create());
+
+    }
+
+    @Override
+    public Optional<ParentAppDetails> getParentDetails(String universalId, BigDecimal packageNumber) {
+
+        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
+
+        if (!filingPackage.isPresent()) return Optional.empty();
+
+        Optional<ParentAppProperties> parentAppProperties = parentProperties.getParents().stream()
+                .filter(parentApp -> parentApp.getApplication().equalsIgnoreCase(filingPackage.get().getApplicationCode()))
+                .findFirst();
+
+        if (!parentAppProperties.isPresent()) return Optional.empty();
+
+        ParentAppDetails parentAppDetails = new ParentAppDetails();
+
+        parentAppDetails.setRejectedDocumentFeature(parentAppProperties.get().getRejectedDocuments());
+        parentAppDetails.setReturnUrl(parentAppProperties.get().getReturnUrl());
+
+        return Optional.of(parentAppDetails);
 
     }
 

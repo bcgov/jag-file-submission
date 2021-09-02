@@ -120,6 +120,20 @@ info:
 mailsend:
   baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8090}
 
+parents:
+  - application: EFILING_ADMIN
+    returnUrl: ${EFILING_ADMIN_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${EFILING_ADMIN_REJECTED_DOCUMENT:false}
+  - application: FLA
+    returnUrl: ${FLA_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${FLA_REJECTED_DOCUMENT:false}
+  - application: BCCOA
+    returnUrl: ${BCCOA_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${BCCOA_REJECTED_DOCUMENT:false}
+  - application: EDIVORCE
+    returnUrl: ${EDIVORCE_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${EDIVORCE_REJECTED_DOCUMENT:false}
+
 opentracing:
   jaeger:
     service-name: efilingApi

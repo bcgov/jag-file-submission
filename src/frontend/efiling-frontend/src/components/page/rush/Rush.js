@@ -121,6 +121,10 @@ export default function Rush({ payment }) {
     }
   }
 
+  const handleDeleteFile = (file) => {
+    setFiles(files.filter((f) => f !== file));
+  };
+
   const handleMethodOfContactChange = (e) => {
     setFields({
       ...fields,
@@ -331,7 +335,9 @@ export default function Rush({ payment }) {
       <br />
       {canReject}
       <br />
-      {files.length > 0 && <RushDocumentList files={files} />}
+      {files.length > 0 && (
+        <RushDocumentList files={files} onDelete={handleDeleteFile} />
+      )}
     </>
   );
 
