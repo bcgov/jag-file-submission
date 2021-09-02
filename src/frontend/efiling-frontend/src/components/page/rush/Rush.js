@@ -55,8 +55,8 @@ export default function Rush({ payment }) {
     email: "",
     org: "",
     country: null,
-    details: null,
-    date: null,
+    details: "",
+    date: "",
   };
 
   const [files, setFiles] = useState([]);
@@ -76,7 +76,7 @@ export default function Rush({ payment }) {
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
-  const [mandatoryFields, setMandatoryFields] = useState(null)
+  const [mandatoryFields, setMandatoryFields] = useState([]);
 
 
   const handleContinue = () => {
@@ -88,13 +88,12 @@ export default function Rush({ payment }) {
     if (isError()) result = false;
     mandatoryFields.forEach((field) => {
       if (typeof field === "string") {
-          console.log(field)
-          console.log("Is empty? " + validator.isEmpty(field))
+          //console.log(field)
+          //console.log("Is empty? " + validator.isEmpty(field))
           //console.log("Not Radio1 and No files and no details " + ((radio2 || radio3) && (files.length < 1 && fields.details === null)))
         // If any of the fields are invalid or the selection is radio2 or radio3 and there are no files and details then return a false result
-        if ((radio1 && validator.isEmpty(field)) || ( (radio2 || radio3) && (validator.isEmpty(field)) && (files.length < 1 && fields.details === null) )) {
+        if ((radio1 && validator.isEmpty(field)) || ( (radio2 || radio3) && ((validator.isEmpty(field)) || ((files.length < 1 && validator.isEmpty(fields.details)))) )) {
           result = false;
-          return;
         }
       }
     })
@@ -349,7 +348,7 @@ export default function Rush({ payment }) {
       initialRender.current = false;
       return;
     }
-    setContinueBtnEnabled(canContinue())
+    setContinueBtnEnabled(() => canContinue())
   }, [fields.firstName, fields.surname, fields[fields.contactMethod[1]], fields.details, fields.date, radio1, radio2, radio3])
 
   useEffect(() => {
@@ -396,10 +395,10 @@ export default function Rush({ payment }) {
   };
 
   const setRadioStatusComponents = () => {
+    resetFields();    
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
-    resetFields();
     setFiles([]);
   };
 
@@ -429,9 +428,7 @@ export default function Rush({ payment }) {
           onSelect={() => {
             setRadioStatusComponents();
             setRadio1(true);
-            console.log(mandatoryFields)
             setMandatoryFields([fields.surname, fields.firstName, fields[fields.contactMethod[1]]])
-            console.log(mandatoryFields)
           }}
         />
         <Radio
