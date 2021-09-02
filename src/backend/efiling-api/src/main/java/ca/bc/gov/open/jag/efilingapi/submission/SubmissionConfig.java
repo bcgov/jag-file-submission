@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission;
 
-
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.court.services.CourtService;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentService;

@@ -373,7 +373,9 @@ public class GenerateFromRequestTest {
         Assertions.assertEquals(BigDecimal.TEN, actual.getFilingPackage().getDocuments().get(0).getStatutoryFeeAmount());
         Assertions.assertEquals(SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD, actual.getFilingPackage().getDocuments().get(0).getSubType());
         Assertions.assertEquals("application/txt", actual.getFilingPackage().getDocuments().get(0).getMimeType());
-        Assertions.assertEquals(DOCUMENT_ID, actual.getFilingPackage().getDocuments().get(0).getDocumentId());
+        Assertions.assertEquals(DOCUMENT_ID, actual.getFilingPackage().getDocuments().get(0).getActionDocument().getDocumentId());
+        Assertions.assertEquals("REJ", actual.getFilingPackage().getDocuments().get(0).getActionDocument().getStatus());
+        Assertions.assertEquals("TEST", actual.getFilingPackage().getDocuments().get(0).getActionDocument().getType());
         Assertions.assertEquals(2, actual.getFilingPackage().getParties().size());
         Assertions.assertEquals(TestHelpers.FIRST_NAME, actual.getFilingPackage().getParties().get(0).getFirstName());
         Assertions.assertEquals(TestHelpers.MIDDLE_NAME, actual.getFilingPackage().getParties().get(0).getMiddleName());

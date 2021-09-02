@@ -3,11 +3,11 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.swing.*;
 import java.math.BigDecimal;
 
 public class Document {
 
-    private BigDecimal documentId;
     private String name;
     private String type;
     private String subType;
@@ -18,10 +18,10 @@ public class Document {
     private BigDecimal statutoryFeeAmount;
     private String mimeType;
     private String serverFileName;
+    private ActionDocument actionDocument;
 
     @JsonCreator
-    public Document(@JsonProperty("documentId") BigDecimal documentId,
-                    @JsonProperty("name") String name,
+    public Document(@JsonProperty("name") String name,
                     @JsonProperty("type") String type,
                     @JsonProperty("subType") String subType,
                     @JsonProperty("isAmendment") Boolean isAmendment,
@@ -30,8 +30,8 @@ public class Document {
                     @JsonProperty("description") String description,
                     @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
                     @JsonProperty("mimeType") String mimeType,
-                    @JsonProperty("serverFileName") String serverFileName) {
-        this.documentId = documentId;
+                    @JsonProperty("serverFileName") String serverFileName,
+                    @JsonProperty("actionDocument") ActionDocument actionDocument) {
         this.name = name;
         this.type = type;
         this.subType = subType;
@@ -42,10 +42,10 @@ public class Document {
         this.statutoryFeeAmount = statutoryFeeAmount;
         this.mimeType = mimeType;
         this.serverFileName = serverFileName;
+        this.actionDocument = actionDocument;
     }
 
     public Document(Builder builder) {
-        this.documentId = builder.documentId;
         this.name = builder.name;
         this.type = builder.type;
         this.subType = builder.subType;
@@ -56,9 +56,8 @@ public class Document {
         this.statutoryFeeAmount = builder.statutoryFeeAmount;
         this.mimeType = builder.mimeType;
         this.serverFileName = builder.serverFileName;
+        this.actionDocument = builder.actionDocument;
     }
-
-    public BigDecimal getDocumentId() { return documentId; }
 
     public String getName() {
         return name;
@@ -100,13 +99,14 @@ public class Document {
         return serverFileName;
     }
 
+    public ActionDocument getActionDocument() { return actionDocument; }
+
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder {
 
-        private BigDecimal documentId;
         private String name;
         private String type;
         private String subType;
@@ -117,11 +117,7 @@ public class Document {
         private BigDecimal statutoryFeeAmount;
         private String mimeType;
         private String serverFileName;
-
-        public Builder documentId(BigDecimal documentId) {
-            this.documentId = documentId;
-            return this;
-        }
+        private ActionDocument actionDocument;
 
         public Builder name(String name) {
             this.name = name;
@@ -170,6 +166,11 @@ public class Document {
 
         public Builder serverFileName(String serverFileName) {
             this.serverFileName = serverFileName;
+            return this;
+        }
+
+        public Builder actionDocument(ActionDocument actionDocument) {
+            this.actionDocument = actionDocument;
             return this;
         }
 
