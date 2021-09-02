@@ -185,7 +185,6 @@ public class TestHelpers {
 
     public static List<Document> createDocumentList() {
         return Arrays.asList(Document.builder()
-                .documentId(BigDecimal.TEN)
                 .description(DESCRIPTION)
                 .statutoryFeeAmount(BigDecimal.TEN)
                 .name("random.txt")
@@ -194,6 +193,11 @@ public class TestHelpers {
                 .mimeType("application/txt")
                 .isSupremeCourtScheduling(true)
                 .isAmendment(true)
+                .actionDocument(ActionDocument.builder()
+                        .documentId(BigDecimal.TEN)
+                        .status("REJ")
+                        .type("TEST")
+                        .create())
                 .data(new Object()).create());
     }
 

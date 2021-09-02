@@ -191,7 +191,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                     csoProperties.getFileServerHost(),
                     milestones,
                     payments,
-                    statuses
+                    statuses,
+                    setDocumentId(efilingPackage.getDocuments().get(i).getActionDocument())
             ));
         }
 
@@ -430,6 +431,17 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
             logger.info("Form data is invalid");
             return false;
         }
+
+    }
+
+    private BigDecimal setDocumentId(ActionDocument actionDocument) {
+
+        if (actionDocument == null) return null;
+
+        //Rejected documents do get the document id applied
+        if (actionDocument.getStatus().equalsIgnoreCase(CSO_DOCUMENT_REJECTED)) return null;
+
+        return actionDocument.getDocumentId();
 
     }
 

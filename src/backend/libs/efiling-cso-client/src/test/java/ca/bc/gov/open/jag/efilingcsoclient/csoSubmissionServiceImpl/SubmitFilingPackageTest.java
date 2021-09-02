@@ -706,6 +706,118 @@ public class SubmitFilingPackageTest {
         Assertions.assertEquals(BigDecimal.ONE, actual.getTransactionId());
     }
 
+    @DisplayName("OK: submitting a action document that is courtesy corrected ")
+    @Test
+    public void testWithCourtesyCorrection() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception, DatatypeConfigurationException {
+        Mockito.when(filingFacadeBeanMock.submitFiling(argThat(filingPackage -> filingPackage.isDelayProcessing()))).thenReturn(BigDecimal.ONE);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        XMLGregorianCalendar mockDate = DateUtils.getCurrentXmlDate();
+        mockDate.setYear(mockDate.getYear() + 5000);
+        Mockito.doReturn(mockDate).when(filingFacadeBeanMock)
+                .calculateSubmittedDate(any(), Mockito.eq(LOCATION));
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                        .name(DOCUMENT)
+                                        .serverFileName(SERVERFILENAME)
+                                        .isAmendment(IS_AMENDMENT)
+                                        .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                        .type("type2")
+                                        .subType(TYPE)
+                                        .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                        .create(),
+                                Document.builder()
+                                        .name(DOCUMENT)
+                                        .serverFileName(SERVERFILENAME)
+                                        .isAmendment(IS_AMENDMENT)
+                                        .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                        .type("type1")
+                                        .subType(TYPE)
+                                        .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                        .actionDocument(
+                                                ActionDocument.builder()
+                                                        .type("TEST")
+                                                        .status("CCOR")
+                                                        .documentId(BigDecimal.TEN)
+                                                        .create()
+                                        )
+                                        .create()))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Assertions.assertEquals(BigDecimal.ONE, actual.getTransactionId());
+    }
+
+    @DisplayName("OK: submitting a action document that is rejected")
+    @Test
+    public void testWithRejected() throws ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception, DatatypeConfigurationException {
+        Mockito.when(filingFacadeBeanMock.submitFiling(argThat(filingPackage -> filingPackage.isDelayProcessing()))).thenReturn(BigDecimal.ONE);
+        Mockito.when(serviceFacadeBean.addService(any())).thenReturn(TestHelpers.createService());
+        Mockito.when(efilingPaymentServiceMock.makePayment(any())).thenReturn(createTransaction());
+        XMLGregorianCalendar mockDate = DateUtils.getCurrentXmlDate();
+        mockDate.setYear(mockDate.getYear() + 5000);
+        Mockito.doReturn(mockDate).when(filingFacadeBeanMock)
+                .calculateSubmittedDate(any(), Mockito.eq(LOCATION));
+        Mockito.doNothing().when(serviceFacadeBean).updateService(any());
+
+        AccountDetails accountDetails = getAccountDetails();
+
+        SubmitPackageResponse actual = sut.submitFilingPackage(accountDetails,
+                FilingPackage.builder()
+                        .applicationCode(APP_CODE)
+                        .court(Court.builder()
+                                .location(LOCATION)
+                                .agencyId(AGENCY_ID)
+                                .courtClass(COURT_CLASS)
+                                .division(DIVISION)
+                                .level(LEVEL)
+                                .fileNumber(FILE_NUMBER)
+                                .create())
+                        .documents(Arrays.asList(Document.builder()
+                                        .name(DOCUMENT)
+                                        .serverFileName(SERVERFILENAME)
+                                        .isAmendment(IS_AMENDMENT)
+                                        .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                        .type("type2")
+                                        .subType(TYPE)
+                                        .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                        .create(),
+                                Document.builder()
+                                        .name(DOCUMENT)
+                                        .serverFileName(SERVERFILENAME)
+                                        .isAmendment(IS_AMENDMENT)
+                                        .isSupremeCourtScheduling(IS_SUPREME_COURT_SCHEDULING)
+                                        .type("type1")
+                                        .subType(TYPE)
+                                        .statutoryFeeAmount(STATUTORY_FEE_AMOUNT)
+                                        .actionDocument(
+                                                ActionDocument.builder()
+                                                        .type("TEST")
+                                                        .status("REJ")
+                                                        .documentId(BigDecimal.TEN)
+                                                        .create()
+                                        )
+                                        .create()))
+                        .create(),
+                efilingPaymentServiceMock);
+
+        Assertions.assertEquals(BigDecimal.ONE, actual.getTransactionId());
+    }
+
     @DisplayName("Exception: payment to bambora throw exception")
     @Test
     public void testWithValidRequestPaymentThrowsException() throws DatatypeConfigurationException, ca.bc.gov.ag.csows.filing.NestedEjbException_Exception, NestedEjbException_Exception {

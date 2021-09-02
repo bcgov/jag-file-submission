@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_ACTUAL_SUBMITTED_DATE;
@@ -18,7 +19,7 @@ import static ca.bc.gov.open.jag.efilingcsoclient.Keys.CSO_CALCULATED_SUBMITTED_
 public interface DocumentMapper {
     //Civil Document Mappings
     @Mapping(target = "packageSeqNo", source = "index")
-    @Mapping(target = "documentId", source = "document.documentId")
+    @Mapping(target = "documentId", source = "documentId")
     @Mapping(target = "amendsAnotherDocumentYn", source = "document.isAmendment", defaultValue = "false")
     @Mapping(target = "clientFileNameTxt", source = "document.name")
     @Mapping(target = "documentSubtypeCd", constant = Keys.DOCUMENT_SUB_TYPE_CD)
@@ -41,7 +42,8 @@ public interface DocumentMapper {
             String serverHost,
             List<Milestones> milestones,
             List<DocumentPayments> payments,
-            List<DocumentStatuses> statuses);
+            List<DocumentStatuses> statuses,
+            BigDecimal documentId);
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")

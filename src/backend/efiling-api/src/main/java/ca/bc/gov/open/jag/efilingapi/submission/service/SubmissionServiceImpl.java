@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -13,9 +12,10 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.SubmissionConstants;
 import ca.bc.gov.open.jag.efilingapi.utils.FileUtils;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingCourtServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
+import ca.bc.gov.open.jag.efilingcommons.model.ActionDocument;
 import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
@@ -236,7 +236,6 @@ public class SubmissionServiceImpl implements SubmissionService {
 
         return
                 Document.builder()
-                        .documentId(setDocumentId(initialDocument.getActionDocument()))
                         .description(details.getDescription())
                         .statutoryFeeAmount(details.getStatutoryFeeAmount())
                         .type(initialDocument.getType())
@@ -245,6 +244,9 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .mimeType(FileUtils.guessContentTypeFromName(initialDocument.getName()))
                         .isAmendment(initialDocument.getIsAmendment())
                         .isSupremeCourtScheduling(initialDocument.getIsSupremeCourtScheduling())
+                        .actionDocument(
+                                setActionDocument(initialDocument.getActionDocument())
+                        )
                         .subType(details.isOrderDocument() ? SubmissionConstants.SUBMISSION_ORDR_DOCUMENT_SUB_TYPE_CD : SubmissionConstants.SUBMISSION_ODOC_DOCUMENT_SUB_TYPE_CD)
                         .data(initialDocument.getData())
                         .create();
@@ -322,15 +324,17 @@ public class SubmissionServiceImpl implements SubmissionService {
         return System.currentTimeMillis() + cacheProperties.getRedis().getTimeToLive().toMillis();
     }
 
-    private BigDecimal setDocumentId(ActionDocument actionDocument) {
+    private ActionDocument setActionDocument(ca.bc.gov.open.jag.efilingapi.api.model.ActionDocument actionDocument) {
 
         if (actionDocument == null) return null;
 
-        if (actionDocument.getType().equals(Keys.REJECTED_DOCUMENT_CODE)) return null;
+        logger.info("setting action document");
 
-        logger.info("setting action document id");
-
-        return actionDocument.getId();
+        return ActionDocument.builder()
+                .documentId(actionDocument.getId())
+                .status(String.valueOf(actionDocument.getStatus()))
+                .type(actionDocument.getType())
+                .create();
 
     }
 

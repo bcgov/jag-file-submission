@@ -1,9 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingcommons.model.Court;
-import ca.bc.gov.open.jag.efilingcommons.model.Document;
-import ca.bc.gov.open.jag.efilingcommons.model.Individual;
-import ca.bc.gov.open.jag.efilingcommons.model.Organization;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -134,7 +131,6 @@ public class FilingPakageTest {
     private List<Document> getDocuments() {
         List<Document> documents = new ArrayList<>();
         Document document = new Document(
-                BigDecimal.ONE,
                 NAME,
                 TYPE,
                 SUB_TYPE,
@@ -144,7 +140,12 @@ public class FilingPakageTest {
                 DESCRIPTION,
                 STATUTORY_FEE_AMOUNT,
                 MIME_TYPE,
-                SERVER_FILE_NAME);
+                SERVER_FILE_NAME,
+                ActionDocument.builder()
+                        .documentId(BigDecimal.TEN)
+                        .status("REJ")
+                        .type("TEST")
+                        .create());
         documents.add(document);
         return documents;
     }
