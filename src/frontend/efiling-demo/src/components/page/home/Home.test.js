@@ -314,4 +314,48 @@ describe("Home", () => {
 
     fireEvent.change(dropdown, { target: { value: "AFF" } });
   });
+
+  test("Action Document Status is updated", async () => {
+    mock
+      .onPost(
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+
+    const actiondropdown = getAllByTestId(container, "actionDropdown")[0];
+
+    fireEvent.change(actiondropdown, { target: { value: "REJ" } });
+  });
+
+  test("Remove document button", async () => {
+    mock
+      .onPost(
+        "apikeycloakexample.com/realms/apiRealm/protocol/openid-connect/token"
+      )
+      .reply(200, { access_token: token });
+    mock.onPost("/submission/documents").reply(200, { submissionId });
+    mock
+      .onPost(`/submission/${submissionId}/generateUrl`)
+      .reply(200, { efilingUrl });
+
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+
+    const removeButton = getAllByTestId(container, "close-button")[0];
+
+    fireEvent.click(removeButton);
+  });
 });
