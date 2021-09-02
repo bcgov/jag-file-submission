@@ -3,7 +3,6 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.swing.*;
 import java.math.BigDecimal;
 
 public class Document {
