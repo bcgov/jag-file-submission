@@ -10,6 +10,9 @@ const documents = [
     isSupremeCourtScheduling: null,
     mimeType: "application/pdf",
     statutoryFeeAmount: 40,
+    actionDocument: {
+      status: "SUB",
+    },
   },
   {
     description: "file description 2",
@@ -22,6 +25,9 @@ const documents = [
     isSupremeCourtScheduling: true,
     mimeType: "application/pdf",
     statutoryFeeAmount: 0,
+    actionDocument: {
+      status: "REJ",
+    },
   },
 ];
 
