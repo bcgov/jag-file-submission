@@ -67,7 +67,7 @@ public class GenerateUrlSD {
                 actualUserIdentity.getUniversalId(), fileSpec);
 
 
-        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
 
     }
 
@@ -91,7 +91,7 @@ public class GenerateUrlSD {
         actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
-        logger.info("Api response status code: {}", actualGenerateUrlResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualGenerateUrlResponse.getStatusCode()));
 
         logger.info("Api response: {}", actualGenerateUrlResponse.asString());
 
@@ -121,7 +121,7 @@ public class GenerateUrlSD {
         actualGenerateUrlResponse = submissionService.generateUrlResponseForInvalidFileNo(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
-        logger.info("Api response status code: {}", actualGenerateUrlResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualGenerateUrlResponse.getStatusCode()));
 
         logger.info("Api response: {}", actualGenerateUrlResponse.asString());
 

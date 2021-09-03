@@ -32,7 +32,7 @@ public class OauthService {
 
         Response response = TokenHelper.getUserAccessToken(keycloakHost, keycloakRealm, username, password, "efiling-frontend");
 
-        logger.info("Issuer respond with http status: {}", response.getStatusCode());
+        logger.info("Issuer respond with http status: {}", Integer.valueOf(response.getStatusCode()));
 
         JsonPath oidcTokenJsonPath = new JsonPath(response.asString());
 

@@ -51,7 +51,7 @@ public class ViewSubmissionHistorySD {
             Assert.assertEquals("View Recently Submitted Package # 1", packageReviewPageHeader);
 
             List<String> actualPackageDetails = packageReviewPage.getPackageDetails();
-            logger.info("There are {} elements", actualPackageDetails.size());
+            logger.info("There are {} elements", Integer.valueOf(actualPackageDetails.size()));
 
             Assert.assertNotNull(actualPackageDetails.get(1));
             Assert.assertEquals("Kelowna Law Courts", actualPackageDetails.get(2));

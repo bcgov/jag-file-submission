@@ -58,7 +58,7 @@ public class SubmissionHistoryPage extends BasePage {
 
     public int verifyTableIsNotEmpty() {
         List<WebElement> tableRows = submissionList.findElements(By.tagName("tr"));
-        logger.info("Total no of rows: {}", tableRows.size());
+        logger.info("Total no of rows: {}", Integer.valueOf(tableRows.size()));
         return tableRows.size();
     }
 
@@ -77,7 +77,7 @@ public class SubmissionHistoryPage extends BasePage {
         wait.until(ExpectedConditions.visibilityOf(submissionList));
 
         List<WebElement> tableRows = submissionList.findElements(By.tagName("tr"));
-        logger.info("Total no of rows: {}", tableRows.size());
+        logger.info("Total no of rows: {}", Integer.valueOf(tableRows.size()));
 
         String submissionHistoryTab = this.driver.getWindowHandle();
         tableRows.get(1).findElements(By.tagName("span")).get(0).click();

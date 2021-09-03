@@ -66,7 +66,7 @@ public class AddRushProcessingSD {
         actualRushProcessResponse = submissionService.addRushProcessingResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, Keys.RUSH_PROCESSING_PATH);
 
-        logger.info("Api response status code: {}", actualRushProcessResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualRushProcessResponse.getStatusCode()));
     }
 
     @Then("rush processing is created")

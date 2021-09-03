@@ -66,7 +66,7 @@ public class GetFileNameSD {
         actualFileNameResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
                 actualSubmissionId, Keys.FILE_NAME_PATH);
 
-        logger.info("Api response status code: {}", actualFileNameResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualFileNameResponse.getStatusCode()));
 
     }
 

@@ -2,7 +2,9 @@ package ca.bc.gov.open.jag.efiling.error;
 
 public class EfilingTestException extends RuntimeException {
 
-    public EfilingTestException(String message) {
+	private static final long serialVersionUID = 1L;
+
+	public EfilingTestException(String message) {
         super(message);
     }
 
