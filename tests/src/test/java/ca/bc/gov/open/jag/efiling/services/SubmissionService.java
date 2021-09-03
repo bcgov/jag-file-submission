@@ -48,7 +48,7 @@ public class SubmissionService {
     }
 
     public Response generateUrlResponse(UUID transactionId, String universalId, String accessToken,
-                                         String submissionId) {
+                                         String submissionId, String actionStatus) {
 
         logger.info("Requesting to generate Url");
 
@@ -60,7 +60,7 @@ public class SubmissionService {
                 .contentType(ContentType.JSON)
                 .header(Keys.X_TRANSACTION_ID, transactionId)
                 .header(Keys.X_USER_ID, universalId)
-                .body(PayloadHelper.generateUrlPayload(Keys.TEST_DOCUMENT_PDF));
+                .body(PayloadHelper.generateUrlPayload(Keys.TEST_DOCUMENT_PDF, actionStatus));
 
         return request
                 .when()

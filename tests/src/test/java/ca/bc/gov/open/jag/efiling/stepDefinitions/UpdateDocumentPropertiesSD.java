@@ -62,7 +62,7 @@ public class UpdateDocumentPropertiesSD {
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
         actualUpdatedDocumentPropertiesResponse = submissionService.updateDocumentPropertiesResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, Keys.UPDATE_DOCUMENTS_PATH);

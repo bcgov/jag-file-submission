@@ -31,7 +31,7 @@ public class GenerateUrlService {
         actualTransactionId = UUID.randomUUID();
     }
 
-    public String getGeneratedUrl() {
+    public String getGeneratedUrl(String actionDocumentStatus) {
 
         UserIdentity actualUserIdentity = oauthService.getUserIdentity();
 
@@ -59,7 +59,7 @@ public class GenerateUrlService {
         String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         Response actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId, actionDocumentStatus);
 
         logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
         logger.info("Api response: {}", actualDocumentResponse.asString());

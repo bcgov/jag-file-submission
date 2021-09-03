@@ -5,7 +5,7 @@ public class PayloadHelper {
     private PayloadHelper() {
     }
 
-    public static String generateUrlPayload(String documentName) {
+    public static String generateUrlPayload(String documentName, String actionStatus) {
 
         return "{\n" +
                 "    \"navigationUrls\": {\n" +
@@ -31,7 +31,7 @@ public class PayloadHelper {
                 "                \"md5\": \"string\", \n" +
                 "                \"actionDocument\": {\n" +
                 "                   \"id\": 2,\n" +
-                "                   \"status\": \"SUB\",\n" +
+                "                   \"status\": \"" + actionStatus + "\",\n" +
                 "                   \"type\": \"F\"\n" +
                 "               }\n" +
                 "            }\n" +
