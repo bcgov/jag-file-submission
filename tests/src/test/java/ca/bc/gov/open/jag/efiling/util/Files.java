@@ -10,6 +10,9 @@ public class Files {
 	
     private static final Logger logger = LoggerFactory.getLogger(Files.class);
 
+    private Files() { // private constructor to restrict instantiating this object.
+	}
+    
     /**
      * Code-climate approved  method to use Files.delete(File) instead of File.delete()
      */
