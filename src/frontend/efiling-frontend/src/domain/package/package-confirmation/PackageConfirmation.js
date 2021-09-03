@@ -57,7 +57,7 @@ const getFilingPackageData = (
     });
 };
 
-const checkRejectedFiles = (files, setShowRejectedMsg) => {
+const checkRejectedFiles = (files, setHasRejectedDocuments) => {
   let hasRejectedDoc = false;
   if (files && files.length > 0) {
     files.forEach((file) => {
@@ -66,7 +66,7 @@ const checkRejectedFiles = (files, setShowRejectedMsg) => {
       }
     });
   }
-  setShowRejectedMsg(hasRejectedDoc);
+  setHasRejectedDocuments(hasRejectedDoc);
 };
 
 const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
@@ -120,7 +120,8 @@ export default function PackageConfirmation({
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData().rushSubmission;
-  const [showRejectedMsg, setShowRejectedMsg] = useState(false);
+  const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
+  const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
   const resetState = () => {
     setShowUpload(false);
@@ -152,7 +153,7 @@ export default function PackageConfirmation({
     );
 
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
-    checkRejectedFiles(files, setShowRejectedMsg);
+    checkRejectedFiles(files, setHasRejectedDocuments);
   }, [files, submissionId, showUpload, refreshFiles]);
 
   function handleUploadFile(e) {
@@ -237,7 +238,7 @@ export default function PackageConfirmation({
         <br />
         {<FileList submissionId={submissionId} files={files} />}
         <br />
-        {showRejectedMsg && (
+        {hasRejectedDocuments && (
           <>
             <div className="alert alert-danger show rejectedMsg" role="alert">
               <div>
@@ -322,6 +323,9 @@ export default function PackageConfirmation({
         </section>
       </div>
       <div className="sidecard">
+        {hasRejectedDocuments && (
+          <Sidecard sideCard={rejectedDocumentsSideCard} />
+        )}
         {isRush && <Sidecard sideCard={rushSubmissionSidecard} />}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />

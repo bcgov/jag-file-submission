@@ -1345,6 +1345,80 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
           <p />
           <section
             class="bcgov-bluegrey-container"
+            id="rejectedDocumentsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Rejected Documents
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
+                </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <p>
+                  <span
+                    class="file-href"
+                  >
+                    Learn more about rejected documents.
+                  </span>
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
             id="csoAccountDetailsCard"
           >
             <div
