@@ -15,6 +15,7 @@ import { propTypes } from "../../../types/propTypes";
 import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
+import { checkRejectedFiles } from "../../../util/FileUtil";
 
 import "./PackageConfirmation.scss";
 import Payment from "../../payment/Payment";
@@ -55,18 +56,6 @@ const getFilingPackageData = (
       );
       setShowToast(true);
     });
-};
-
-const checkRejectedFiles = (files, setHasRejectedDocuments) => {
-  let hasRejectedDoc = false;
-  if (files && files.length > 0) {
-    files.forEach((file) => {
-      if (file.actionDocument && file.actionDocument.status === "REJ") {
-        hasRejectedDoc = true;
-      }
-    });
-  }
-  setHasRejectedDocuments(hasRejectedDoc);
 };
 
 const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
