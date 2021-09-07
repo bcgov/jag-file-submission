@@ -95,11 +95,11 @@ public class PackageReviewPage extends BasePage {
         List<String> packageDetails = new ArrayList<>();
         packageValueDetails.forEach(webElement -> {
             if (!webElement.isDisplayed()) {
-                logger.info("WebElement is still not visible. Waiting for all rows to be present: {}", Boolean.valueOf(webElement.isDisplayed()));
+                logger.info("WebElement is still not visible. Waiting for all rows to be present: {}", webElement.isDisplayed());
                 wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@data-test-id='detailsTable'] //*[contains(@class,'bcgov-table-value')]/b")));
             }
-            logger.info("Is it visible: {}", Boolean.valueOf(webElement.isDisplayed()));
-            logger.info("Is it enabled: {}", Boolean.valueOf(webElement.isEnabled()));
+            logger.info("Is it visible: {}", webElement.isDisplayed());
+            logger.info("Is it enabled: {}", webElement.isEnabled());
             packageDetails.add(webElement.getText());
         });
         return packageDetails;
@@ -108,7 +108,7 @@ public class PackageReviewPage extends BasePage {
     public void clickToDownloadDocument() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='btn-download-document']")));
 
-        logger.info("Download button is enabled: {}", Boolean.valueOf(downloadButton.isEnabled()));
+        logger.info("Download button is enabled: {}", downloadButton.isEnabled());
         logger.info("Downloaded file name is: {}", downloadButton.getText());
         downloadButton.click();
         Thread.sleep(1500L);
@@ -123,7 +123,7 @@ public class PackageReviewPage extends BasePage {
         partiesTab.click();
 
         List<WebElement> tableRows = partiesTable.findElements(By.tagName("li"));
-        logger.info("Total no of rows: {}", Integer.valueOf(tableRows.size()));
+        logger.info("Total no of rows: {}", tableRows.size());
 
         List<String> columnValues = new ArrayList<>();
 
@@ -172,7 +172,7 @@ public class PackageReviewPage extends BasePage {
 
     public void clickToDownloadReceipt() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='btn-view-receipt']")));
-        logger.info("Download button is enabled: {}", Boolean.valueOf(viewReceiptButton.isEnabled()));
+        logger.info("Download button is enabled: {}", viewReceiptButton.isEnabled());
 
         viewReceiptButton.click();
         Thread.sleep(1500L);
@@ -201,7 +201,7 @@ public class PackageReviewPage extends BasePage {
     public void clickToDownloadRegistryNotice() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(alertComponent));
 
-        logger.info("Registry notice alert is visible: {}", Boolean.valueOf(alertComponent.isDisplayed()));
+        logger.info("Registry notice alert is visible: {}", alertComponent.isDisplayed());
         logger.info("Downloaded file name is: {}", registryNoticeBtn.getText());
         registryNoticeBtn.click();
         Thread.sleep(1500L);
