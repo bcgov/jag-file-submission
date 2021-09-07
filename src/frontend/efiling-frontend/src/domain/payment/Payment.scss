@@ -23,6 +23,13 @@
     user-select: none; /* Standard */
   }
 
+  .rejectedMsg {
+    margin-bottom: 20px;
+    svg {
+      color: #A84441;
+    }
+  }
+
   @media (max-width: 576px) {
     .button-container {
       justify-content: space-between;

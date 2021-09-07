@@ -17,6 +17,8 @@ import { getJWTData } from "../../modules/helpers/authentication-helper/authenti
 import { propTypes } from "../../types/propTypes";
 import PackageConfirmation from "../package/package-confirmation/PackageConfirmation";
 import { generateFileSummaryData } from "../../modules/helpers/generateFileSummaryData";
+import { checkRejectedFiles } from "../../util/FileUtil";
+import { rejectedDocumentsAlert } from "../../modules/helpers/alerts";
 
 import "./Payment.scss";
 
@@ -126,6 +128,7 @@ export default function Payment({
   const [showRush, setShowRush] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -170,6 +173,10 @@ export default function Payment({
     checkSubmitEnabled(paymentAgreed, setSubmitBtnEnabled, submissionFee);
   }, [paymentAgreed, submissionFee]);
 
+  useEffect(() => {
+    checkRejectedFiles(files, setHasRejectedDocuments);
+  }, [files]);
+
   if (showPackageConfirmation) {
     return (
       <PackageConfirmation
@@ -199,6 +206,7 @@ export default function Payment({
         {hasSubmissionFee(submissionFee) && paymentSectionElement}
         <br />
         <h1>Package Submission Details</h1>
+        {hasRejectedDocuments && rejectedDocumentsAlert}
         <p>Your package will be filed to:</p>
         <div className="court-half-width">
           <Table elements={generateCourtDataTable(courtData)} />

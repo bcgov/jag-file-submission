@@ -165,6 +165,42 @@ exports[`Storyshots Payment Mobile 1`] = `
       <h1>
         Package Submission Details
       </h1>
+      <div
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom rejectedMsg"
+      >
+        <div
+          class="bcgov-display-icon"
+        >
+          <div
+            style="color: rgb(46, 133, 64);"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="bcgov-display-right-element"
+        >
+          <p>
+            Your rejected document(s) will be 
+            <b>
+              resubmitted
+            </b>
+            , and will be reviewed by the registry.
+          </p>
+        </div>
+      </div>
       <p>
         Your package will be filed to:
       </p>
@@ -681,6 +717,42 @@ exports[`Storyshots Payment With Fees 1`] = `
       <h1>
         Package Submission Details
       </h1>
+      <div
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom rejectedMsg"
+      >
+        <div
+          class="bcgov-display-icon"
+        >
+          <div
+            style="color: rgb(46, 133, 64);"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="bcgov-display-right-element"
+        >
+          <p>
+            Your rejected document(s) will be 
+            <b>
+              resubmitted
+            </b>
+            , and will be reviewed by the registry.
+          </p>
+        </div>
+      </div>
       <p>
         Your package will be filed to:
       </p>
