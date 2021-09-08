@@ -80,6 +80,7 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
 
     @Override
     public List<LookupItem> getCountries() {
+
         try {
 
             List<CodeValue> countryCodes = lookupFacade.getCountryCodes();
@@ -89,16 +90,27 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
                     .map(country -> LookupItem.builder().code(country.getCode()).description(
                            countries.stream()
                                 .filter(codeValue -> codeValue.getCode().equals(country.getParentCode()))
-                                .findFirst().orElseGet(() -> new CodeValue()).getDescription()
+                                .findFirst()
+                                .orElseGet(this::setMissingCodeValue).getDescription()
                     ).create())
                     .collect(Collectors.toList());
         } catch(NestedEjbException_Exception e) {
             throw new EfilingLookupServiceException("Exception while getting countries", e.getCause());
         }
+
     }
 
+    /**
+     * If the parent is missing ensure drop down populates
+     * @return Generic message
+     */
     private CodeValue setMissingCodeValue() {
+
         CodeValue codeValue = new CodeValue();
+
+        codeValue.setDescription("Missing Description");
+
+        return codeValue;
 
     }
 
