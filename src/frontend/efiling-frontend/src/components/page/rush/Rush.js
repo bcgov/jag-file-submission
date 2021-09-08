@@ -1,5 +1,5 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/jsx-props-no-spreading, no-unused-vars */
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import {
@@ -34,7 +34,6 @@ const generateInputField = (input, onChange) => (
 
 export default function Rush({ payment }) {
   // eslint-disable-next-line no-unused-vars
-  const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
   const input = {
     isReadOnly: false,
@@ -56,7 +55,8 @@ export default function Rush({ payment }) {
     email: "",
     org: "",
     country: null,
-    details: null,
+    details: "",
+    date: "",
   };
 
   const [files, setFiles] = useState([]);
@@ -69,9 +69,39 @@ export default function Rush({ payment }) {
   const [numDocumentsError, setNumDocumentsError] = useState(false);
   const [duplicateFilenamesError, setDuplicateFilenamesError] = useState(false);
   const [emailError, setEmailError] = useState(null);
+  const [firstNameError, setFirstNameError] = useState(null);
+  const [surnameError, setSurnameError] = useState(null);
+  const [phoneError, setPhoneError] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
+  const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+
+  const handleContinue = () => {};
+
+  const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
+    const limitedValue = fieldValue.substring(0, characterLimit);
+
+    setFields({ ...fields, [fieldName]: limitedValue });
+  };
+
+  const handleInputFieldChange = (
+    inputs,
+    fieldName,
+    characterLimit,
+    errorSetter
+  ) => {
+    enforceCharacterLimit(inputs, fieldName, characterLimit);
+
+    if (
+      !validator.isAlpha(inputs, "en-US", { ignore: " -" }) &&
+      !validator.isEmpty(inputs)
+    ) {
+      errorSetter("Invalid name");
+    } else {
+      errorSetter(null);
+    }
+  };
 
   const handleDeleteFile = (file) => {
     setFiles(files.filter((f) => f !== file));
@@ -83,13 +113,14 @@ export default function Rush({ payment }) {
       contactMethod: contactMethods.filter((list) => list[0] === e && list)[0],
       phoneNumber: "",
       email: "",
-      surname: null,
+      surname: "",
     });
     setEmailError(null);
+    setPhoneError(null);
   };
 
   const handleEmailChange = (email) => {
-    if (!validator.isEmail(email)) {
+    if (!validator.isEmail(email) && !validator.isEmpty(email)) {
       setEmailError("Invalid email address");
     } else {
       setEmailError(null);
@@ -99,16 +130,18 @@ export default function Rush({ payment }) {
 
   const handlePhoneNumberChange = (phoneNumber) => {
     const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+    if (
+      !validator.isMobilePhone(formattedPhoneNumber, "any") &&
+      !validator.isEmpty(formattedPhoneNumber)
+    ) {
+      setPhoneError("Invalid phone number");
+    } else {
+      setPhoneError(null);
+    }
     setFields({
       ...fields,
       phoneNumber: formattedPhoneNumber,
     });
-  };
-
-  const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
-    const limitedValue = fieldValue.substring(0, characterLimit);
-
-    setFields({ ...fields, [fieldName]: limitedValue });
   };
 
   const canReject = (
@@ -124,6 +157,7 @@ export default function Rush({ payment }) {
       id="detailed-reason"
       isRequired
       label="Clear and detailed reason(s)"
+      value={fields.details}
       onChange={(inputs) => setFields({ ...fields, details: inputs })}
     />
   );
@@ -137,8 +171,10 @@ export default function Rush({ payment }) {
             id: "surname",
             value: fields.surname,
             isControlled: true,
+            errorMsg: surnameError,
           },
-          (inputs) => enforceCharacterLimit(inputs, "surname", 30)
+          (inputs) =>
+            handleInputFieldChange(inputs, "surname", 30, setSurnameError)
         )}
         {generateInputField(
           {
@@ -147,8 +183,10 @@ export default function Rush({ payment }) {
             id: "firstName",
             value: fields.firstName,
             isControlled: true,
+            errorMsg: firstNameError,
           },
-          (inputs) => enforceCharacterLimit(inputs, "firstName", 30)
+          (inputs) =>
+            handleInputFieldChange(inputs, "firstName", 30, setFirstNameError)
         )}
       </div>
       <div className="form-parent">
@@ -177,7 +215,11 @@ export default function Rush({ payment }) {
           <Dropdown
             className="field-dropdown"
             isRequired
-            label="Method of Contact"
+            label={
+              <span>
+                Method of Contact <span className="red">*</span>
+              </span>
+            }
             items={contactMethods.map((list) => list[0])}
             onSelect={(e) => handleMethodOfContactChange(e)}
           />
@@ -201,6 +243,7 @@ export default function Rush({ payment }) {
               id: fields.contactMethod[1],
               value: fields[fields.contactMethod[1]],
               isControlled: true,
+              errorMsg: phoneError,
             },
             (inputs) => handlePhoneNumberChange(inputs)
           )}
@@ -290,6 +333,75 @@ export default function Rush({ payment }) {
       .catch((err) => console.log(err));
   }, []);
 
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    // Do not trigger effects if on the initial render of Rush.js (ie. a radio button has not been selected)
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+
+    const isError = () => {
+      const errorStates = [
+        firstNameError,
+        surnameError,
+        emailError,
+        duplicateFilenamesError,
+        phoneError,
+      ];
+      let result = false;
+
+      errorStates.forEach((error) => {
+        if (error !== null && error !== false) result = true;
+      });
+
+      return result;
+    };
+
+    const canContinue = () => {
+      let mandatoryFields;
+
+      if (radio1)
+        mandatoryFields = [
+          fields.firstName,
+          fields.surname,
+          fields[fields.contactMethod[1]],
+        ];
+      else if (radio2 || radio3) {
+        setFields({ ...fields, date: selectedDate });
+        mandatoryFields = [
+          fields.firstName,
+          fields.surname,
+          fields[fields.contactMethod[1]],
+          fields.details,
+          validator.toString(fields.date),
+        ];
+      }
+
+      // return false if: there are any errors, any mandatory fields are empty, in the case of radio2 or radio3: fields.details is empty and there are no dropped files
+      if (
+        isError() ||
+        mandatoryFields.some((field) => !field) ||
+        (!radio1 && validator.isEmpty(mandatoryFields[3]) && files.length < 1)
+      )
+        return false;
+
+      return true;
+    };
+
+    setContinueBtnEnabled(canContinue());
+  }, [
+    fields.firstName,
+    fields.surname,
+    fields[fields.contactMethod[1]],
+    fields.details,
+    fields.date,
+    radio1,
+    radio2,
+    radio3,
+  ]);
+
   useEffect(() => {
     const displayAnyDocumentErrors = () => {
       const errors = [];
@@ -334,10 +446,10 @@ export default function Rush({ payment }) {
   };
 
   const setRadioStatusComponents = () => {
+    resetFields();
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
-    resetFields();
     setFiles([]);
   };
 

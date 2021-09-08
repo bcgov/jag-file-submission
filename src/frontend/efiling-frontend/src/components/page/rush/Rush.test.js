@@ -252,6 +252,40 @@ describe("Rush Component", () => {
     expect(input.value).toBe("not-an-email@email.com");
   });
 
+  test("Input validation works as expected", async () => {
+    mock.onGet("/countries").reply(200, countries);
+    const { getByLabelText, getAllByTestId, getByText } = render(
+      <Rush payment={payment} />
+    );
+    const radio2 = getByLabelText(radio2Label);
+
+    fireEvent.click(radio2);
+
+    const input = getAllByTestId("input-test")[0];
+
+    userEvent.type(input, "abc123");
+    await waitFor(() => expect(getByText("Invalid name")).toBeInTheDocument());
+  });
+
+  test("Document can be successfully deleted", async () => {
+    mock.onGet("/countries").reply(200, countries);
+    const { getByLabelText, queryByTestId, getAllByText } = render(
+      <Rush payment={payment} />
+    );
+    const radio3 = getByLabelText(radio3Label);
+
+    fireEvent.click(radio3);
+
+    const dropzone = queryByTestId("dropdownzone");
+    await waitFor(() => expect(dropzone).toBeInTheDocument());
+
+    dispatchEvt(dropzone, "drop", data);
+    await waitFor(() => expect(getAllByText("Remove")[0]).toBeInTheDocument());
+    expect(files.length).toBe(2);
+
+    // fireEvent.click(getAllByText("Remove")[0])
+  });
+
   test("Contact Country dropdown works", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, getAllByTestId, getByText } = render(
