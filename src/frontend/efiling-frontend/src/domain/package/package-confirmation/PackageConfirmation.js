@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { MdCheckBox } from "react-icons/md";
+import { MdCheckBox, MdError } from "react-icons/md";
 import ConfirmationPopup, {
   Alert,
   Button,
@@ -57,6 +57,18 @@ const getFilingPackageData = (
     });
 };
 
+const checkRejectedFiles = (files, setHasRejectedDocuments) => {
+  let hasRejectedDoc = false;
+  if (files && files.length > 0) {
+    files.forEach((file) => {
+      if (file.actionDocument && file.actionDocument.status === "REJ") {
+        hasRejectedDoc = true;
+      }
+    });
+  }
+  setHasRejectedDocuments(hasRejectedDoc);
+};
+
 const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
   if (files && files.length > 0) {
     const filenames = [];
@@ -107,6 +119,8 @@ export default function PackageConfirmation({
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData().rushSubmission;
+  const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
+  const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
   const resetState = () => {
     setShowUpload(false);
@@ -138,6 +152,7 @@ export default function PackageConfirmation({
     );
 
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
+    checkRejectedFiles(files, setHasRejectedDocuments);
   }, [files, submissionId, showUpload, refreshFiles]);
 
   function handleUploadFile(e) {
@@ -173,7 +188,7 @@ export default function PackageConfirmation({
       />
     );
 
-  if (!showRush)
+  if (showRush)
     return (
       <Rush
         payment={{
@@ -222,6 +237,22 @@ export default function PackageConfirmation({
         <br />
         {<FileList submissionId={submissionId} files={files} />}
         <br />
+        {hasRejectedDocuments && (
+          <>
+            <div className="alert alert-danger show rejectedMsg" role="alert">
+              <div>
+                <MdError size={32} />
+              </div>
+              <div>
+                <span>
+                  Please ensure you have uploaded all required rejected
+                  documents. If you still need to add documents use the upload
+                  link below.
+                </span>
+              </div>
+            </div>
+          </>
+        )}
         <h4>
           Do you have additional documents to upload?&nbsp;
           <span
@@ -291,6 +322,9 @@ export default function PackageConfirmation({
         </section>
       </div>
       <div className="sidecard">
+        {hasRejectedDocuments && (
+          <Sidecard sideCard={rejectedDocumentsSideCard} />
+        )}
         {isRush && <Sidecard sideCard={rushSubmissionSidecard} />}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />

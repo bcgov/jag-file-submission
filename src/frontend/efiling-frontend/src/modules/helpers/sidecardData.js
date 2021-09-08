@@ -115,12 +115,37 @@ const supremeCourtScheduling = () => ({
   icon: <MdInfoOutline className="bcgov-side-card-icon" />,
 });
 
+const rejectedDocuments = () => ({
+  heading: "Rejected Documents",
+  content: [
+    <p key="rjctdDcmnts">
+      When directed by the court, an order will be processed on an urgent(rush)
+      basis. The registry will consider specific reasons for processing an order
+      on an urgent(rush) basis.
+    </p>,
+    <p>
+      <b>
+        Only request processing on an urgent(rush) basis in exceptional
+        circumstances.
+      </b>
+    </p>,
+    <p>
+      <span className="file-href">Learn more about rejected documents.</span>
+    </p>,
+  ],
+  type: "bluegrey",
+  id: "rejectedDocumentsCard",
+  isWide: true,
+  icon: <MdInfoOutline className="bcgov-side-card-icon" />,
+});
+
 export function getSidecardData(setShowRush) {
   const aboutCsoCard = aboutCso();
   const csoAccountDetailsCard = csoAccountDetails();
   const rushSubmissionCard = rushSubmission(setShowRush);
   const amendmentsCard = amendments();
   const supremeCourtSchedulingCard = supremeCourtScheduling();
+  const rejectedDocumentsCard = rejectedDocuments();
 
   return {
     aboutCso: aboutCsoCard,
@@ -128,5 +153,6 @@ export function getSidecardData(setShowRush) {
     rushSubmission: rushSubmissionCard,
     amendments: amendmentsCard,
     supremeCourtScheduling: supremeCourtSchedulingCard,
+    rejectedDocuments: rejectedDocumentsCard,
   };
 }
