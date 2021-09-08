@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efiling.stepDefinitions;
 import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.FileDownloadHelper;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
+import ca.bc.gov.open.jag.efiling.util.Files;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
@@ -40,7 +41,7 @@ public class ViewAndDownloadReceiptSD {
         Assert.assertTrue(downloadedFile.length() > 0);
         logger.info("Files successfully downloaded");
 
-        logger.info("Files deleted after validation: {}", downloadedFile.delete());
+        logger.info("Files deleted after validation: {}", Boolean.valueOf(Files.delete(downloadedFile)));
         Assert.assertEquals(0, downloadedFile.length());
     }
 }

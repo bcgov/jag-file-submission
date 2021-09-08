@@ -85,8 +85,8 @@ public class PackageReviewPage extends BasePage {
     @FindBy(id = "kc-login")
     private WebElement signIn;
 
-
-    public List<String> getPackageDetails() {
+    @SuppressWarnings("boxing")
+	public List<String> getPackageDetails() {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test-id='detailsTable']")));
 
@@ -105,6 +105,7 @@ public class PackageReviewPage extends BasePage {
         return packageDetails;
     }
 
+    @SuppressWarnings("boxing")
     public void clickToDownloadDocument() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='btn-download-document']")));
 
@@ -118,6 +119,7 @@ public class PackageReviewPage extends BasePage {
         documentsTab.click();
     }
 
+    @SuppressWarnings("boxing")
     public List<String> getAllParties() {
 
         partiesTab.click();
@@ -170,6 +172,7 @@ public class PackageReviewPage extends BasePage {
         return paymentPane.isDisplayed();
     }
 
+    @SuppressWarnings("boxing")
     public void clickToDownloadReceipt() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-testid='btn-view-receipt']")));
         logger.info("Download button is enabled: {}", viewReceiptButton.isEnabled());
@@ -198,6 +201,7 @@ public class PackageReviewPage extends BasePage {
         return this.driver.getTitle();
     }
 
+    @SuppressWarnings("boxing")
     public void clickToDownloadRegistryNotice() throws InterruptedException {
         wait.until(ExpectedConditions.visibilityOf(alertComponent));
 

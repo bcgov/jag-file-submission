@@ -66,7 +66,7 @@ public class UploadAdditionalDocumentSD {
         actualAdditionalDocumentResponse = submissionService.additionalDocumentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, Keys.DOCUMENTS_PATH);
 
-        logger.info("Api response status code: {}", actualAdditionalDocumentResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualAdditionalDocumentResponse.getStatusCode()));
         logger.info("Api response: {}", actualAdditionalDocumentResponse.asString());
     }
 

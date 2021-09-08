@@ -39,7 +39,7 @@ public class GetCourtLocationSD {
 
         actualCourtLocationResponse = courtService.getCourtsResponse(actualUserIdentity.getAccessToken(), "s");
 
-        logger.info("Api response status code: {}", actualCourtLocationResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualCourtLocationResponse.getStatusCode()));
         logger.info("Api response: {}", actualCourtLocationResponse.asString());
     }
 
@@ -57,7 +57,7 @@ public class GetCourtLocationSD {
         Assert.assertEquals("5871", jsonPath.get("courts.identifierCode[0]"));
         Assert.assertEquals("Campbell River", jsonPath.get("courts.name[0]"));
         Assert.assertEquals("OMH", jsonPath.get("courts.code[0]"));
-        Assert.assertTrue(jsonPath.get("courts.isSupremeCourt[0]"));
+        Assert.assertEquals(Boolean.TRUE, jsonPath.get("courts.isSupremeCourt[0]"));
         Assert.assertEquals("500 - 13th Avenue", jsonPath.get("courts.address.addressLine1[0]"));
         Assert.assertEquals("V9W 6P1", jsonPath.get("courts.address.postalCode[0]"));
         Assert.assertEquals("Campbell River", jsonPath.get("courts.address.cityName[0]"));

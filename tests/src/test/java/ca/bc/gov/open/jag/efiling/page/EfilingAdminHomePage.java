@@ -36,7 +36,7 @@ public class EfilingAdminHomePage extends BasePage {
     public void uploadAPdfOnDemoClient() {
         try {
             wait.until(ExpectedConditions.visibilityOf(fileUploadInput)).sendKeys(pdfDocumentToUpload.getPath());
-        } catch (org.openqa.selenium.TimeoutException ex) {
+        } catch (@SuppressWarnings("unused") org.openqa.selenium.TimeoutException ex) {
             fileUploadInput.sendKeys(pdfDocumentToUpload.getPath());
         }
     }
