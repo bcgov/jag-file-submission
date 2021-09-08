@@ -66,7 +66,7 @@ public class GetFilingPackageSD {
         actualFilingPackageResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
                 actualSubmissionId, Keys.FILING_PACKAGE_PATH);
 
-        logger.info("Api response status code: {}", actualFilingPackageResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualFilingPackageResponse.getStatusCode()));
         logger.info("Api response: {}", actualFilingPackageResponse.asString());
     }
 

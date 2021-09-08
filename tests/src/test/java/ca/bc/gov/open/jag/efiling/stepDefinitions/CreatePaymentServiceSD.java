@@ -67,7 +67,7 @@ public class CreatePaymentServiceSD {
         actualSubmitResponse = submissionService.createPaymentServiceResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, Keys.SUBMIT_PATH);
 
-        logger.info("Api response status code: {}", actualSubmitResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualSubmitResponse.getStatusCode()));
         logger.info("Api response: {}", actualSubmitResponse.asString());
     }
 

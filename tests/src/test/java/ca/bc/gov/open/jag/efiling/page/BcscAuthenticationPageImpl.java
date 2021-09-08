@@ -39,7 +39,6 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
     @FindBy(id = "form_setConfirmation")
     private WebElement personalIdentitySection;
 
-
     public void accessBcscLogIn() {
         wait.until(ExpectedConditions.titleContains("Log in to Family Law Act Application"));
         bcscLink.click();
@@ -47,7 +46,7 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
 
         try {
             bcscVirtualCardButton.click();
-        } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+        } catch (@SuppressWarnings("unused") org.openqa.selenium.StaleElementReferenceException ex) {
             bcscVirtualCardButton.click();
         }
 
@@ -59,7 +58,7 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
         try {
             wait.until(ExpectedConditions.elementToBeClickable(bcscNumberInputField));
             bcscNumberInputField.sendKeys(bcscCardNumber);
-        } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+        } catch (@SuppressWarnings("unused") org.openqa.selenium.StaleElementReferenceException ex) {
             bcscNumberInputField.sendKeys(bcscCardNumber);
         }
 
@@ -73,7 +72,7 @@ public class BcscAuthenticationPageImpl extends BasePage implements Authenticati
     public void enterBcscPasscode() {
         try {
             passcodeInputField.sendKeys(bcscPasscode);
-        } catch (org.openqa.selenium.StaleElementReferenceException ex) {
+        } catch (@SuppressWarnings("unused") org.openqa.selenium.StaleElementReferenceException ex) {
             passcodeInputField.sendKeys(bcscPasscode);
         }
 

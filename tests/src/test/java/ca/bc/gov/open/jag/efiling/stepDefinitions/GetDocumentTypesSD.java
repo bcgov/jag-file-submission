@@ -39,7 +39,7 @@ public class GetDocumentTypesSD {
 
         actualDocumentTypesResponse = documentService.getDocumentTypesResponse(actualUserIdentity.getAccessToken(), "P", "F");
 
-        logger.info("Api response status code: {}", actualDocumentTypesResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentTypesResponse.getStatusCode()));
         logger.info("Api response: {}", actualDocumentTypesResponse.asString());
     }
 

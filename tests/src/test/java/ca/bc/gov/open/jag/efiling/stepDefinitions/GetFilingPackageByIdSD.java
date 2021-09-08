@@ -39,9 +39,9 @@ public class GetFilingPackageByIdSD {
     @When("user submits request to get filing packages details")
     public void getFilingPackagesRequest() {
 
-        actualFilingPackageResponse = filingPackageService.getByPackageId(actualUserIdentity.getAccessToken(), 1);
+        actualFilingPackageResponse = filingPackageService.getByPackageId(actualUserIdentity.getAccessToken(), Integer.valueOf(1));
 
-        logger.info("Api response status code: {}", actualFilingPackageResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualFilingPackageResponse.getStatusCode()));
         logger.info("Api response: {}", actualFilingPackageResponse.asString());
 
     }
@@ -86,7 +86,7 @@ public class GetFilingPackageByIdSD {
         Assert.assertEquals("1", actualFilingPackageResponseJsonPath.get("documents.identifier[0]"));
         Assert.assertNotNull(actualFilingPackageResponseJsonPath.get("documents.filingDate[0]"));
         Assert.assertEquals("Affidavit", actualFilingPackageResponseJsonPath.get("documents.description[0]"));
-        Assert.assertFalse(actualFilingPackageResponseJsonPath.get("documents.paymentProcessed[0]"));
+        Assert.assertEquals(Boolean.FALSE, actualFilingPackageResponseJsonPath.get("documents.paymentProcessed[0]"));
         Assert.assertEquals("test-document.pdf", actualFilingPackageResponseJsonPath.get("documents.documentProperties[0].name"));
         Assert.assertEquals("AFF", actualFilingPackageResponseJsonPath.get("documents.documentProperties[0].type"));
         Assert.assertEquals("Submitted", actualFilingPackageResponseJsonPath.get("documents.status[0].description"));
@@ -110,7 +110,7 @@ public class GetFilingPackageByIdSD {
         Assert.assertEquals("Individual", actualFilingPackageResponseJsonPath.get("parties.partyDescription[0]"));
 
         //Payments
-        Assert.assertTrue(actualFilingPackageResponseJsonPath.get("payments.feeExempt[1]"));
+        Assert.assertEquals(Boolean.TRUE, actualFilingPackageResponseJsonPath.get("payments.feeExempt[1]"));
         Assert.assertEquals(Integer.valueOf(3), actualFilingPackageResponseJsonPath.get("payments.paymentCategory[1]"));
         Assert.assertNull(actualFilingPackageResponseJsonPath.get("payments.processedAmount[1]"));
         Assert.assertEquals(Integer.valueOf(1), actualFilingPackageResponseJsonPath.get("payments.submittedAmount[1]"));

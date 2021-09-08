@@ -39,10 +39,10 @@ public class GetDocumentByDocumentIdSD {
     public void getSubmissionSheetRequest() {
         logger.info("Requesting get document from filing package");
 
-        actualDocumentResponse = filingPackageService.getDocumentById(actualUserIdentity.getAccessToken(), 1, 1);
+        actualDocumentResponse = filingPackageService.getDocumentById(actualUserIdentity.getAccessToken(), Integer.valueOf(1), Integer.valueOf(1));
 
-        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
-        logger.info("Api response: {}", actualDocumentResponse.asString().getBytes(StandardCharsets.UTF_8).length);
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
+        logger.info("Api response: {}", Integer.valueOf(actualDocumentResponse.asString().getBytes(StandardCharsets.UTF_8).length));
     }
 
     @Then("valid document is returned")

@@ -52,7 +52,7 @@ public class GenerateUrlService {
         Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualUserIdentity.getUniversalId(), fileSpec);
 
-        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
         logger.info("Api response: {}", actualDocumentResponse.asString());
 
 
@@ -61,7 +61,7 @@ public class GenerateUrlService {
         Response actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
-        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
         logger.info("Api response: {}", actualDocumentResponse.asString());
 
         logger.info("Returning E-Filing url from generateUrl response");
