@@ -111,6 +111,9 @@ describe("PackageConfirmation Component", () => {
       expect(queryByText("About Rush Documents")).toBeInTheDocument()
     );
 
+    fireEvent.click(rushNo);
+    fireEvent.click(rushYes);
+
     fireEvent.click(continueBtn);
     fireEvent.click(getByRole("dialog"));
     await waitFor(() =>
