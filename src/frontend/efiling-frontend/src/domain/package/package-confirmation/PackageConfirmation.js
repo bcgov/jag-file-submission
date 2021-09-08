@@ -173,7 +173,7 @@ export default function PackageConfirmation({
       />
     );
 
-  if (showRush)
+  if (!showRush)
     return (
       <Rush
         payment={{

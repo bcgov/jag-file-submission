@@ -76,39 +76,10 @@ export default function Rush({ payment }) {
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
-  const [mandatoryFields, setMandatoryFields] = useState([]);
+  const [mandatoryFields, setMandatoryFields] = useState([])
 
 
   const handleContinue = () => {
-  }
-
-  const canContinue = () => {
-    let result = true;
-
-    if (isError()) result = false;
-    mandatoryFields.forEach((field) => {
-      if (typeof field === "string") {
-          //console.log(field)
-          //console.log("Is empty? " + validator.isEmpty(field))
-          //console.log("Not Radio1 and No files and no details " + ((radio2 || radio3) && (files.length < 1 && fields.details === null)))
-        // If any of the fields are invalid or the selection is radio2 or radio3 and there are no files and details then return a false result
-        if ((radio1 && validator.isEmpty(field)) || ( (radio2 || radio3) && ((validator.isEmpty(field)) || ((files.length < 1 && validator.isEmpty(fields.details)))) )) {
-          result = false;
-        }
-      }
-    })
-     return result;
-  }
-
-  const isError = () => {
-    const errorStates = [firstNameError, surnameError, emailError, duplicateFilenamesError, phoneError];
-    let result = false;
-
-    errorStates.forEach(error => {
-      if (error !== null && error !== false) result = true;
-    })
-
-    return result;
   }
 
   const handleInputFieldChange = (input, fieldName, characterLimit, errorSetter) => {
@@ -178,6 +149,7 @@ export default function Rush({ payment }) {
       id="detailed-reason"
       isRequired
       label="Clear and detailed reason(s)"
+      value={fields.details}
       onChange={(inputs) => setFields({ ...fields, details: inputs })}
     />
   );
@@ -350,11 +322,40 @@ export default function Rush({ payment }) {
   const initialRender = useRef(true)
 
   useEffect(() => {
+    // Do not trigger effects if on the initial render of Rush.js (ie. a radio button has not been selected)
     if (initialRender.current) {
       initialRender.current = false;
       return;
     }
-    setContinueBtnEnabled(() => canContinue())
+
+    const isError = () => {
+      const errorStates = [firstNameError, surnameError, emailError, duplicateFilenamesError, phoneError];
+      let result = false;
+  
+      errorStates.forEach(error => {
+        if (error !== null && error !== false) result = true;
+      })
+  
+      return result;
+    }
+
+    const canContinue = () => {
+      let mandatoryFields;
+
+      if (radio1) mandatoryFields = [fields.firstName, fields.surname, fields[fields.contactMethod[1]]]
+      else if (radio2 || radio3) {
+        setFields({...fields, date: selectedDate})
+        mandatoryFields = [fields.firstName, fields.surname, fields[fields.contactMethod[1]], fields.details, validator.toString(fields.date)]}
+
+      // return false if: there are any errors, any mandatory fields are empty, in the case of radio2 or radio3: fields.details is empty and there are no dropped files
+      if (isError() || mandatoryFields.some(field => (validator.isEmpty(field))) || ((!radio1) && (validator.isEmpty(mandatoryFields[3]) && files.length < 1)) ) return false;
+
+      return true;
+      
+    }
+
+    setContinueBtnEnabled(canContinue())
+
   }, [fields.firstName, fields.surname, fields[fields.contactMethod[1]], fields.details, fields.date, radio1, radio2, radio3])
 
   useEffect(() => {
@@ -434,7 +435,6 @@ export default function Rush({ payment }) {
           onSelect={() => {
             setRadioStatusComponents();
             setRadio1(true);
-            setMandatoryFields([fields.surname, fields.firstName, fields[fields.contactMethod[1]]])
           }}
         />
         <Radio
@@ -444,7 +444,6 @@ export default function Rush({ payment }) {
           onSelect={() => {
             setRadioStatusComponents();
             setRadio2(true);
-            setMandatoryFields([fields.surname, fields.firstName, fields[fields.contactMethod[1]], fields.data, fields.details])
           }}
         />
         <Radio
@@ -454,7 +453,6 @@ export default function Rush({ payment }) {
           onSelect={() => {
             setRadioStatusComponents();
             setRadio3(true);
-            setMandatoryFields([fields.surname, fields.firstName, fields[fields.contactMethod[1]], fields.data, fields.details])
           }}
         />
         <br />
