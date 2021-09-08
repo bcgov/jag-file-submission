@@ -76,4 +76,17 @@ public class PackageConfirmationPage extends BasePage {
         }
         return UploadedFileList;
     }
+    
+    /** Returns true if the rejected banner exists. */ 
+    public boolean rejectedBannerExists() { 
+    	List<WebElement> elements = driver.findElements(By.className("rejectedMsg")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the rejected sidecard exists. */ 
+    public boolean rejectedSidecardExists() { 
+    	List<WebElement> elements = driver.findElements(By.id("rejectedDocumentsCard")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
 }

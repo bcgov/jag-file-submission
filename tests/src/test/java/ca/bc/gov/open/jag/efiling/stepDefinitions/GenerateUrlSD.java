@@ -89,7 +89,7 @@ public class GenerateUrlSD {
     public void userRequestASubmissionUrl() {
 
         actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
         logger.info("Api response status code: {}", Integer.valueOf(actualGenerateUrlResponse.getStatusCode()));
 

@@ -61,7 +61,7 @@ public class UploadAdditionalDocumentSD {
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
         actualAdditionalDocumentResponse = submissionService.additionalDocumentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, Keys.DOCUMENTS_PATH);

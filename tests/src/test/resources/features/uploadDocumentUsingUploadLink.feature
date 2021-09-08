@@ -5,7 +5,7 @@
 Feature: Additional documents can be uploaded from EFiling hub
 
   Background:
-    Given user is on the eFiling submission page
+    Given User uploads a successful document from parent app
   
   Scenario: Verify documents can be uploaded using the upload link
     When user uploads an additional document

@@ -1,19 +1,26 @@
 
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
-import ca.bc.gov.open.jag.efiling.Keys;
-import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
-import ca.bc.gov.open.jag.efiling.page.*;
-import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+
+import java.io.FileNotFoundException;
+
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.io.IOException;
+import ca.bc.gov.open.jag.efiling.Keys;
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
+import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
+import ca.bc.gov.open.jag.efiling.page.EfilingAdminHomePage;
+import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
+import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 
 public class AuthenticateAndRedirectToEfilingHubSD {
 
@@ -35,35 +42,64 @@ public class AuthenticateAndRedirectToEfilingHubSD {
         this.generateUrlService = generateUrlService;
     }
 
-    @Given("user is on the eFiling submission page")
-    public void userIsOnTheEfilingSubmissionPage() throws IOException {
-
-        if (this.authenticationPage.getName().equalsIgnoreCase("keycloak")) {
-            if (this.generateUrlService.getGeneratedUrl() == null)
-                throw new EfilingTestException("Redirect url is not generated.");
-            this.efilingAdminHomePage.goTo(this.generateUrlService.getGeneratedUrl());
-        } else {
-            this.efilingAdminHomePage.goTo(efilingAdminUrl);
-        }
-        logger.info("Waiting for the page to load...");
-
-        this.authenticationPage.signIn();
-        logger.info("user is authenticated with: {}", this.authenticationPage.getName());
-
-        if (!this.authenticationPage.getName().equalsIgnoreCase("keycloak")) {
-            logger.info("Uloading and submitting document to Efiling hub");
-            this.efilingAdminHomePage.redirectToEfilingHub();
-        }
+    @Given("User uploads a successful document from parent app")
+    public void userUploadsSuccessfulDocument() throws FileNotFoundException {
+    	userUploadsDocumentFromParentApp(Keys.ACTION_STATUS_SUB);
     }
+
+    @Given("User uploads a rejected document from parent app")
+    public void userUploadsRejectedDocument() throws FileNotFoundException {
+    	userUploadsDocumentFromParentApp(Keys.ACTION_STATUS_REJ);
+    }
+    
+	private void userUploadsDocumentFromParentApp(String actionDocumentStatus) throws FileNotFoundException {
+		if (this.authenticationPage.getName().equalsIgnoreCase("keycloak")) {
+			String generatedUrl = this.generateUrlService.getGeneratedUrl(actionDocumentStatus);
+			if (generatedUrl == null)
+				throw new EfilingTestException("Redirect url is not generated.");
+			this.efilingAdminHomePage.goTo(generatedUrl);
+		} else {
+			this.efilingAdminHomePage.goTo(efilingAdminUrl);
+		}
+		logger.info("Waiting for the page to load...");
+
+		this.authenticationPage.signIn();
+		logger.info("user is authenticated with: {}", this.authenticationPage.getName());
+
+		if (!this.authenticationPage.getName().equalsIgnoreCase("keycloak")) {
+			logger.info("Uloading and submitting document to Efiling hub");
+			this.efilingAdminHomePage.redirectToEfilingHub();
+		}
+	}
 
     @Then("Package information is displayed")
     public void verifyPackageInformation() {
-        Assert.assertEquals(Keys.EFILE_SUBMISSION_PAGE_TITLE, this.packageConfirmationPage.verifyPageTitle());
+        assertEquals(Keys.EFILE_SUBMISSION_PAGE_TITLE, this.packageConfirmationPage.verifyPageTitle());
         logger.info("Efiling submission page title is verified");
 
-        Assert.assertEquals(Keys.TEST_DOCUMENT_PDF, this.packageConfirmationPage.getInitialDocumentName());
+        assertEquals(Keys.TEST_DOCUMENT_PDF, this.packageConfirmationPage.getInitialDocumentName());
         logger.info("Actual document name matches the uploaded document name");
 
+    }
+    
+    @And("Rejected Document banner exists")
+    public void verifyRejectedBannerExists() {
+    	assertTrue(packageConfirmationPage.rejectedBannerExists());
+    }
+    
+    @And("Rejected Document banner doesn't exist")
+    public void verifyRejectedBannerNotExists() {
+    	assertFalse(packageConfirmationPage.rejectedBannerExists());
+    }
+    
+    @And("Rejected Document sidecard exists")
+    public void verifyRejectedSideCardExists() {
+    	assertTrue(packageConfirmationPage.rejectedSidecardExists());
+    }
+    
+    @And("Rejected Document sidecard doesn't exist")
+    public void verifyRejectedSideCardNotExists() {
+    	assertFalse(packageConfirmationPage.rejectedSidecardExists());
     }
 
     @And("continue to payment button is enabled")

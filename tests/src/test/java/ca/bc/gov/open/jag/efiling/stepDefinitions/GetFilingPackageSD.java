@@ -60,8 +60,7 @@ public class GetFilingPackageSD {
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                                                    actualUserIdentity.getAccessToken(), actualSubmissionId);
-
+                                                    actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
         actualFilingPackageResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
                 actualSubmissionId, Keys.FILING_PACKAGE_PATH);
