@@ -85,22 +85,6 @@ const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
   }
 };
 
-const handleContinue = (
-  isRush,
-  setShowRush,
-  setShowPayment,
-  setShowModal
-) => {
-  if (isRush) {
-    setShowPayment(false);
-    setShowModal(true);
-  } else {
-    setShowModal(false);
-    setShowRush(false);
-    setShowPayment(true);
-  }
-};
-
 export default function PackageConfirmation({
   packageConfirmation: { confirmationPopup, submissionId },
   csoAccountStatus: { isNew },
@@ -125,6 +109,18 @@ export default function PackageConfirmation({
   const resetState = () => {
     setShowUpload(false);
     setShowPayment(false);
+    setShowRush(false);
+  };
+
+  const handleContinue = () => {
+    if (isRush) {
+      setShowPayment(false);
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+      setShowRush(false);
+      setShowPayment(true);
+    }
   };
 
   useEffect(() => {
@@ -306,15 +302,7 @@ export default function PackageConfirmation({
           />
           <Button
             label="Continue"
-            onClick={() =>
-              handleContinue(
-                isRush,
-                setShowRush,
-                setShowPayment,
-                showModal,
-                setShowModal
-              )
-            }
+            onClick={() => handleContinue()}
             styling="bcgov-normal-blue btn"
             testId="continue-btn"
             disabled={toastMessage !== null}
