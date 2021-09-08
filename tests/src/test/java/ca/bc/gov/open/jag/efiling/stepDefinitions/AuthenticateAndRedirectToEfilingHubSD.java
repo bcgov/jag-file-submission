@@ -1,11 +1,11 @@
 
 package ca.bc.gov.open.jag.efiling.stepDefinitions;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
+import ca.bc.gov.open.jag.efiling.models.FileSpec;
 import ca.bc.gov.open.jag.efiling.page.AuthenticationPage;
 import ca.bc.gov.open.jag.efiling.page.EfilingAdminHomePage;
 import ca.bc.gov.open.jag.efiling.page.PackageConfirmationPage;
@@ -43,18 +44,32 @@ public class AuthenticateAndRedirectToEfilingHubSD {
     }
 
     @Given("User uploads a successful document from parent app")
-    public void userUploadsSuccessfulDocument() throws FileNotFoundException {
-    	userUploadsDocumentFromParentApp(Keys.ACTION_STATUS_SUB);
+    public void userUploadsSuccessfulDocument() throws IOException {
+    	userUploadsDocumentFromParentApp(new FileSpec(Keys.TEST_DOCUMENT_PDF, Keys.ACTION_STATUS_SUB));
     }
 
     @Given("User uploads a rejected document from parent app")
-    public void userUploadsRejectedDocument() throws FileNotFoundException {
-    	userUploadsDocumentFromParentApp(Keys.ACTION_STATUS_REJ);
+    public void userUploadsRejectedDocument() throws IOException {
+    	userUploadsDocumentFromParentApp(new FileSpec(Keys.TEST_DOCUMENT_PDF, Keys.ACTION_STATUS_REJ));
+    }
+
+    @Given("User uploads duplicate documents from parent app")
+    public void userUploadsDuplicateDocuments() throws IOException {
+    	userUploadsDocumentFromParentApp(
+    			new FileSpec(Keys.TEST_DOCUMENT_PDF, Keys.ACTION_STATUS_SUB),
+    			new FileSpec(Keys.TEST_DOCUMENT_PDF, Keys.ACTION_STATUS_SUB));
+    }
+
+    @Given("User uploads different documents from parent app")
+    public void userUploadsDifferentDocuments() throws IOException {
+    	userUploadsDocumentFromParentApp(
+    			new FileSpec(Keys.TEST_DOCUMENT_PDF, Keys.ACTION_STATUS_SUB),
+    			new FileSpec(Keys.SECOND_DOCUMENT_PDF, Keys.ACTION_STATUS_SUB));
     }
     
-	private void userUploadsDocumentFromParentApp(String actionDocumentStatus) throws FileNotFoundException {
+	private void userUploadsDocumentFromParentApp(FileSpec... fileSpecs) throws IOException {
 		if (this.authenticationPage.getName().equalsIgnoreCase("keycloak")) {
-			String generatedUrl = this.generateUrlService.getGeneratedUrl(actionDocumentStatus);
+			String generatedUrl = this.generateUrlService.getGeneratedUrl(fileSpecs);
 			if (generatedUrl == null)
 				throw new EfilingTestException("Redirect url is not generated.");
 			this.efilingAdminHomePage.goTo(generatedUrl);
@@ -90,6 +105,16 @@ public class AuthenticateAndRedirectToEfilingHubSD {
     @And("Rejected Document banner doesn't exist")
     public void verifyRejectedBannerNotExists() {
     	assertFalse(packageConfirmationPage.rejectedBannerExists());
+    }
+    
+    @And("Duplicate Document banner exists")
+    public void verifyDuplicateDocumentBannerExists() {
+    	assertTrue(packageConfirmationPage.duplicateBannerExists());
+    }
+    
+    @And("Duplicate Document banner doesn't exist")
+    public void verifyDuplicateDocumentNotBannerExists() {
+    	assertFalse(packageConfirmationPage.duplicateBannerExists());
     }
     
     @And("Rejected Document sidecard exists")
