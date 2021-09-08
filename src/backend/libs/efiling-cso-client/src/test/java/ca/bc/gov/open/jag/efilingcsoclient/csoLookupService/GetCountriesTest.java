@@ -99,8 +99,7 @@ public class GetCountriesTest {
     }
 
     private List<CodeValue> createCodeList() {
-
-        List<CodeValue> codes = new ArrayList<>();
+        
         CodeValue codeOne = new CodeValue();
         codeOne.setCode(TEST_1);
         codeOne.setParentCode(TEST_1);
@@ -116,8 +115,6 @@ public class GetCountriesTest {
     }
 
     private List<CodeValue> createMissingCountryList() {
-
-        List<CodeValue> codes = new ArrayList<>();
 
         CodeValue codeTwo = new CodeValue();
         codeTwo.setCode(TEST_2);
