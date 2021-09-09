@@ -83,6 +83,12 @@ public class PackageConfirmationPage extends BasePage {
     	return elements != null && !elements.isEmpty();
 	}
     
+    /** Returns true if the duplicate banner exists. */ 
+    public boolean duplicateBannerExists() { 
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testId='duplicateDocMsg']")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
     /** Returns true if the rejected sidecard exists. */ 
     public boolean rejectedSidecardExists() { 
     	List<WebElement> elements = driver.findElements(By.id("rejectedDocumentsCard")); 

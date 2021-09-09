@@ -1,7 +1,6 @@
 # new feature
 # Tags: optional
 
-@current
 @frontend
 Feature: Rejected documents uploaded from Parent App show rejected banner/sidecard
 
