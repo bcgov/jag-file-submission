@@ -77,7 +77,7 @@ public class GenerateUrlSD {
         logger.info("Asserting document upload response");
 
         JsonPath jsonPath = new JsonPath(actualDocumentResponse.asString());
-        Assert.assertEquals(Integer.valueOf(1), jsonPath.get("received"));
+        Assert.assertTrue(((Integer) jsonPath.get("received")).intValue() >= 1);
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
