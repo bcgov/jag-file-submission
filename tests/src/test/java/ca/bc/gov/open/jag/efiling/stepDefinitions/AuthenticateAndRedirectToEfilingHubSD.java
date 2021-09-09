@@ -22,6 +22,7 @@ import ca.bc.gov.open.jag.efiling.services.GenerateUrlService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class AuthenticateAndRedirectToEfilingHubSD {
 
@@ -87,6 +88,11 @@ public class AuthenticateAndRedirectToEfilingHubSD {
 		}
 	}
 
+	@When("Rush radio option Yes is selected")
+	public void rushRadioYesIsSelected() {
+		packageConfirmationPage.selectRushYesOption();
+	}
+	
     @Then("Package information is displayed")
     public void verifyPackageInformation() {
         assertEquals(Keys.EFILE_SUBMISSION_PAGE_TITLE, this.packageConfirmationPage.verifyPageTitle());
@@ -94,7 +100,21 @@ public class AuthenticateAndRedirectToEfilingHubSD {
 
         assertEquals(Keys.TEST_DOCUMENT_PDF, this.packageConfirmationPage.getInitialDocumentName());
         logger.info("Actual document name matches the uploaded document name");
-
+    }
+    
+    @And("Rush radio options are available")
+    public void rushRadioOptionsAvailable() {
+    	assertTrue(packageConfirmationPage.rushRadioOptionsExist());
+    }
+    
+    @And("Rush sidecard is visible")
+    public void rushSidecardIsVisible() {
+    	assertTrue(packageConfirmationPage.rushSideCardExist());
+    }
+    
+    @And("Rush sidecard is not visible")
+    public void rushSidecardIsNotVisible() {
+    	assertFalse(packageConfirmationPage.rushSideCardExist());
     }
     
     @And("Rejected Document banner exists")
