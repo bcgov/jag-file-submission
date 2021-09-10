@@ -125,16 +125,14 @@ public class PackageConfirmationPage extends BasePage {
     	return elements != null && !elements.isEmpty();
     }
 
-    /** Returns true if the Rush modal is visible. */ 
-    public void clickCloseOnRushModal() {  	
-    	rushModalCloseBtn.click();
+    /** Returns true if the Rush modal is visible. */
+    public void clickCloseOnRushModal() {
+        rushModalCloseBtn.click();
     }
 
-	public boolean verifyRushDetailsScreenIsDisplayed() {
-    	List<WebElement> elements = driver.findElements(By.xpath("//div[contains(@class, 'ct-rush')]")); // the main Rush div
-    	return elements != null && !elements.isEmpty();
-	}
-    
-    
-    
+    public boolean verifyRushDetailsScreenIsDisplayed() {
+        List<WebElement> elements = driver.findElements(By.xpath("//div[contains(@class, 'ct-rush')]")); // the main Rush div
+        return elements != null && !elements.isEmpty();
+    }
+
 }
