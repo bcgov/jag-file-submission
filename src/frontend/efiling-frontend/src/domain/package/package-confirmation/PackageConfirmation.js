@@ -269,7 +269,7 @@ export default function PackageConfirmation({
           </span>
         </h4>
         <br />
-        <div className="bcgov-row">
+        <div className="bcgov-row" data-testId="rushRadioOpts">
           <span>
             Do you want to request that this submission be processed on a{" "}
             <b>rush basis?</b>

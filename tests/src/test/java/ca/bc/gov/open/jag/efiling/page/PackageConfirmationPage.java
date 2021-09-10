@@ -31,6 +31,9 @@ public class PackageConfirmationPage extends BasePage {
     @FindBy(xpath = "//span[@data-test-id='uploaded-file']")
     private List<WebElement> uploadedFiles;
 
+    @FindBy(xpath = "//label[@for='Yes']")
+    private WebElement rushYesRadioBtn;
+
     //Actions:
     public boolean verifyContinuePaymentBtnIsEnabled() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-testid='continue-btn']")));
@@ -44,6 +47,11 @@ public class PackageConfirmationPage extends BasePage {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-testid='continue-btn']")));
         continuePaymentBtn.click();
     }
+
+    /** Clicks the Yes radio button for the label "Do you want to request that this submission be processed on a rush basis?" */
+	public void selectRushYesOption() {
+		rushYesRadioBtn.click();
+	}
 
     public String getInitialDocumentName() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@data-test-id='uploaded-file']")));
@@ -83,9 +91,21 @@ public class PackageConfirmationPage extends BasePage {
     	return elements != null && !elements.isEmpty();
 	}
     
+    /** Returns true if the "rush basis" radio options exist. */ 
+    public boolean rushRadioOptionsExist() { 
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testid='rushRadioOpts']")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the Rush sidecard is visible. */ 
+    public boolean rushSideCardExist() { 
+    	List<WebElement> elements = driver.findElements(By.id("rushSubmissionCard")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
     /** Returns true if the duplicate banner exists. */ 
     public boolean duplicateBannerExists() { 
-    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testId='duplicateDocMsg']")); 
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testid='duplicateDocMsg']")); 
     	return elements != null && !elements.isEmpty();
 	}
     
