@@ -16,3 +16,13 @@ Feature: Rush processing screen
     When Rush radio option Yes is selected
     Then Rush sidecard is visible
     
+  Scenario: Proceed to Rush Processing from Package Confirmation screen
+    Given User uploads a successful document from parent app
+    And Package information is displayed
+    And Rush radio option Yes is selected
+    And Continue to payment button is enabled
+    When User clicks Continue
+    Then Rush modal is displayed
+    Then Rush model is closed
+    And Rush Details screen is displayed
+    

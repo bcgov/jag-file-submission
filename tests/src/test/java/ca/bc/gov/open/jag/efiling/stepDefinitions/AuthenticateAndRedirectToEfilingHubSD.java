@@ -92,6 +92,11 @@ public class AuthenticateAndRedirectToEfilingHubSD {
 	public void rushRadioYesIsSelected() {
 		packageConfirmationPage.selectRushYesOption();
 	}
+    
+	@When("Rush model is closed")
+    public void rushModelIsClosed() {
+    	packageConfirmationPage.clickCloseOnRushModal();
+    }
 	
     @Then("Package information is displayed")
     public void verifyPackageInformation() {
@@ -104,52 +109,68 @@ public class AuthenticateAndRedirectToEfilingHubSD {
     
     @And("Rush radio options are available")
     public void rushRadioOptionsAvailable() {
-    	assertTrue(packageConfirmationPage.rushRadioOptionsExist());
+    	assertTrue(packageConfirmationPage.verifyRushRadioOptionsExist());
     }
     
     @And("Rush sidecard is visible")
     public void rushSidecardIsVisible() {
-    	assertTrue(packageConfirmationPage.rushSideCardExist());
+    	assertTrue(packageConfirmationPage.verifyRushSideCardExist());
     }
     
     @And("Rush sidecard is not visible")
     public void rushSidecardIsNotVisible() {
-    	assertFalse(packageConfirmationPage.rushSideCardExist());
+    	assertFalse(packageConfirmationPage.verifyRushSideCardExist());
     }
     
     @And("Rejected Document banner exists")
     public void verifyRejectedBannerExists() {
-    	assertTrue(packageConfirmationPage.rejectedBannerExists());
+    	assertTrue(packageConfirmationPage.verifyRejectedBannerExists());
     }
     
     @And("Rejected Document banner doesn't exist")
     public void verifyRejectedBannerNotExists() {
-    	assertFalse(packageConfirmationPage.rejectedBannerExists());
+    	assertFalse(packageConfirmationPage.verifyRejectedBannerExists());
     }
     
     @And("Duplicate Document banner exists")
     public void verifyDuplicateDocumentBannerExists() {
-    	assertTrue(packageConfirmationPage.duplicateBannerExists());
+    	assertTrue(packageConfirmationPage.verifyDuplicateBannerExists());
     }
     
     @And("Duplicate Document banner doesn't exist")
     public void verifyDuplicateDocumentNotBannerExists() {
-    	assertFalse(packageConfirmationPage.duplicateBannerExists());
+    	assertFalse(packageConfirmationPage.verifyDuplicateBannerExists());
     }
     
     @And("Rejected Document sidecard exists")
     public void verifyRejectedSideCardExists() {
-    	assertTrue(packageConfirmationPage.rejectedSidecardExists());
+    	assertTrue(packageConfirmationPage.verifyRejectedSidecardExists());
     }
     
     @And("Rejected Document sidecard doesn't exist")
     public void verifyRejectedSideCardNotExists() {
-    	assertFalse(packageConfirmationPage.rejectedSidecardExists());
+    	assertFalse(packageConfirmationPage.verifyRejectedSidecardExists());
     }
 
-    @And("continue to payment button is enabled")
+    @And("Continue to payment button is enabled")
     public void verifyContinueToPaymentButtonIsEnabled() {
         Assert.assertTrue(this.packageConfirmationPage.verifyContinuePaymentBtnIsEnabled());
         logger.info("Continue payment button is enabled");
+    }
+
+    @And("User clicks Continue")
+    public void userClicksContinue() {
+        Assert.assertTrue(packageConfirmationPage.verifyContinuePaymentBtnIsEnabled());
+        packageConfirmationPage.clickContinueBtn();
+    }
+
+    @Then("Rush modal is displayed")
+    public void rushModalIsDisplayed() {
+        Assert.assertTrue(packageConfirmationPage.verifyRushModalIsDisplayed());
+    }
+    
+    @And("Rush Details screen is displayed")
+    public void rushDetailsScreenIsDisplayed() {
+        Assert.assertTrue(packageConfirmationPage.verifyRushDetailsScreenIsDisplayed());
     }
 }
