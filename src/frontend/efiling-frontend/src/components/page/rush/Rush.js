@@ -16,7 +16,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../../../domain/payment/Payment";
 
 import "./Rush.scss";
-import { getCountries } from "./RushService";
+import { getCountries, submitRush, submitRushDocuments } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
@@ -32,9 +32,7 @@ const generateInputField = (input, onChange) => (
   </div>
 );
 
-export default function Rush({ payment }) {
-  // eslint-disable-next-line no-unused-vars
-
+export default function Rush({ payment, setShowRush, setIsRush }) {
   const input = {
     isReadOnly: false,
     styling: "bcgov-editable-white",
@@ -48,6 +46,7 @@ export default function Rush({ payment }) {
     ["Phone Number", "phoneNumber"],
   ];
   const clearFields = {
+    rushType: "",
     surname: "",
     firstName: "",
     contactMethod: contactMethods[0],
@@ -77,7 +76,36 @@ export default function Rush({ payment }) {
   const [countries, setCountries] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
-  const handleContinue = () => {};
+  const handleContinue = () => {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i += 1) {
+      formData.append("files", files[i]);
+    }
+    const req = {
+      rushType: fields.rushType,
+      firstName: fields.firstName,
+      lastName: fields.surname,
+      organization: fields.org,
+      phoneNumber: fields.phoneNumber,
+      email: fields.email,
+      country: fields.country,
+      reason: fields.details,
+      supportingDocuments: files,
+    };
+
+    if (files.length > 0) {
+      submitRushDocuments(payment.submissionId, formData)
+        .then((res) => setShowToast(""))
+        .catch((err) => setShowToast(err));
+    }
+
+    submitRush(payment.submissionId, req)
+      .then(() => {
+        sessionStorage.setItem("validRushExit", true);
+        setShowRush(false);
+      })
+      .catch((err) => setShowToast(err));
+  };
 
   const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
     const limitedValue = fieldValue.substring(0, characterLimit);
@@ -330,7 +358,9 @@ export default function Rush({ payment }) {
   useEffect(() => {
     getCountries()
       .then((res) => setCountries(res.data.map((obj) => obj.description)))
-      .catch((err) => console.log(err));
+      .catch((err) => setToastMessage(err));
+
+    if (sessionStorage.getItem("validRushExit") === "true") setShowRush(false);
   }, []);
 
   const initialRender = useRef(true);
@@ -438,6 +468,7 @@ export default function Rush({ payment }) {
       firstName: jwtData.given_name,
       surname: jwtData.family_name,
       email: jwtData.email,
+      country: countries[0],
     });
 
     if (validator.isEmail(jwtData.email)) {
@@ -478,6 +509,7 @@ export default function Rush({ payment }) {
           label="The attached application is made under Rule 8-5 (1) SCR."
           onSelect={() => {
             setRadioStatusComponents();
+            setFields({ ...fields, rushType: "rule" });
             setRadio1(true);
           }}
         />
@@ -487,6 +519,7 @@ export default function Rush({ payment }) {
           label="The court directed that the order be processed on an urgent basis."
           onSelect={() => {
             setRadioStatusComponents();
+            setFields({ ...fields, rushType: "court" });
             setRadio2(true);
           }}
         />
@@ -496,6 +529,7 @@ export default function Rush({ payment }) {
           label="Other (please explain)."
           onSelect={() => {
             setRadioStatusComponents();
+            setFields({ ...fields, rushType: "other" });
             setRadio3(true);
           }}
         />
@@ -544,13 +578,17 @@ export default function Rush({ payment }) {
         <section className="buttons pt-2">
           <Button
             label="Cancel"
-            onClick={() => setShowPayment(true)}
+            onClick={() => {
+              setIsRush(false);
+              setShowRush(false);
+            }}
             styling="bcgov-normal-white btn"
           />
           <Button
             label="Continue"
             disabled={!continueBtnEnabled}
             styling="bcgov-normal-blue btn"
+            onClick={handleContinue}
           />
         </section>
       </div>
@@ -565,4 +603,8 @@ export default function Rush({ payment }) {
 
 Rush.propTypes = {
   payment: PropTypes.object.isRequired,
+  setShowRush: PropTypes.func.isRequired,
+  setIsRush: PropTypes.bool.isRequired,
+  setValidRushExit: PropTypes.func.isRequired,
+  validRushExit: PropTypes.bool.isRequired,
 };

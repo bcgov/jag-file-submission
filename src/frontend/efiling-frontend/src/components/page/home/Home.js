@@ -172,6 +172,8 @@ export default function Home() {
     }
   };
 
+  sessionStorage.setItem("validRushExit", false);
+
   const modal = {
     show,
     title: "Cancel E-File Submission?",
