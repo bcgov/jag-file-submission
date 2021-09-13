@@ -11,6 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFeeRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.jetty.http.HttpStatus;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
@@ -79,14 +80,38 @@ public class CsoLookupServiceImpl implements EfilingLookupService {
 
     @Override
     public List<LookupItem> getCountries() {
+
         try {
-            List<CodeValue> countries = lookupFacade.getCountryCodes();
-            return countries.stream()
-                    .map(country -> LookupItem.builder().code(country.getCode()).description(country.getDescription()).create())
+
+            List<CodeValue> countryCodes = lookupFacade.getCountryCodes();
+            List<CodeValue> countries = lookupFacade.getCountries();
+
+            return countryCodes.stream()
+                    .map(country -> LookupItem.builder().code(country.getCode()).description(
+                           countries.stream()
+                                .filter(codeValue -> codeValue.getCode().equals(country.getParentCode()))
+                                .findFirst()
+                                .orElseGet(this::setMissingCodeValue).getDescription()
+                    ).create())
                     .collect(Collectors.toList());
         } catch(NestedEjbException_Exception e) {
             throw new EfilingLookupServiceException("Exception while getting countries", e.getCause());
         }
+
+    }
+
+    /**
+     * If the parent is missing ensure drop down populates
+     * @return Generic message
+     */
+    private CodeValue setMissingCodeValue() {
+
+        CodeValue codeValue = new CodeValue();
+
+        codeValue.setDescription("Missing Description");
+
+        return codeValue;
+
     }
 
 }

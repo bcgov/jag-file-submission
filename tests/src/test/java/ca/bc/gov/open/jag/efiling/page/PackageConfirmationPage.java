@@ -31,6 +31,9 @@ public class PackageConfirmationPage extends BasePage {
     @FindBy(xpath = "//span[@data-test-id='uploaded-file']")
     private List<WebElement> uploadedFiles;
 
+    @FindBy(xpath = "//label[@for='Yes']")
+    private WebElement rushYesRadioBtn;
+
     //Actions:
     public boolean verifyContinuePaymentBtnIsEnabled() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-testid='continue-btn']")));
@@ -45,6 +48,11 @@ public class PackageConfirmationPage extends BasePage {
         continuePaymentBtn.click();
     }
 
+    /** Clicks the Yes radio button for the label "Do you want to request that this submission be processed on a rush basis?" */
+	public void selectRushYesOption() {
+		rushYesRadioBtn.click();
+	}
+
     public String getInitialDocumentName() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@data-test-id='uploaded-file']")));
         return uploadedInitialFile.getText();
@@ -56,7 +64,7 @@ public class PackageConfirmationPage extends BasePage {
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@data-test-id='upload-link']")));
             action.moveToElement(uploadLink).click().build().perform();
 
-        } catch (org.openqa.selenium.TimeoutException | org.openqa.selenium.NoSuchElementException tx) {
+        } catch (@SuppressWarnings("unused") org.openqa.selenium.TimeoutException | org.openqa.selenium.NoSuchElementException tx) {
             JavascriptExecutor js = (JavascriptExecutor) this.driver;
             js.executeScript("arguments[0].click();", uploadLink);
         }
@@ -76,4 +84,35 @@ public class PackageConfirmationPage extends BasePage {
         }
         return UploadedFileList;
     }
+    
+    /** Returns true if the rejected banner exists. */ 
+    public boolean rejectedBannerExists() { 
+    	List<WebElement> elements = driver.findElements(By.className("rejectedMsg")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the "rush basis" radio options exist. */ 
+    public boolean rushRadioOptionsExist() { 
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testid='rushRadioOpts']")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the Rush sidecard is visible. */ 
+    public boolean rushSideCardExist() { 
+    	List<WebElement> elements = driver.findElements(By.id("rushSubmissionCard")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the duplicate banner exists. */ 
+    public boolean duplicateBannerExists() { 
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testid='duplicateDocMsg']")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the rejected sidecard exists. */ 
+    public boolean rejectedSidecardExists() { 
+    	List<WebElement> elements = driver.findElements(By.id("rejectedDocumentsCard")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
 }

@@ -223,7 +223,13 @@ export default function PackageConfirmation({
           </>
         )}
         <h1>Package Confirmation</h1>
-        {showToast && <Toast content={toastMessage} setShow={setShowToast} />}
+        {showToast && (
+          <Toast
+            testId="duplicateDocMsg"
+            content={toastMessage}
+            setShow={setShowToast}
+          />
+        )}
         <span>
           Review your package for accuracy and upload any additional or
           supporting documents.
@@ -267,6 +273,7 @@ export default function PackageConfirmation({
           </span>
         </h4>
         <br />
+
         {sessionStorage.getItem("validRushExit") === "false" && (
           <div className="bcgov-row">
             <span>

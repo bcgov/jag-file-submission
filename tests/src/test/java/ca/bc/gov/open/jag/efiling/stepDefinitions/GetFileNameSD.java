@@ -60,13 +60,12 @@ public class GetFileNameSD {
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
-
+                actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
         actualFileNameResponse = submissionService.getSubmissionDetailsResponse(actualUserIdentity.getAccessToken(),actualTransactionId,
                 actualSubmissionId, Keys.FILE_NAME_PATH);
 
-        logger.info("Api response status code: {}", actualFileNameResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualFileNameResponse.getStatusCode()));
 
     }
 

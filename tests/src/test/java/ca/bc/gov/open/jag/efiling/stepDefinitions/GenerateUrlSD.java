@@ -67,7 +67,7 @@ public class GenerateUrlSD {
                 actualUserIdentity.getUniversalId(), fileSpec);
 
 
-        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
 
     }
 
@@ -77,7 +77,7 @@ public class GenerateUrlSD {
         logger.info("Asserting document upload response");
 
         JsonPath jsonPath = new JsonPath(actualDocumentResponse.asString());
-        Assert.assertEquals(Integer.valueOf(1), jsonPath.get("received"));
+        Assert.assertTrue(((Integer) jsonPath.get("received")).intValue() >= 1);
 
         actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
@@ -89,9 +89,9 @@ public class GenerateUrlSD {
     public void userRequestASubmissionUrl() {
 
         actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
-        logger.info("Api response status code: {}", actualGenerateUrlResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualGenerateUrlResponse.getStatusCode()));
 
         logger.info("Api response: {}", actualGenerateUrlResponse.asString());
 
@@ -121,7 +121,7 @@ public class GenerateUrlSD {
         actualGenerateUrlResponse = submissionService.generateUrlResponseForInvalidFileNo(actualTransactionId, actualUserIdentity.getUniversalId(),
                 actualUserIdentity.getAccessToken(), actualSubmissionId);
 
-        logger.info("Api response status code: {}", actualGenerateUrlResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualGenerateUrlResponse.getStatusCode()));
 
         logger.info("Api response: {}", actualGenerateUrlResponse.asString());
 

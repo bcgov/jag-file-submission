@@ -1,16 +1,15 @@
 package ca.bc.gov.open.jag.efiling.services;
 
+import java.text.MessageFormat;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+
 import ca.bc.gov.open.jag.efiling.Keys;
 import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.springframework.beans.factory.annotation.Value;
-
-import java.text.MessageFormat;
-import java.util.UUID;
 
 public class CountryService {
 

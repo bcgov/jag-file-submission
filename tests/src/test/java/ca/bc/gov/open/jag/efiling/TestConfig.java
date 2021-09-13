@@ -75,7 +75,7 @@ public class TestConfig {
         WebDriverManager.chromedriver().setup();
 
         Map<String, Object> prefs = new HashMap<String, Object>();
-        prefs.put("profile.default_content_settings.popups", 0);
+        prefs.put("profile.default_content_settings.popups", Integer.valueOf(0));
         prefs.put("download.default_directory", Keys.BASE_PATH + Keys.DOWNLOADED_FILES_PATH);
 
         ChromeOptions options = new ChromeOptions();

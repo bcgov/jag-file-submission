@@ -173,6 +173,7 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         </span>
       </h4>
       <br />
+
       <br />
       <h2>
         Summary
@@ -713,6 +714,7 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         </span>
       </h4>
       <br />
+
       <br />
       <h2>
         Summary
@@ -1940,6 +1942,7 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
         </span>
       </h4>
       <br />
+
       <br />
       <h2>
         Summary

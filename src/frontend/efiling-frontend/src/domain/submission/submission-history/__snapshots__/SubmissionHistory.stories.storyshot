@@ -35,6 +35,7 @@ exports[`Storyshots SubmissionHistory Default 1`] = `
       </button>
       <div
         class="alert alert-danger alert-dismissible fade show"
+        data-testid=""
         role="alert"
       >
         Something went wrong while trying to retrieve your submissions.

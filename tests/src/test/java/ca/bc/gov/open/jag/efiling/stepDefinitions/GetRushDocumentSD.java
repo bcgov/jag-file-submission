@@ -39,10 +39,10 @@ public class GetRushDocumentSD {
     public void getSubmissionSheetRequest() {
         logger.info("Requesting get a rush document from filing package");
 
-        actualRushDocumentResponse = filingPackageService.getRushDocument(actualUserIdentity.getAccessToken(), 1, "9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8" );
+        actualRushDocumentResponse = filingPackageService.getRushDocument(actualUserIdentity.getAccessToken(), Integer.valueOf(1), "9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8" );
 
-        logger.info("Api response status code: {}", actualRushDocumentResponse.getStatusCode());
-        logger.info("Api response: {}", actualRushDocumentResponse.asString().getBytes(StandardCharsets.UTF_8).length);
+        logger.info("Api response status code: {}", Integer.valueOf(actualRushDocumentResponse.getStatusCode()));
+        logger.info("Api response: {}", Integer.valueOf(actualRushDocumentResponse.asString().getBytes(StandardCharsets.UTF_8).length));
     }
 
     @Then("valid Rush document is returned")

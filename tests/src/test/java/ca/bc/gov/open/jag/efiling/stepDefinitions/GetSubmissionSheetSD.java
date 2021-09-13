@@ -40,10 +40,10 @@ public class GetSubmissionSheetSD {
     public void getSubmissionSheetRequest() {
         logger.info("Requesting submission sheet from filing packages");
 
-        actualSubmissionSheetResponse = filingPackageService.getSubmissionSheet(actualUserIdentity.getAccessToken(), 1);
+        actualSubmissionSheetResponse = filingPackageService.getSubmissionSheet(actualUserIdentity.getAccessToken(), Integer.valueOf(1));
 
-        logger.info("Api response status code: {}", actualSubmissionSheetResponse.getStatusCode());
-        logger.info("Api response: {}", actualSubmissionSheetResponse.asString().getBytes(StandardCharsets.UTF_8).length);
+        logger.info("Api response status code: {}", Integer.valueOf(actualSubmissionSheetResponse.getStatusCode()));
+        logger.info("Api response: {}", Integer.valueOf(actualSubmissionSheetResponse.asString().getBytes(StandardCharsets.UTF_8).length));
 
     }
 

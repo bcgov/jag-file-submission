@@ -44,7 +44,7 @@ public class GetCountriesSD {
 
         actualCountriesResponse = countryService.getCountriesResponse(actualUserIdentity.getAccessToken(), actualTransactionId);
 
-        logger.info("Api response status code: {}", actualCountriesResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualCountriesResponse.getStatusCode()));
         logger.info("Api response: {}", actualCountriesResponse.asString());
     }
 
