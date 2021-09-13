@@ -173,45 +173,6 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
         </span>
       </h4>
       <br />
-      <div
-        class="bcgov-row"
-      >
-        <span>
-          Do you want to request that this submission be processed on a 
-          <b>
-            rush basis?
-          </b>
-        </span>
-        <label
-          class="bcgov-radio"
-          for="No"
-        >
-          No
-          <input
-            checked=""
-            id="No"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-        <label
-          class="bcgov-radio"
-          for="Yes"
-        >
-          Yes
-          <input
-            id="Yes"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-      </div>
       <br />
       <h2>
         Summary
@@ -752,45 +713,6 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
         </span>
       </h4>
       <br />
-      <div
-        class="bcgov-row"
-      >
-        <span>
-          Do you want to request that this submission be processed on a 
-          <b>
-            rush basis?
-          </b>
-        </span>
-        <label
-          class="bcgov-radio"
-          for="No"
-        >
-          No
-          <input
-            checked=""
-            id="No"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-        <label
-          class="bcgov-radio"
-          for="Yes"
-        >
-          Yes
-          <input
-            id="Yes"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-      </div>
       <br />
       <h2>
         Summary
@@ -2018,45 +1940,6 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
         </span>
       </h4>
       <br />
-      <div
-        class="bcgov-row"
-      >
-        <span>
-          Do you want to request that this submission be processed on a 
-          <b>
-            rush basis?
-          </b>
-        </span>
-        <label
-          class="bcgov-radio"
-          for="No"
-        >
-          No
-          <input
-            checked=""
-            id="No"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-        <label
-          class="bcgov-radio"
-          for="Yes"
-        >
-          Yes
-          <input
-            id="Yes"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-      </div>
       <br />
       <h2>
         Summary

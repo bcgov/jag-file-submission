@@ -477,7 +477,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
   };
 
   const setRadioStatusComponents = () => {
-    resetFields();
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
@@ -511,6 +510,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setRadioStatusComponents();
             setFields({ ...fields, rushType: "rule" });
             setRadio1(true);
+            resetFields();
           }}
         />
         <Radio
@@ -521,6 +521,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setRadioStatusComponents();
             setFields({ ...fields, rushType: "court" });
             setRadio2(true);
+            resetFields();
           }}
         />
         <Radio
@@ -531,6 +532,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setRadioStatusComponents();
             setFields({ ...fields, rushType: "other" });
             setRadio3(true);
+            resetFields();
           }}
         />
         <br />
@@ -604,7 +606,5 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
 Rush.propTypes = {
   payment: PropTypes.object.isRequired,
   setShowRush: PropTypes.func.isRequired,
-  setIsRush: PropTypes.bool.isRequired,
-  setValidRushExit: PropTypes.func.isRequired,
-  validRushExit: PropTypes.bool.isRequired,
+  setIsRush: PropTypes.func.isRequired,
 };

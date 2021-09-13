@@ -274,6 +274,7 @@ export default function PackageConfirmation({
               <b>rush basis?</b>
             </span>
             <Radio
+              data-testid="no"
               id="No"
               label="No"
               name="rush"
