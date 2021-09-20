@@ -7,7 +7,7 @@
     "@babel/preset-react": "^7.13.13",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
     "axios": "^0.21.1",
-    "axios-auth-refresh": "^2.2.8",
+    "axios-auth-refresh": "^3.2.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.5.3",
     "dinero.js": "^1.8.1",
