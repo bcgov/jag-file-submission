@@ -1,7 +1,9 @@
 package ca.bc.gov.open.jag.efiling.page;
 
 
-import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -11,8 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 
 public class PackageConfirmationPage extends BasePage {
 
@@ -20,7 +21,7 @@ public class PackageConfirmationPage extends BasePage {
 
     //Page Objects:
     @FindBy(xpath = "//button[@data-testid='continue-btn']")
-    private WebElement continuePaymentBtn;
+    private WebElement continueBtn;
 
     @FindBy(xpath = "//*[@data-test-id='upload-link']")
     private WebElement uploadLink;
@@ -31,19 +32,30 @@ public class PackageConfirmationPage extends BasePage {
     @FindBy(xpath = "//span[@data-test-id='uploaded-file']")
     private List<WebElement> uploadedFiles;
 
+    @FindBy(xpath = "//label[@for='Yes']")
+    private WebElement rushYesRadioBtn;
+    
+    @FindBy(xpath = "//div[contains(@class, 'modal-header')]/button[@class='close']")
+    private WebElement rushModalCloseBtn;
+
     //Actions:
     public boolean verifyContinuePaymentBtnIsEnabled() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-testid='continue-btn']")));
 
-        if (!continuePaymentBtn.isDisplayed())
+        if (!continueBtn.isDisplayed())
             throw new EfilingTestException("User may not have a CSO account created");
-        return continuePaymentBtn.isEnabled();
+        return continueBtn.isEnabled();
     }
 
-    public void clickContinuePaymentBtn() {
+    public void clickContinueBtn() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@data-testid='continue-btn']")));
-        continuePaymentBtn.click();
+        continueBtn.click();
     }
+
+    /** Clicks the Yes radio button for the label "Do you want to request that this submission be processed on a rush basis?" */
+	public void selectRushYesOption() {
+		rushYesRadioBtn.click();
+	}
 
     public String getInitialDocumentName() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@data-test-id='uploaded-file']")));
@@ -78,15 +90,49 @@ public class PackageConfirmationPage extends BasePage {
     }
     
     /** Returns true if the rejected banner exists. */ 
-    public boolean rejectedBannerExists() { 
+    public boolean verifyRejectedBannerExists() { 
     	List<WebElement> elements = driver.findElements(By.className("rejectedMsg")); 
     	return elements != null && !elements.isEmpty();
 	}
     
-    /** Returns true if the rejected sidecard exists. */ 
-    public boolean rejectedSidecardExists() { 
-    	List<WebElement> elements = driver.findElements(By.id("rejectedDocumentsCard")); 
+    /** Returns true if the "rush basis" radio options exist. */ 
+    public boolean verifyRushRadioOptionsExist() { 
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testid='rushRadioOpts']")); 
     	return elements != null && !elements.isEmpty();
 	}
     
+    /** Returns true if the Rush sidecard is visible. */ 
+    public boolean verifyRushSideCardExist() { 
+    	List<WebElement> elements = driver.findElements(By.id("rushSubmissionCard")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the duplicate banner exists. */ 
+    public boolean verifyDuplicateBannerExists() { 
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testid='duplicateDocMsg']")); 
+    	return elements != null && !elements.isEmpty();
+	}
+    
+    /** Returns true if the rejected sidecard exists. */ 
+    public boolean verifyRejectedSidecardExists() { 
+    	List<WebElement> elements = driver.findElements(By.id("rejectedDocumentsCard")); 
+    	return elements != null && !elements.isEmpty();
+	}
+
+    /** Returns true if the Rush modal is visible. */ 
+    public boolean verifyRushModalIsDisplayed() {  	
+    	List<WebElement> elements = driver.findElements(By.xpath("//div[contains(@class, 'modal-header')]/div/h2[text()='Rush Documents']"));
+    	return elements != null && !elements.isEmpty();
+    }
+
+    /** Returns true if the Rush modal is visible. */
+    public void clickCloseOnRushModal() {
+        rushModalCloseBtn.click();
+    }
+
+    public boolean verifyRushDetailsScreenIsDisplayed() {
+        List<WebElement> elements = driver.findElements(By.xpath("//div[contains(@class, 'ct-rush')]")); // the main Rush div
+        return elements != null && !elements.isEmpty();
+    }
+
 }

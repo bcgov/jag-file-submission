@@ -219,7 +219,13 @@ export default function PackageConfirmation({
           </>
         )}
         <h1>Package Confirmation</h1>
-        {showToast && <Toast content={toastMessage} setShow={setShowToast} />}
+        {showToast && (
+          <Toast
+            testId="duplicateDocMsg"
+            content={toastMessage}
+            setShow={setShowToast}
+          />
+        )}
         <span>
           Review your package for accuracy and upload any additional or
           supporting documents.
@@ -263,7 +269,7 @@ export default function PackageConfirmation({
           </span>
         </h4>
         <br />
-        <div className="bcgov-row">
+        <div className="bcgov-row" data-testId="rushRadioOpts">
           <span>
             Do you want to request that this submission be processed on a{" "}
             <b>rush basis?</b>

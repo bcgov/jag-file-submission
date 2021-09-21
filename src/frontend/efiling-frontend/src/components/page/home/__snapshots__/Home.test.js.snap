@@ -1188,6 +1188,7 @@ exports[`Home Component matches the snapshot when user cso account exists 1`] = 
       <br />
       <div
         class="bcgov-row"
+        data-testid="rushRadioOpts"
       >
         <span>
           Do you want to request that this submission be processed on a 

@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const Toast = ({ content, setShow }) => (
-  <div className="alert alert-danger alert-dismissible fade show" role="alert">
+export const Toast = ({ content, setShow, testId }) => (
+  <div
+    className="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    data-testId={testId}
+  >
     {content}
     <button
       type="button"
@@ -20,4 +24,9 @@ export const Toast = ({ content, setShow }) => (
 Toast.propTypes = {
   content: PropTypes.string.isRequired,
   setShow: PropTypes.func.isRequired,
+  testId: PropTypes.string,
+};
+
+Toast.defaultProps = {
+  testId: "",
 };
