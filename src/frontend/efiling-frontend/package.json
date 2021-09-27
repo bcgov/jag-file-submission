@@ -62,7 +62,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/plugin-syntax-typescript": "^7.12.13",
-    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-env": "^7.15.6",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
     "@storybook/addon-storyshots": "^6.2.9",
