@@ -32,7 +32,7 @@
         <org.junit.jupiter.version>5.7.1</org.junit.jupiter.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <org.mockito.mockito-all.version>1.10.19</org.mockito.mockito-all.version>
-        <org.mockito.mockito-core.version>3.6.0</org.mockito.mockito-core.version>
+        <org.mockito.mockito-core.version>4.0.0</org.mockito.mockito-core.version>
         <org.openapitools.version>0.2.1</org.openapitools.version>
         <org.springdoc.version>1.5.8</org.springdoc.version>
         <org.threeten.version>1.5.1</org.threeten.version>
