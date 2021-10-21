@@ -11,7 +11,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFeeRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.jetty.http.HttpStatus;
+
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
