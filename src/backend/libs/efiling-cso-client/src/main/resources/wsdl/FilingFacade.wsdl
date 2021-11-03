@@ -142,6 +142,7 @@
                     <xs:element minOccurs="0" name="filePath" type="xs:string"/>
                     <xs:element minOccurs="0" name="fileServer" type="xs:string"/>
                     <xs:element minOccurs="0" name="filingBodyCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="filingProcessCd" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="issues" nillable="true" type="tns:issue"/>
                     <xs:element minOccurs="0" name="jsonObject" type="xs:string"/>
                     <xs:element minOccurs="0" name="largeFileTimeMilliSecs" type="xs:string"/>
