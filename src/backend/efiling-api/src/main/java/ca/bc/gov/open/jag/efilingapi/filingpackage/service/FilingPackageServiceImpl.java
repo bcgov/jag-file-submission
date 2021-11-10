@@ -84,6 +84,10 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     @Override
     public Optional<Resource> getReport(ReportRequest reportRequest) {
 
+        Optional<ReviewFilingPackage> filingPackage = getFilingPackage(reportRequest.getUniversalId(), reportRequest.getPackageId());
+
+        if (!filingPackage.isPresent()) return Optional.empty();
+
         Optional<byte[]> result = efilingReviewService.getReport(reportRequest);
 
         if (!result.isPresent()) return Optional.empty();
