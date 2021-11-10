@@ -323,6 +323,19 @@ export default function PackageReview() {
     </p>
   );
 
+  if (error) {
+    return (
+        <div className="col-md-8">
+          <Alert
+            icon={<MdCancel size={24} />}
+            type="error"
+            styling="bcgov-error-background"
+            element="There was a problem with your request."
+          />
+        </div>
+    )
+  }
+
   return (
     <>
       <div className="ct-package-review page">
@@ -333,16 +346,6 @@ export default function PackageReview() {
               content="Something went wrong while trying to download your document."
               setShow={setShowToast}
             />
-          )}
-          {error && (
-            <div className="col-md-8">
-              <Alert
-                icon={<MdCancel size={24} />}
-                type="error"
-                styling="bcgov-error-background"
-                element="There was a problem with your request."
-              />
-            </div>
           )}
           <br />
           <div className="row">
