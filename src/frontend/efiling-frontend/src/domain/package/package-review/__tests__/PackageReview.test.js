@@ -384,7 +384,7 @@ describe("PackageReview Component", () => {
 
     mock
       .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links, });
+      .reply(200, { court: courtData, submittedBy, submittedDate, links });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -416,7 +416,7 @@ describe("PackageReview Component", () => {
 
     mock
       .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links, });
+      .reply(200, { court: courtData, submittedBy, submittedDate, links });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -442,7 +442,7 @@ describe("PackageReview Component", () => {
 
     mock
       .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links, });
+      .reply(200, { court: courtData, submittedBy, submittedDate, links });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
