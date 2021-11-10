@@ -116,6 +116,7 @@ describe("PackageReview Component", () => {
       documents,
       parties,
       payments,
+      links,
     });
 
     const { asFragment } = render(<PackageReview />);
@@ -131,6 +132,7 @@ describe("PackageReview Component", () => {
   });
 
   test("Clicking cancel takes user back to parent app", async () => {
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
     const url = "http://www.google.ca";
     routerDom.useLocation = jest
       .fn()
@@ -145,6 +147,7 @@ describe("PackageReview Component", () => {
   });
 
   test("Clicking cancel takes user back to parent app, encoded URL", async () => {
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
     const encodedUrlWithParams = encodeURIComponent(
       "https://www.google.ca/search?q=bob+ross&tbm=isch"
     );
@@ -358,6 +361,7 @@ describe("PackageReview Component", () => {
       court: courtData,
       submittedBy,
       submittedDate,
+      links,
     });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
@@ -380,7 +384,7 @@ describe("PackageReview Component", () => {
 
     mock
       .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate });
+      .reply(200, { court: courtData, submittedBy, submittedDate, links, });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -412,7 +416,7 @@ describe("PackageReview Component", () => {
 
     mock
       .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate });
+      .reply(200, { court: courtData, submittedBy, submittedDate, links, });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -438,7 +442,7 @@ describe("PackageReview Component", () => {
 
     mock
       .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate });
+      .reply(200, { court: courtData, submittedBy, submittedDate, links, });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -462,6 +466,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       documents,
+      links,
     });
     mock.onDelete("/filingpackages/1/document/1").reply(200);
     const noop = jest.spyOn(mockHelper, "noop");
@@ -495,6 +500,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       documents,
+      links,
     });
     mock.onDelete("/filingpackages/1/document/1").reply(404);
     const noop = jest.spyOn(mockHelper, "noop");
@@ -654,6 +660,8 @@ describe("PackageReview Component", () => {
 
     const { getByText, getAllByTestId } = render(<PackageReview />);
 
+    await act(() => promise);
+
     const rushTab = getByText("Rush Details");
     expect(rushTab).not.toHaveAttribute("aria-disabled", "false");
     fireEvent.click(rushTab);
@@ -684,6 +692,8 @@ describe("PackageReview Component", () => {
       .reply(400, {});
 
     const { getByText, getAllByTestId } = render(<PackageReview />);
+
+    await act(() => promise);
 
     const rushTab = getByText("Rush Details");
     expect(rushTab).not.toHaveAttribute("aria-disabled", "false");
