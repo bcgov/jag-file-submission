@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components */
 import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components */
-import { Alert, Button, Sidecard, Table } from "shared-components";
+import { Alert, Button, Sidecard, Table, Loader } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel, MdError } from "react-icons/md";
 import { useLocation, useParams } from "react-router-dom";
@@ -77,6 +77,7 @@ export default function PackageReview() {
   const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
   const defaultTabKey = defaultTab || "documents"; // TODO: Remove when removing rushTabFeatureFlag
 
+  const [showLoader, setShowLoader] = useState(true);
   const [error, setError] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
@@ -275,6 +276,7 @@ export default function PackageReview() {
       .catch(() => {
         setError(true);
       });
+      setShowLoader(false);
   }, [packageId, reloadTrigger, isRush]);
 
   /** Whenever this function is called, it'll trigger a reload of the document list. */
@@ -338,7 +340,8 @@ export default function PackageReview() {
 
   return (
     <>
-      <div className="ct-package-review page">
+      {showLoader ? (<Loader page />) : (
+        <div className="ct-package-review page">
         <div className="content col-md-8">
           <h1>View Recently Submitted Package # {packageId}</h1>
           {showToast && (
@@ -492,6 +495,7 @@ export default function PackageReview() {
           <Sidecard sideCard={aboutCsoSidecard} />
         </div>
       </div>
+      )}
     </>
   );
 }
