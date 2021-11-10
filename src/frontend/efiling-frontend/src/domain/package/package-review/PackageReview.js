@@ -272,11 +272,11 @@ export default function PackageReview() {
         } catch (err) {
           setError(true);
         }
+        setShowLoader(false);
       })
       .catch(() => {
         setError(true);
       });
-      setShowLoader(false);
   }, [packageId, reloadTrigger, isRush]);
 
   /** Whenever this function is called, it'll trigger a reload of the document list. */
