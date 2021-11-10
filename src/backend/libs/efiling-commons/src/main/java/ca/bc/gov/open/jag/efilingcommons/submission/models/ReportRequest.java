@@ -7,6 +7,7 @@ public class ReportRequest {
     ReportsTypes report;
     BigDecimal packageId;
     String fileName;
+    String universalId;
 
     public ReportsTypes getReport() { return report; }
 
@@ -14,11 +15,16 @@ public class ReportRequest {
 
     public String getFileName() { return fileName; }
 
+    public String getUniversalId() { return universalId; }
+
+    public void setUniversalId(String universalId) { this.universalId = universalId; }
+
     protected ReportRequest(ReportRequest.Builder builder) {
 
         this.report = builder.report;
         this.packageId = builder.packageId;
         this.fileName = builder.fileName;
+        this.universalId = builder.universalId;
 
     }
 
@@ -32,6 +38,7 @@ public class ReportRequest {
         private ReportsTypes report;
         private BigDecimal packageId;
         private String fileName;
+        private String universalId;
 
         public ReportRequest.Builder report(ReportsTypes report) {
             this.report = report;
@@ -45,6 +52,11 @@ public class ReportRequest {
 
         public ReportRequest.Builder fileName(String fileName) {
             this.fileName = fileName;
+            return this;
+        }
+
+        public ReportRequest.Builder universalId(String universalId) {
+            this.universalId = universalId;
             return this;
         }
 

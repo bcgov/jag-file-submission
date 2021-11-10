@@ -116,9 +116,13 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     private ResponseEntity<Resource> getReport(ReportRequest reportRequest) {
+
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
 
         if(!universalId.isPresent()) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        //Add a universal id
+        reportRequest.setUniversalId(universalId.get());
 
         Optional<Resource> result = filingPackageService.getReport(reportRequest);
 
