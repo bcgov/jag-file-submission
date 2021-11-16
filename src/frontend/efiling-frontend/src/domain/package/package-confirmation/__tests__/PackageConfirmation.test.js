@@ -46,6 +46,8 @@ describe("PackageConfirmation Component", () => {
   localStorage.setItem("jwt", token);
   window.scrollTo = jest.fn();
 
+  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+
   let mock;
   beforeEach(() => {
     mock = new MockAdapter(axios);

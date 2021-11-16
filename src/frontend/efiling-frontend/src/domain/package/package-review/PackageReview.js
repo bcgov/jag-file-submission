@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Tabs from "react-bootstrap/Tabs"; /* TODO: replace with shared-components */
 import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components */
-import { Alert, Button, Sidecard, Table } from "shared-components";
+import { Alert, Button, Sidecard, Table, Loader } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel, MdError } from "react-icons/md";
 import { useLocation, useParams } from "react-router-dom";
@@ -77,6 +77,7 @@ export default function PackageReview() {
   const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
   const defaultTabKey = defaultTab || "documents"; // TODO: Remove when removing rushTabFeatureFlag
 
+  const [showLoader, setShowLoader] = useState(true);
   const [error, setError] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
@@ -271,6 +272,7 @@ export default function PackageReview() {
         } catch (err) {
           setError(true);
         }
+        setShowLoader(false);
       })
       .catch(() => {
         setError(true);
@@ -323,172 +325,184 @@ export default function PackageReview() {
     </p>
   );
 
+  if (error) {
+    return (
+      <div className="col-md-8">
+        <Alert
+          icon={<MdCancel size={24} />}
+          type="error"
+          styling="bcgov-error-background"
+          element="There was a problem with your request."
+        />
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="ct-package-review page">
-        <div className="content col-md-8">
-          <h1>View Recently Submitted Package # {packageId}</h1>
-          {showToast && (
-            <Toast
-              content="Something went wrong while trying to download your document."
-              setShow={setShowToast}
-            />
-          )}
-          {error && (
-            <div className="col-md-8">
+      {showLoader ? (
+        <Loader page />
+      ) : (
+        <div className="ct-package-review page">
+          <div className="content col-md-8">
+            <h1>View Recently Submitted Package # {packageId}</h1>
+            {showToast && (
+              <Toast
+                content="Something went wrong while trying to download your document."
+                setShow={setShowToast}
+              />
+            )}
+            <br />
+            <div className="row">
+              <h2 className="col-sm-6">Package Details</h2>
+              <div className="col-sm-6 text-sm-right mt-3 mt-sm-0">
+                <span
+                  role="button"
+                  tabIndex={0}
+                  className="file-href"
+                  onClick={handleSubmissionSheet}
+                  onKeyDown={handleSubmissionSheet}
+                >
+                  Print Submission Sheet
+                </span>
+                <BsEyeFill size="24" color="#7F7F7F" className="align-icon" />
+              </div>
+            </div>
+            <br />
+            <div className="row" data-test-id="detailsTable">
+              <div className="col-sm-12 col-lg-6">
+                <Table id="packageDetails" elements={packageDetails} />
+              </div>
+              <div className="col-sm-12 col-lg-6">
+                <Table elements={courtFileDetails} />
+              </div>
+            </div>
+            <br />
+            {hasRegistryNotice && (
               <Alert
-                icon={<MdCancel size={24} />}
+                icon={
+                  <MdError size={40} className="align-icon registry-align" />
+                }
                 type="error"
                 styling="bcgov-error-background"
-                element="There was a problem with your request."
+                element={registryElement}
               />
-            </div>
-          )}
-          <br />
-          <div className="row">
-            <h2 className="col-sm-6">Package Details</h2>
-            <div className="col-sm-6 text-sm-right mt-3 mt-sm-0">
+            )}
+            <br />
+            {rushTabFeatureFlag === "true" && (
+              <Tabs
+                activeKey={tabKey}
+                onSelect={(key) => setTabKey(key)}
+                id="controlled-tab"
+              >
+                <Tab eventKey="documents" title="Documents">
+                  <br />
+                  <DocumentList
+                    packageId={packageId}
+                    documents={documents}
+                    reloadDocumentList={reloadDocumentList}
+                  />
+                </Tab>
+                <Tab eventKey="parties" title="Parties">
+                  <br />
+                  <PartyList
+                    parties={parties}
+                    organizationParties={organizationParties}
+                  />
+                </Tab>
+                <Tab eventKey="payment" title="Payment Status">
+                  <br />
+                  <PaymentList payments={payments} packageId={packageId} />
+                </Tab>
+                <Tab
+                  eventKey="rush"
+                  title="Rush Details"
+                  disabled={determineIfRushTabDisabled(
+                    isRush,
+                    isProtectionOrder
+                  )}
+                >
+                  <br />
+                  <Table id="rushDetails" elements={rushDetails} />
+                  <br />
+                  <SupportingDocumentList
+                    packageId={packageId}
+                    files={supportingDocuments}
+                  />
+                </Tab>
+                <Tab eventKey="comments" title="Filing Comments">
+                  <br />
+                  <h4>Filing Comments</h4>
+                  <div id="filingComments" className="tabContent">
+                    {filingComments}
+                  </div>
+                </Tab>
+              </Tabs>
+            )}
+            {rushTabFeatureFlag !== "true" && (
+              <Tabs defaultActiveKey={defaultTabKey} id="controlled-tab">
+                <Tab eventKey="documents" title="Documents">
+                  <br />
+                  <DocumentList
+                    packageId={packageId}
+                    documents={documents}
+                    reloadDocumentList={reloadDocumentList}
+                  />
+                </Tab>
+                <Tab eventKey="parties" title="Parties">
+                  <br />
+                  <PartyList
+                    parties={parties}
+                    organizationParties={organizationParties}
+                  />
+                </Tab>
+                <Tab eventKey="payment" title="Payment Status">
+                  <br />
+                  <PaymentList payments={payments} packageId={packageId} />
+                </Tab>
+                <Tab eventKey="comments" title="Filing Comments">
+                  <br />
+                  <h4>Filing Comments</h4>
+                  <div id="filingComments" className="tabContent">
+                    {filingComments}
+                  </div>
+                </Tab>
+              </Tabs>
+            )}
+            <br />
+            <div className="row note">
+              <span className="fw-bold">Please Note:&nbsp;</span> Visit your CSO
+              account to&nbsp;{" "}
               <span
                 role="button"
+                data-testid="cso-link"
                 tabIndex={0}
                 className="file-href"
-                onClick={handleSubmissionSheet}
-                onKeyDown={handleSubmissionSheet}
+                onClick={handleCsoLink}
+                onKeyDown={handleCsoLink}
               >
-                Print Submission Sheet
+                view all your previously submitted packages.
               </span>
-              <BsEyeFill size="24" color="#7F7F7F" className="align-icon" />
             </div>
+            {returnUrl && validator.isURL(returnUrl) && (
+              <>
+                <section className="buttons pt-2 row">
+                  <Button
+                    label={returnButtonName}
+                    onClick={() => window.open(returnUrl, "_self")}
+                    styling="bcgov-normal-white btn"
+                  />
+                </section>
+              </>
+            )}
+            {isParentAppFLA() && <SafefyCheck />}
           </div>
-          <br />
-          <div className="row" data-test-id="detailsTable">
-            <div className="col-sm-12 col-lg-6">
-              <Table id="packageDetails" elements={packageDetails} />
-            </div>
-            <div className="col-sm-12 col-lg-6">
-              <Table elements={courtFileDetails} />
-            </div>
+          <div className="sidecard">
+            <Sidecard sideCard={csoAccountDetailsSidecard} />
+            <Sidecard sideCard={aboutCsoSidecard} />
           </div>
-          <br />
-          {hasRegistryNotice && (
-            <Alert
-              icon={<MdError size={40} className="align-icon registry-align" />}
-              type="error"
-              styling="bcgov-error-background"
-              element={registryElement}
-            />
-          )}
-          <br />
-          {rushTabFeatureFlag === "true" && (
-            <Tabs
-              activeKey={tabKey}
-              onSelect={(key) => setTabKey(key)}
-              id="controlled-tab"
-            >
-              <Tab eventKey="documents" title="Documents">
-                <br />
-                <DocumentList
-                  packageId={packageId}
-                  documents={documents}
-                  reloadDocumentList={reloadDocumentList}
-                />
-              </Tab>
-              <Tab eventKey="parties" title="Parties">
-                <br />
-                <PartyList
-                  parties={parties}
-                  organizationParties={organizationParties}
-                />
-              </Tab>
-              <Tab eventKey="payment" title="Payment Status">
-                <br />
-                <PaymentList payments={payments} packageId={packageId} />
-              </Tab>
-              <Tab
-                eventKey="rush"
-                title="Rush Details"
-                disabled={determineIfRushTabDisabled(isRush, isProtectionOrder)}
-              >
-                <br />
-                <Table id="rushDetails" elements={rushDetails} />
-                <br />
-                <SupportingDocumentList
-                  packageId={packageId}
-                  files={supportingDocuments}
-                />
-              </Tab>
-              <Tab eventKey="comments" title="Filing Comments">
-                <br />
-                <h4>Filing Comments</h4>
-                <div id="filingComments" className="tabContent">
-                  {filingComments}
-                </div>
-              </Tab>
-            </Tabs>
-          )}
-          {rushTabFeatureFlag !== "true" && (
-            <Tabs defaultActiveKey={defaultTabKey} id="controlled-tab">
-              <Tab eventKey="documents" title="Documents">
-                <br />
-                <DocumentList
-                  packageId={packageId}
-                  documents={documents}
-                  reloadDocumentList={reloadDocumentList}
-                />
-              </Tab>
-              <Tab eventKey="parties" title="Parties">
-                <br />
-                <PartyList
-                  parties={parties}
-                  organizationParties={organizationParties}
-                />
-              </Tab>
-              <Tab eventKey="payment" title="Payment Status">
-                <br />
-                <PaymentList payments={payments} packageId={packageId} />
-              </Tab>
-              <Tab eventKey="comments" title="Filing Comments">
-                <br />
-                <h4>Filing Comments</h4>
-                <div id="filingComments" className="tabContent">
-                  {filingComments}
-                </div>
-              </Tab>
-            </Tabs>
-          )}
-          <br />
-          <div className="row note">
-            <span className="fw-bold">Please Note:&nbsp;</span> Visit your CSO
-            account to&nbsp;{" "}
-            <span
-              role="button"
-              data-testid="cso-link"
-              tabIndex={0}
-              className="file-href"
-              onClick={handleCsoLink}
-              onKeyDown={handleCsoLink}
-            >
-              view all your previously submitted packages.
-            </span>
-          </div>
-          {returnUrl && validator.isURL(returnUrl) && (
-            <>
-              <section className="buttons pt-2 row">
-                <Button
-                  label={returnButtonName}
-                  onClick={() => window.open(returnUrl, "_self")}
-                  styling="bcgov-normal-white btn"
-                />
-              </section>
-            </>
-          )}
-          {isParentAppFLA() && <SafefyCheck />}
         </div>
-        <div className="sidecard">
-          <Sidecard sideCard={csoAccountDetailsSidecard} />
-          <Sidecard sideCard={aboutCsoSidecard} />
-        </div>
-      </div>
+      )}
     </>
   );
 }

@@ -106,6 +106,10 @@ export default function PackageConfirmation({
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
+  const rushFeatureFlag = window.env
+    ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
+    : process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG;
+
   const resetState = () => {
     setShowUpload(false);
     setShowPayment(false);
@@ -113,7 +117,7 @@ export default function PackageConfirmation({
   };
 
   const handleContinue = () => {
-    if (isRush) {
+    if (isRush && rushFeatureFlag === "true") {
       setShowPayment(false);
       setShowModal(true);
     } else {
@@ -268,26 +272,30 @@ export default function PackageConfirmation({
             Upload them now.
           </span>
         </h4>
-        <br />
-        <div className="bcgov-row" data-testId="rushRadioOpts">
-          <span>
-            Do you want to request that this submission be processed on a{" "}
-            <b>rush basis?</b>
-          </span>
-          <Radio
-            id="No"
-            label="No"
-            name="rush"
-            defaultChecked
-            onSelect={() => setIsRush(false)}
-          />
-          <Radio
-            id="Yes"
-            label="Yes"
-            name="rush"
-            onSelect={() => setIsRush(true)}
-          />
-        </div>
+        {rushFeatureFlag === "true" && (
+          <>
+            <br />
+            <div className="bcgov-row" data-testId="rushRadioOpts">
+              <span>
+                Do you want to request that this submission be processed on a{" "}
+                <b>rush basis?</b>
+              </span>
+              <Radio
+                id="No"
+                label="No"
+                name="rush"
+                defaultChecked
+                onSelect={() => setIsRush(false)}
+              />
+              <Radio
+                id="Yes"
+                label="Yes"
+                name="rush"
+                onSelect={() => setIsRush(true)}
+              />
+            </div>
+          </>
+        )}
         <br />
         <h2>Summary</h2>
         <p />
@@ -319,7 +327,9 @@ export default function PackageConfirmation({
         {hasRejectedDocuments && (
           <Sidecard sideCard={rejectedDocumentsSideCard} />
         )}
-        {isRush && <Sidecard sideCard={rushSubmissionSidecard} />}
+        {isRush && rushFeatureFlag === "true" && (
+          <Sidecard sideCard={rushSubmissionSidecard} />
+        )}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />
       </div>
