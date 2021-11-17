@@ -15,6 +15,6 @@ public class EfilingDocumentServiceDemoImpl implements EfilingDocumentService {
 
     @Override
     public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
-        return Arrays.asList(new DocumentTypeDetails("Description1", "AFF", BigDecimal.valueOf(7),true, true, false), new DocumentTypeDetails("Description2", "Type2", BigDecimal.valueOf(7),true, true, false));
+        return Arrays.asList(new DocumentTypeDetails("Description1", "AFF", BigDecimal.valueOf(7),true, true, false), new DocumentTypeDetails("Description2", "Type2", BigDecimal.valueOf(7),true, true, false), new DocumentTypeDetails("Description2", "POR", BigDecimal.valueOf(7),true, true, false));
     }
 }
