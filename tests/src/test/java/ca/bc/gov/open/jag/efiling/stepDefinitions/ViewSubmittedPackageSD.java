@@ -3,6 +3,7 @@ package ca.bc.gov.open.jag.efiling.stepDefinitions;
 import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.helpers.FileDownloadHelper;
 import ca.bc.gov.open.jag.efiling.page.PackageReviewPage;
+import ca.bc.gov.open.jag.efiling.util.Files;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -36,7 +37,7 @@ public class ViewSubmittedPackageSD {
 
         List<String> actualPackageDetails = packageReviewPage.getPackageDetails();
 
-        logger.info("There are {} elements", actualPackageDetails.size());
+        logger.info("There are {} elements", Integer.valueOf(actualPackageDetails.size()));
 
         Assert.assertEquals("Han Solo", actualPackageDetails.get(0));
         Assert.assertNotNull(actualPackageDetails.get(1));
@@ -65,7 +66,7 @@ public class ViewSubmittedPackageSD {
         Assert.assertTrue(downloadedFile.length() > 0);
         logger.info("Files successfully downloaded");
 
-        logger.info("Files deleted after validation: {}", downloadedFile.delete());
+        logger.info("Files deleted after validation: {}", Boolean.valueOf(Files.delete(downloadedFile)));
         Assert.assertEquals(0, downloadedFile.length());
     }
 

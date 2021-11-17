@@ -30,20 +30,44 @@ function generateTableContent(
   totalStatFee,
   submissionFee
 ) {
+  const rushFeatureFlag = window.env
+    ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
+    : process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG;
+  if (rushFeatureFlag === "true") {
+    return [
+      {
+        name: "Rush Processing:",
+        value: isRush ? (
+          <span style={{ color: "red" }}>
+            <b>Yes</b>
+          </span>
+        ) : (
+          <span>
+            <b>No</b>
+          </span>
+        ),
+        isValueBold: true,
+      },
+      {
+        name: "Number of Documents in Package:",
+        value: `${numDocuments}`,
+        isValueBold: true,
+      },
+      {
+        name: "Statutory Fees:",
+        value: totalStatFee.toFormat("$0,0.00"),
+        isValueBold: true,
+      },
+      {
+        name: "Submission Fee:",
+        value: Dinero({
+          amount: parseInt((submissionFee * 100).toFixed(0), 10),
+        }).toFormat("$0,0.00"),
+        isValueBold: true,
+      },
+    ];
+  }
   return [
-    {
-      name: "Rush Processing:",
-      value: isRush ? (
-        <span style={{ color: "red" }}>
-          <b>Yes</b>
-        </span>
-      ) : (
-        <span>
-          <b>No</b>
-        </span>
-      ),
-      isValueBold: true,
-    },
     {
       name: "Number of Documents in Package:",
       value: `${numDocuments}`,

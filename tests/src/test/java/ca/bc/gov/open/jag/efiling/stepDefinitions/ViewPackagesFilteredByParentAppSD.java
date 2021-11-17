@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.text.MessageFormat;
 
-public class viewPackagesFilteredByParentAppSD {
+public class ViewPackagesFilteredByParentAppSD {
 
     @Value("${SUBMISSION_HISTORY_URL:http://localhost:3000/efilinghub/submissionhistory}")
     private String submissionHistoryUrl;
@@ -19,9 +19,9 @@ public class viewPackagesFilteredByParentAppSD {
 
     private final SubmissionHistoryPage submissionHistoryPage;
 
-    private final Logger logger = LoggerFactory.getLogger(viewPackagesFilteredByParentAppSD.class);
+    private final Logger logger = LoggerFactory.getLogger(ViewPackagesFilteredByParentAppSD.class);
 
-    public viewPackagesFilteredByParentAppSD(SubmissionHistoryPage submissionHistoryPage) {
+    public ViewPackagesFilteredByParentAppSD(SubmissionHistoryPage submissionHistoryPage) {
         this.submissionHistoryPage = submissionHistoryPage;
     }
 

@@ -5,6 +5,8 @@
             <xs:element name="calculateSubmittedDateResponse" type="tns:calculateSubmittedDateResponse"/>
             <xs:element name="courtesyCorrection" type="tns:courtesyCorrection"/>
             <xs:element name="courtesyCorrectionResponse" type="tns:courtesyCorrectionResponse"/>
+            <xs:element name="createExtractEvent" type="tns:createExtractEvent"/>
+            <xs:element name="createExtractEventResponse" type="tns:createExtractEventResponse"/>
             <xs:element name="findCeisPartiesByFileNumber" type="tns:findCeisPartiesByFileNumber"/>
             <xs:element name="findCeisPartiesByFileNumberResponse" type="tns:findCeisPartiesByFileNumberResponse"/>
             <xs:element name="findChecklistImages" type="tns:findChecklistImages"/>
@@ -31,6 +33,8 @@
             <xs:element name="getActiveDocumentURLResponse" type="tns:getActiveDocumentURLResponse"/>
             <xs:element name="getActiveSuppDocImage" type="tns:getActiveSuppDocImage"/>
             <xs:element name="getActiveSuppDocImageResponse" type="tns:getActiveSuppDocImageResponse"/>
+            <xs:element name="getActiveSuppDocURL" type="tns:getActiveSuppDocURL"/>
+            <xs:element name="getActiveSuppDocURLResponse" type="tns:getActiveSuppDocURLResponse"/>
             <xs:element name="getCivilFilings" type="tns:getCivilFilings"/>
             <xs:element name="getCivilFilingsResponse" type="tns:getCivilFilingsResponse"/>
             <xs:element name="getDocument" type="tns:getDocument"/>
@@ -106,6 +110,7 @@
                     <xs:element minOccurs="0" name="submittedByClientId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="submittedToAgenId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="submitterCommentTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionGuid" type="xs:string"/>
                     <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="userAccessTxt" type="xs:string"/>
@@ -137,6 +142,7 @@
                     <xs:element minOccurs="0" name="filePath" type="xs:string"/>
                     <xs:element minOccurs="0" name="fileServer" type="xs:string"/>
                     <xs:element minOccurs="0" name="filingBodyCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="filingProcessCd" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="issues" nillable="true" type="tns:issue"/>
                     <xs:element minOccurs="0" name="jsonObject" type="xs:string"/>
                     <xs:element minOccurs="0" name="largeFileTimeMilliSecs" type="xs:string"/>
@@ -148,6 +154,7 @@
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="payments" nillable="true" type="tns:documentPayments"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="statuses" nillable="true" type="tns:documentStatuses"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="supports" nillable="true" type="tns:documentSupport"/>
+                    <xs:element minOccurs="0" name="transactionGuid" type="xs:string"/>
                     <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="uploadStateCd" type="xs:string"/>
@@ -545,11 +552,12 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg3" type="tns:referenceDocument"/>
-                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg4" type="tns:referenceDocument"/>
                     <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg6" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:decimal"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="referenceDocument">
@@ -558,7 +566,7 @@
                     <xs:element minOccurs="0" name="fileNameTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="largeFileTimeMilliSecs" type="xs:string"/>
                     <xs:element minOccurs="0" name="largeFileYn" type="xs:boolean"/>
-                    <xs:element minOccurs="0" name="referenceDocumentSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="referenceDocumentNo" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="referenceDocumentTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="server" type="xs:string"/>
                     <xs:element minOccurs="0" name="tempFileName" type="xs:string"/>
@@ -642,6 +650,18 @@
                     <xs:element minOccurs="0" name="secondNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="thirdNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getActiveSuppDocURL">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getActiveSuppDocURLResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="testSaveClob">
@@ -788,11 +808,22 @@
                     <xs:element minOccurs="0" name="supremeCrtSchedYN" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="findCivilFilingsForPackage">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findCivilFilingsForPackageResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:civilFiling"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="findReferenceDocuments">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg1" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findReferenceDocumentsResponse">
@@ -806,22 +837,11 @@
                     <xs:element minOccurs="0" name="descriptionTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="fileNameTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
-                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="physicalFileId" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="referenceDocumentSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="referenceDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="referenceDocumentNo" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="referenceDocumentTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="referenceDocumentTypeDsc" type="xs:string"/>
                     <xs:element minOccurs="0" name="uploadStateCd" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="findCivilFilingsForPackage">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="findCivilFilingsForPackageResponse">
-                <xs:sequence>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:civilFiling"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getActiveSuppDocImage">
@@ -928,6 +948,16 @@
             <xs:complexType name="inactivateReferralsResponse">
                 <xs:sequence/>
             </xs:complexType>
+            <xs:complexType name="createExtractEvent">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createExtractEventResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="courtesyCorrection">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="tns:correction"/>
@@ -998,11 +1028,17 @@
     <wsdl:message name="getActiveDocumentURL">
         <wsdl:part element="tns:getActiveDocumentURL" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getActiveSuppDocURL">
+        <wsdl:part element="tns:getActiveSuppDocURL" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getCivilFilingsResponse">
         <wsdl:part element="tns:getCivilFilingsResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="testSaveClob">
         <wsdl:part element="tns:testSaveClob" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createExtractEventResponse">
+        <wsdl:part element="tns:createExtractEventResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="saveReferenceFileResponse">
         <wsdl:part element="tns:saveReferenceFileResponse" name="parameters"></wsdl:part>
@@ -1045,6 +1081,9 @@
     </wsdl:message>
     <wsdl:message name="getDocumentResponse">
         <wsdl:part element="tns:getDocumentResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getActiveSuppDocURLResponse">
+        <wsdl:part element="tns:getActiveSuppDocURLResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="retrieveFiling">
         <wsdl:part element="tns:retrieveFiling" name="parameters"></wsdl:part>
@@ -1115,11 +1154,11 @@
     <wsdl:message name="findChecklistImagesResponse">
         <wsdl:part element="tns:findChecklistImagesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="findReferenceDocuments">
-        <wsdl:part element="tns:findReferenceDocuments" name="parameters"></wsdl:part>
-    </wsdl:message>
     <wsdl:message name="findCivilFilingsForPackage">
         <wsdl:part element="tns:findCivilFilingsForPackage" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findReferenceDocuments">
+        <wsdl:part element="tns:findReferenceDocuments" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findCeisPartiesByFileNumber">
         <wsdl:part element="tns:findCeisPartiesByFileNumber" name="parameters"></wsdl:part>
@@ -1144,6 +1183,9 @@
     </wsdl:message>
     <wsdl:message name="inactivateReferralsResponse">
         <wsdl:part element="tns:inactivateReferralsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createExtractEvent">
+        <wsdl:part element="tns:createExtractEvent" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="courtesyCorrection">
         <wsdl:part element="tns:courtesyCorrection" name="parameters"></wsdl:part>
@@ -1189,6 +1231,11 @@
         <wsdl:operation name="findCivilAppearancesByFileNumberDate">
             <wsdl:input message="tns:findCivilAppearancesByFileNumberDate" name="findCivilAppearancesByFileNumberDate"></wsdl:input>
             <wsdl:output message="tns:findCivilAppearancesByFileNumberDateResponse" name="findCivilAppearancesByFileNumberDateResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getActiveSuppDocURL">
+            <wsdl:input message="tns:getActiveSuppDocURL" name="getActiveSuppDocURL"></wsdl:input>
+            <wsdl:output message="tns:getActiveSuppDocURLResponse" name="getActiveSuppDocURLResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="testSaveClob">
@@ -1239,14 +1286,14 @@
             <wsdl:input message="tns:findCurrProcTimesByParams" name="findCurrProcTimesByParams"></wsdl:input>
             <wsdl:output message="tns:findCurrProcTimesByParamsResponse" name="findCurrProcTimesByParamsResponse"></wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="findReferenceDocuments">
-            <wsdl:input message="tns:findReferenceDocuments" name="findReferenceDocuments"></wsdl:input>
-            <wsdl:output message="tns:findReferenceDocumentsResponse" name="findReferenceDocumentsResponse"></wsdl:output>
-            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
-        </wsdl:operation>
         <wsdl:operation name="findCivilFilingsForPackage">
             <wsdl:input message="tns:findCivilFilingsForPackage" name="findCivilFilingsForPackage"></wsdl:input>
             <wsdl:output message="tns:findCivilFilingsForPackageResponse" name="findCivilFilingsForPackageResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findReferenceDocuments">
+            <wsdl:input message="tns:findReferenceDocuments" name="findReferenceDocuments"></wsdl:input>
+            <wsdl:output message="tns:findReferenceDocumentsResponse" name="findReferenceDocumentsResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="getActiveSuppDocImage">
@@ -1292,6 +1339,11 @@
         <wsdl:operation name="inactivateReferrals">
             <wsdl:input message="tns:inactivateReferrals" name="inactivateReferrals"></wsdl:input>
             <wsdl:output message="tns:inactivateReferralsResponse" name="inactivateReferralsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createExtractEvent">
+            <wsdl:input message="tns:createExtractEvent" name="createExtractEvent"></wsdl:input>
+            <wsdl:output message="tns:createExtractEventResponse" name="createExtractEventResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="courtesyCorrection">
@@ -1389,6 +1441,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findCivilAppearancesByFileNumberDateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getActiveSuppDocURL">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getActiveSuppDocURL">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getActiveSuppDocURLResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1509,24 +1573,24 @@
                 <soap:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
-        <wsdl:operation name="findReferenceDocuments">
-            <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="findReferenceDocuments">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="findReferenceDocumentsResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-            <wsdl:fault name="NestedEjbException">
-                <soap:fault name="NestedEjbException" use="literal"/>
-            </wsdl:fault>
-        </wsdl:operation>
         <wsdl:operation name="findCivilFilingsForPackage">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="findCivilFilingsForPackage">
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findCivilFilingsForPackageResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findReferenceDocuments">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findReferenceDocuments">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findReferenceDocumentsResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1635,6 +1699,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="inactivateReferralsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createExtractEvent">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="createExtractEvent">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createExtractEventResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">

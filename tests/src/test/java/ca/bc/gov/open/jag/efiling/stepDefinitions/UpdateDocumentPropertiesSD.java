@@ -62,12 +62,12 @@ public class UpdateDocumentPropertiesSD {
 
         // Generate Url Response
         submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
         actualUpdatedDocumentPropertiesResponse = submissionService.updateDocumentPropertiesResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, Keys.UPDATE_DOCUMENTS_PATH);
 
-        logger.info("Api response status code: {}", actualUpdatedDocumentPropertiesResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualUpdatedDocumentPropertiesResponse.getStatusCode()));
         logger.info("Api response: {}", actualUpdatedDocumentPropertiesResponse.asString());
 
     }
@@ -84,8 +84,8 @@ public class UpdateDocumentPropertiesSD {
         Assert.assertEquals("application/json", actualUpdatedDocumentPropertiesResponse.getContentType());
 
         Assert.assertEquals("AAB", additionalDocumentUploadJsonPath.get("documents.type[1]"));
-        Assert.assertTrue( additionalDocumentUploadJsonPath.get("documents.isAmendment[1]"));
-        Assert.assertTrue( additionalDocumentUploadJsonPath.get("documents.isSupremeCourtScheduling[1]"));
+        Assert.assertEquals(Boolean.TRUE, additionalDocumentUploadJsonPath.get("documents.isAmendment[1]"));
+        Assert.assertEquals(Boolean.TRUE, additionalDocumentUploadJsonPath.get("documents.isSupremeCourtScheduling[1]"));
 
 
         logger.info("Response matches the requirements");

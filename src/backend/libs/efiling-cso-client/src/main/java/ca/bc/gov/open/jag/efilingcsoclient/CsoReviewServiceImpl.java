@@ -276,7 +276,7 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     private String getCountryDescription(FilePackage filePackage) {
-        if (filePackage.getProcRequest() == null) return null;
+        if (filePackage.getProcRequest() == null || filePackage.getProcRequest().getCtryId() == null) return null;
 
         Optional<LookupItem> countryItem = lookupService.getCountries().stream()
                 .filter(country -> country.getCode().equals(filePackage.getProcRequest().getCtryId().toEngineeringString()))

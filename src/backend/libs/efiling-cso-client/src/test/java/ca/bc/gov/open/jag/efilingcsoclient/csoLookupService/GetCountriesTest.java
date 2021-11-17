@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -46,11 +47,38 @@ public class GetCountriesTest {
                 .when(lookupFacadeBeanMock.getCountryCodes())
                 .thenReturn(createCodeList());
 
+        Mockito
+                .when(lookupFacadeBeanMock.getCountries())
+                .thenReturn(createCodeList());
+
         List<LookupItem> actual = sut.getCountries();
         Assertions.assertEquals(2, actual.size());
 
         Assertions.assertEquals(TEST_1, actual.get(0).getCode());
         Assertions.assertEquals(TEST, actual.get(0).getDescription());
+
+        Assertions.assertEquals(TEST_2, actual.get(1).getCode());
+        Assertions.assertEquals(TEST, actual.get(1).getDescription());
+
+    }
+
+    @DisplayName("OK: getCountries missing description ")
+    @Test
+    public void testGetCountriesMissingDescription() throws NestedEjbException_Exception {
+
+        Mockito
+                .when(lookupFacadeBeanMock.getCountryCodes())
+                .thenReturn(createCodeList());
+
+        Mockito
+                .when(lookupFacadeBeanMock.getCountries())
+                .thenReturn(createMissingCountryList());
+
+        List<LookupItem> actual = sut.getCountries();
+        Assertions.assertEquals(2, actual.size());
+
+        Assertions.assertEquals(TEST_1, actual.get(0).getCode());
+        Assertions.assertEquals("Missing Description", actual.get(0).getDescription());
 
         Assertions.assertEquals(TEST_2, actual.get(1).getCode());
         Assertions.assertEquals(TEST, actual.get(1).getDescription());
@@ -71,17 +99,28 @@ public class GetCountriesTest {
     }
 
     private List<CodeValue> createCodeList() {
-
-        List<CodeValue> codes = new ArrayList<>();
+        
         CodeValue codeOne = new CodeValue();
         codeOne.setCode(TEST_1);
+        codeOne.setParentCode(TEST_1);
         codeOne.setDescription(GetCountriesTest.TEST);
+
+        CodeValue codeTwo = new CodeValue();
+        codeTwo.setCode(TEST_2);
+        codeTwo.setParentCode(TEST_2);
+        codeTwo.setDescription(TEST);
+
+        return Arrays.asList(codeOne, codeTwo);
+
+    }
+
+    private List<CodeValue> createMissingCountryList() {
 
         CodeValue codeTwo = new CodeValue();
         codeTwo.setCode(TEST_2);
         codeTwo.setDescription(TEST);
 
-        return Arrays.asList(codeOne, codeTwo);
+        return Collections.singletonList(codeTwo);
 
     }
 

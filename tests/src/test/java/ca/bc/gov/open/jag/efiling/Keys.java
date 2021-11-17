@@ -44,4 +44,10 @@ public class Keys {
     public static final String COUNTRIES_PATH = "countries";
     public static final String RUSH_PROCESSING_PATH = "rushProcessing";
 
+    /** Action Document 'Submitted' status */
+    public static final String ACTION_STATUS_SUB = "SUB";
+
+    /** Action Document 'Rejected' status */
+    public static final String ACTION_STATUS_REJ = "REJ";
+    
 }

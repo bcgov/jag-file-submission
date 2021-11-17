@@ -59,14 +59,13 @@ public class AddRushProcessingSD {
         String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         // Generate Url Response
-        submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
-
+		submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
+				actualUserIdentity.getAccessToken(), actualSubmissionId, Keys.ACTION_STATUS_SUB);
 
         actualRushProcessResponse = submissionService.addRushProcessingResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
                 actualSubmissionId, Keys.RUSH_PROCESSING_PATH);
 
-        logger.info("Api response status code: {}", actualRushProcessResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualRushProcessResponse.getStatusCode()));
     }
 
     @Then("rush processing is created")

@@ -1,40 +1,53 @@
 package ca.bc.gov.open.jag.efiling.helpers;
 
+import ca.bc.gov.open.jag.efiling.models.FileSpec;
+
 public class PayloadHelper {
 
     private PayloadHelper() {
     }
 
-    public static String generateUrlPayload(String documentName) {
+    public static String generateUrlPayload(FileSpec... fileSpecs) {
 
-        return "{\n" +
-                "    \"navigationUrls\": {\n" +
-                "        \"success\": \"http//somewhere.com\",\n" +
-                "        \"error\": \"http//somewhere.com\",\n" +
-                "        \"cancel\": \"http//somewhere.com\"\n" +
-                "    },\n" +
-                "    \"clientAppName\": \"my app\",\n" +
-                "    \"filingPackage\": {\n" +
-                "       \"packageIdentifier\": 1,\n" +
-                "        \"court\": {\n" +
-                "            \"location\": \"1211\",\n" +
-                "            \"level\": \"P\",\n" +
-                "            \"courtClass\": \"F\",\n" +
-                "            \"fileNumber\": \"1\"\n" +
-                "        },\n" +
-                "        \"documents\": [\n" +
-                "            {\n" +
-                "                \"name\": \"" + documentName + "\",\n" +
-                "                \"type\": \"AFF\",\n" +
-                "                \"statutoryFeeAmount\": 0,\n" +
-                "                \"data\": {},\n" +
-                "                \"md5\": \"string\", \n" +
-                "                \"actionDocument\": {\n" +
-                "                   \"id\": 2,\n" +
-                "                   \"status\": \"SUB\",\n" +
-                "                   \"type\": \"F\"\n" +
-                "               }\n" +
-                "            }\n" +
+    	StringBuffer sb = new StringBuffer();
+        sb.append(
+        		"{\n" +
+		        "    \"navigationUrls\": {\n" +
+		        "        \"success\": \"http//somewhere.com\",\n" +
+		        "        \"error\": \"http//somewhere.com\",\n" +
+		        "        \"cancel\": \"http//somewhere.com\"\n" +
+		        "    },\n" +
+		        "    \"clientAppName\": \"my app\",\n" +
+		        "    \"filingPackage\": {\n" +
+		        "       \"packageIdentifier\": 1,\n" +
+		        "        \"court\": {\n" +
+		        "            \"location\": \"1211\",\n" +
+		        "            \"level\": \"P\",\n" +
+		        "            \"courtClass\": \"F\",\n" +
+		        "            \"fileNumber\": \"1\"\n" +
+		        "        },\n" +
+		        "        \"documents\": [\n");
+        
+        for (int i = 0; i < fileSpecs.length; i++) {
+            if (i > 0) {
+            	sb.append(",");
+            }
+            sb.append(
+	            "            {\n" +
+	            "                \"name\": \"" + fileSpecs[i].getFilename() + "\",\n" +
+	            "                \"type\": \"AFF\",\n" +
+	            "                \"statutoryFeeAmount\": 0,\n" +
+	            "                \"data\": {},\n" +
+	            "                \"md5\": \"string\", \n" +
+	            "                \"actionDocument\": {\n" +
+	            "                   \"id\": 2,\n" +
+	            "                   \"status\": \"" + fileSpecs[i].getActionStatus() + "\",\n" +
+	            "                   \"type\": \"F\"\n" +
+	            "               }\n" +
+	            "            }\n");
+		}
+        
+        sb.append(
                 "        ],\n" +
                 "        \"parties\": [\n" +
                 "            {\n" +
@@ -46,7 +59,9 @@ public class PayloadHelper {
                 "            }\n" +
                 "        ]\n" +
                 "    }\n" +
-                "}";
+                "}");
+        
+    	return sb.toString();
 
     }
 

@@ -1,20 +1,22 @@
 package ca.bc.gov.open.jag.efiling.services;
 
-import ca.bc.gov.open.jag.efiling.Keys;
-import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
-import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
-import ca.bc.gov.open.jag.efiling.models.UserIdentity;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import io.restassured.specification.MultiPartSpecification;
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.UUID;
+import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
+import ca.bc.gov.open.jag.efiling.models.FileSpec;
+import ca.bc.gov.open.jag.efiling.models.UserIdentity;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import io.restassured.specification.MultiPartSpecification;
 
 public class GenerateUrlService {
 
@@ -31,37 +33,31 @@ public class GenerateUrlService {
         actualTransactionId = UUID.randomUUID();
     }
 
-    public String getGeneratedUrl() {
+    public String getGeneratedUrl(FileSpec... filespecs) throws IOException {
 
         UserIdentity actualUserIdentity = oauthService.getUserIdentity();
 
         logger.info("Submitting document upload request");
 
-        File resource = null;
-
-        try {
-            resource = new ClassPathResource(
-                    MessageFormat.format("data/{0}", Keys.TEST_DOCUMENT_PDF)).getFile();
-        } catch (IOException e) {
-            logger.error("Exception while getting test file");
-            throw new EfilingTestException("Exception while getting test file", e);
-        }
-
-        MultiPartSpecification fileSpec = SubmissionHelper.fileSpecBuilder(resource, Keys.TEST_DOCUMENT_PDF, "text/application.pdf");
+        List<MultiPartSpecification> multiPartSpecifications = new ArrayList<MultiPartSpecification>();
+        for (FileSpec fileSpec : filespecs) {
+            File resource = new ClassPathResource(MessageFormat.format("data/{0}", fileSpec.getFilename())).getFile();
+            multiPartSpecifications.add(SubmissionHelper.fileSpecBuilder(resource, fileSpec.getFilename(), "text/application.pdf"));
+		}
 
         Response actualDocumentResponse = submissionService.documentUploadResponse(actualUserIdentity.getAccessToken(), actualTransactionId,
-                actualUserIdentity.getUniversalId(), fileSpec);
+                actualUserIdentity.getUniversalId(), multiPartSpecifications.toArray(new MultiPartSpecification[0]));
 
-        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
         logger.info("Api response: {}", actualDocumentResponse.asString());
 
 
         String actualSubmissionId = submissionService.getSubmissionId(actualDocumentResponse);
 
         Response actualGenerateUrlResponse = submissionService.generateUrlResponse(actualTransactionId, actualUserIdentity.getUniversalId(),
-                actualUserIdentity.getAccessToken(), actualSubmissionId);
+                actualUserIdentity.getAccessToken(), actualSubmissionId, filespecs);
 
-        logger.info("Api response status code: {}", actualDocumentResponse.getStatusCode());
+        logger.info("Api response status code: {}", Integer.valueOf(actualDocumentResponse.getStatusCode()));
         logger.info("Api response: {}", actualDocumentResponse.asString());
 
         logger.info("Returning E-Filing url from generateUrl response");

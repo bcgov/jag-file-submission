@@ -4,6 +4,8 @@ import ca.bc.gov.open.jag.efiling.Keys;
 import ca.bc.gov.open.jag.efiling.error.EfilingTestException;
 import ca.bc.gov.open.jag.efiling.helpers.PayloadHelper;
 import ca.bc.gov.open.jag.efiling.helpers.SubmissionHelper;
+import ca.bc.gov.open.jag.efiling.models.FileSpec;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -31,15 +33,19 @@ public class SubmissionService {
 
     private final Logger logger = LoggerFactory.getLogger(SubmissionService.class);
 
-    public Response documentUploadResponse(String accessToken, UUID transactionId, String universalId, MultiPartSpecification fileSpec) {
+    public Response documentUploadResponse(String accessToken, UUID transactionId, String universalId, MultiPartSpecification... fileSpecs) {
 
         logger.info("Submitting document upload request to the host {}", eFilingHost);
 
         RequestSpecification request = RestAssured.given().auth().preemptive()
                 .oauth2(accessToken)
                 .header(Keys.X_TRANSACTION_ID, transactionId)
-                .header(Keys.X_USER_ID, universalId)
-                .multiPart(fileSpec);
+                .header(Keys.X_USER_ID, universalId);
+        
+        // Add a fileSpec for each file.
+        for (MultiPartSpecification fileSpec : fileSpecs) {
+        	request = request.multiPart(fileSpec);
+		}
 
         return request.when().post(MessageFormat.format("{0}/{1}", eFilingHost, Keys.SUBMISSION_DOCUMENTS_PATH))
                 .then()
@@ -48,7 +54,12 @@ public class SubmissionService {
     }
 
     public Response generateUrlResponse(UUID transactionId, String universalId, String accessToken,
-                                         String submissionId) {
+                                         String submissionId, String actionStatus) {
+    	return generateUrlResponse(transactionId, universalId, accessToken, submissionId, new FileSpec(Keys.TEST_DOCUMENT_PDF, actionStatus));
+    }
+    
+    public Response generateUrlResponse(UUID transactionId, String universalId, String accessToken,
+                                         String submissionId, FileSpec... filespecs) {
 
         logger.info("Requesting to generate Url");
 
@@ -60,7 +71,7 @@ public class SubmissionService {
                 .contentType(ContentType.JSON)
                 .header(Keys.X_TRANSACTION_ID, transactionId)
                 .header(Keys.X_USER_ID, universalId)
-                .body(PayloadHelper.generateUrlPayload(Keys.TEST_DOCUMENT_PDF));
+                .body(PayloadHelper.generateUrlPayload(filespecs));
 
         return request
                 .when()

@@ -29,7 +29,7 @@ public class FilingPackageService {
                 .response();
     }
 
-    public Response getByPackageId(String accessToken, int packageId) {
+    public Response getByPackageId(String accessToken, Integer packageId) {
 
         RequestSpecification request = RestAssured
                 .given()
@@ -44,7 +44,7 @@ public class FilingPackageService {
                 .response();
     }
 
-    public Response getSubmissionSheet(String accessToken, int packageId) {
+    public Response getSubmissionSheet(String accessToken, Integer packageId) {
 
         RequestSpecification request = RestAssured
                 .given()
@@ -59,7 +59,7 @@ public class FilingPackageService {
                 .response();
     }
 
-    public Response getDocumentById(String accessToken, int packageId, int documentId) {
+    public Response getDocumentById(String accessToken, Integer packageId, Integer documentId) {
 
         RequestSpecification request = RestAssured
                 .given()
@@ -74,7 +74,7 @@ public class FilingPackageService {
                 .response();
     }
 
-    public Response getRushDocument(String accessToken, int packageId, String documentId) {
+    public Response getRushDocument(String accessToken, Integer packageId, String documentId) {
 
         RequestSpecification request = RestAssured
                 .given()
