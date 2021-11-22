@@ -73,6 +73,39 @@ const jsonDocuments = [
   },
 ];
 
+const porDocuments = [
+  {
+    description: "file description 1",
+    documentProperties: {
+      name: "file name 1",
+      type: "POR",
+    },
+    name: "file name 1",
+    isAmendment: null,
+    isSupremeCourtScheduling: null,
+    mimeType: "application/pdf",
+    statutoryFeeAmount: 40,
+    actionDocument: {
+      status: "SUB",
+    },
+  },
+  {
+    description: "file description 2",
+    documentProperties: {
+      name: "file name 2",
+      type: "POR",
+    },
+    name: "file name 2",
+    isAmendment: false,
+    isSupremeCourtScheduling: true,
+    mimeType: "application/pdf",
+    statutoryFeeAmount: 0,
+    actionDocument: {
+      status: "REJ",
+    },
+  },
+];
+
 export function getDocumentsData() {
   return documents;
 }
@@ -83,4 +116,8 @@ export function getDuplicateDocumentsData() {
 
 export function getJsonDocumentsData() {
   return jsonDocuments;
+}
+
+export function getPorDocumentsData() {
+  return porDocuments;
 }

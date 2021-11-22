@@ -85,6 +85,14 @@ const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
   }
 };
 
+const checkPorDocument = (files, setHasPorDocument) => {
+  files.forEach((file) => {
+    if (file.documentProperties.type === "POR") {
+      setHasPorDocument(true);
+    }
+  });
+};
+
 export default function PackageConfirmation({
   packageConfirmation: { confirmationPopup, submissionId },
   csoAccountStatus: { isNew },
@@ -100,9 +108,10 @@ export default function PackageConfirmation({
   const [showRush, setShowRush] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
+  const [hasPorDocument, setHasPorDocument] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData().rushSubmission;
+  const rushSubmissionSidecard = getSidecardData(setShowRush).rushSubmission;
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
@@ -153,6 +162,7 @@ export default function PackageConfirmation({
 
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
     checkRejectedFiles(files, setHasRejectedDocuments);
+    checkPorDocument(files, setHasPorDocument);
   }, [files, submissionId, showUpload, refreshFiles]);
 
   function handleUploadFile(e) {
@@ -272,7 +282,7 @@ export default function PackageConfirmation({
             Upload them now.
           </span>
         </h4>
-        {rushFeatureFlag === "true" && (
+        {rushFeatureFlag === "true" && hasPorDocument === false && (
           <>
             <br />
             <div className="bcgov-row" data-testId="rushRadioOpts">
@@ -302,7 +312,13 @@ export default function PackageConfirmation({
         <div className="near-half-width">
           <Table
             elements={
-              generateFileSummaryData(isRush, files, submissionFee, false).data
+              generateFileSummaryData(
+                isRush,
+                files,
+                submissionFee,
+                false,
+                hasPorDocument
+              ).data
             }
           />
         </div>
