@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
+import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
@@ -408,7 +409,7 @@ public class EfilingReviewServiceDemoImplTest {
     @DisplayName("OK: demo returns a document byte array")
     public void withRushDocumentRequestReturnByteArray() {
 
-        Optional<byte[]> result = sut.getRushDocument(UUID.randomUUID().toString());
+        Optional<byte[]> result = sut.getRushDocument(RushDocumentRequest.builder().create());
 
         Assertions.assertTrue(result.isPresent());
 

@@ -52,7 +52,7 @@ public class GetRushDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
-        Mockito.when(efilingReviewServiceMock.getRushDocument(Mockito.eq(TestHelpers.OBJECT_GUID))).thenReturn(Optional.of(DOC_DATA));
+        Mockito.when(efilingReviewServiceMock.getRushDocument(ArgumentMatchers.any())).thenReturn(Optional.of(DOC_DATA));
 
         Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.OBJECT_GUID);
 
@@ -102,7 +102,7 @@ public class GetRushDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
-        Mockito.when(efilingReviewServiceMock.getRushDocument(Mockito.eq(DOCUMENT_NOT_FOUND))).thenReturn(Optional.empty());
+        Mockito.when(efilingReviewServiceMock.getRushDocument(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
         Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.TEN, DOCUMENT_NOT_FOUND);
 
