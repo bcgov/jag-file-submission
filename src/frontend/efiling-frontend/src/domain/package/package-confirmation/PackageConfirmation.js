@@ -111,7 +111,7 @@ export default function PackageConfirmation({
   const [hasPorDocument, setHasPorDocument] = useState(false);
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData().rushSubmission;
+  const rushSubmissionSidecard = getSidecardData(setShowRush).rushSubmission;
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
