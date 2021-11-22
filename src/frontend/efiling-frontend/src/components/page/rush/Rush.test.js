@@ -232,8 +232,8 @@ describe("Rush Component", () => {
 
     let input = getAllByTestId("input-test")[3];
 
-    userEvent.type(input, "123456789123456789");
-    await waitFor(() => expect(input.value).toBe("123-456-7891"));
+    userEvent.type(input, "+1 555-555-5555");
+    await waitFor(() => expect(input.value).toBe("+1 555-555-5555"));
 
     fireEvent.change(input, { target: { value: "" } });
     await waitFor(() => expect(input.value).toBe(""));

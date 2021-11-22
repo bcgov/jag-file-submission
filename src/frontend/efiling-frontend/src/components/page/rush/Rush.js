@@ -21,7 +21,6 @@ import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
 import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import { formatPhoneNumber } from "../../../modules/helpers/StringUtil";
 import { checkForDuplicateFilenames } from "../../../modules/helpers/filenameUtil";
 
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
@@ -129,10 +128,9 @@ export default function Rush({ payment }) {
   };
 
   const handlePhoneNumberChange = (phoneNumber) => {
-    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
     if (
-      !validator.isMobilePhone(formattedPhoneNumber, "any") &&
-      !validator.isEmpty(formattedPhoneNumber)
+      !validator.isMobilePhone(phoneNumber, "any", { strictMode: true }) &&
+      !validator.isEmpty(phoneNumber)
     ) {
       setPhoneError("Invalid phone number");
     } else {
@@ -140,7 +138,7 @@ export default function Rush({ payment }) {
     }
     setFields({
       ...fields,
-      phoneNumber: formattedPhoneNumber,
+      phoneNumber,
     });
   };
 
@@ -242,6 +240,7 @@ export default function Rush({ payment }) {
               label: fields.contactMethod[0],
               id: fields.contactMethod[1],
               value: fields[fields.contactMethod[1]],
+              placeholder: "+1 xxx-xxx-xxxx",
               isControlled: true,
               errorMsg: phoneError,
             },
