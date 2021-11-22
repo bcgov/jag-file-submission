@@ -38,7 +38,7 @@ public class EfilingDocumentServiceDemoImplTest {
 
         List<DocumentTypeDetails> actual = service.getDocumentTypes(Mockito.any(), Mockito.any());
 
-        Assertions.assertEquals(2, actual.size());
+        Assertions.assertEquals(3, actual.size());
         Assertions.assertEquals("Description1", actual.get(0).getDescription());
         Assertions.assertEquals("AFF", actual.get(0).getType());
         Assertions.assertEquals(BigDecimal.valueOf(7), actual.get(0).getStatutoryFeeAmount());
