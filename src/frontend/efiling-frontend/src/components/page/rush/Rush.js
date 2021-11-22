@@ -32,7 +32,12 @@ const generateInputField = (input, onChange) => (
   </div>
 );
 
-export default function Rush({ payment, setShowRush, setIsRush }) {
+export default function Rush({
+  payment,
+  setShowRush,
+  setIsRush,
+  packageFiles,
+}) {
   const input = {
     isReadOnly: false,
     styling: "bcgov-editable-white",
@@ -306,7 +311,9 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setNumDocumentsError(false);
           }
 
-          if (checkForDuplicateFilenames(droppedFiles, files)) {
+          if (
+            checkForDuplicateFilenames(droppedFiles, files.concat(packageFiles))
+          ) {
             setDuplicateFilenamesError(true);
             hasError = true;
           } else {
@@ -440,9 +447,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       }
 
       if (duplicateFilenamesError) {
-        errors.push(
-          "You cannot upload two supporting documents with the same filename."
-        );
+        errors.push("You cannot upload two documents with the same filename.");
       }
 
       if (errors.length > 0) {
@@ -607,4 +612,5 @@ Rush.propTypes = {
   payment: PropTypes.object.isRequired,
   setShowRush: PropTypes.func.isRequired,
   setIsRush: PropTypes.func.isRequired,
+  packageFiles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

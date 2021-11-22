@@ -206,6 +206,7 @@ export default function PackageConfirmation({
         }}
         setShowRush={setShowRush}
         setIsRush={setIsRush}
+        packageFiles={files}
       />
     );
 
