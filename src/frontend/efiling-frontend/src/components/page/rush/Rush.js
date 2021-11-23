@@ -31,6 +31,38 @@ const generateInputField = (input, onChange) => (
   </div>
 );
 
+const getCountryCode = (country, countries) => {
+  const countryCode = countries.filter(
+    (countryObj) => countryObj.description === country
+  );
+
+  if (countryCode === null || countryCode.length === 0) {
+    return "1";
+  }
+
+  return countryCode;
+};
+
+const isValidPhoneNumber = (phoneNumber, country, countries) => {
+  // Size restriction on CSO database column
+  if (phoneNumber.length > 13) {
+    return false;
+  }
+
+  const countryCode = getCountryCode(country, countries);
+
+  if (country === null || countryCode === "1") {
+    const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
+    return domesticRegex.test(phoneNumber);
+  }
+
+  const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
+  return internationalRegex.test(phoneNumber);
+};
+
+const determinePhonePlaceholder = (country, countries) =>
+  getCountryCode(country, countries) === "1" ? "xxx-xxx-xxxx" : "";
+
 export default function Rush({ payment }) {
   // eslint-disable-next-line no-unused-vars
 
@@ -106,6 +138,13 @@ export default function Rush({ payment }) {
     setFiles(files.filter((f) => f !== file));
   };
 
+  const handleCountryChange = (countryDescription) => {
+    const currentCountryObject = countries.filter(
+      (countryObj) => countryObj.description === countryDescription
+    );
+    setFields({ ...fields, country: currentCountryObject });
+  };
+
   const handleMethodOfContactChange = (e) => {
     setFields({
       ...fields,
@@ -129,7 +168,7 @@ export default function Rush({ payment }) {
 
   const handlePhoneNumberChange = (phoneNumber) => {
     if (
-      !validator.isMobilePhone(phoneNumber, "any", { strictMode: true }) &&
+      !isValidPhoneNumber(phoneNumber, fields.country, countries) &&
       !validator.isEmpty(phoneNumber)
     ) {
       setPhoneError("Invalid phone number");
@@ -203,8 +242,8 @@ export default function Rush({ payment }) {
           <Dropdown
             className="field-dropdown"
             label="Contact Country"
-            items={countries}
-            onSelect={(e) => setFields({ ...fields, country: e })}
+            items={countries.map((countryObj) => countryObj.description)}
+            onSelect={(e) => handleCountryChange(e, fields, setFields)}
           />
         </div>
       </div>
@@ -240,7 +279,7 @@ export default function Rush({ payment }) {
               label: fields.contactMethod[0],
               id: fields.contactMethod[1],
               value: fields[fields.contactMethod[1]],
-              placeholder: "+1 xxx-xxx-xxxx",
+              placeholder: determinePhonePlaceholder(fields.country, countries),
               isControlled: true,
               errorMsg: phoneError,
             },
@@ -328,7 +367,14 @@ export default function Rush({ payment }) {
 
   useEffect(() => {
     getCountries()
-      .then((res) => setCountries(res.data.map((obj) => obj.description)))
+      .then((res) => {
+        setCountries(
+          res.data.map((obj) => ({
+            code: obj.code,
+            description: obj.description,
+          }))
+        );
+      })
       .catch((err) => console.log(err));
   }, []);
 
