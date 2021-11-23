@@ -37,13 +37,16 @@ public class EfilingLookupServiceDemoImplTest {
 
         List<LookupItem> actual = service.getCountries();
 
-        Assertions.assertEquals(2, actual.size());
+        Assertions.assertEquals(3, actual.size());
 
-        Assertions.assertEquals(BigDecimal.ONE.toEngineeringString(), actual.get(0).getCode());
+        Assertions.assertEquals("1", actual.get(0).getCode());
         Assertions.assertEquals("Canada", actual.get(0).getDescription());
 
-        Assertions.assertEquals(BigDecimal.TEN.toEngineeringString(), actual.get(1).getCode());
+        Assertions.assertEquals("1", actual.get(1).getCode());
         Assertions.assertEquals("United States", actual.get(1).getDescription());
+
+        Assertions.assertEquals("34", actual.get(2).getCode());
+        Assertions.assertEquals("Spain", actual.get(2).getDescription());
 
     }
 
