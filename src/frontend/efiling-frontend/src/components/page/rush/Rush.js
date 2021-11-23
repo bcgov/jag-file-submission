@@ -37,6 +37,7 @@ const isValidPhoneNumber = (phoneNumber, country) => {
     return false;
   }
 
+  // These regexes are used to match the regexes used by CSO
   if (!country || country.code === "1") {
     const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
     return domesticRegex.test(phoneNumber);
