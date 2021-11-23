@@ -31,27 +31,13 @@ const generateInputField = (input, onChange) => (
   </div>
 );
 
-const getCountryCode = (country, countries) => {
-  const countryCode = countries.filter(
-    (countryObj) => countryObj.description === country
-  );
-
-  if (countryCode === null || countryCode.length === 0) {
-    return "1";
-  }
-
-  return countryCode;
-};
-
-const isValidPhoneNumber = (phoneNumber, country, countries) => {
+const isValidPhoneNumber = (phoneNumber, country) => {
   // Size restriction on CSO database column
   if (phoneNumber.length > 13) {
     return false;
   }
 
-  const countryCode = getCountryCode(country, countries);
-
-  if (country === null || countryCode === "1") {
+  if (!country || country.code === "1") {
     const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
     return domesticRegex.test(phoneNumber);
   }
@@ -60,9 +46,19 @@ const isValidPhoneNumber = (phoneNumber, country, countries) => {
   return internationalRegex.test(phoneNumber);
 };
 
-const determinePhonePlaceholder = (country, countries) =>
-  getCountryCode(country, countries) === "1" ? "xxx-xxx-xxxx" : "";
+const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
+  if (
+    !isValidPhoneNumber(phoneNumber, country) &&
+    !validator.isEmpty(phoneNumber)
+  ) {
+    setPhoneError("Invalid phone number");
+  } else {
+    setPhoneError(null);
+  }
+};
 
+const determinePhonePlaceholder = (country) =>
+  country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
 export default function Rush({ payment }) {
   // eslint-disable-next-line no-unused-vars
 
@@ -139,10 +135,12 @@ export default function Rush({ payment }) {
   };
 
   const handleCountryChange = (countryDescription) => {
-    const currentCountryObject = countries.filter(
+    const currentCountry = countries.filter(
       (countryObj) => countryObj.description === countryDescription
-    );
-    setFields({ ...fields, country: currentCountryObject });
+    )[0];
+
+    setFields({ ...fields, country: currentCountry });
+    checkPhoneNumberErrors(fields.phoneNumber, currentCountry, setPhoneError);
   };
 
   const handleMethodOfContactChange = (e) => {
@@ -167,14 +165,7 @@ export default function Rush({ payment }) {
   };
 
   const handlePhoneNumberChange = (phoneNumber) => {
-    if (
-      !isValidPhoneNumber(phoneNumber, fields.country, countries) &&
-      !validator.isEmpty(phoneNumber)
-    ) {
-      setPhoneError("Invalid phone number");
-    } else {
-      setPhoneError(null);
-    }
+    checkPhoneNumberErrors(phoneNumber, fields.country, setPhoneError);
     setFields({
       ...fields,
       phoneNumber,
@@ -279,7 +270,7 @@ export default function Rush({ payment }) {
               label: fields.contactMethod[0],
               id: fields.contactMethod[1],
               value: fields[fields.contactMethod[1]],
-              placeholder: determinePhonePlaceholder(fields.country, countries),
+              placeholder: determinePhonePlaceholder(fields.country),
               isControlled: true,
               errorMsg: phoneError,
             },
