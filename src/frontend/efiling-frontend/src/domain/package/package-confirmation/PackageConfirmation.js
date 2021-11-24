@@ -310,7 +310,6 @@ export default function PackageConfirmation({
               />
             </div>
           </>
-
         )}
         <br />
         <h2>Summary</h2>
