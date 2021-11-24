@@ -265,7 +265,7 @@ describe("Rush Component", () => {
 
     const input = getAllByTestId("input-test")[0];
 
-    userEvent.type(input, "abc123");
+    userEvent.clear(input);
     await waitFor(() => expect(getByText("Invalid name")).toBeInTheDocument());
   });
 
