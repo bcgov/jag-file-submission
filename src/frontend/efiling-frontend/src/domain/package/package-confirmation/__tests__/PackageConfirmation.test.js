@@ -3,11 +3,13 @@ import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";
 import MockAdapter from "axios-mock-adapter";
+import { act } from "react-dom/test-utils";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import { getTestData } from "../../../../modules/test-data/confirmationPopupTestData";
 import {
   getDocumentsData,
   getDuplicateDocumentsData,
+  getPorDocumentsData,
 } from "../../../../modules/test-data/documentTestData";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
@@ -22,6 +24,7 @@ describe("PackageConfirmation Component", () => {
   const csoAccountStatus = { isNew: false };
   const documents = getDocumentsData();
   const duplicateDocuments = getDuplicateDocumentsData();
+  const porDocuments = getPorDocumentsData();
 
   const file = {
     documentProperties: {
@@ -42,11 +45,15 @@ describe("PackageConfirmation Component", () => {
     realm_access: {
       roles: ["rush_flag"],
     },
+    email: "bobross@paintit.com",
+    family_name: "ross",
+    given_name: "bob",
   });
   localStorage.setItem("jwt", token);
   window.scrollTo = jest.fn();
 
   process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+  sessionStorage.setItem("validRushExit", "false");
 
   let mock;
   beforeEach(() => {
@@ -94,7 +101,13 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
 
-    const { getByLabelText, getByText, queryByText, getByRole } = render(
+    const {
+      getByLabelText,
+      getByText,
+      queryByText,
+      getByRole,
+      queryByTestId,
+    } = render(
       <PackageConfirmation
         packageConfirmation={packageConfirmation}
         csoAccountStatus={csoAccountStatus}
@@ -120,6 +133,21 @@ describe("PackageConfirmation Component", () => {
     fireEvent.click(getByRole("dialog"));
     await waitFor(() =>
       expect(queryByText("Rush Details")).toBeInTheDocument()
+    );
+
+    const radio1 = getByLabelText(
+      "The attached application is made under Rule 8-5 (1) SCR."
+    );
+    const cancel = getByText("Cancel");
+
+    fireEvent.click(radio1);
+    await waitFor(() =>
+      expect(queryByTestId("dropdownzone")).toBeInTheDocument()
+    );
+
+    fireEvent.click(cancel);
+    await waitFor(() =>
+      expect(getByText("Package Confirmation")).toBeInTheDocument()
     );
   });
 
@@ -319,6 +347,29 @@ describe("PackageConfirmation Component", () => {
 
     // assert here what was being done in callback
     expect(getByText(container, "Package Confirmation")).toBeInTheDocument();
+  });
+
+  test("Rush is set to yes and radio buttons are hidden when a POR document is in the package", async () => {
+    const promise = Promise.resolve();
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents: porDocuments, court, submissionFeeAmount });
+
+    const { getByText, queryByTestId } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await act(() => promise);
+
+    const rushRadioButtons = queryByTestId("rushRadioOpts");
+
+    const rushStatus = getByText("Yes");
+
+    expect(rushRadioButtons).not.toBeInTheDocument();
+    expect(rushStatus).toBeInTheDocument();
   });
 
   test("take user directly to payment page when coming from bambora redirect", async () => {

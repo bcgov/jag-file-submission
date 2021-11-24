@@ -1202,7 +1202,46 @@ exports[`Payment Component On back click, it redirects back to the package confi
         </span>
       </h4>
       <br />
-
+      <div
+        class="bcgov-row"
+        data-testid="rushRadioOpts"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            checked=""
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
       <br />
       <h2>
         Summary

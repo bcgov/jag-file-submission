@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.submission;
 
+import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.ReportRequest;
@@ -23,9 +24,9 @@ public interface EfilingReviewService {
 
     /**
      * Call cso to get the byte array
-     * @param documentIdentifier requested document identifier
+     * @param rushDocumentRequest requested document identifiers
      * @return optional byte array
      */
-    Optional<byte[]> getRushDocument(String documentIdentifier);
+    Optional<byte[]> getRushDocument(RushDocumentRequest rushDocumentRequest);
 
 }
