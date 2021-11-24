@@ -131,7 +131,6 @@ export default function Rush({ payment }) {
     }
   };
 
-
   const handleCountryChange = (countryDescription) => {
     const currentCountry = countries.filter(
       (countryObj) => countryObj.description === countryDescription
