@@ -50,7 +50,7 @@ describe("PackageConfirmation Component", () => {
   window.scrollTo = jest.fn();
 
   process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
-  sessionStorage.setItem("validRushExit", "false")
+  sessionStorage.setItem("validRushExit", "false");
 
   let mock;
   beforeEach(() => {
@@ -98,7 +98,13 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
 
-    const { getByLabelText, getByText, queryByText, getByRole, queryByTestId } = render(
+    const {
+      getByLabelText,
+      getByText,
+      queryByText,
+      getByRole,
+      queryByTestId,
+    } = render(
       <PackageConfirmation
         packageConfirmation={packageConfirmation}
         csoAccountStatus={csoAccountStatus}
@@ -126,7 +132,9 @@ describe("PackageConfirmation Component", () => {
       expect(queryByText("Rush Details")).toBeInTheDocument()
     );
 
-    const radio1 = getByLabelText("The attached application is made under Rule 8-5 (1) SCR.");
+    const radio1 = getByLabelText(
+      "The attached application is made under Rule 8-5 (1) SCR."
+    );
     const cancel = getByText("Cancel");
 
     fireEvent.click(radio1);
