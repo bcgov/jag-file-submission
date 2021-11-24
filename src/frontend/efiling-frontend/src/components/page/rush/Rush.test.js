@@ -19,8 +19,9 @@ describe("Rush Component", () => {
   const files = getDocumentsData();
   const submissionFee = 25.5;
   const countries = [
-    { description: "Canada" },
-    { description: "United States" },
+    { code: "1", description: "Canada" },
+    { code: "1", description: "United States" },
+    { code: "34", description: "Spain" },
   ];
 
   let mock;
@@ -232,8 +233,8 @@ describe("Rush Component", () => {
 
     let input = getAllByTestId("input-test")[3];
 
-    userEvent.type(input, "123456789123456789");
-    await waitFor(() => expect(input.value).toBe("123-456-7891"));
+    userEvent.type(input, "555-555-5555");
+    await waitFor(() => expect(input.value).toBe("555-555-5555"));
 
     fireEvent.change(input, { target: { value: "" } });
     await waitFor(() => expect(input.value).toBe(""));
@@ -445,5 +446,28 @@ describe("Rush Component", () => {
     expect(getByDisplayValue("bob")).toBeInTheDocument();
     expect(getByDisplayValue("ross")).toBeInTheDocument();
     expect(getByDisplayValue("bobross@paintit.com")).toBeInTheDocument();
+  });
+
+  test("Validation rules change based on selected country", async () => {
+    mock.onGet("/countries").reply(200, countries);
+    const { getByLabelText, getAllByTestId, getByText, queryByText } = render(
+      <Rush payment={payment} />
+    );
+    const radio1 = getByLabelText(radio1Label);
+
+    fireEvent.click(radio1);
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Canada" } });
+    await waitFor(() => expect(getByText("Canada")).toBeInTheDocument());
+
+    fireEvent.change(dropdown[1], { target: { value: "Phone Number" } });
+
+    const phoneNumberInput = getAllByTestId("input-test")[3];
+    userEvent.type(phoneNumberInput, "632-362-296");
+    expect(queryByText("Invalid phone number")).toBeInTheDocument();
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    expect(queryByText("Invalid phone number")).not.toBeInTheDocument();
   });
 });

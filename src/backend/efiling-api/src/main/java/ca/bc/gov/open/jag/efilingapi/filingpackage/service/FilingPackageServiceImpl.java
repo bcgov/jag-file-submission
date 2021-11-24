@@ -13,6 +13,7 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.properties.ParentAppPropertie
 import ca.bc.gov.open.jag.efilingapi.filingpackage.properties.ParentProperties;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -168,7 +169,11 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (!reviewDocument.isPresent()) return Optional.empty();
 
-        Optional<byte[]> document = efilingReviewService.getRushDocument(documentIdentifier);
+        Optional<byte[]> document = efilingReviewService.getRushDocument(RushDocumentRequest.builder()
+                .procReqId(reviewDocument.get().getProcessRequestId())
+                .docSeqNo(reviewDocument.get().getProcessSupportDocSeqNo())
+                .procItemSeqNo(reviewDocument.get().getProcessItemSeqNo())
+                .create());
 
         return document.map(bytes -> SubmittedDocument.builder()
                 .name(reviewDocument.get().getClientFileNm())

@@ -4,6 +4,7 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -81,7 +82,7 @@ public class FilingPackageConfigTest {
                 }
 
                 @Override
-                public Optional<byte[]> getRushDocument(String documentIdentifier) {
+                public Optional<byte[]> getRushDocument(RushDocumentRequest rushDocumentRequest) {
                     return Optional.empty();
                 }
             };
