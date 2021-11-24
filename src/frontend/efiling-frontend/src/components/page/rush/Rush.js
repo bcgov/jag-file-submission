@@ -131,10 +131,6 @@ export default function Rush({ payment }) {
     }
   };
 
-  const handleDeleteFile = (file) => {
-    setFiles(files.filter((f) => f !== file));
-  };
-
   const handleCountryChange = (countryDescription) => {
     const currentCountry = countries.filter(
       (countryObj) => countryObj.description === countryDescription
@@ -352,7 +348,7 @@ export default function Rush({ payment }) {
       {canReject}
       <br />
       {files.length > 0 && (
-        <RushDocumentList files={files} onDelete={handleDeleteFile} />
+        <RushDocumentList files={files} setFiles={setFiles} />
       )}
     </>
   );
