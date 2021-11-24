@@ -145,7 +145,7 @@ describe("Rush Component", () => {
       }
     };
 
-    const { asFragment } = render(<Rush payment={payment} />);
+    const { asFragment } = render(<Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />);
 
     expect(asFragment()).toMatchSnapshot();
 
@@ -178,7 +178,7 @@ describe("Rush Component", () => {
   test("Correctly display duplicate error", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, queryByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
     const radio1 = getByLabelText(radio1Label);
 
@@ -201,7 +201,7 @@ describe("Rush Component", () => {
   test("Correctly display document number error", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, queryByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
     const radio1 = getByLabelText(radio1Label);
 
@@ -219,7 +219,7 @@ describe("Rush Component", () => {
   test("Text fields change based on dropdown", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, getAllByTestId, getAllByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
     const radio3 = getByLabelText(radio3Label);
 
@@ -255,7 +255,7 @@ describe("Rush Component", () => {
   test("Input validation works as expected", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, getAllByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
     const radio2 = getByLabelText(radio2Label);
 
@@ -270,7 +270,7 @@ describe("Rush Component", () => {
   test("Document can be successfully deleted", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, queryByTestId, getAllByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
     const radio3 = getByLabelText(radio3Label);
 
@@ -289,7 +289,7 @@ describe("Rush Component", () => {
   test("Contact Country dropdown works", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, getAllByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
     const radio3 = getByLabelText(radio3Label);
 
@@ -302,19 +302,27 @@ describe("Rush Component", () => {
 
   test("Field inputs work correctly", async () => {
     mock.onGet("/countries").reply(200, countries);
-    const { getByLabelText, getAllByTestId } = render(
-      <Rush payment={payment} />
+    mock.onPost(`submission/${submissionId}/rushProcessing`).reply(201)
+    mock.onPost(`submission/${submissionId}/rushDocuments`).reply(201, {submissionId, received: 1})
+    
+    const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
-    const radio3 = getByLabelText(radio3Label);
+    const radio1 = getByLabelText(radio1Label);
 
-    fireEvent.click(radio3);
+    fireEvent.click(radio1);
+
+    const dropzone = queryByTestId("dropdownzone");
+    await waitFor(() => expect(dropzone).toBeInTheDocument());
+    dispatchEvt(dropzone, "drop", data);
+
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];
     const orgInput = getAllByTestId("input-test")[2];
 
-    const reasonsInput = getByLabelText("Clear and detailed reason(s)");
-    userEvent.type(reasonsInput, "I'm in a rush");
-    await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
+    //const reasonsInput = getByLabelText("Clear and detailed reason(s)");
+    //userEvent.type(reasonsInput, "I'm in a rush");
+    //await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
 
     const defaultSurnameInput = surnameInput.value;
     const defaultFirstNameInput = firstNameInput.value;
@@ -332,24 +340,8 @@ describe("Rush Component", () => {
 
     userEvent.type(orgInput, "test");
     await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
-  });
-
-  test("Cancel redirects to payment screen", async () => {
-    const { getByLabelText, getByText, queryByTestId } = render(
-      <Rush payment={payment} />
-    );
-    const radio1 = getByLabelText(radio1Label);
-    const cancel = getByText("Cancel");
-
-    fireEvent.click(radio1);
-    await waitFor(() =>
-      expect(queryByTestId("dropdownzone")).toBeInTheDocument()
-    );
-
-    fireEvent.click(cancel);
-    await waitFor(() =>
-      expect(getByText("Package Submission Details")).toBeInTheDocument()
-    );
+    
+    fireEvent.click(getByText("Continue"))
   });
 
   test("Surname field is limited to 30 characters", () => {
@@ -360,7 +352,7 @@ describe("Rush Component", () => {
     const shortStringTruncated = "asdfbasdfbasdfbasdfbasdfbasdfb";
 
     const { getByLabelText, getByDisplayValue } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
 
     const radioButton1 = getByLabelText(
@@ -386,7 +378,7 @@ describe("Rush Component", () => {
     const shortStringTruncated = "asdfbasdfbasdfbasdfbasdfbasdfb";
 
     const { getByLabelText, getByDisplayValue } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
 
     const radioButton1 = getByLabelText(
@@ -413,7 +405,7 @@ describe("Rush Component", () => {
     const longStringTruncated =
       "asdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfb";
 
-    const { getByLabelText } = render(<Rush payment={payment} />);
+    const { getByLabelText } = render(<Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />);
 
     const radioButton1 = getByLabelText(
       "The attached application is made under Rule 8-5 (1) SCR."
@@ -432,7 +424,7 @@ describe("Rush Component", () => {
 
   test("Fields are prepopulated from JWT", () => {
     const { getByLabelText, getByDisplayValue } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}}/>
     );
 
     const radioButton1 = getByLabelText(

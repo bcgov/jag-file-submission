@@ -175,7 +175,6 @@ exports[`PackageConfirmation Component Matches the existing account snapshot 1`]
       <br />
       <div
         class="bcgov-row"
-        data-testid="rushRadioOpts"
       >
         <span>
           Do you want to request that this submission be processed on a 
@@ -755,7 +754,6 @@ exports[`PackageConfirmation Component Matches the new account snapshot 1`] = `
       <br />
       <div
         class="bcgov-row"
-        data-testid="rushRadioOpts"
       >
         <span>
           Do you want to request that this submission be processed on a 
@@ -2022,7 +2020,6 @@ exports[`PackageConfirmation Component On keydown of Upload them now text, it re
       <br />
       <div
         class="bcgov-row"
-        data-testid="rushRadioOpts"
       >
         <span>
           Do you want to request that this submission be processed on a 

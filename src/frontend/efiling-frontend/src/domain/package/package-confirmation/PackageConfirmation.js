@@ -276,29 +276,29 @@ export default function PackageConfirmation({
             Upload them now.
           </span>
         </h4>
-        {rushFeatureFlag === "true" && (
-          <>
-            <br />
-            <div className="bcgov-row" data-testId="rushRadioOpts">
-              <span>
-                Do you want to request that this submission be processed on a{" "}
-                <b>rush basis?</b>
-              </span>
-              <Radio
-                id="No"
-                label="No"
-                name="rush"
-                defaultChecked
-                onSelect={() => setIsRush(false)}
-              />
-              <Radio
-                id="Yes"
-                label="Yes"
-                name="rush"
-                onSelect={() => setIsRush(true)}
-              />
-            </div>
-          </>
+        <br />
+
+        {sessionStorage.getItem("validRushExit") === "false" && (
+          <div className="bcgov-row">
+            <span>
+              Do you want to request that this submission be processed on a{" "}
+              <b>rush basis?</b>
+            </span>
+            <Radio
+              data-testid="no"
+              id="No"
+              label="No"
+              name="rush"
+              defaultChecked
+              onSelect={() => setIsRush(false)}
+            />
+            <Radio
+              id="Yes"
+              label="Yes"
+              name="rush"
+              onSelect={() => setIsRush(true)}
+            />
+          </div>
         )}
         <br />
         <h2>Summary</h2>

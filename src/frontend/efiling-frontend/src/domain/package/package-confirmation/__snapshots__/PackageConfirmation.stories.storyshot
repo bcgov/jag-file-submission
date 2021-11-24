@@ -175,7 +175,6 @@ exports[`Storyshots PackageConfirmation Existing Account 1`] = `
       <br />
       <div
         class="bcgov-row"
-        data-testid="rushRadioOpts"
       >
         <span>
           Do you want to request that this submission be processed on a 
@@ -724,7 +723,6 @@ exports[`Storyshots PackageConfirmation Mobile 1`] = `
       <br />
       <div
         class="bcgov-row"
-        data-testid="rushRadioOpts"
       >
         <span>
           Do you want to request that this submission be processed on a 
@@ -1304,7 +1302,6 @@ exports[`Storyshots PackageConfirmation New Account 1`] = `
       <br />
       <div
         class="bcgov-row"
-        data-testid="rushRadioOpts"
       >
         <span>
           Do you want to request that this submission be processed on a 
