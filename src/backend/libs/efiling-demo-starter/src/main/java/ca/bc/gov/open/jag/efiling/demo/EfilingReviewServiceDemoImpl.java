@@ -2,6 +2,7 @@ package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import ca.bc.gov.open.jag.efilingcommons.model.Organization;
+import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -69,7 +70,7 @@ public class EfilingReviewServiceDemoImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getRushDocument(String documentIdentifier) {
+    public Optional<byte[]> getRushDocument(RushDocumentRequest rushDocumentRequest) {
 
         return getDocument();
 

@@ -85,6 +85,14 @@ const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
   }
 };
 
+const checkPorDocument = (files, setHasPorDocument) => {
+  files.forEach((file) => {
+    if (file.documentProperties.type === "POR") {
+      setHasPorDocument(true);
+    }
+  });
+};
+
 export default function PackageConfirmation({
   packageConfirmation: { confirmationPopup, submissionId },
   csoAccountStatus: { isNew },
@@ -100,10 +108,11 @@ export default function PackageConfirmation({
   const [showRush, setShowRush] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
-  // const [validRushExit, setValidRushExit] = useState(false)
+  const [hasPorDocument, setHasPorDocument] = useState(false);
+
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData().rushSubmission;
+  const rushSubmissionSidecard = getSidecardData(setShowRush).rushSubmission;
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
@@ -155,6 +164,7 @@ export default function PackageConfirmation({
 
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
     checkRejectedFiles(files, setHasRejectedDocuments);
+    checkPorDocument(files, setHasPorDocument);
   }, [files, submissionId, showUpload, refreshFiles]);
 
   function handleUploadFile(e) {
@@ -276,29 +286,31 @@ export default function PackageConfirmation({
             Upload them now.
           </span>
         </h4>
-        <br />
 
-        {sessionStorage.getItem("validRushExit") === "false" && (
-          <div className="bcgov-row">
-            <span>
-              Do you want to request that this submission be processed on a{" "}
-              <b>rush basis?</b>
-            </span>
-            <Radio
-              data-testid="no"
-              id="No"
-              label="No"
-              name="rush"
-              defaultChecked
-              onSelect={() => setIsRush(false)}
-            />
-            <Radio
-              id="Yes"
-              label="Yes"
-              name="rush"
-              onSelect={() => setIsRush(true)}
-            />
-          </div>
+        {rushFeatureFlag === "true" && hasPorDocument === false && (
+          <>
+            <br />
+            <div className="bcgov-row" data-testId="rushRadioOpts">
+              <span>
+                Do you want to request that this submission be processed on a{" "}
+                <b>rush basis?</b>
+              </span>
+              <Radio
+                id="No"
+                label="No"
+                name="rush"
+                defaultChecked
+                onSelect={() => setIsRush(false)}
+              />
+              <Radio
+                id="Yes"
+                label="Yes"
+                name="rush"
+                onSelect={() => setIsRush(true)}
+              />
+            </div>
+          </>
+
         )}
         <br />
         <h2>Summary</h2>
@@ -306,7 +318,13 @@ export default function PackageConfirmation({
         <div className="near-half-width">
           <Table
             elements={
-              generateFileSummaryData(isRush, files, submissionFee, false).data
+              generateFileSummaryData(
+                isRush,
+                files,
+                submissionFee,
+                false,
+                hasPorDocument
+              ).data
             }
           />
         </div>

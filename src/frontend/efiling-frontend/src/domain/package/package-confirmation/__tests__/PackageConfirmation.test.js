@@ -3,11 +3,13 @@ import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";
 import MockAdapter from "axios-mock-adapter";
+import { act } from "react-dom/test-utils";
 import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
 import { getTestData } from "../../../../modules/test-data/confirmationPopupTestData";
 import {
   getDocumentsData,
   getDuplicateDocumentsData,
+  getPorDocumentsData,
 } from "../../../../modules/test-data/documentTestData";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
@@ -22,6 +24,7 @@ describe("PackageConfirmation Component", () => {
   const csoAccountStatus = { isNew: false };
   const documents = getDocumentsData();
   const duplicateDocuments = getDuplicateDocumentsData();
+  const porDocuments = getPorDocumentsData();
 
   const file = {
     documentProperties: {
@@ -336,6 +339,29 @@ describe("PackageConfirmation Component", () => {
 
     // assert here what was being done in callback
     expect(getByText(container, "Package Confirmation")).toBeInTheDocument();
+  });
+
+  test("Rush is set to yes and radio buttons are hidden when a POR document is in the package", async () => {
+    const promise = Promise.resolve();
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents: porDocuments, court, submissionFeeAmount });
+
+    const { getByText, queryByTestId } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await act(() => promise);
+
+    const rushRadioButtons = queryByTestId("rushRadioOpts");
+
+    const rushStatus = getByText("Yes");
+
+    expect(rushRadioButtons).not.toBeInTheDocument();
+    expect(rushStatus).toBeInTheDocument();
   });
 
   test("take user directly to payment page when coming from bambora redirect", async () => {
