@@ -7,6 +7,7 @@ import ca.bc.gov.ag.csows.reports.Report;
 import ca.bc.gov.ag.csows.reports.ReportService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingReviewServiceException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
@@ -29,10 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CsoReviewServiceImpl implements EfilingReviewService {
@@ -253,14 +251,25 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
     }
 
     @Override
-    public Optional<byte[]> getRushDocument(String documentIdentifier) {
-
-        //TODO:This method is not implemented in CSO
+    public Optional<byte[]> getRushDocument(RushDocumentRequest rushDocumentRequest) {
 
         logger.info("Calling soap service to retrieve rush document");
-        logger.warn("CSO soap service is not yet implemented this call always return empty");
 
-        return Optional.empty();
+        String url = "";
+
+        try {
+            url = filingFacadeBean.getActiveSuppDocURL(rushDocumentRequest.getProcReqId(), rushDocumentRequest.getProcItemSeqNo(), rushDocumentRequest.getDocSeqNo());
+        } catch (ca.bc.gov.ag.csows.filing.NestedEjbException_Exception e) {
+            logger.error("Error in [getActiveSuppDocURL] call");
+            throw new EfilingReviewServiceException("Failed to retrieved document", e.getCause());
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_PDF));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class, entity);
+
+        return Optional.of(response.getBody());
 
     }
 

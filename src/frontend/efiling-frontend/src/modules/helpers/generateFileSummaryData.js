@@ -28,7 +28,8 @@ function generateTableContent(
   isRush,
   numDocuments,
   totalStatFee,
-  submissionFee
+  submissionFee,
+  hasPorDocument
 ) {
   const rushFeatureFlag = window.env
     ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
@@ -37,15 +38,16 @@ function generateTableContent(
     return [
       {
         name: "Rush Processing:",
-        value: isRush ? (
-          <span style={{ color: "red" }}>
-            <b>Yes</b>
-          </span>
-        ) : (
-          <span>
-            <b>No</b>
-          </span>
-        ),
+        value:
+          isRush || hasPorDocument ? (
+            <span style={{ color: "red" }}>
+              <b>Yes</b>
+            </span>
+          ) : (
+            <span>
+              <b>No</b>
+            </span>
+          ),
         isValueBold: true,
       },
       {
@@ -92,7 +94,8 @@ export function generateFileSummaryData(
   isRush,
   files,
   submissionFee,
-  withTotal
+  withTotal,
+  hasPorDocument
 ) {
   const totalStatFee = calculateTotalStatFee(files);
   const totalOverallFee = calculateTotalFee(totalStatFee, submissionFee);
@@ -101,7 +104,8 @@ export function generateFileSummaryData(
     isRush,
     numDocuments,
     totalStatFee,
-    submissionFee
+    submissionFee,
+    hasPorDocument
   );
 
   if (withTotal) {

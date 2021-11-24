@@ -60,4 +60,7 @@ public class Keys {
     public static final String PACKAGE_STATUS_ACTION_REQUIRED = "Action Required";
     public static final String PACKAGE_STATUS_COMPLETE = "Complete";
 
+    public static final String AUTO_PROCESSING_STATE = "AUTO";
+    public static final String MANUAL_PROCESSING_STATE = "MANUAL";
+
 }

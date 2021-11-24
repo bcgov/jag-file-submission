@@ -61,8 +61,11 @@ public class GetCountriesSD {
         Assert.assertEquals("1", jsonPath.get("code[0]"));
         Assert.assertEquals("Canada", jsonPath.get("description[0]"));
 
-        Assert.assertEquals("10", jsonPath.get("code[1]"));
+        Assert.assertEquals("1", jsonPath.get("code[1]"));
         Assert.assertEquals("United States", jsonPath.get("description[1]"));
+
+        Assert.assertEquals("34", jsonPath.get("code[2]"));
+        Assert.assertEquals("Spain", jsonPath.get("description[2]"));
 
         logger.info("Response matches the requirements");
     }
