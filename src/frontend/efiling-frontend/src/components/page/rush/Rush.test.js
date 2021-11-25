@@ -484,8 +484,13 @@ describe("Rush Component", () => {
     await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
 
     fireEvent.click(getByText("Continue"));
-    await waitFor(() => expect(getByText("Something went wrong while trying to submit your document(s)")).toBeInTheDocument())
-    
+    await waitFor(() =>
+      expect(
+        getByText(
+          "Something went wrong while trying to submit your document(s)"
+        )
+      ).toBeInTheDocument()
+    );
   });
 
   test("rushProcessing endpoint fail", async () => {
@@ -526,7 +531,12 @@ describe("Rush Component", () => {
     await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
 
     fireEvent.click(getByText("Continue"));
-    await waitFor(() => expect(getByText("Something went wrong while trying to process your submission")).toBeInTheDocument())
-    
+    await waitFor(() =>
+      expect(
+        getByText(
+          "Something went wrong while trying to process your submission"
+        )
+      ).toBeInTheDocument()
+    );
   });
 });
