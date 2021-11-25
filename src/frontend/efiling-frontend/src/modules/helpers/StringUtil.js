@@ -14,30 +14,3 @@ export const formatFullName = ({ firstName, middleName, lastName }) => {
   fullName = fullName.replace(/\s+/g, " "); // extra whitespace
   return fullName.trim();
 };
-
-/**
- * Formats a phone number to be "555-555-5555". Also removes any non-digit characters passed in
- * @param {*} phoneNumber a string containing any characters
- * @returns formatted phone number
- */
-export const formatPhoneNumber = (phoneNumber) => {
-  // Case for empty or null value
-  if (!phoneNumber) {
-    return phoneNumber;
-  }
-
-  const phoneNumberDigits = phoneNumber.replace(/[^\d]/g, "");
-
-  if (phoneNumberDigits.length < 4) {
-    return phoneNumberDigits;
-  }
-
-  if (phoneNumberDigits.length < 7) {
-    return `${phoneNumberDigits.slice(0, 3)}-${phoneNumberDigits.slice(3)}`;
-  }
-
-  return `${phoneNumberDigits.slice(0, 3)}-${phoneNumberDigits.slice(
-    3,
-    6
-  )}-${phoneNumberDigits.slice(6, 10)}`;
-};

@@ -19,8 +19,9 @@ describe("Rush Component", () => {
   const files = getDocumentsData();
   const submissionFee = 25.5;
   const countries = [
-    { description: "Canada" },
-    { description: "United States" },
+    { code: "1", description: "Canada" },
+    { code: "1", description: "United States" },
+    { code: "34", description: "Spain" },
   ];
 
   let mock;
@@ -234,8 +235,8 @@ describe("Rush Component", () => {
 
     let input = getAllByTestId("input-test")[3];
 
-    userEvent.type(input, "123456789123456789");
-    await waitFor(() => expect(input.value).toBe("123-456-7891"));
+    userEvent.type(input, "555-555-5555");
+    await waitFor(() => expect(input.value).toBe("555-555-5555"));
 
     fireEvent.change(input, { target: { value: "" } });
     await waitFor(() => expect(input.value).toBe(""));
