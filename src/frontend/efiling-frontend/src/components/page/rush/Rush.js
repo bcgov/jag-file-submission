@@ -60,7 +60,8 @@ const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
 
 const determinePhonePlaceholder = (country) =>
   country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
-export default function Rush({ payment }) {
+
+export default function Rush({ payment, setIsRush, setShowRush }) {
   // eslint-disable-next-line no-unused-vars
 
   const input = {
@@ -613,7 +614,8 @@ export default function Rush({ payment }) {
           <Button
             label="Cancel"
             onClick={() => {
-              
+              setIsRush(false);
+              setShowRush(false);
             }}
             styling="bcgov-normal-white btn"
           />
