@@ -215,7 +215,7 @@ export default function PackageReview() {
               setIsProtectionOrder(protectionOrderFlag);
             }
 
-            if (response.data.rush) {
+            if (response.data.rush.rushType) {
               setIsRush(true);
               const rushResponse = response.data.rush;
               setRushDetails([
