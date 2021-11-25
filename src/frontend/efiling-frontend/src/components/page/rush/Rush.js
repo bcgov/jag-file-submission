@@ -31,37 +31,36 @@ const generateInputField = (input, onChange) => (
   </div>
 );
 
-const isValidPhoneNumber = (phoneNumber, country) => {
-  // Size restriction on CSO database column
-  if (phoneNumber.length > 13) {
-    return false;
-  }
+export default function Rush({ payment, setShowRush, setIsRush }) {
+  const isValidPhoneNumber = (phoneNumber, country) => {
+    // Size restriction on CSO database column
+    if (phoneNumber.length > 13) {
+      return false;
+    }
 
-  // These regexes are used to match the regexes used by CSO
-  if (!country || country.code === "1") {
-    const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
-    return domesticRegex.test(phoneNumber);
-  }
+    // These regexes are used to match the regexes used by CSO
+    if (!country || country.code === "1") {
+      const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
+      return domesticRegex.test(phoneNumber);
+    }
 
-  const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
-  return internationalRegex.test(phoneNumber);
-};
+    const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
+    return internationalRegex.test(phoneNumber);
+  };
 
-const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
-  if (
-    !isValidPhoneNumber(phoneNumber, country) &&
-    !validator.isEmpty(phoneNumber)
-  ) {
-    setPhoneError("Invalid phone number");
-  } else {
-    setPhoneError(null);
-  }
-};
+  const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
+    if (
+      !isValidPhoneNumber(phoneNumber, country) &&
+      !validator.isEmpty(phoneNumber)
+    ) {
+      setPhoneError("Invalid phone number");
+    } else {
+      setPhoneError(null);
+    }
+  };
 
-const determinePhonePlaceholder = (country) =>
-  country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
-
-export default function Rush({ payment, setIsRush, setShowRush }) {
+  const determinePhonePlaceholder = (country) =>
+    country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
   // eslint-disable-next-line no-unused-vars
 
   const input = {
