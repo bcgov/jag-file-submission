@@ -95,8 +95,8 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
 
     if (files.length > 0) {
       submitRushDocuments(payment.submissionId, formData)
-        .then((res) => setShowToast(""))
-        .catch((err) => setShowToast(err));
+        .then((res) => {})
+        .catch((err) => {setToastMessage("Something went wrong while trying to submit your document(s)"); setShowToast(true)});
     }
 
     submitRush(payment.submissionId, req)
@@ -104,7 +104,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
         sessionStorage.setItem("validRushExit", true);
         setShowRush(false);
       })
-      .catch((err) => setShowToast(err));
+      .catch((err) => {setToastMessage("Something went wrong while trying to process your submission"); setShowToast(true)});
   };
 
   const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
