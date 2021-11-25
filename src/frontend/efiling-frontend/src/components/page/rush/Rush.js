@@ -21,7 +21,6 @@ import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
 import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import { formatPhoneNumber } from "../../../modules/helpers/StringUtil";
 import { checkForDuplicateFilenames } from "../../../modules/helpers/filenameUtil";
 
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
@@ -33,6 +32,37 @@ const generateInputField = (input, onChange) => (
 );
 
 export default function Rush({ payment, setShowRush, setIsRush }) {
+
+const isValidPhoneNumber = (phoneNumber, country) => {
+  // Size restriction on CSO database column
+  if (phoneNumber.length > 13) {
+    return false;
+  }
+
+  // These regexes are used to match the regexes used by CSO
+  if (!country || country.code === "1") {
+    const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
+    return domesticRegex.test(phoneNumber);
+  }
+
+  const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
+  return internationalRegex.test(phoneNumber);
+};
+
+const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
+  if (
+    !isValidPhoneNumber(phoneNumber, country) &&
+    !validator.isEmpty(phoneNumber)
+  ) {
+    setPhoneError("Invalid phone number");
+  } else {
+    setPhoneError(null);
+  }
+};
+
+const determinePhonePlaceholder = (country) =>
+  country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
+
   const input = {
     isReadOnly: false,
     styling: "bcgov-editable-white",
@@ -131,8 +161,13 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     }
   };
 
-  const handleDeleteFile = (file) => {
-    setFiles(files.filter((f) => f !== file));
+  const handleCountryChange = (countryDescription) => {
+    const currentCountry = countries.filter(
+      (countryObj) => countryObj.description === countryDescription
+    )[0];
+
+    setFields({ ...fields, country: currentCountry });
+    checkPhoneNumberErrors(fields.phoneNumber, currentCountry, setPhoneError);
   };
 
   const handleMethodOfContactChange = (e) => {
@@ -157,18 +192,10 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
   };
 
   const handlePhoneNumberChange = (phoneNumber) => {
-    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
-    if (
-      !validator.isMobilePhone(formattedPhoneNumber, "any") &&
-      !validator.isEmpty(formattedPhoneNumber)
-    ) {
-      setPhoneError("Invalid phone number");
-    } else {
-      setPhoneError(null);
-    }
+    checkPhoneNumberErrors(phoneNumber, fields.country, setPhoneError);
     setFields({
       ...fields,
-      phoneNumber: formattedPhoneNumber,
+      phoneNumber,
     });
   };
 
@@ -233,8 +260,8 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
           <Dropdown
             className="field-dropdown"
             label="Contact Country"
-            items={countries}
-            onSelect={(e) => setFields({ ...fields, country: e })}
+            items={countries.map((countryObj) => countryObj.description)}
+            onSelect={(e) => handleCountryChange(e, fields, setFields)}
           />
         </div>
       </div>
@@ -270,6 +297,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
               label: fields.contactMethod[0],
               id: fields.contactMethod[1],
               value: fields[fields.contactMethod[1]],
+              placeholder: determinePhonePlaceholder(fields.country),
               isControlled: true,
               errorMsg: phoneError,
             },
@@ -350,17 +378,22 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       {canReject}
       <br />
       {files.length > 0 && (
-        <RushDocumentList files={files} onDelete={handleDeleteFile} />
+        <RushDocumentList files={files} setFiles={setFiles} />
       )}
     </>
   );
 
   useEffect(() => {
     getCountries()
-      .then((res) => setCountries(res.data.map((obj) => obj.description)))
-      .catch((err) => setToastMessage(err));
-
-    if (sessionStorage.getItem("validRushExit") === "true") setShowRush(false);
+      .then((res) => {
+        setCountries(
+          res.data.map((obj) => ({
+            code: obj.code,
+            description: obj.description,
+          }))
+        );
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const initialRender = useRef(true);
