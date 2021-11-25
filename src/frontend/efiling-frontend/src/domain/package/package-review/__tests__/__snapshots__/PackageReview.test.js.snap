@@ -604,13 +604,11 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
               </span>
               <span
                 class="d-none d-lg-inline col-lg-4"
-              >
-                Status
-              </span>
+              />
               <span
                 class="d-none d-lg-inline col-lg-4"
               >
-                Registry Notice
+                Status
               </span>
             </div>
             <ul />
@@ -1328,13 +1326,11 @@ exports[`PackageReview Component Reload 1`] = `
               </span>
               <span
                 class="d-none d-lg-inline col-lg-4"
-              >
-                Status
-              </span>
+              />
               <span
                 class="d-none d-lg-inline col-lg-4"
               >
-                Registry Notice
+                Status
               </span>
             </div>
             <ul />
@@ -2048,13 +2044,11 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
               </span>
               <span
                 class="d-none d-lg-inline col-lg-4"
-              >
-                Status
-              </span>
+              />
               <span
                 class="d-none d-lg-inline col-lg-4"
               >
-                Registry Notice
+                Status
               </span>
             </div>
             <ul />
