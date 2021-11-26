@@ -667,6 +667,22 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                   </b>
                 </div>
               </div>
+              <div
+                class="bcgov-row "
+              >
+                <div
+                  class="bcgov-fill-width"
+                >
+                  Registry Notice:
+                </div>
+                <div
+                  class="bcgov-table-value "
+                >
+                  <b>
+                    No
+                  </b>
+                </div>
+              </div>
             </div>
           </div>
           <br />
@@ -726,23 +742,19 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                 </span>
                 <span
                   class="label col-md-5 d-lg-none"
+                />
+                <span
+                  class="col-md-5 col-lg-4"
+                />
+                <span
+                  class="label col-md-5 d-lg-none"
                 >
                   Status:
                 </span>
                 <span
                   class="col-md-5 col-lg-4"
                 >
-                  Submitted
-                </span>
-                <span
-                  class="label col-md-5 d-lg-none"
-                >
-                  Registry Notice:
-                </span>
-                <span
-                  class="col-md-5 col-lg-4"
-                >
-                  Registry notice goes here
+                  Processing
                 </span>
               </li>
               <li
@@ -780,23 +792,19 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                 </span>
                 <span
                   class="label col-md-5 d-lg-none"
+                />
+                <span
+                  class="col-md-5 col-lg-4"
+                />
+                <span
+                  class="label col-md-5 d-lg-none"
                 >
                   Status:
                 </span>
                 <span
                   class="col-md-5 col-lg-4"
                 >
-                  Submitted
-                </span>
-                <span
-                  class="label col-md-5 d-lg-none"
-                >
-                  Registry Notice:
-                </span>
-                <span
-                  class="col-md-5 col-lg-4"
-                >
-                  Registry notice goes here
+                  Processing
                 </span>
               </li>
             </ul>
