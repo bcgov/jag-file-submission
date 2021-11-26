@@ -116,6 +116,7 @@ export default function PackageReview() {
   const [isProtectionOrder, setIsProtectionOrder] = useState(false);
   const [rushDetails, setRushDetails] = useState([]);
   const [supportingDocuments, setSupportingDocuments] = useState([]);
+  const [rushStatus, setRushStatus] = useState("");
   const [tabKey, setTabKey] = useState("");
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -251,8 +252,15 @@ export default function PackageReview() {
                   isNameBold: false,
                   isValueBold: true,
                 },
+                {
+                  name: "Registry Notice:",
+                  value: response.data.hasRegistryNotice ? "Yes" : "No",
+                  isNameBold: false,
+                  isValueBold: true,
+                },
               ]);
               setSupportingDocuments(rushResponse.supportingDocuments);
+              setRushStatus(rushResponse.status);
 
               if (tabKey === "") {
                 setTabKey(
@@ -428,6 +436,7 @@ export default function PackageReview() {
                   <SupportingDocumentList
                     packageId={packageId}
                     files={supportingDocuments}
+                    rushStatus={rushStatus}
                   />
                 </Tab>
                 <Tab eventKey="comments" title="Filing Comments">

@@ -681,12 +681,52 @@ describe("PackageReview Component", () => {
     expect(rushTab).toHaveAttribute("aria-disabled", "true");
   });
 
+  test("Rush document downloads successfully", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
+    mock
+      .onGet(
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].identifier}`
+      )
+      .reply(200, {});
+
+    jest.mock("file-saver", () => ({ saveAs: jest.fn() }));
+    URL.createObjectURL = jest.fn();
+
+    const { getByText, queryByText, getAllByTestId } = render(
+      <PackageReview />
+    );
+
+    await act(() => promise);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).not.toHaveAttribute("aria-disabled", "false");
+    fireEvent.click(rushTab);
+
+    await act(() => promise);
+
+    expect(
+      getByText("Reason for requesting urgent (rush) filing:")
+    ).toBeInTheDocument();
+
+    const downloadButton = getAllByTestId("uploaded-file")[0];
+    fireEvent.click(downloadButton);
+
+    await act(() => promise);
+
+    expect(
+      queryByText("Something went wrong while trying to download your file.")
+    ).not.toBeInTheDocument();
+
+    expect(FileSaver.saveAs).toHaveBeenCalledTimes(1);
+  });
+
   test("An error is shown when rush tab supporting documents fail to download - click", async () => {
     const promise = Promise.resolve();
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
     mock
       .onGet(
-        `/filingpackages/${packageId}/document/${supportingDocuments[0].identifier}`
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].identifier}`
       )
       .reply(400, {});
 
@@ -719,7 +759,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
     mock
       .onGet(
-        `/filingpackages/${packageId}/document/${supportingDocuments[0].identifier}`
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].identifier}`
       )
       .reply(400, {});
 
