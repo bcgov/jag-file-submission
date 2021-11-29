@@ -82,6 +82,21 @@ describe("Rush Component", () => {
     },
   ];
 
+  const singleFile = [
+    {
+      description: "file description 7",
+      documentProperties: {
+        name: "file name 7",
+        type: "file type",
+      },
+      name: "file name 7",
+      isAmendment: null,
+      isSupremeCourtScheduling: null,
+      mimeType: "application/pdf",
+      statutoryFeeAmount: 40,
+    },
+  ];
+
   function mockData(files) {
     return {
       dataTransfer: {
@@ -96,7 +111,7 @@ describe("Rush Component", () => {
       },
     };
   }
-  const data = mockData(files);
+  const nonDuplicateData = mockData(singleFile);
   const tooManyData = mockData([...files, ...moreFiles]);
 
   function dispatchEvt(node, type, data) {
@@ -187,12 +202,12 @@ describe("Rush Component", () => {
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
-    await waitFor(() => expect(getByText("file name 1")).toBeInTheDocument());
-    const firstFile = getByText("file name 1");
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+    await waitFor(() => expect(getByText("file name 7")).toBeInTheDocument());
+    const firstFile = getByText("file name 7");
     await waitFor(() => expect(firstFile).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
     await waitFor(() => expect(getByText(duplicateError)).toBeInTheDocument());
 
     fireEvent.click(firstFile);
@@ -280,7 +295,7 @@ describe("Rush Component", () => {
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
     await waitFor(() => expect(getAllByText("Remove")[0]).toBeInTheDocument());
     expect(files.length).toBe(2);
 
