@@ -35,6 +35,19 @@ describe("PackageReview Component", () => {
       identifier: "d59c1528-8415-421e-a06a-9a46a0757fb5",
     },
   ];
+  const nullRush = {
+    country: null,
+    countryCode: null,
+    email: null,
+    firstName: null,
+    lastName: null,
+    organization: null,
+    phoneNumber: null,
+    reason: null,
+    rushType: null,
+    status: null,
+    supportingDocuments: [],
+  };
   const rush = {
     country: "Canada",
     countryCode: "1",
@@ -64,6 +77,7 @@ describe("PackageReview Component", () => {
     submittedDate,
     documents,
     hasRegistryNotice: true,
+    rush: nullRush,
   };
 
   const csoRedirectResponseWithRush = {
@@ -116,6 +130,7 @@ describe("PackageReview Component", () => {
       parties,
       payments,
       links,
+      rush,
     });
 
     const { asFragment } = render(<PackageReview />);
@@ -261,6 +276,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       links,
+      rush: nullRush,
     });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
@@ -331,6 +347,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       documents,
+      rush: nullRush,
     });
 
     const { getByText } = render(<PackageReview />);
@@ -361,6 +378,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       links,
+      rush: nullRush,
     });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
@@ -381,9 +399,13 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on click) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links });
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      links,
+      rush: nullRush,
+    });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -413,9 +435,13 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on keyDown) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links });
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      links,
+      rush: nullRush,
+    });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -439,9 +465,13 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on keyDown) - tab", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links });
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      links,
+      rush: nullRush,
+    });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -466,6 +496,7 @@ describe("PackageReview Component", () => {
       submittedDate,
       documents,
       links,
+      rush: nullRush,
     });
     mock.onDelete("/filingpackages/1/document/1").reply(200);
     const noop = jest.spyOn(mockHelper, "noop");
@@ -500,6 +531,7 @@ describe("PackageReview Component", () => {
       submittedDate,
       documents,
       links,
+      rush: nullRush,
     });
     mock.onDelete("/filingpackages/1/document/1").reply(404);
     const noop = jest.spyOn(mockHelper, "noop");
