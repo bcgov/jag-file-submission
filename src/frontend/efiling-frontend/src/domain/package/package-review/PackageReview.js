@@ -141,6 +141,15 @@ export default function PackageReview() {
           const fileNumber =
             response.data.court.fileNumber || "Not Assigned Yet";
           const submittedTo = response.data.court.location || "";
+
+          let protectionOrderFlag = isProtectionOrder;
+          if (response.data.documents) {
+            protectionOrderFlag = determineIfProtectionOrder(
+              response.data.documents
+            );
+            setIsProtectionOrder(protectionOrderFlag);
+          }
+
           setPackageDetails([
             {
               name: "Submitted By:",
@@ -177,7 +186,7 @@ export default function PackageReview() {
               },
               {
                 name: "Rush Processing:",
-                value: isRush || isProtectionOrder ? `Yes` : `No`,
+                value: isRush || protectionOrderFlag ? `Yes` : `No`,
                 isNameBold: false,
                 isValueBold: true,
               },
@@ -206,14 +215,6 @@ export default function PackageReview() {
           setPayments(response.data.payments);
           setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
           setHasRegistryNotice(response.data.hasRegistryNotice);
-
-          let protectionOrderFlag = isProtectionOrder;
-          if (response.data.documents) {
-            protectionOrderFlag = determineIfProtectionOrder(
-              response.data.documents
-            );
-            setIsProtectionOrder(protectionOrderFlag);
-          }
 
           if (response.data.rush.reason && rushTabFeatureFlag === "true") {
             setIsRush(true);
