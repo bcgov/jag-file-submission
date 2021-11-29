@@ -177,7 +177,7 @@ export default function PackageReview() {
               },
               {
                 name: "Rush Processing:",
-                value: isRush ? `Yes` : `No`,
+                value: isRush || isProtectionOrder ? `Yes` : `No`,
                 isNameBold: false,
                 isValueBold: true,
               },
@@ -216,7 +216,7 @@ export default function PackageReview() {
               setIsProtectionOrder(protectionOrderFlag);
             }
 
-            if (response.data.rush.rushType) {
+            if (response.data.rush.reason) {
               setIsRush(true);
               const rushResponse = response.data.rush;
               setRushDetails([
