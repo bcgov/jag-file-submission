@@ -525,10 +525,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     setFiles([]);
   };
 
-  if (showPayment) {
-    return <Payment payment={payment} />;
-  }
-
   return (
     <div className="ct-rush page">
       <div className="content col-md-8">

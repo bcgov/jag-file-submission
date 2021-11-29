@@ -221,7 +221,7 @@ describe("Rush Component", () => {
 
   test("Text fields change based on dropdown", async () => {
     mock.onGet("/countries").reply(200, countries);
-    const { getByLabelText, getAllByTestId, getAllByText } = render(
+    const { getByLabelText, getAllByTestId, getAllByText, getByText } = render(
       <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio3 = getByLabelText(radio3Label);
@@ -235,8 +235,12 @@ describe("Rush Component", () => {
 
     let input = getAllByTestId("input-test")[3];
 
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")));
+
     userEvent.type(input, "555-555-5555");
     await waitFor(() => expect(input.value).toBe("555-555-5555"));
+    userEvent.type(input, "5555");
 
     fireEvent.change(input, { target: { value: "" } });
     await waitFor(() => expect(input.value).toBe(""));
@@ -299,8 +303,8 @@ describe("Rush Component", () => {
     fireEvent.click(radio3);
     const dropdown = getAllByTestId("dropdown");
 
-    fireEvent.change(dropdown[0], { target: { value: "United States" } });
-    await waitFor(() => expect(getByText("United States")).toBeInTheDocument());
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
   });
 
   test("Field inputs work correctly", async () => {
@@ -313,9 +317,9 @@ describe("Rush Component", () => {
     const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
       <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
-    const radio1 = getByLabelText(radio1Label);
+    const radio2 = getByLabelText(radio2Label);
 
-    fireEvent.click(radio1);
+    fireEvent.click(radio2);
 
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
@@ -325,9 +329,9 @@ describe("Rush Component", () => {
     const firstNameInput = getAllByTestId("input-test")[1];
     const orgInput = getAllByTestId("input-test")[2];
 
-    // const reasonsInput = getByLabelText("Clear and detailed reason(s)");
-    // userEvent.type(reasonsInput, "I'm in a rush");
-    // await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
+    const reasonsInput = getByLabelText("Clear and detailed reason(s)");
+    userEvent.type(reasonsInput, "I'm in a rush");
+    await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
 
     const defaultSurnameInput = surnameInput.value;
     const defaultFirstNameInput = firstNameInput.value;
