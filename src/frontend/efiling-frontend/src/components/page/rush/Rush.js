@@ -467,7 +467,9 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       if (
         isError() ||
         mandatoryFields.some((field) => !field) ||
-        (!radio1 && validator.isEmpty(mandatoryFields[3] || "") && files.length < 1)
+        (!radio1 &&
+          validator.isEmpty(mandatoryFields[3] || "") &&
+          files.length < 1)
       )
         return false;
 
@@ -487,7 +489,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
   ]);
 
   useEffect(() => {
-
     const resetFields = () => {
       const jwtData = getJWTData();
       setFields({
@@ -497,13 +498,13 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
         email: jwtData.email,
         country: countries[0],
       });
-  
-      if (validator.isEmail(jwtData.email)) {
+
+      if (validator.isEmail(jwtData.email || "")) {
         setEmailError(null);
       }
     };
     resetFields();
-  }, [radio1, radio2, radio3])
+  }, [radio1, radio2, radio3]);
 
   useEffect(() => {
     const displayAnyDocumentErrors = () => {
