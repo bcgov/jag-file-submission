@@ -75,7 +75,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     ["Email", "email"],
     ["Phone Number", "phoneNumber"],
   ];
-  const clearFields = {
+  const initFields = {
     rushType: "",
     surname: "",
     firstName: "",
@@ -87,14 +87,13 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     details: "",
     date: "",
   };
-
   const [files, setFiles] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPayment, setShowPayment] = useState(false);
   const [radio1, setRadio1] = useState(false);
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
-  const [fields, setFields] = useState(clearFields);
+  const [fields, setFields] = useState(initFields);
   const [numDocumentsError, setNumDocumentsError] = useState(false);
   const [duplicateFilenamesError, setDuplicateFilenamesError] = useState(false);
   const [emailError, setEmailError] = useState(null);
@@ -105,6 +104,19 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+
+  const clearFields = {
+    rushType: fields.rushType,
+    surname: "",
+    firstName: "",
+    contactMethod: contactMethods[0],
+    phoneNumber: "",
+    email: "",
+    org: "",
+    country: null,
+    details: "",
+    date: "",
+  };
 
   const handleContinue = () => {
     const formData = new FormData();
@@ -432,7 +444,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     };
 
     const canContinue = () => {
-      let mandatoryFields;
+      let mandatoryFields = [];
 
       if (radio1)
         mandatoryFields = [
@@ -455,7 +467,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       if (
         isError() ||
         mandatoryFields.some((field) => !field) ||
-        (!radio1 && validator.isEmpty(mandatoryFields[3]) && files.length < 1)
+        (!radio1 && validator.isEmpty(mandatoryFields[3] || "") && files.length < 1)
       )
         return false;
 
@@ -473,6 +485,25 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     radio2,
     radio3,
   ]);
+
+  useEffect(() => {
+
+    const resetFields = () => {
+      const jwtData = getJWTData();
+      setFields({
+        ...clearFields,
+        firstName: jwtData.given_name,
+        surname: jwtData.family_name,
+        email: jwtData.email,
+        country: countries[0],
+      });
+  
+      if (validator.isEmail(jwtData.email)) {
+        setEmailError(null);
+      }
+    };
+    resetFields();
+  }, [radio1, radio2, radio3])
 
   useEffect(() => {
     const displayAnyDocumentErrors = () => {
@@ -503,21 +534,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     displayAnyDocumentErrors();
   }, [numDocumentsError, duplicateFilenamesError]);
 
-  const resetFields = () => {
-    const jwtData = getJWTData();
-    setFields({
-      ...clearFields,
-      firstName: jwtData.given_name,
-      surname: jwtData.family_name,
-      email: jwtData.email,
-      country: countries[0],
-    });
-
-    if (validator.isEmail(jwtData.email)) {
-      setEmailError(null);
-    }
-  };
-
   const setRadioStatusComponents = () => {
     setRadio1(false);
     setRadio2(false);
@@ -546,9 +562,8 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
           label="The attached application is made under Rule 8-5 (1) SCR."
           onSelect={() => {
             setRadioStatusComponents();
-            setFields({ ...fields, rushType: "rule" });
             setRadio1(true);
-            resetFields();
+            setFields({ ...fields, rushType: "rule" });
           }}
         />
         <Radio
@@ -559,7 +574,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setRadioStatusComponents();
             setFields({ ...fields, rushType: "court" });
             setRadio2(true);
-            resetFields();
           }}
         />
         <Radio
@@ -570,7 +584,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setRadioStatusComponents();
             setFields({ ...fields, rushType: "other" });
             setRadio3(true);
-            resetFields();
           }}
         />
         <br />
