@@ -141,6 +141,15 @@ export default function PackageReview() {
           const fileNumber =
             response.data.court.fileNumber || "Not Assigned Yet";
           const submittedTo = response.data.court.location || "";
+
+          let protectionOrderFlag = isProtectionOrder;
+          if (response.data.documents) {
+            protectionOrderFlag = determineIfProtectionOrder(
+              response.data.documents
+            );
+            setIsProtectionOrder(protectionOrderFlag);
+          }
+
           setPackageDetails([
             {
               name: "Submitted By:",
@@ -177,7 +186,7 @@ export default function PackageReview() {
               },
               {
                 name: "Rush Processing:",
-                value: isRush ? `Yes` : `No`,
+                value: isRush || protectionOrderFlag ? `Yes` : `No`,
                 isNameBold: false,
                 isValueBold: true,
               },
@@ -207,74 +216,64 @@ export default function PackageReview() {
           setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
           setHasRegistryNotice(response.data.hasRegistryNotice);
 
-          if (rushTabFeatureFlag === "true") {
-            let protectionOrderFlag = isProtectionOrder;
-            if (response.data.documents) {
-              protectionOrderFlag = determineIfProtectionOrder(
-                response.data.documents
+          if (response.data.rush.reason && rushTabFeatureFlag === "true") {
+            setIsRush(true);
+            const rushResponse = response.data.rush;
+            setRushDetails([
+              {
+                name: "Reason for requesting urgent (rush) filing:",
+                value: rushResponse.reason,
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Contact Name:",
+                value: rushResponse.firstName
+                  .concat(" ")
+                  .concat(rushResponse.lastName),
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Phone Number:",
+                value: rushResponse.phoneNumber,
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Email:",
+                value: rushResponse.email,
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Urgent (Rush) Request Status:",
+                value: rushResponse.status,
+                isNameBold: false,
+                isValueBold: true,
+              },
+              {
+                name: "Registry Notice:",
+                value: response.data.hasRegistryNotice ? "Yes" : "No",
+                isNameBold: false,
+                isValueBold: true,
+              },
+            ]);
+            setSupportingDocuments(rushResponse.supportingDocuments);
+            setRushStatus(rushResponse.status);
+
+            if (tabKey === "") {
+              setTabKey(
+                determineDefaultTabKey(defaultTab, true, protectionOrderFlag)
               );
-              setIsProtectionOrder(protectionOrderFlag);
             }
+          } else {
+            setIsRush(false);
 
-            if (response.data.rush.rushType) {
-              setIsRush(true);
-              const rushResponse = response.data.rush;
-              setRushDetails([
-                {
-                  name: "Reason for requesting urgent (rush) filing:",
-                  value: rushResponse.reason,
-                  isNameBold: false,
-                  isValueBold: true,
-                },
-                {
-                  name: "Contact Name:",
-                  value: rushResponse.firstName
-                    .concat(" ")
-                    .concat(rushResponse.lastName),
-                  isNameBold: false,
-                  isValueBold: true,
-                },
-                {
-                  name: "Phone Number:",
-                  value: rushResponse.phoneNumber,
-                  isNameBold: false,
-                  isValueBold: true,
-                },
-                {
-                  name: "Email:",
-                  value: rushResponse.email,
-                  isNameBold: false,
-                  isValueBold: true,
-                },
-                {
-                  name: "Urgent (Rush) Request Status:",
-                  value: rushResponse.status,
-                  isNameBold: false,
-                  isValueBold: true,
-                },
-                {
-                  name: "Registry Notice:",
-                  value: response.data.hasRegistryNotice ? "Yes" : "No",
-                  isNameBold: false,
-                  isValueBold: true,
-                },
-              ]);
-              setSupportingDocuments(rushResponse.supportingDocuments);
-              setRushStatus(rushResponse.status);
-
-              if (tabKey === "") {
-                setTabKey(
-                  determineDefaultTabKey(defaultTab, true, protectionOrderFlag)
-                );
-              }
-            } else {
-              setIsRush(false);
-
-              if (tabKey === "") {
-                setTabKey(
-                  determineDefaultTabKey(defaultTab, false, protectionOrderFlag)
-                );
-              }
+            if (tabKey === "") {
+              setTabKey(
+                determineDefaultTabKey(defaultTab, false, protectionOrderFlag)
+              );
             }
           }
         } catch (err) {

@@ -355,7 +355,12 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setNumDocumentsError(false);
           }
 
-          if (checkForDuplicateFilenames(droppedFiles, files)) {
+          if (
+            checkForDuplicateFilenames(
+              droppedFiles,
+              files.concat(payment.files)
+            )
+          ) {
             setDuplicateFilenamesError(true);
             hasError = true;
           } else {
