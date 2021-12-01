@@ -534,7 +534,7 @@ exports[`Upload Component Radio buttons working as expected 1`] = `
                       >
                         <label
                           class="bcgov-dropdown-label"
-                          for="dropdown"
+                          for="file-dropdown"
                         >
                           Description:
                         </label>
@@ -558,7 +558,7 @@ exports[`Upload Component Radio buttons working as expected 1`] = `
                           <select
                             class="bcgov-dropdown"
                             data-testid="dropdown"
-                            id="dropdown"
+                            id="file-dropdown"
                             name="options"
                           >
                             <option
@@ -773,7 +773,7 @@ exports[`Upload Component Radio buttons working as expected 1`] = `
                       >
                         <label
                           class="bcgov-dropdown-label"
-                          for="dropdown"
+                          for="file-dropdown"
                         >
                           Description:
                         </label>
@@ -797,7 +797,7 @@ exports[`Upload Component Radio buttons working as expected 1`] = `
                           <select
                             class="bcgov-dropdown"
                             data-testid="dropdown"
-                            id="dropdown"
+                            id="file-dropdown"
                             name="options"
                           >
                             <option
@@ -1225,7 +1225,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                       >
                         <label
                           class="bcgov-dropdown-label"
-                          for="dropdown"
+                          for="file-dropdown"
                         >
                           Description:
                         </label>
@@ -1249,7 +1249,7 @@ exports[`Upload Component invoke onDrop when drop event occurs 1`] = `
                           <select
                             class="bcgov-dropdown"
                             data-testid="dropdown"
-                            id="dropdown"
+                            id="file-dropdown"
                             name="options"
                           >
                             <option
@@ -1669,7 +1669,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                       >
                         <label
                           class="bcgov-dropdown-label"
-                          for="dropdown"
+                          for="file-dropdown"
                         >
                           Description:
                         </label>
@@ -1693,7 +1693,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                           <select
                             class="bcgov-dropdown"
                             data-testid="dropdown"
-                            id="dropdown"
+                            id="file-dropdown"
                             name="options"
                           >
                             <option
@@ -1908,7 +1908,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                       >
                         <label
                           class="bcgov-dropdown-label"
-                          for="dropdown"
+                          for="file-dropdown"
                         >
                           Description:
                         </label>
@@ -1932,7 +1932,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                           <select
                             class="bcgov-dropdown"
                             data-testid="dropdown"
-                            id="dropdown"
+                            id="file-dropdown"
                             name="options"
                           >
                             <option
