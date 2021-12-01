@@ -171,6 +171,7 @@ const generateDropdownJSX = (items, fileName, setContinueBtnEnabled) => (
     <div className="table-value top-spacing">
       <Dropdown
         label="Description:"
+        id="file-dropdown"
         items={translateItems(items)}
         onSelect={(val) => {
           filesToUpload.documents.forEach((f) => {

@@ -285,6 +285,7 @@ export default function Rush({
         <div className="form-child">
           <Dropdown
             className="field-dropdown"
+            id="country-dropdown"
             label="Contact Country"
             items={countries.map((countryObj) => countryObj.description)}
             onSelect={(e) => handleCountryChange(e, fields, setFields)}
@@ -295,6 +296,7 @@ export default function Rush({
         <div className="form-child">
           <Dropdown
             className="field-dropdown"
+            id="contact-dropdown"
             isRequired
             label={
               <span>
