@@ -18,6 +18,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -46,6 +47,7 @@ public class PostRushProcessingTest {
     private static final String ORGANIZATION = "ORGANIZATION";
     private static final String REASON = "REASON";
     private static final String PHONE_NUMBER = "1231231234";
+    private static final String DATE = "2001-11-26T12:00:00Z";
     private SubmissionApiDelegateImpl sut;
 
     @Mock
@@ -117,6 +119,7 @@ public class PostRushProcessingTest {
 
         Rush rush = new Rush();
         rush.setCountry(COUNTRY);
+        rush.setCourtDate(DATE);
         rush.setCountryCode(COUNTRY_CODE);
         rush.setFirstName(FIRST_NAME);
         rush.setLastName(LAST_NAME);
