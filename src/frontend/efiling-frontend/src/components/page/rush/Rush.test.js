@@ -348,6 +348,11 @@ describe("Rush Component", () => {
     userEvent.type(reasonsInput, "I'm in a rush");
     await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
 
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
+
     const defaultSurnameInput = surnameInput.value;
     const defaultFirstNameInput = firstNameInput.value;
     const defaultOrgInput = orgInput.value;
@@ -481,6 +486,11 @@ describe("Rush Component", () => {
     await waitFor(() => expect(dropzone).toBeInTheDocument());
     dispatchEvt(dropzone, "drop", nonDuplicateData);
 
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
+
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];
     const orgInput = getAllByTestId("input-test")[2];
@@ -527,6 +537,11 @@ describe("Rush Component", () => {
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
     dispatchEvt(dropzone, "drop", nonDuplicateData);
+
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
 
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];

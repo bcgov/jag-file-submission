@@ -130,7 +130,8 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       organization: fields.org,
       phoneNumber: fields.phoneNumber,
       email: fields.email,
-      country: fields.country,
+      country: fields.country.description,
+      countryCode: fields.country.code,
       reason: fields.details,
       supportingDocuments: files,
     };
@@ -355,12 +356,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setNumDocumentsError(false);
           }
 
-          if (
-            checkForDuplicateFilenames(
-              droppedFiles,
-              files.concat(payment.files)
-            )
-          ) {
+          if (checkForDuplicateFilenames(droppedFiles, files)) {
             setDuplicateFilenamesError(true);
             hasError = true;
           } else {
