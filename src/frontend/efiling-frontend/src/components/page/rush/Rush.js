@@ -173,10 +173,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
   ) => {
     enforceCharacterLimit(inputs, fieldName, characterLimit);
 
-    if (
-      !validator.isAlpha(inputs, "en-US", { ignore: " -" }) &&
-      !validator.isEmpty(inputs)
-    ) {
+    if (validator.isEmpty(inputs)) {
       errorSetter("Invalid name");
     } else {
       errorSetter(null);
