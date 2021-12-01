@@ -16,6 +16,7 @@ public interface RushProcessingMapper {
     @Mapping(target="organization", source="organization", defaultValue = "")
     @Mapping(target="country", source="country", defaultValue = "")
     @Mapping(target="countryCode", source="countryCode", defaultValue = "")
+    @Mapping(target="courtDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toDate(rush.getCourtDate()))")
     RushProcessing toRushProcessing(Rush rush);
 
     @Mapping(target = "name", source = "fileName")
