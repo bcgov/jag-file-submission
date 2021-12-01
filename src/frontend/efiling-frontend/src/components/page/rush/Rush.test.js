@@ -338,7 +338,7 @@ describe("Rush Component", () => {
 
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
 
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];
@@ -479,7 +479,7 @@ describe("Rush Component", () => {
 
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
 
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];
@@ -526,7 +526,7 @@ describe("Rush Component", () => {
 
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
 
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];
