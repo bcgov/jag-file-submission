@@ -35,6 +35,19 @@ describe("PackageReview Component", () => {
       identifier: "d59c1528-8415-421e-a06a-9a46a0757fb5",
     },
   ];
+  const nullRush = {
+    country: null,
+    countryCode: null,
+    email: null,
+    firstName: null,
+    lastName: null,
+    organization: null,
+    phoneNumber: null,
+    reason: null,
+    rushType: null,
+    status: null,
+    supportingDocuments: [],
+  };
   const rush = {
     country: "Canada",
     countryCode: "1",
@@ -64,6 +77,7 @@ describe("PackageReview Component", () => {
     submittedDate,
     documents,
     hasRegistryNotice: true,
+    rush: nullRush,
   };
 
   const csoRedirectResponseWithRush = {
@@ -77,12 +91,11 @@ describe("PackageReview Component", () => {
     rush,
   };
 
-  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
-
   FileSaver.saveAs = jest.fn();
 
   let mock;
   beforeEach(() => {
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
     routerDom.useParams = jest.fn().mockReturnValue({ packageId: 1 });
     routerDom.useLocation = jest
       .fn()
@@ -117,6 +130,7 @@ describe("PackageReview Component", () => {
       parties,
       payments,
       links,
+      rush,
     });
 
     const { asFragment } = render(<PackageReview />);
@@ -262,6 +276,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       links,
+      rush: nullRush,
     });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
@@ -332,6 +347,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       documents,
+      rush: nullRush,
     });
 
     const { getByText } = render(<PackageReview />);
@@ -362,6 +378,7 @@ describe("PackageReview Component", () => {
       submittedBy,
       submittedDate,
       links,
+      rush: nullRush,
     });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
@@ -382,9 +399,13 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on click) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links });
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      links,
+      rush: nullRush,
+    });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -414,9 +435,13 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on keyDown) - unsuccessful", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links });
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      links,
+      rush: nullRush,
+    });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -440,9 +465,13 @@ describe("PackageReview Component", () => {
   test("View Submission Sheet (on keyDown) - tab", async () => {
     sessionStorage.setItem("errorUrl", "error.com");
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { court: courtData, submittedBy, submittedDate, links });
+    mock.onGet(apiRequest).reply(200, {
+      court: courtData,
+      submittedBy,
+      submittedDate,
+      links,
+      rush: nullRush,
+    });
     mock
       .onGet(`/filingpackages/${packageId}/submissionSheet`)
       .reply(400, { message: "There was an error." });
@@ -467,6 +496,7 @@ describe("PackageReview Component", () => {
       submittedDate,
       documents,
       links,
+      rush: nullRush,
     });
     mock.onDelete("/filingpackages/1/document/1").reply(200);
     const noop = jest.spyOn(mockHelper, "noop");
@@ -501,6 +531,7 @@ describe("PackageReview Component", () => {
       submittedDate,
       documents,
       links,
+      rush: nullRush,
     });
     mock.onDelete("/filingpackages/1/document/1").reply(404);
     const noop = jest.spyOn(mockHelper, "noop");
@@ -613,6 +644,9 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
 
     const { getByText } = render(<PackageReview />);
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: `?defaultTab=rush` });
 
     await act(() => promise);
 
@@ -649,12 +683,80 @@ describe("PackageReview Component", () => {
     expect(rushTab).toHaveAttribute("aria-disabled", "true");
   });
 
+  test("defaultTabKey is set to 'documents' ", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoProtectionOrderRedirectResponse);
+
+    const { getByText } = render(<PackageReview />);
+
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: `?defaultTab=rush` });
+
+    await act(() => promise);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).toHaveAttribute("aria-disabled", "true");
+  });
+
+  test("Rush processing flag is false ", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "false";
+
+    const { queryByText } = render(<PackageReview />);
+
+    await act(() => promise);
+
+    expect(queryByText("Rush Processing")).not.toBeInTheDocument();
+  });
+
+  test("Rush document downloads successfully", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
+    mock
+      .onGet(
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].identifier}`
+      )
+      .reply(200, {});
+
+    jest.mock("file-saver", () => ({ saveAs: jest.fn() }));
+    URL.createObjectURL = jest.fn();
+
+    const { getByText, queryByText, getAllByTestId } = render(
+      <PackageReview />
+    );
+
+    await act(() => promise);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).not.toHaveAttribute("aria-disabled", "false");
+    fireEvent.click(rushTab);
+
+    await act(() => promise);
+
+    expect(
+      getByText("Reason for requesting urgent (rush) filing:")
+    ).toBeInTheDocument();
+
+    const downloadButton = getAllByTestId("uploaded-file")[0];
+    fireEvent.click(downloadButton);
+
+    await act(() => promise);
+
+    expect(
+      queryByText("Something went wrong while trying to download your file.")
+    ).not.toBeInTheDocument();
+
+    expect(FileSaver.saveAs).toHaveBeenCalledTimes(1);
+  });
+
   test("An error is shown when rush tab supporting documents fail to download - click", async () => {
     const promise = Promise.resolve();
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
     mock
       .onGet(
-        `/filingpackages/${packageId}/document/${supportingDocuments[0].identifier}`
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].identifier}`
       )
       .reply(400, {});
 
@@ -687,7 +789,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
     mock
       .onGet(
-        `/filingpackages/${packageId}/document/${supportingDocuments[0].identifier}`
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].identifier}`
       )
       .reply(400, {});
 

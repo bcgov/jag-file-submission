@@ -5,7 +5,7 @@ import { isClick, isEnter } from "../../../../modules/helpers/eventUtil";
 import { propTypes } from "../../../../types/propTypes";
 import { Toast } from "../../../toast/Toast";
 
-export default function RushDocumentListItem({ file, onDeleteFile }) {
+export default function RushDocumentListItem({ files, setFiles, file }) {
   const [showToast, setShowToast] = useState(false);
   const handleDownloadFile = (e) => {
     if (isClick(e) || isEnter(e)) {
@@ -13,9 +13,9 @@ export default function RushDocumentListItem({ file, onDeleteFile }) {
       // TODO: download functionality
     }
   };
-  const handleDeleteFile = (e, f) => {
+  const handleDeleteFile = (e) => {
     if (isClick(e) || isEnter(e)) {
-      onDeleteFile(f);
+      setFiles(files.filter((f) => f !== file));
     }
   };
 
@@ -47,8 +47,8 @@ export default function RushDocumentListItem({ file, onDeleteFile }) {
           className="file-href col-sm-8 col-lg-2"
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => handleDeleteFile(e, file)}
-          onClick={(e) => handleDeleteFile(e, file)}
+          onKeyDown={(e) => handleDeleteFile(e)}
+          onClick={(e) => handleDeleteFile(e)}
         >
           Remove
         </span>
@@ -59,5 +59,6 @@ export default function RushDocumentListItem({ file, onDeleteFile }) {
 
 RushDocumentListItem.propTypes = {
   file: propTypes.file.isRequired,
-  onDeleteFile: PropTypes.func.isRequired,
+  files: PropTypes.array.isRequired,
+  setFiles: PropTypes.func.isRequired,
 };

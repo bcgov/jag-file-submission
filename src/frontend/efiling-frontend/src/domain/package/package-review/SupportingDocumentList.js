@@ -4,16 +4,20 @@ import { MdDescription } from "react-icons/md";
 import { propTypes } from "../../../types/propTypes";
 import { Toast } from "../../../components/toast/Toast";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
-import { downloadSubmittedDocument } from "./PackageReviewService";
+import { downloadRushDocument } from "./PackageReviewService";
 
 const hash = require("object-hash");
 
-export default function SupportingDocumentList({ packageId, files }) {
+export default function SupportingDocumentList({
+  packageId,
+  files,
+  rushStatus,
+}) {
   const [showToast, setShowToast] = useState(false);
 
   const handleDownloadFileEvent = (e, document) => {
     if (isClick(e) || isEnter(e)) {
-      downloadSubmittedDocument(packageId, document).catch(() => {
+      downloadRushDocument(packageId, document.identifier).catch(() => {
         setShowToast(true);
       });
     }
@@ -23,8 +27,8 @@ export default function SupportingDocumentList({ packageId, files }) {
     <div className="ct-document-list">
       <div className="header">
         <span className="d-none d-lg-inline col-lg-4">File Name</span>
+        <span className="d-none d-lg-inline col-lg-4" />
         <span className="d-none d-lg-inline col-lg-4">Status</span>
-        <span className="d-none d-lg-inline col-lg-4">Registry Notice</span>
       </div>
       {showToast && (
         <Toast
@@ -34,7 +38,6 @@ export default function SupportingDocumentList({ packageId, files }) {
       )}
       <ul>
         {files.map((file) => (
-          // TODO: Fix the classname to be based on the document status when supporting document statuses are added
           <li key={hash(file)} className="SUB">
             <span className="label col-md-5 d-lg-none">File Name:</span>
             <span className="col-md-5 col-lg-4 file-cell">
@@ -50,10 +53,10 @@ export default function SupportingDocumentList({ packageId, files }) {
                 {file.fileName}
               </span>
             </span>
+            <span className="label col-md-5 d-lg-none" />
+            <span className="col-md-5 col-lg-4" />
             <span className="label col-md-5 d-lg-none">Status:</span>
-            <span className="col-md-5 col-lg-4">Submitted</span>
-            <span className="label col-md-5 d-lg-none">Registry Notice:</span>
-            <span className="col-md-5 col-lg-4">Registry notice goes here</span>
+            <span className="col-md-5 col-lg-4">{rushStatus}</span>
           </li>
         ))}
       </ul>
@@ -64,4 +67,5 @@ export default function SupportingDocumentList({ packageId, files }) {
 SupportingDocumentList.propTypes = {
   packageId: PropTypes.number.isRequired,
   files: PropTypes.arrayOf(propTypes.file.isRequired).isRequired,
+  rushStatus: PropTypes.string.isRequired,
 };

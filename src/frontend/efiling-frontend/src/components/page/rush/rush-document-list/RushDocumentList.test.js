@@ -34,22 +34,22 @@ describe("RushConfirmation Component", () => {
   });
 
   test("Remove link onClick", () => {
-    const onDeleteFile = jest.fn();
+    const setFiles = jest.fn();
     const { getAllByText } = render(
-      <RushDocumentList files={documents} onDeleteFile={onDeleteFile} />
+      <RushDocumentList files={documents} setFiles={setFiles} />
     );
 
     const links = getAllByText("Remove");
     expect(links.length).toBeGreaterThan(0);
 
     fireEvent.click(links[0]);
-    expect(onDeleteFile).toBeCalled();
+    expect(setFiles).toBeCalled();
   });
 
   test("Remove link onKeyDown Enter", () => {
-    const onDeleteFile = jest.fn();
+    const setFiles = jest.fn();
     const { getAllByText } = render(
-      <RushDocumentList files={documents} onDeleteFile={onDeleteFile} />
+      <RushDocumentList files={documents} setFiles={setFiles} />
     );
 
     const links = getAllByText("Remove");
@@ -59,7 +59,7 @@ describe("RushConfirmation Component", () => {
       key: "Enter",
       keyCode: "13",
     });
-    expect(onDeleteFile).toBeCalled();
+    expect(setFiles).toBeCalled();
   });
 
   test("Remove link onKeyDown Tab", () => {

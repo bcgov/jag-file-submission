@@ -21,7 +21,6 @@ import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
 import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import { formatPhoneNumber } from "../../../modules/helpers/StringUtil";
 import { checkForDuplicateFilenames } from "../../../modules/helpers/filenameUtil";
 
 const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
@@ -33,6 +32,37 @@ const generateInputField = (input, onChange) => (
 );
 
 export default function Rush({ payment, setShowRush, setIsRush }) {
+  const isValidPhoneNumber = (phoneNumber, country) => {
+    // Size restriction on CSO database column
+    if (phoneNumber.length > 13) {
+      return false;
+    }
+
+    // These regexes are used to match the regexes used by CSO
+    if (!country || country.code === "1") {
+      const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
+      return domesticRegex.test(phoneNumber);
+    }
+
+    const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
+    return internationalRegex.test(phoneNumber);
+  };
+
+  const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
+    if (
+      !isValidPhoneNumber(phoneNumber, country) &&
+      !validator.isEmpty(phoneNumber)
+    ) {
+      setPhoneError("Invalid phone number");
+    } else {
+      setPhoneError(null);
+    }
+  };
+
+  const determinePhonePlaceholder = (country) =>
+    country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
+  // eslint-disable-next-line no-unused-vars
+
   const input = {
     isReadOnly: false,
     styling: "bcgov-editable-white",
@@ -45,7 +75,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     ["Email", "email"],
     ["Phone Number", "phoneNumber"],
   ];
-  const clearFields = {
+  const initFields = {
     rushType: "",
     surname: "",
     firstName: "",
@@ -57,14 +87,13 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     details: "",
     date: "",
   };
-
   const [files, setFiles] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPayment, setShowPayment] = useState(false);
   const [radio1, setRadio1] = useState(false);
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
-  const [fields, setFields] = useState(clearFields);
+  const [fields, setFields] = useState(initFields);
   const [numDocumentsError, setNumDocumentsError] = useState(false);
   const [duplicateFilenamesError, setDuplicateFilenamesError] = useState(false);
   const [emailError, setEmailError] = useState(null);
@@ -75,6 +104,19 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+
+  const clearFields = {
+    rushType: fields.rushType,
+    surname: "",
+    firstName: "",
+    contactMethod: contactMethods[0],
+    phoneNumber: "",
+    email: "",
+    org: "",
+    country: null,
+    details: "",
+    date: "",
+  };
 
   const handleContinue = () => {
     const formData = new FormData();
@@ -88,23 +130,33 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       organization: fields.org,
       phoneNumber: fields.phoneNumber,
       email: fields.email,
-      country: fields.country,
+      country: fields.country.description,
+      countryCode: fields.country.code,
       reason: fields.details,
       supportingDocuments: files,
     };
 
     if (files.length > 0) {
       submitRushDocuments(payment.submissionId, formData)
-        .then((res) => setShowToast(""))
-        .catch((err) => setShowToast(err));
+        .then((res) => {})
+        .catch((err) => {
+          setToastMessage(
+            "Something went wrong while trying to submit your document(s)"
+          );
+          setShowToast(true);
+        });
     }
 
     submitRush(payment.submissionId, req)
       .then(() => {
         sessionStorage.setItem("validRushExit", true);
-        setShowRush(false);
       })
-      .catch((err) => setShowToast(err));
+      .catch((err) => {
+        setToastMessage(
+          "Something went wrong while trying to process your submission"
+        );
+        setShowToast(true);
+      });
   };
 
   const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
@@ -128,8 +180,13 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     }
   };
 
-  const handleDeleteFile = (file) => {
-    setFiles(files.filter((f) => f !== file));
+  const handleCountryChange = (countryDescription) => {
+    const currentCountry = countries.filter(
+      (countryObj) => countryObj.description === countryDescription
+    )[0];
+
+    setFields({ ...fields, country: currentCountry });
+    checkPhoneNumberErrors(fields.phoneNumber, currentCountry, setPhoneError);
   };
 
   const handleMethodOfContactChange = (e) => {
@@ -154,18 +211,10 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
   };
 
   const handlePhoneNumberChange = (phoneNumber) => {
-    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
-    if (
-      !validator.isMobilePhone(formattedPhoneNumber, "any") &&
-      !validator.isEmpty(formattedPhoneNumber)
-    ) {
-      setPhoneError("Invalid phone number");
-    } else {
-      setPhoneError(null);
-    }
+    checkPhoneNumberErrors(phoneNumber, fields.country, setPhoneError);
     setFields({
       ...fields,
-      phoneNumber: formattedPhoneNumber,
+      phoneNumber,
     });
   };
 
@@ -230,8 +279,8 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
           <Dropdown
             className="field-dropdown"
             label="Contact Country"
-            items={countries}
-            onSelect={(e) => setFields({ ...fields, country: e })}
+            items={countries.map((countryObj) => countryObj.description)}
+            onSelect={(e) => handleCountryChange(e, fields, setFields)}
           />
         </div>
       </div>
@@ -267,6 +316,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
               label: fields.contactMethod[0],
               id: fields.contactMethod[1],
               value: fields[fields.contactMethod[1]],
+              placeholder: determinePhonePlaceholder(fields.country),
               isControlled: true,
               errorMsg: phoneError,
             },
@@ -347,17 +397,22 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       {canReject}
       <br />
       {files.length > 0 && (
-        <RushDocumentList files={files} onDelete={handleDeleteFile} />
+        <RushDocumentList files={files} setFiles={setFiles} />
       )}
     </>
   );
 
   useEffect(() => {
     getCountries()
-      .then((res) => setCountries(res.data.map((obj) => obj.description)))
-      .catch((err) => setToastMessage(err));
-
-    if (sessionStorage.getItem("validRushExit") === "true") setShowRush(false);
+      .then((res) => {
+        setCountries(
+          res.data.map((obj) => ({
+            code: obj.code,
+            description: obj.description,
+          }))
+        );
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const initialRender = useRef(true);
@@ -387,7 +442,7 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     };
 
     const canContinue = () => {
-      let mandatoryFields;
+      let mandatoryFields = [];
 
       if (radio1)
         mandatoryFields = [
@@ -410,7 +465,9 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
       if (
         isError() ||
         mandatoryFields.some((field) => !field) ||
-        (!radio1 && validator.isEmpty(mandatoryFields[3]) && files.length < 1)
+        (!radio1 &&
+          validator.isEmpty(mandatoryFields[3] || "") &&
+          files.length < 1)
       )
         return false;
 
@@ -428,6 +485,24 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     radio2,
     radio3,
   ]);
+
+  useEffect(() => {
+    const resetFields = () => {
+      const jwtData = getJWTData();
+      setFields({
+        ...clearFields,
+        firstName: jwtData.given_name,
+        surname: jwtData.family_name,
+        email: jwtData.email,
+        country: countries[0],
+      });
+
+      if (validator.isEmail(jwtData.email || "")) {
+        setEmailError(null);
+      }
+    };
+    resetFields();
+  }, [radio1, radio2, radio3]);
 
   useEffect(() => {
     const displayAnyDocumentErrors = () => {
@@ -458,31 +533,12 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     displayAnyDocumentErrors();
   }, [numDocumentsError, duplicateFilenamesError]);
 
-  const resetFields = () => {
-    const jwtData = getJWTData();
-    setFields({
-      ...clearFields,
-      firstName: jwtData.given_name,
-      surname: jwtData.family_name,
-      email: jwtData.email,
-      country: countries[0],
-    });
-
-    if (validator.isEmail(jwtData.email)) {
-      setEmailError(null);
-    }
-  };
-
   const setRadioStatusComponents = () => {
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
     setFiles([]);
   };
-
-  if (showPayment) {
-    return <Payment payment={payment} />;
-  }
 
   return (
     <div className="ct-rush page">
@@ -505,9 +561,8 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
           label="The attached application is made under Rule 8-5 (1) SCR."
           onSelect={() => {
             setRadioStatusComponents();
-            setFields({ ...fields, rushType: "rule" });
             setRadio1(true);
-            resetFields();
+            setFields({ ...fields, rushType: "rule" });
           }}
         />
         <Radio
@@ -518,7 +573,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setRadioStatusComponents();
             setFields({ ...fields, rushType: "court" });
             setRadio2(true);
-            resetFields();
           }}
         />
         <Radio
@@ -529,7 +583,6 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setRadioStatusComponents();
             setFields({ ...fields, rushType: "other" });
             setRadio3(true);
-            resetFields();
           }}
         />
         <br />

@@ -19,8 +19,9 @@ describe("Rush Component", () => {
   const files = getDocumentsData();
   const submissionFee = 25.5;
   const countries = [
-    { description: "Canada" },
-    { description: "United States" },
+    { code: "1", description: "Canada" },
+    { code: "1", description: "United States" },
+    { code: "34", description: "Spain" },
   ];
 
   let mock;
@@ -81,6 +82,21 @@ describe("Rush Component", () => {
     },
   ];
 
+  const singleFile = [
+    {
+      description: "file description 7",
+      documentProperties: {
+        name: "file name 7",
+        type: "file type",
+      },
+      name: "file name 7",
+      isAmendment: null,
+      isSupremeCourtScheduling: null,
+      mimeType: "application/pdf",
+      statutoryFeeAmount: 40,
+    },
+  ];
+
   function mockData(files) {
     return {
       dataTransfer: {
@@ -95,7 +111,7 @@ describe("Rush Component", () => {
       },
     };
   }
-  const data = mockData(files);
+  const nonDuplicateData = mockData(singleFile);
   const tooManyData = mockData([...files, ...moreFiles]);
 
   function dispatchEvt(node, type, data) {
@@ -188,12 +204,12 @@ describe("Rush Component", () => {
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
-    await waitFor(() => expect(getByText("file name 1")).toBeInTheDocument());
-    const firstFile = getByText("file name 1");
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+    await waitFor(() => expect(getByText("file name 7")).toBeInTheDocument());
+    const firstFile = getByText("file name 7");
     await waitFor(() => expect(firstFile).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
     await waitFor(() => expect(getByText(duplicateError)).toBeInTheDocument());
 
     fireEvent.click(firstFile);
@@ -220,7 +236,7 @@ describe("Rush Component", () => {
 
   test("Text fields change based on dropdown", async () => {
     mock.onGet("/countries").reply(200, countries);
-    const { getByLabelText, getAllByTestId, getAllByText } = render(
+    const { getByLabelText, getAllByTestId, getAllByText, getByText } = render(
       <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio3 = getByLabelText(radio3Label);
@@ -234,8 +250,12 @@ describe("Rush Component", () => {
 
     let input = getAllByTestId("input-test")[3];
 
-    userEvent.type(input, "123456789123456789");
-    await waitFor(() => expect(input.value).toBe("123-456-7891"));
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")));
+
+    userEvent.type(input, "555-555-5555");
+    await waitFor(() => expect(input.value).toBe("555-555-5555"));
+    userEvent.type(input, "5555");
 
     fireEvent.change(input, { target: { value: "" } });
     await waitFor(() => expect(input.value).toBe(""));
@@ -281,7 +301,7 @@ describe("Rush Component", () => {
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
     await waitFor(() => expect(getAllByText("Remove")[0]).toBeInTheDocument());
     expect(files.length).toBe(2);
 
@@ -298,8 +318,8 @@ describe("Rush Component", () => {
     fireEvent.click(radio3);
     const dropdown = getAllByTestId("dropdown");
 
-    fireEvent.change(dropdown[0], { target: { value: "United States" } });
-    await waitFor(() => expect(getByText("United States")).toBeInTheDocument());
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
   });
 
   test("Field inputs work correctly", async () => {
@@ -312,21 +332,26 @@ describe("Rush Component", () => {
     const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
       <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
-    const radio1 = getByLabelText(radio1Label);
+    const radio2 = getByLabelText(radio2Label);
 
-    fireEvent.click(radio1);
+    fireEvent.click(radio2);
 
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
 
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];
     const orgInput = getAllByTestId("input-test")[2];
 
-    // const reasonsInput = getByLabelText("Clear and detailed reason(s)");
-    // userEvent.type(reasonsInput, "I'm in a rush");
-    // await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
+    const reasonsInput = getByLabelText("Clear and detailed reason(s)");
+    userEvent.type(reasonsInput, "I'm in a rush");
+    await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
+
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
 
     const defaultSurnameInput = surnameInput.value;
     const defaultFirstNameInput = firstNameInput.value;
@@ -443,5 +468,109 @@ describe("Rush Component", () => {
     expect(getByDisplayValue("bob")).toBeInTheDocument();
     expect(getByDisplayValue("ross")).toBeInTheDocument();
     expect(getByDisplayValue("bobross@paintit.com")).toBeInTheDocument();
+  });
+
+  test("rushDocument endpoint fail", async () => {
+    mock.onGet("/countries").reply(200, countries);
+    mock.onPost(`submission/${submissionId}/rushDocuments`).reply(400);
+    mock.onPost(`submission/${submissionId}/rushProcessing`).reply(200);
+
+    const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
+    );
+    const radio1 = getByLabelText(radio1Label);
+
+    fireEvent.click(radio1);
+
+    const dropzone = queryByTestId("dropdownzone");
+    await waitFor(() => expect(dropzone).toBeInTheDocument());
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
+
+    const surnameInput = getAllByTestId("input-test")[0];
+    const firstNameInput = getAllByTestId("input-test")[1];
+    const orgInput = getAllByTestId("input-test")[2];
+
+    const defaultSurnameInput = surnameInput.value;
+    const defaultFirstNameInput = firstNameInput.value;
+    const defaultOrgInput = orgInput.value;
+
+    userEvent.type(surnameInput, "test");
+    await waitFor(() =>
+      expect(surnameInput.value).toBe(`${defaultSurnameInput}test`)
+    );
+
+    userEvent.type(firstNameInput, "test");
+    await waitFor(() =>
+      expect(firstNameInput.value).toBe(`${defaultFirstNameInput}test`)
+    );
+
+    userEvent.type(orgInput, "test");
+    await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
+
+    fireEvent.click(getByText("Continue"));
+    await waitFor(() =>
+      expect(
+        getByText(
+          "Something went wrong while trying to submit your document(s)"
+        )
+      ).toBeInTheDocument()
+    );
+  });
+
+  test("rushProcessing endpoint fail", async () => {
+    mock.onGet("/countries").reply(200, countries);
+    mock.onPost(`submission/${submissionId}/rushDocuments`).reply(200);
+    mock.onPost(`submission/${submissionId}/rushProcessing`).reply(400);
+
+    const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
+    );
+    const radio1 = getByLabelText(radio1Label);
+
+    fireEvent.click(radio1);
+
+    const dropzone = queryByTestId("dropdownzone");
+    await waitFor(() => expect(dropzone).toBeInTheDocument());
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
+
+    const surnameInput = getAllByTestId("input-test")[0];
+    const firstNameInput = getAllByTestId("input-test")[1];
+    const orgInput = getAllByTestId("input-test")[2];
+
+    const defaultSurnameInput = surnameInput.value;
+    const defaultFirstNameInput = firstNameInput.value;
+    const defaultOrgInput = orgInput.value;
+
+    userEvent.type(surnameInput, "test");
+    await waitFor(() =>
+      expect(surnameInput.value).toBe(`${defaultSurnameInput}test`)
+    );
+
+    userEvent.type(firstNameInput, "test");
+    await waitFor(() =>
+      expect(firstNameInput.value).toBe(`${defaultFirstNameInput}test`)
+    );
+
+    userEvent.type(orgInput, "test");
+    await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
+
+    fireEvent.click(getByText("Continue"));
+    await waitFor(() =>
+      expect(
+        getByText(
+          "Something went wrong while trying to process your submission"
+        )
+      ).toBeInTheDocument()
+    );
   });
 });

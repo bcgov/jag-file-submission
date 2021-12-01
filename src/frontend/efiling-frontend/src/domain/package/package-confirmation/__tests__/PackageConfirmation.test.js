@@ -52,11 +52,11 @@ describe("PackageConfirmation Component", () => {
   localStorage.setItem("jwt", token);
   window.scrollTo = jest.fn();
 
-  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
   sessionStorage.setItem("validRushExit", "false");
 
   let mock;
   beforeEach(() => {
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
     mock = new MockAdapter(axios);
     window.open = jest.fn();
     FileSaver.saveAs = jest.fn();
@@ -389,5 +389,23 @@ describe("PackageConfirmation Component", () => {
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Rush flag is set to false", async () => {
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "false";
+
+    const { queryByText } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await waitFor(() => {});
+
+    expect(queryByText("Rush")).not.toBeInTheDocument();
   });
 });
