@@ -108,6 +108,7 @@ export default function PackageConfirmation({
   const [showRush, setShowRush] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
+  const [completedRushRequest, setCompletedRushRequest] = useState(false);
   const [hasPorDocument, setHasPorDocument] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
@@ -127,7 +128,7 @@ export default function PackageConfirmation({
   };
 
   const handleContinue = () => {
-    if (isRush && rushFeatureFlag === "true") {
+    if (isRush && rushFeatureFlag === "true" && !completedRushRequest) {
       setShowPayment(false);
       setShowModal(true);
     } else {
@@ -212,6 +213,7 @@ export default function PackageConfirmation({
         }}
         setShowRush={setShowRush}
         setIsRush={setIsRush}
+        setCompletedRushRequest={setCompletedRushRequest}
       />
     );
 
@@ -287,30 +289,32 @@ export default function PackageConfirmation({
           </span>
         </h4>
 
-        {rushFeatureFlag === "true" && hasPorDocument === false && (
-          <>
-            <br />
-            <div className="bcgov-row" data-testId="rushRadioOpts">
-              <span>
-                Do you want to request that this submission be processed on a{" "}
-                <b>rush basis?</b>
-              </span>
-              <Radio
-                id="No"
-                label="No"
-                name="rush"
-                defaultChecked
-                onSelect={() => setIsRush(false)}
-              />
-              <Radio
-                id="Yes"
-                label="Yes"
-                name="rush"
-                onSelect={() => setIsRush(true)}
-              />
-            </div>
-          </>
-        )}
+        {rushFeatureFlag === "true" &&
+          completedRushRequest === false &&
+          hasPorDocument === false && (
+            <>
+              <br />
+              <div className="bcgov-row" data-testId="rushRadioOpts">
+                <span>
+                  Do you want to request that this submission be processed on a{" "}
+                  <b>rush basis?</b>
+                </span>
+                <Radio
+                  id="No"
+                  label="No"
+                  name="rush"
+                  defaultChecked
+                  onSelect={() => setIsRush(false)}
+                />
+                <Radio
+                  id="Yes"
+                  label="Yes"
+                  name="rush"
+                  onSelect={() => setIsRush(true)}
+                />
+              </div>
+            </>
+          )}
         <br />
         <h2>Summary</h2>
         <p />

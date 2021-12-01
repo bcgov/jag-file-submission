@@ -31,7 +31,12 @@ const generateInputField = (input, onChange) => (
   </div>
 );
 
-export default function Rush({ payment, setShowRush, setIsRush }) {
+export default function Rush({
+  payment,
+  setShowRush,
+  setIsRush,
+  setCompletedRushRequest,
+}) {
   const isValidPhoneNumber = (phoneNumber, country) => {
     // Size restriction on CSO database column
     if (phoneNumber.length > 13) {
@@ -150,6 +155,8 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
     submitRush(payment.submissionId, req)
       .then(() => {
         sessionStorage.setItem("validRushExit", true);
+        setCompletedRushRequest(true);
+        setShowRush(false);
       })
       .catch((err) => {
         setToastMessage(
@@ -353,7 +360,12 @@ export default function Rush({ payment, setShowRush, setIsRush }) {
             setNumDocumentsError(false);
           }
 
-          if (checkForDuplicateFilenames(droppedFiles, files)) {
+          if (
+            checkForDuplicateFilenames(
+              droppedFiles,
+              files.concat(payment.files)
+            )
+          ) {
             setDuplicateFilenamesError(true);
             hasError = true;
           } else {
@@ -657,4 +669,5 @@ Rush.propTypes = {
   payment: PropTypes.object.isRequired,
   setShowRush: PropTypes.func.isRequired,
   setIsRush: PropTypes.func.isRequired,
+  setCompletedRushRequest: PropTypes.func.isRequired,
 };
