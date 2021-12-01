@@ -91,12 +91,11 @@ describe("PackageReview Component", () => {
     rush,
   };
 
-  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
-
   FileSaver.saveAs = jest.fn();
 
   let mock;
   beforeEach(() => {
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
     routerDom.useParams = jest.fn().mockReturnValue({ packageId: 1 });
     routerDom.useLocation = jest
       .fn()
@@ -645,6 +644,9 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
 
     const { getByText } = render(<PackageReview />);
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: `?defaultTab=rush` });
 
     await act(() => promise);
 
@@ -679,6 +681,34 @@ describe("PackageReview Component", () => {
 
     const rushTab = getByText("Rush Details");
     expect(rushTab).toHaveAttribute("aria-disabled", "true");
+  });
+
+  test("defaultTabKey is set to 'documents' ", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoProtectionOrderRedirectResponse);
+
+    const { getByText } = render(<PackageReview />);
+
+    routerDom.useLocation = jest
+      .fn()
+      .mockReturnValue({ search: `?defaultTab=rush` });
+
+    await act(() => promise);
+
+    const rushTab = getByText("Rush Details");
+    expect(rushTab).toHaveAttribute("aria-disabled", "true");
+  });
+
+  test("Rush processing flag is false ", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, csoRedirectResponse);
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "false";
+
+    const { queryByText } = render(<PackageReview />);
+
+    await act(() => promise);
+
+    expect(queryByText("Rush Processing")).not.toBeInTheDocument();
   });
 
   test("Rush document downloads successfully", async () => {

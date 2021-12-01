@@ -82,6 +82,21 @@ describe("Rush Component", () => {
     },
   ];
 
+  const singleFile = [
+    {
+      description: "file description 7",
+      documentProperties: {
+        name: "file name 7",
+        type: "file type",
+      },
+      name: "file name 7",
+      isAmendment: null,
+      isSupremeCourtScheduling: null,
+      mimeType: "application/pdf",
+      statutoryFeeAmount: 40,
+    },
+  ];
+
   function mockData(files) {
     return {
       dataTransfer: {
@@ -96,7 +111,7 @@ describe("Rush Component", () => {
       },
     };
   }
-  const data = mockData(files);
+  const nonDuplicateData = mockData(singleFile);
   const tooManyData = mockData([...files, ...moreFiles]);
 
   function dispatchEvt(node, type, data) {
@@ -146,7 +161,9 @@ describe("Rush Component", () => {
       }
     };
 
-    const { asFragment } = render(<Rush payment={payment} />);
+    const { asFragment } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
+    );
 
     expect(asFragment()).toMatchSnapshot();
 
@@ -179,7 +196,7 @@ describe("Rush Component", () => {
   test("Correctly display duplicate error", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, queryByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio1 = getByLabelText(radio1Label);
 
@@ -187,12 +204,12 @@ describe("Rush Component", () => {
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
-    await waitFor(() => expect(getByText("file name 1")).toBeInTheDocument());
-    const firstFile = getByText("file name 1");
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+    await waitFor(() => expect(getByText("file name 7")).toBeInTheDocument());
+    const firstFile = getByText("file name 7");
     await waitFor(() => expect(firstFile).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
     await waitFor(() => expect(getByText(duplicateError)).toBeInTheDocument());
 
     fireEvent.click(firstFile);
@@ -202,7 +219,7 @@ describe("Rush Component", () => {
   test("Correctly display document number error", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, queryByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio1 = getByLabelText(radio1Label);
 
@@ -219,8 +236,8 @@ describe("Rush Component", () => {
 
   test("Text fields change based on dropdown", async () => {
     mock.onGet("/countries").reply(200, countries);
-    const { getByLabelText, getAllByTestId, getAllByText } = render(
-      <Rush payment={payment} />
+    const { getByLabelText, getAllByTestId, getAllByText, getByText } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio3 = getByLabelText(radio3Label);
 
@@ -233,8 +250,12 @@ describe("Rush Component", () => {
 
     let input = getAllByTestId("input-test")[3];
 
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")));
+
     userEvent.type(input, "555-555-5555");
     await waitFor(() => expect(input.value).toBe("555-555-5555"));
+    userEvent.type(input, "5555");
 
     fireEvent.change(input, { target: { value: "" } });
     await waitFor(() => expect(input.value).toBe(""));
@@ -256,7 +277,7 @@ describe("Rush Component", () => {
   test("Input validation works as expected", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, getAllByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio2 = getByLabelText(radio2Label);
 
@@ -264,14 +285,14 @@ describe("Rush Component", () => {
 
     const input = getAllByTestId("input-test")[0];
 
-    userEvent.type(input, "abc123");
+    userEvent.clear(input);
     await waitFor(() => expect(getByText("Invalid name")).toBeInTheDocument());
   });
 
   test("Document can be successfully deleted", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, queryByTestId, getAllByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio3 = getByLabelText(radio3Label);
 
@@ -280,7 +301,7 @@ describe("Rush Component", () => {
     const dropzone = queryByTestId("dropdownzone");
     await waitFor(() => expect(dropzone).toBeInTheDocument());
 
-    dispatchEvt(dropzone, "drop", data);
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
     await waitFor(() => expect(getAllByText("Remove")[0]).toBeInTheDocument());
     expect(files.length).toBe(2);
 
@@ -290,25 +311,35 @@ describe("Rush Component", () => {
   test("Contact Country dropdown works", async () => {
     mock.onGet("/countries").reply(200, countries);
     const { getByLabelText, getAllByTestId, getByText } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio3 = getByLabelText(radio3Label);
 
     fireEvent.click(radio3);
     const dropdown = getAllByTestId("dropdown");
 
-    fireEvent.change(dropdown[0], { target: { value: "United States" } });
-    await waitFor(() => expect(getByText("United States")).toBeInTheDocument());
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
   });
 
   test("Field inputs work correctly", async () => {
     mock.onGet("/countries").reply(200, countries);
-    const { getByLabelText, getAllByTestId } = render(
-      <Rush payment={payment} />
-    );
-    const radio3 = getByLabelText(radio3Label);
+    mock.onPost(`submission/${submissionId}/rushProcessing`).reply(201);
+    mock
+      .onPost(`submission/${submissionId}/rushDocuments`)
+      .reply(201, { submissionId, received: 1 });
 
-    fireEvent.click(radio3);
+    const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
+    );
+    const radio2 = getByLabelText(radio2Label);
+
+    fireEvent.click(radio2);
+
+    const dropzone = queryByTestId("dropdownzone");
+    await waitFor(() => expect(dropzone).toBeInTheDocument());
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+
     const surnameInput = getAllByTestId("input-test")[0];
     const firstNameInput = getAllByTestId("input-test")[1];
     const orgInput = getAllByTestId("input-test")[2];
@@ -316,6 +347,11 @@ describe("Rush Component", () => {
     const reasonsInput = getByLabelText("Clear and detailed reason(s)");
     userEvent.type(reasonsInput, "I'm in a rush");
     await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
+
+    const dropdown = getAllByTestId("dropdown");
+
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
 
     const defaultSurnameInput = surnameInput.value;
     const defaultFirstNameInput = firstNameInput.value;
@@ -333,24 +369,8 @@ describe("Rush Component", () => {
 
     userEvent.type(orgInput, "test");
     await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
-  });
 
-  test("Cancel redirects to payment screen", async () => {
-    const { getByLabelText, getByText, queryByTestId } = render(
-      <Rush payment={payment} />
-    );
-    const radio1 = getByLabelText(radio1Label);
-    const cancel = getByText("Cancel");
-
-    fireEvent.click(radio1);
-    await waitFor(() =>
-      expect(queryByTestId("dropdownzone")).toBeInTheDocument()
-    );
-
-    fireEvent.click(cancel);
-    await waitFor(() =>
-      expect(getByText("Package Submission Details")).toBeInTheDocument()
-    );
+    fireEvent.click(getByText("Continue"));
   });
 
   test("Surname field is limited to 30 characters", () => {
@@ -361,7 +381,7 @@ describe("Rush Component", () => {
     const shortStringTruncated = "asdfbasdfbasdfbasdfbasdfbasdfb";
 
     const { getByLabelText, getByDisplayValue } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
 
     const radioButton1 = getByLabelText(
@@ -387,7 +407,7 @@ describe("Rush Component", () => {
     const shortStringTruncated = "asdfbasdfbasdfbasdfbasdfbasdfb";
 
     const { getByLabelText, getByDisplayValue } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
 
     const radioButton1 = getByLabelText(
@@ -414,7 +434,9 @@ describe("Rush Component", () => {
     const longStringTruncated =
       "asdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfbasdfb";
 
-    const { getByLabelText } = render(<Rush payment={payment} />);
+    const { getByLabelText } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
+    );
 
     const radioButton1 = getByLabelText(
       "The attached application is made under Rule 8-5 (1) SCR."
@@ -433,7 +455,7 @@ describe("Rush Component", () => {
 
   test("Fields are prepopulated from JWT", () => {
     const { getByLabelText, getByDisplayValue } = render(
-      <Rush payment={payment} />
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
 
     const radioButton1 = getByLabelText(
@@ -448,26 +470,107 @@ describe("Rush Component", () => {
     expect(getByDisplayValue("bobross@paintit.com")).toBeInTheDocument();
   });
 
-  test("Validation rules change based on selected country", async () => {
+  test("rushDocument endpoint fail", async () => {
     mock.onGet("/countries").reply(200, countries);
-    const { getByLabelText, getAllByTestId, getByText, queryByText } = render(
-      <Rush payment={payment} />
+    mock.onPost(`submission/${submissionId}/rushDocuments`).reply(400);
+    mock.onPost(`submission/${submissionId}/rushProcessing`).reply(200);
+
+    const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
     );
     const radio1 = getByLabelText(radio1Label);
 
     fireEvent.click(radio1);
+
+    const dropzone = queryByTestId("dropdownzone");
+    await waitFor(() => expect(dropzone).toBeInTheDocument());
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+
     const dropdown = getAllByTestId("dropdown");
 
-    fireEvent.change(dropdown[0], { target: { value: "Canada" } });
-    await waitFor(() => expect(getByText("Canada")).toBeInTheDocument());
+    fireEvent.change(dropdown[0], { target: { value: "Spain" } });
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
 
-    fireEvent.change(dropdown[1], { target: { value: "Phone Number" } });
+    const surnameInput = getAllByTestId("input-test")[0];
+    const firstNameInput = getAllByTestId("input-test")[1];
+    const orgInput = getAllByTestId("input-test")[2];
 
-    const phoneNumberInput = getAllByTestId("input-test")[3];
-    userEvent.type(phoneNumberInput, "632-362-296");
-    expect(queryByText("Invalid phone number")).toBeInTheDocument();
+    const defaultSurnameInput = surnameInput.value;
+    const defaultFirstNameInput = firstNameInput.value;
+    const defaultOrgInput = orgInput.value;
+
+    userEvent.type(surnameInput, "test");
+    await waitFor(() =>
+      expect(surnameInput.value).toBe(`${defaultSurnameInput}test`)
+    );
+
+    userEvent.type(firstNameInput, "test");
+    await waitFor(() =>
+      expect(firstNameInput.value).toBe(`${defaultFirstNameInput}test`)
+    );
+
+    userEvent.type(orgInput, "test");
+    await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
+
+    fireEvent.click(getByText("Continue"));
+    await waitFor(() =>
+      expect(
+        getByText(
+          "Something went wrong while trying to submit your document(s)"
+        )
+      ).toBeInTheDocument()
+    );
+  });
+
+  test("rushProcessing endpoint fail", async () => {
+    mock.onGet("/countries").reply(200, countries);
+    mock.onPost(`submission/${submissionId}/rushDocuments`).reply(200);
+    mock.onPost(`submission/${submissionId}/rushProcessing`).reply(400);
+
+    const { getByLabelText, getAllByTestId, getByText, queryByTestId } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
+    );
+    const radio1 = getByLabelText(radio1Label);
+
+    fireEvent.click(radio1);
+
+    const dropzone = queryByTestId("dropdownzone");
+    await waitFor(() => expect(dropzone).toBeInTheDocument());
+    dispatchEvt(dropzone, "drop", nonDuplicateData);
+
+    const dropdown = getAllByTestId("dropdown");
 
     fireEvent.change(dropdown[0], { target: { value: "Spain" } });
-    expect(queryByText("Invalid phone number")).not.toBeInTheDocument();
+    await waitFor(() => expect(getByText("Spain")).toBeInTheDocument());
+
+    const surnameInput = getAllByTestId("input-test")[0];
+    const firstNameInput = getAllByTestId("input-test")[1];
+    const orgInput = getAllByTestId("input-test")[2];
+
+    const defaultSurnameInput = surnameInput.value;
+    const defaultFirstNameInput = firstNameInput.value;
+    const defaultOrgInput = orgInput.value;
+
+    userEvent.type(surnameInput, "test");
+    await waitFor(() =>
+      expect(surnameInput.value).toBe(`${defaultSurnameInput}test`)
+    );
+
+    userEvent.type(firstNameInput, "test");
+    await waitFor(() =>
+      expect(firstNameInput.value).toBe(`${defaultFirstNameInput}test`)
+    );
+
+    userEvent.type(orgInput, "test");
+    await waitFor(() => expect(orgInput.value).toBe(`${defaultOrgInput}test`));
+
+    fireEvent.click(getByText("Continue"));
+    await waitFor(() =>
+      expect(
+        getByText(
+          "Something went wrong while trying to process your submission"
+        )
+      ).toBeInTheDocument()
+    );
   });
 });
