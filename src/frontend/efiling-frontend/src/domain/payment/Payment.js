@@ -189,6 +189,7 @@ export default function Payment({
           files,
           submissionFee,
         }}
+        setShowRush={setShowRush}
       />
     );
   }

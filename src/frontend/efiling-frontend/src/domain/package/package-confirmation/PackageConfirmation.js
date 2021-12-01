@@ -109,6 +109,7 @@ export default function PackageConfirmation({
   const [showModal, setShowModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
   const [hasPorDocument, setHasPorDocument] = useState(false);
+
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData(setShowRush).rushSubmission;
@@ -144,6 +145,7 @@ export default function PackageConfirmation({
       );
       sessionStorage.setItem("listenerExists", true);
     }
+    if (sessionStorage.getItem("validRushExit") === "true") setIsRush(true);
   }, []);
 
   useEffect(() => {
@@ -208,6 +210,8 @@ export default function PackageConfirmation({
           files,
           submissionFee,
         }}
+        setShowRush={setShowRush}
+        setIsRush={setIsRush}
       />
     );
 
@@ -282,6 +286,7 @@ export default function PackageConfirmation({
             Upload them now.
           </span>
         </h4>
+
         {rushFeatureFlag === "true" && hasPorDocument === false && (
           <>
             <br />

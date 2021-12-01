@@ -16,7 +16,7 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../../../domain/payment/Payment";
 
 import "./Rush.scss";
-import { getCountries } from "./RushService";
+import { getCountries, submitRush, submitRushDocuments } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";
 import { Input } from "../../input/Input";
@@ -31,36 +31,36 @@ const generateInputField = (input, onChange) => (
   </div>
 );
 
-const isValidPhoneNumber = (phoneNumber, country) => {
-  // Size restriction on CSO database column
-  if (phoneNumber.length > 13) {
-    return false;
-  }
+export default function Rush({ payment, setShowRush, setIsRush }) {
+  const isValidPhoneNumber = (phoneNumber, country) => {
+    // Size restriction on CSO database column
+    if (phoneNumber.length > 13) {
+      return false;
+    }
 
-  // These regexes are used to match the regexes used by CSO
-  if (!country || country.code === "1") {
-    const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
-    return domesticRegex.test(phoneNumber);
-  }
+    // These regexes are used to match the regexes used by CSO
+    if (!country || country.code === "1") {
+      const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
+      return domesticRegex.test(phoneNumber);
+    }
 
-  const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
-  return internationalRegex.test(phoneNumber);
-};
+    const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
+    return internationalRegex.test(phoneNumber);
+  };
 
-const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
-  if (
-    !isValidPhoneNumber(phoneNumber, country) &&
-    !validator.isEmpty(phoneNumber)
-  ) {
-    setPhoneError("Invalid phone number");
-  } else {
-    setPhoneError(null);
-  }
-};
+  const checkPhoneNumberErrors = (phoneNumber, country, setPhoneError) => {
+    if (
+      !isValidPhoneNumber(phoneNumber, country) &&
+      !validator.isEmpty(phoneNumber)
+    ) {
+      setPhoneError("Invalid phone number");
+    } else {
+      setPhoneError(null);
+    }
+  };
 
-const determinePhonePlaceholder = (country) =>
-  country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
-export default function Rush({ payment }) {
+  const determinePhonePlaceholder = (country) =>
+    country && country.code !== "1" ? "" : "xxx-xxx-xxxx";
   // eslint-disable-next-line no-unused-vars
 
   const input = {
@@ -75,7 +75,8 @@ export default function Rush({ payment }) {
     ["Email", "email"],
     ["Phone Number", "phoneNumber"],
   ];
-  const clearFields = {
+  const initFields = {
+    rushType: "",
     surname: "",
     firstName: "",
     contactMethod: contactMethods[0],
@@ -86,14 +87,13 @@ export default function Rush({ payment }) {
     details: "",
     date: "",
   };
-
   const [files, setFiles] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showPayment, setShowPayment] = useState(false);
   const [radio1, setRadio1] = useState(false);
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
-  const [fields, setFields] = useState(clearFields);
+  const [fields, setFields] = useState(initFields);
   const [numDocumentsError, setNumDocumentsError] = useState(false);
   const [duplicateFilenamesError, setDuplicateFilenamesError] = useState(false);
   const [emailError, setEmailError] = useState(null);
@@ -105,7 +105,59 @@ export default function Rush({ payment }) {
   const [countries, setCountries] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
 
-  const handleContinue = () => {};
+  const clearFields = {
+    rushType: fields.rushType,
+    surname: "",
+    firstName: "",
+    contactMethod: contactMethods[0],
+    phoneNumber: "",
+    email: "",
+    org: "",
+    country: null,
+    details: "",
+    date: "",
+  };
+
+  const handleContinue = () => {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i += 1) {
+      formData.append("files", files[i]);
+    }
+    const req = {
+      rushType: fields.rushType,
+      firstName: fields.firstName,
+      lastName: fields.surname,
+      organization: fields.org,
+      phoneNumber: fields.phoneNumber,
+      email: fields.email,
+      country: fields.country.description,
+      countryCode: fields.country.code,
+      reason: fields.details,
+      supportingDocuments: files,
+    };
+
+    if (files.length > 0) {
+      submitRushDocuments(payment.submissionId, formData)
+        .then((res) => {})
+        .catch((err) => {
+          setToastMessage(
+            "Something went wrong while trying to submit your document(s)"
+          );
+          setShowToast(true);
+        });
+    }
+
+    submitRush(payment.submissionId, req)
+      .then(() => {
+        sessionStorage.setItem("validRushExit", true);
+      })
+      .catch((err) => {
+        setToastMessage(
+          "Something went wrong while trying to process your submission"
+        );
+        setShowToast(true);
+      });
+  };
 
   const enforceCharacterLimit = (fieldValue, fieldName, characterLimit) => {
     const limitedValue = fieldValue.substring(0, characterLimit);
@@ -304,12 +356,7 @@ export default function Rush({ payment }) {
             setNumDocumentsError(false);
           }
 
-          if (
-            checkForDuplicateFilenames(
-              droppedFiles,
-              files.concat(payment.files)
-            )
-          ) {
+          if (checkForDuplicateFilenames(droppedFiles, files)) {
             setDuplicateFilenamesError(true);
             hasError = true;
           } else {
@@ -398,7 +445,7 @@ export default function Rush({ payment }) {
     };
 
     const canContinue = () => {
-      let mandatoryFields;
+      let mandatoryFields = [];
 
       if (radio1)
         mandatoryFields = [
@@ -421,7 +468,9 @@ export default function Rush({ payment }) {
       if (
         isError() ||
         mandatoryFields.some((field) => !field) ||
-        (!radio1 && validator.isEmpty(mandatoryFields[3]) && files.length < 1)
+        (!radio1 &&
+          validator.isEmpty(mandatoryFields[3] || "") &&
+          files.length < 1)
       )
         return false;
 
@@ -439,6 +488,24 @@ export default function Rush({ payment }) {
     radio2,
     radio3,
   ]);
+
+  useEffect(() => {
+    const resetFields = () => {
+      const jwtData = getJWTData();
+      setFields({
+        ...clearFields,
+        firstName: jwtData.given_name,
+        surname: jwtData.family_name,
+        email: jwtData.email,
+        country: countries[0],
+      });
+
+      if (validator.isEmail(jwtData.email || "")) {
+        setEmailError(null);
+      }
+    };
+    resetFields();
+  }, [radio1, radio2, radio3]);
 
   useEffect(() => {
     const displayAnyDocumentErrors = () => {
@@ -469,31 +536,12 @@ export default function Rush({ payment }) {
     displayAnyDocumentErrors();
   }, [numDocumentsError, duplicateFilenamesError]);
 
-  const resetFields = () => {
-    const jwtData = getJWTData();
-    setFields({
-      ...clearFields,
-      firstName: jwtData.given_name,
-      surname: jwtData.family_name,
-      email: jwtData.email,
-    });
-
-    if (validator.isEmail(jwtData.email)) {
-      setEmailError(null);
-    }
-  };
-
   const setRadioStatusComponents = () => {
-    resetFields();
     setRadio1(false);
     setRadio2(false);
     setRadio3(false);
     setFiles([]);
   };
-
-  if (showPayment) {
-    return <Payment payment={payment} />;
-  }
 
   return (
     <div className="ct-rush page">
@@ -517,6 +565,7 @@ export default function Rush({ payment }) {
           onSelect={() => {
             setRadioStatusComponents();
             setRadio1(true);
+            setFields({ ...fields, rushType: "rule" });
           }}
         />
         <Radio
@@ -525,6 +574,7 @@ export default function Rush({ payment }) {
           label="The court directed that the order be processed on an urgent basis."
           onSelect={() => {
             setRadioStatusComponents();
+            setFields({ ...fields, rushType: "court" });
             setRadio2(true);
           }}
         />
@@ -534,6 +584,7 @@ export default function Rush({ payment }) {
           label="Other (please explain)."
           onSelect={() => {
             setRadioStatusComponents();
+            setFields({ ...fields, rushType: "other" });
             setRadio3(true);
           }}
         />
@@ -582,13 +633,17 @@ export default function Rush({ payment }) {
         <section className="buttons pt-2">
           <Button
             label="Cancel"
-            onClick={() => setShowPayment(true)}
+            onClick={() => {
+              setIsRush(false);
+              setShowRush(false);
+            }}
             styling="bcgov-normal-white btn"
           />
           <Button
             label="Continue"
             disabled={!continueBtnEnabled}
             styling="bcgov-normal-blue btn"
+            onClick={handleContinue}
           />
         </section>
       </div>
@@ -603,4 +658,6 @@ export default function Rush({ payment }) {
 
 Rush.propTypes = {
   payment: PropTypes.object.isRequired,
+  setShowRush: PropTypes.func.isRequired,
+  setIsRush: PropTypes.func.isRequired,
 };
