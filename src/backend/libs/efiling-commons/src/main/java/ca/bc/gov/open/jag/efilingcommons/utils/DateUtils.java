@@ -34,6 +34,11 @@ public class DateUtils {
         }
     }
 
+    public static DateTime toDate(String date) {
+        if (date == null) return null;
+        return DateTime.parse(date);
+    }
+
     public static String toIsoDate(DateTime date) {
         if (date == null) return null;
         return date.toDateTimeISO().toString();

@@ -214,6 +214,7 @@ export default function Home({ page: { header } }) {
         name: "Type:",
         value: (
           <Dropdown
+            id="doctype-dropdown"
             data-testid="dropdown"
             items={docTypeListIds}
             onSelect={(e) => onSelect(e, file)}
@@ -247,6 +248,7 @@ export default function Home({ page: { header } }) {
         name: "Action Document",
         value: (
           <Dropdown
+            id="action-dropdown"
             items={actionStatusIds}
             onSelect={(e) => onSelectStatus(e, file)}
             testId="actionDropdown"
