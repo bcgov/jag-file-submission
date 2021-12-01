@@ -64,3 +64,21 @@ export const downloadRegistryNotice = async (packageId) => {
   const fileUrl = URL.createObjectURL(fileData);
   FileSaver.saveAs(fileUrl, "RegistryNotice.pdf");
 };
+
+/**
+ * Retrieves the Rush Document from the backend API for the given packageId and documentId.
+ *
+ * @param {*} packageId id associated with the filing package.
+ * @param {*} documentId id associated with the document.
+ */
+export const downloadRushDocument = async (packageId, documentId) => {
+  const response = await api.get(
+    `/filingpackages/${packageId}/rushDocument/${documentId}`,
+    {
+      responseType: "blob",
+    }
+  );
+  const fileData = new Blob([response.data], { type: "application/pdf" });
+  const fileUrl = URL.createObjectURL(fileData);
+  FileSaver.saveAs(fileUrl, "RushDocument.pdf");
+};

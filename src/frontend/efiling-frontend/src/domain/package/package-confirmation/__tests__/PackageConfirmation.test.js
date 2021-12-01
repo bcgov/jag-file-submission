@@ -45,14 +45,18 @@ describe("PackageConfirmation Component", () => {
     realm_access: {
       roles: ["rush_flag"],
     },
+    email: "bobross@paintit.com",
+    family_name: "ross",
+    given_name: "bob",
   });
   localStorage.setItem("jwt", token);
   window.scrollTo = jest.fn();
 
-  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+  sessionStorage.setItem("validRushExit", "false");
 
   let mock;
   beforeEach(() => {
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
     mock = new MockAdapter(axios);
     window.open = jest.fn();
     FileSaver.saveAs = jest.fn();
@@ -97,7 +101,13 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
 
-    const { getByLabelText, getByText, queryByText, getByRole } = render(
+    const {
+      getByLabelText,
+      getByText,
+      queryByText,
+      getByRole,
+      queryByTestId,
+    } = render(
       <PackageConfirmation
         packageConfirmation={packageConfirmation}
         csoAccountStatus={csoAccountStatus}
@@ -123,6 +133,21 @@ describe("PackageConfirmation Component", () => {
     fireEvent.click(getByRole("dialog"));
     await waitFor(() =>
       expect(queryByText("Rush Details")).toBeInTheDocument()
+    );
+
+    const radio1 = getByLabelText(
+      "The attached application is made under Rule 8-5 (1) SCR."
+    );
+    const cancel = getByText("Cancel");
+
+    fireEvent.click(radio1);
+    await waitFor(() =>
+      expect(queryByTestId("dropdownzone")).toBeInTheDocument()
+    );
+
+    fireEvent.click(cancel);
+    await waitFor(() =>
+      expect(getByText("Package Confirmation")).toBeInTheDocument()
     );
   });
 
@@ -364,5 +389,23 @@ describe("PackageConfirmation Component", () => {
     await waitFor(() => {});
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  test("Rush flag is set to false", async () => {
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount });
+    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "false";
+
+    const { queryByText } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await waitFor(() => {});
+
+    expect(queryByText("Rush")).not.toBeInTheDocument();
   });
 });
