@@ -216,7 +216,7 @@ export default function PackageReview() {
           setSubmissionHistoryLink(response.data.links.packageHistoryUrl);
           setHasRegistryNotice(response.data.hasRegistryNotice);
 
-          if (response.data.rush.reason && rushTabFeatureFlag === "true") {
+          if (response.data.rush.rushType && rushTabFeatureFlag === "true") {
             setIsRush(true);
             const rushResponse = response.data.rush;
             setRushDetails([
