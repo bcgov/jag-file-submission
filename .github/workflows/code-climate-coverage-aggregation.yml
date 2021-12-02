@@ -55,6 +55,8 @@ jobs:
           #echo "::set-env name=GIT_BRANCH::master"
         if: env.GIT_BRANCH == 'refs/heads/master'
 
+      - name: Printing node and yarn versions
+        run: node --version && yarn --version
       # Figure out where yarn is caching things
       - name: Yarn Cache
         run: yarn cache dir
