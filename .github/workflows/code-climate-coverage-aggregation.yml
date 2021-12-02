@@ -78,16 +78,16 @@ jobs:
       #  run: yarn --cwd src/frontend/efiling-frontend install 
 
       # Check lint version
-      - name: Run lint - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend run lint -v
+      #- name: Run lint - eFiling Frontend
+      #  run: yarn --cwd src/frontend/efiling-frontend run lint -v
 
       # Run lint - eFiling Frontend
-      - name: Run lint - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend run lint
+      #- name: Run lint - eFiling Frontend
+      #  run: yarn --cwd src/frontend/efiling-frontend run lint
 
       # Yarn Coverage - eFiling Frontend
-      - name: Run Yarn Coverage - eFiling Frontend
-        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
+      #- name: Run Yarn Coverage - eFiling Frontend
+      #  run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
 
       # Run Yarn Install - eFiling Demo
       - name: Run Yarn Install - eFiling Demo
