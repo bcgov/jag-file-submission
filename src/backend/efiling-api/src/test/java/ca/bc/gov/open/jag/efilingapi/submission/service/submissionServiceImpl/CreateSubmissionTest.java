@@ -16,6 +16,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.sftp.starter.SftpService;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -159,6 +160,7 @@ public class CreateSubmissionTest {
 
     private RushProcessing createRush() {
         return RushProcessing.builder()
+                .courtDate("2001-11-26T12:00:00Z")
                 .supportingDocuments(
                         Arrays.asList(
                                 Document.builder()

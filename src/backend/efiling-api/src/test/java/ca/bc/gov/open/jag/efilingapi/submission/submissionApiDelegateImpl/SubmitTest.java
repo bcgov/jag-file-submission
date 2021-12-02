@@ -21,6 +21,9 @@ import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
+import ca.bc.gov.open.jag.efilingcommons.model.RushProcessing;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -115,6 +118,13 @@ public class SubmitTest {
                 .builder()
                 .id(TestHelpers.CASE_2)
                 .navigationUrls(TestHelpers.createNavigation(null, null, null))
+                .filingPackage(
+                        FilingPackage.builder()
+                                .rush(RushProcessing.builder()
+                                        .courtDate("2001-11-26T12:00:00Z")
+                                        .create())
+                                .create()
+                )
                 .create();
 
         Submission submissionPaymentError = Submission

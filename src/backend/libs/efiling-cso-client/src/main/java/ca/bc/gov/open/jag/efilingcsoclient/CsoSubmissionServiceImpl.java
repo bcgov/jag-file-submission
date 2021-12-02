@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -212,9 +213,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         processRequest.setCtryId((rushProcessing != null ? new BigDecimal(rushProcessing.getCountryCode()) : null));
         processRequest.setContactEmailTxt((rushProcessing != null ? rushProcessing.getEmail() : null));
         processRequest.setEntUserId(accountDetails.getClientId().toString());
-        if (rushProcessing != null && rushProcessing.getCourtDate() != null) {
+        if (rushProcessing != null && !StringUtils.isBlank(rushProcessing.getCourtDate())) {
             try {
-                processRequest.setRequestDt(DateUtils.getXmlDate(rushProcessing.getCourtDate()));
+                processRequest.setRequestDt(DateUtils.getXmlDate(DateTime.parse(rushProcessing.getCourtDate())));
             } catch (DatatypeConfigurationException e) {
                 logger.error("Court date is invalid");
             }
