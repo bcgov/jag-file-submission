@@ -146,6 +146,7 @@ export default function Rush({
       organization: fields.org,
       phoneNumber: fields.phoneNumber,
       email: fields.email,
+      courtDate: fields.date,
       country: fields.country.description,
       countryCode: fields.country.code,
       reason: fields.details,
