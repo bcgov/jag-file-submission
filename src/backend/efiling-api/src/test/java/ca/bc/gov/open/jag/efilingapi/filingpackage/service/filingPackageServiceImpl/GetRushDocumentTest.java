@@ -54,7 +54,7 @@ public class GetRushDocumentTest {
 
         Mockito.when(efilingReviewServiceMock.getRushDocument(ArgumentMatchers.any())).thenReturn(Optional.of(DOC_DATA));
 
-        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.OBJECT_GUID);
+        Optional<SubmittedDocument> result = sut.getRushDocument(TestHelpers.CASE_1_STRING, BigDecimal.ONE, TestHelpers.CLIENT_FILE_NM);
 
         Assertions.assertTrue(result.isPresent());
         Assertions.assertEquals("Test.pdf", result.get().getName());

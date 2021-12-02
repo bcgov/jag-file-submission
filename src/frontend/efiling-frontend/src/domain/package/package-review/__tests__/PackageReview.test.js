@@ -27,11 +27,11 @@ describe("PackageReview Component", () => {
   const submittedBy = { firstName: "Han", lastName: "Solo" };
   const supportingDocuments = [
     {
-      fileName: "Test1.pdf",
+      filename: "Test1.pdf",
       identifier: "9b35f5d6-50e9-4cd5-9d46-8ce1f9e484c8",
     },
     {
-      fileName: "Test2.pdf",
+      filename: "Test2.pdf",
       identifier: "d59c1528-8415-421e-a06a-9a46a0757fb5",
     },
   ];
@@ -716,7 +716,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
     mock
       .onGet(
-        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].fileName}`
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].filename}`
       )
       .reply(200, {});
 
@@ -756,7 +756,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
     mock
       .onGet(
-        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].fileName}`
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].filename}`
       )
       .reply(400, {});
 
@@ -789,7 +789,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
     mock
       .onGet(
-        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].fileName}`
+        `/filingpackages/${packageId}/rushDocument/${supportingDocuments[0].filename}`
       )
       .reply(400, {});
 
