@@ -617,7 +617,7 @@ paths:
       responses:
         "200":
           description: Document was deleted
-  "/filingpackages/{packageIdentifier}/rushDocument/{documentIdentifier}":
+  "/filingpackages/{packageIdentifier}/rushDocument/{fileName}":
     get:
       summary: Get rush document
       operationId: GetRushDocument
@@ -626,9 +626,9 @@ paths:
         - filingPackages
       parameters:
         - $ref: "#/components/parameters/packageIdentifier"
-        - name: documentIdentifier
+        - name: fileName
           in: path
-          description: document identifier
+          description: document file name
           required: true
           schema:
             type: string

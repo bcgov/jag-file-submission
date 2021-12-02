@@ -184,7 +184,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     @Override
     @RolesAllowed("efiling-user")
-    public ResponseEntity<Resource> getRushDocument(BigDecimal packageIdentifier, String documentIdentifier) {
+    public ResponseEntity<Resource> getRushDocument(BigDecimal packageIdentifier, String fileName) {
 
         logger.info("get rush document request received");
 
@@ -192,7 +192,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
         if(!universalId.isPresent()) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        Optional<SubmittedDocument> result = filingPackageService.getRushDocument(universalId.get(), packageIdentifier, documentIdentifier);
+        Optional<SubmittedDocument> result = filingPackageService.getRushDocument(universalId.get(), packageIdentifier, fileName);
 
         if(!result.isPresent()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 

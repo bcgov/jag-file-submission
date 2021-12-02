@@ -738,7 +738,9 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                     data-testid="uploaded-file"
                     role="button"
                     tabindex="0"
-                  />
+                  >
+                    Test1.pdf
+                  </span>
                 </span>
                 <span
                   class="label col-md-5 d-lg-none"
@@ -788,7 +790,9 @@ exports[`PackageReview Component Matches the snapshot 1`] = `
                     data-testid="uploaded-file"
                     role="button"
                     tabindex="0"
-                  />
+                  >
+                    Test2.pdf
+                  </span>
                 </span>
                 <span
                   class="label col-md-5 d-lg-none"

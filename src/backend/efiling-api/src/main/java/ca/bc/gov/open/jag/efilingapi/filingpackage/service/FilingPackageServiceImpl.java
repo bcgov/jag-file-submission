@@ -159,13 +159,13 @@ public class FilingPackageServiceImpl implements FilingPackageService {
     }
 
     @Override
-    public Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier) {
+    public Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String fileName) {
 
         Optional<ReviewFilingPackage> filingPackage = getFilingPackage(universalId, packageNumber);
 
         if (!filingPackage.isPresent()) return Optional.empty();
 
-        Optional<RushDocument> reviewDocument = filingPackage.get().getRushOrder().getSupportDocs().stream().filter(document -> document.getObjectGuid().equals(documentIdentifier)).findFirst();
+        Optional<RushDocument> reviewDocument = filingPackage.get().getRushOrder().getSupportDocs().stream().filter(document -> document.getClientFileNm().equals(fileName)).findFirst();
 
         if (!reviewDocument.isPresent()) return Optional.empty();
 
