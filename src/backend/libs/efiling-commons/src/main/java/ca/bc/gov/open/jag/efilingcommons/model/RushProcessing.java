@@ -15,7 +15,7 @@ public class RushProcessing {
     private String email;
     private String organization;
     private String phoneNumber;
-    private DateTime courtDate;
+    private String courtDate;
     private String country;
     private String countryCode;
     private String reason;
@@ -43,7 +43,7 @@ public class RushProcessing {
             @JsonProperty("email") String email,
             @JsonProperty("organization") String organization,
             @JsonProperty("phoneNumber") String phoneNumber,
-            @JsonProperty("courtDate") DateTime courtDate,
+            @JsonProperty("courtDate") String courtDate,
             @JsonProperty("country") String country,
             @JsonProperty("countryCode") String countryCode,
             @JsonProperty("reason") String reason,
@@ -81,7 +81,7 @@ public class RushProcessing {
         return phoneNumber;
     }
 
-    public DateTime getCourtDate() {  return courtDate;  }
+    public String getCourtDate() {  return courtDate;  }
 
     public String getCountry() {
         return country;
@@ -111,7 +111,7 @@ public class RushProcessing {
         private String email;
         private String organization;
         private String phoneNumber;
-        private DateTime courtDate;
+        private String courtDate;
         private String country;
         private String countryCode;
         private String reason;
@@ -147,7 +147,7 @@ public class RushProcessing {
             return this;
         }
 
-        public RushProcessing.Builder courtDate(DateTime courtDate) {
+        public RushProcessing.Builder courtDate(String courtDate) {
             this.courtDate = courtDate;
             return this;
         }
