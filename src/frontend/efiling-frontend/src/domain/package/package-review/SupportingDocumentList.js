@@ -17,7 +17,7 @@ export default function SupportingDocumentList({
 
   const handleDownloadFileEvent = (e, document) => {
     if (isClick(e) || isEnter(e)) {
-      downloadRushDocument(packageId, document.identifier).catch(() => {
+      downloadRushDocument(packageId, document.fileName).catch(() => {
         setShowToast(true);
       });
     }

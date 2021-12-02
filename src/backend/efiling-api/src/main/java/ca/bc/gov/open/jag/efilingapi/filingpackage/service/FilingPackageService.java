@@ -35,10 +35,10 @@ public interface FilingPackageService {
      * Get the file related to the record
      * @param universalId authorized users universal id
      * @param packageNumber  requested package identifier
-     * @param documentIdentifier required documents identifier
+     * @param fileName required fileName
      * @return the byte array and meta associated with the document
      */
-    Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String documentIdentifier);
+    Optional<SubmittedDocument> getRushDocument(String universalId, BigDecimal packageNumber, String fileName);
 
     /**
      * Get the parent app features for a package
