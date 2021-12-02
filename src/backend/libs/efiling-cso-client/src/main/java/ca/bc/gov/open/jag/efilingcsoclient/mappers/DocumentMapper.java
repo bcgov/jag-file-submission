@@ -76,6 +76,7 @@ public interface DocumentMapper {
     //Rush Processing Document
     @Mapping(target = "processItemSeqNo", source = "index")
     @Mapping(target = "clientFileNm", source = "document.name")
+    @Mapping(target = "tempFileName", source = "document.serverFileName")
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "fileServer", source = "serverHost")

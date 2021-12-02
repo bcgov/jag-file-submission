@@ -98,6 +98,10 @@ public class Document {
         return serverFileName;
     }
 
+    public void setServerFileName(String serverFileName) {
+        this.serverFileName = serverFileName;
+    }
+
     public ActionDocument getActionDocument() { return actionDocument; }
 
     public static Builder builder() {

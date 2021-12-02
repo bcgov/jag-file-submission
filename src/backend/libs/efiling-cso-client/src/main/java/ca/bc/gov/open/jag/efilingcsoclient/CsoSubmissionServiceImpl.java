@@ -243,6 +243,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         List<ProcessSupportDocument> supportDocuments = new ArrayList<>();
         for (int i = 0; i < documents.size(); i++) {
+            ProcessSupportDocument test = new ProcessSupportDocument();
+
             supportDocuments.add(documentMapper.toEfilingRushProcessingDocument(i+1,
                     documents.get(i),
                     accountDetails,
