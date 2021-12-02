@@ -206,3 +206,4 @@ volumes:
 networks:
   fisu-net:
     driver: "bridge"
+
