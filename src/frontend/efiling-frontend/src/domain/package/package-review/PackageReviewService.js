@@ -73,7 +73,7 @@ export const downloadRegistryNotice = async (packageId) => {
  */
 export const downloadRushDocument = async (packageId, fileName) => {
   const response = await api.get(
-    `/filingpackages/${packageId}/rushDocument/fileName`,
+    `/filingpackages/${packageId}/rushDocument/${fileName}`,
     {
       responseType: "blob",
     }
