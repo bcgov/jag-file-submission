@@ -20,6 +20,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestVali
 import ca.bc.gov.open.jag.efilingapi.utils.Notification;
 import ca.bc.gov.open.jag.efilingapi.utils.TikaAnalysis;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.*;
+import ca.bc.gov.open.jag.efilingcommons.model.RushProcessing;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,7 @@ import javax.annotation.security.RolesAllowed;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -475,7 +477,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
 
-        fromCacheSubmission.get().getFilingPackage().setRush(rushProcessingMapper.toRushProcessing(rush));
+        RushProcessing rushProcessing = rushProcessingMapper.toRushProcessing(rush);
+        //Set filenames here values not present in mapper
+        rushProcessing.getSupportingDocuments().forEach(
+            document -> document.setServerFileName(MessageFormat.format("fh_{0}_{1}_{2}", submissionKey.getSubmissionId(), submissionKey.getTransactionId(), document.getName())
+        ));
+
+        fromCacheSubmission.get().getFilingPackage().setRush(rushProcessing);
 
         submissionStore.put(fromCacheSubmission.get());
 

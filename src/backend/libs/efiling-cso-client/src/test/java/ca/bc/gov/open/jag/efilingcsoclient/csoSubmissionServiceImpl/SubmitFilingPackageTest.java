@@ -353,7 +353,7 @@ public class SubmitFilingPackageTest {
                         .rushedSubmission(true)
                         .rush(RushProcessing.builder()
                                 .rushType(RUSH_TYPE)
-                                .courtDate(new DateTime().toString())
+                                .courtDate("")
                                 .country(COUNTRY)
                                 .countryCode(COUNTRY_CODE)
                                 .firstName(FIRST_NAME)

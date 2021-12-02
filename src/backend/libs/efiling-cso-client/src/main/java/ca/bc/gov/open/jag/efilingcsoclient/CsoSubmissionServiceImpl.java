@@ -213,7 +213,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         processRequest.setCtryId((rushProcessing != null ? new BigDecimal(rushProcessing.getCountryCode()) : null));
         processRequest.setContactEmailTxt((rushProcessing != null ? rushProcessing.getEmail() : null));
         processRequest.setEntUserId(accountDetails.getClientId().toString());
-        if (rushProcessing != null && rushProcessing.getCourtDate() != null) {
+        if (rushProcessing != null && !StringUtils.isBlank(rushProcessing.getCourtDate())) {
             try {
                 processRequest.setRequestDt(DateUtils.getXmlDate(DateTime.parse(rushProcessing.getCourtDate())));
             } catch (DatatypeConfigurationException e) {
