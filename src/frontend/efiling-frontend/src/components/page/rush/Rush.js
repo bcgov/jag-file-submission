@@ -124,10 +124,21 @@ export default function Rush({
   };
 
   const handleContinue = () => {
+    const supportingDocuments = [];
+    for (let i = 0; i < files.length; i += 1) {
+      const supportingDocument = {
+        fileName: files[i].name,
+        identifier: null,
+      };
+
+      supportingDocuments.push(supportingDocument);
+    }
+
     const formData = new FormData();
     for (let i = 0; i < files.length; i += 1) {
       formData.append("files", files[i]);
     }
+
     const req = {
       rushType: fields.rushType,
       firstName: fields.firstName,
@@ -135,10 +146,11 @@ export default function Rush({
       organization: fields.org,
       phoneNumber: fields.phoneNumber,
       email: fields.email,
+      courtDate: fields.date,
       country: fields.country.description,
       countryCode: fields.country.code,
       reason: fields.details,
-      supportingDocuments: files,
+      supportingDocuments,
     };
 
     if (files.length > 0) {
