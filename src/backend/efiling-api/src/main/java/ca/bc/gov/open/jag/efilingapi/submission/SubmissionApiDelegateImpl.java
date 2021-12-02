@@ -478,7 +478,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
         MDC.put(Keys.MDC_EFILING_SUBMISSION_ID, submissionId.toString());
 
         RushProcessing rushProcessing = rushProcessingMapper.toRushProcessing(rush);
-        //Set filenames values not present in mapper for done here
+        //Set filenames here values not present in mapper
         rushProcessing.getSupportingDocuments().forEach(
             document -> document.setServerFileName(MessageFormat.format("fh_{0}_{1}_{2}", submissionKey.getSubmissionId(), submissionKey.getTransactionId(), document.getName())
         ));
