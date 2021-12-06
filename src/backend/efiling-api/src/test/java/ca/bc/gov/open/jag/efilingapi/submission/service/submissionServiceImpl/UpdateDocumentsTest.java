@@ -69,6 +69,7 @@ public class UpdateDocumentsTest {
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionServiceMock,
+                null,
                 documentStoreMock,
                 null,
                 null, navigationProperties);

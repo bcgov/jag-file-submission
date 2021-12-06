@@ -7,6 +7,7 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImp
 import ca.bc.gov.open.jag.efilingapi.filingpackage.properties.ParentProperties;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageServiceImpl;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +24,8 @@ public class FilingPackageConfig {
     }
 
     @Bean
-    public FilingPackageService filePackageService(EfilingReviewService efilingReviewService, AccountService accountService) {
-        return new FilingPackageServiceImpl(efilingReviewService, accountService, new FilingPackageMapperImpl(), new ActionRequiredDetailsMapperImpl(), parentProperties);
+    public FilingPackageService filePackageService(EfilingReviewService efilingReviewService, EfilingDocumentService efilingDocumentService, AccountService accountService) {
+        return new FilingPackageServiceImpl(efilingReviewService, efilingDocumentService, accountService, new FilingPackageMapperImpl(), new ActionRequiredDetailsMapperImpl(), parentProperties);
     }
 
 }

@@ -18,6 +18,7 @@ import ca.bc.gov.open.jag.efilingcommons.model.Court;
 import ca.bc.gov.open.jag.efilingcommons.model.Document;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
@@ -53,6 +54,8 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     private final EfilingSubmissionService efilingSubmissionService;
 
+    private final EfilingDocumentService efilingDocumentService;
+
     private final DocumentStore documentStore;
 
     private final PaymentAdapter paymentAdapter;
@@ -69,7 +72,7 @@ public class SubmissionServiceImpl implements SubmissionService {
             EfilingLookupService efilingLookupService,
             EfilingCourtService efilingCourtService,
             EfilingSubmissionService efilingSubmissionService,
-            DocumentStore documentStore,
+            EfilingDocumentService efilingDocumentService, DocumentStore documentStore,
             PaymentAdapter paymentAdapter,
             SftpService sftpService, NavigationProperties navigationProperties) {
         this.submissionStore = submissionStore;
@@ -79,6 +82,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         this.efilingLookupService = efilingLookupService;
         this.efilingCourtService = efilingCourtService;
         this.efilingSubmissionService = efilingSubmissionService;
+        this.efilingDocumentService = efilingDocumentService;
         this.documentStore = documentStore;
         this.paymentAdapter = paymentAdapter;
         this.sftpService = sftpService;
@@ -168,6 +172,15 @@ public class SubmissionServiceImpl implements SubmissionService {
                 getValidPartyRoleRequest.getCourtClassification(),
                 getValidPartyRoleRequest.getDocumentTypesAsString()
         );
+
+    }
+
+    @Override
+    public Boolean isRushRequired(String documentType, String courtLevel, String courtClass) {
+
+        DocumentTypeDetails documentTypeDetails = efilingDocumentService.getDocumentTypeDetails(courtLevel, courtClass, documentType);
+
+        return documentTypeDetails.isRushRequired();
 
     }
 

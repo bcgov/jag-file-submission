@@ -14,6 +14,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestVali
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidatorImpl;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingCourtService;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingSubmissionService;
 import ca.bc.gov.open.sftp.starter.SftpService;
@@ -57,6 +58,7 @@ public class SubmissionConfig {
                                                EfilingLookupService efilingLookupService,
                                                EfilingCourtService efilingCourtService,
                                                EfilingSubmissionService efilingSubmissionService,
+                                               EfilingDocumentService efilingDocumentService,
                                                DocumentStore documentStore,
                                                PaymentAdapter paymentAdapter,
                                                SftpService sftpService, PartyMapper partyMapper) {
@@ -68,7 +70,7 @@ public class SubmissionConfig {
                 efilingLookupService,
                 efilingCourtService,
                 efilingSubmissionService,
-                documentStore,
+                efilingDocumentService, documentStore,
                 paymentAdapter,
                 sftpService,
                 navigationProperties);
