@@ -100,7 +100,7 @@ public class GenerateFromRequestTest {
         // Testing mapper as part of this unit test
         SubmissionMapper submissionMapper = new SubmissionMapperImpl();
         NavigationProperties navigationProperties = new NavigationProperties();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, null, null, navigationProperties);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, submissionMapper, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, efilingDocumentService, documentStoreMock, null, null, navigationProperties);
 
     }
 

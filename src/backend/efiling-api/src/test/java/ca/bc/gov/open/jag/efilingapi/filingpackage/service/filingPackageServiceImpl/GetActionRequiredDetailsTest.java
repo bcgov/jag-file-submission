@@ -42,7 +42,7 @@ public class GetActionRequiredDetailsTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), new ActionRequiredDetailsMapperImpl(), null);
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, null, accountServiceMock, new FilingPackageMapperImpl(), new ActionRequiredDetailsMapperImpl(), null);
     }
 
     @Test
