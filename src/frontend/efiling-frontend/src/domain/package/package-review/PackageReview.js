@@ -228,9 +228,12 @@ export default function PackageReview() {
               },
               {
                 name: "Contact Name:",
-                value: rushResponse.firstName
-                  .concat(" ")
-                  .concat(rushResponse.lastName),
+                value:
+                  rushResponse.firstName && rushResponse.lastName
+                    ? rushResponse.firstName
+                        .concat(" ")
+                        .concat(rushResponse.lastName)
+                    : "",
                 isNameBold: false,
                 isValueBold: true,
               },
