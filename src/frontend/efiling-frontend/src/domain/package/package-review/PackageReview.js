@@ -63,7 +63,6 @@ const determineIfProtectionOrder = (documents) => {
   return false;
 };
 
-
 export default function PackageReview() {
   const rushTabFeatureFlag = window.env
     ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
@@ -229,7 +228,12 @@ export default function PackageReview() {
               },
               {
                 name: "Contact Name:",
-                value: (rushResponse.firstName && rushResponse.lastName) ? rushResponse.firstName.concat(" ").concat(rushResponse.lastName) : "",
+                value:
+                  rushResponse.firstName && rushResponse.lastName
+                    ? rushResponse.firstName
+                        .concat(" ")
+                        .concat(rushResponse.lastName)
+                    : "",
                 isNameBold: false,
                 isValueBold: true,
               },
