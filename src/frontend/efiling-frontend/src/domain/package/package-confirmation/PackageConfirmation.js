@@ -33,7 +33,8 @@ const getFilingPackageData = (
   setShowToast,
   setToastMessage,
   refreshFiles,
-  setRefreshFiles
+  setRefreshFiles,
+  setHasRushInfo
 ) => {
   if (refreshFiles === false) {
     return;
@@ -41,13 +42,19 @@ const getFilingPackageData = (
 
   axios
     .get(`/submission/${submissionId}/filing-package`)
-    .then(({ data: { documents, court, submissionFeeAmount } }) => {
+    .then(({ data: { documents, court, submissionFeeAmount, rush } }) => {
       setCourtData(court);
       setSubmissionFee(submissionFeeAmount);
       setFiles(documents);
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
       setRefreshFiles(false);
+
+      if (rush && rush.rushType) {
+        setHasRushInfo(true);
+      } else {
+        setHasRushInfo(false);
+      }
     })
     .catch(() => {
       setToastMessage(
@@ -108,7 +115,7 @@ export default function PackageConfirmation({
   const [showRush, setShowRush] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
-  const [completedRushRequest, setCompletedRushRequest] = useState(false);
+  const [hasRushInfo, setHasRushInfo] = useState(false);
   const [hasPorDocument, setHasPorDocument] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
@@ -128,7 +135,7 @@ export default function PackageConfirmation({
   };
 
   const handleContinue = () => {
-    if (isRush && rushFeatureFlag === "true" && !completedRushRequest) {
+    if (isRush && rushFeatureFlag === "true" && !hasRushInfo) {
       setShowPayment(false);
       setShowModal(true);
     } else {
@@ -160,13 +167,14 @@ export default function PackageConfirmation({
       setShowToast,
       setToastMessage,
       refreshFiles,
-      setRefreshFiles
+      setRefreshFiles,
+      setHasRushInfo
     );
 
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
     checkRejectedFiles(files, setHasRejectedDocuments);
     checkPorDocument(files, setHasPorDocument);
-  }, [files, submissionId, showUpload, refreshFiles]);
+  }, [files, submissionId, showUpload, refreshFiles, hasRushInfo]);
 
   function handleUploadFile(e) {
     if (isClick(e) || isEnter(e)) {
@@ -213,7 +221,7 @@ export default function PackageConfirmation({
         }}
         setShowRush={setShowRush}
         setIsRush={setIsRush}
-        setCompletedRushRequest={setCompletedRushRequest}
+        setHasRushInfo={setHasRushInfo}
       />
     );
 
@@ -290,7 +298,7 @@ export default function PackageConfirmation({
         </h4>
 
         {rushFeatureFlag === "true" &&
-          completedRushRequest === false &&
+          hasRushInfo === false &&
           hasPorDocument === false && (
             <>
               <br />
@@ -322,7 +330,7 @@ export default function PackageConfirmation({
           <Table
             elements={
               generateFileSummaryData(
-                isRush,
+                isRush || hasRushInfo,
                 files,
                 submissionFee,
                 false,
