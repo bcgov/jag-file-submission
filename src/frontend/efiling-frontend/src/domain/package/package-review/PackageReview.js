@@ -63,6 +63,7 @@ const determineIfProtectionOrder = (documents) => {
   return false;
 };
 
+
 export default function PackageReview() {
   const rushTabFeatureFlag = window.env
     ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
@@ -228,9 +229,7 @@ export default function PackageReview() {
               },
               {
                 name: "Contact Name:",
-                value: rushResponse.firstName
-                  .concat(" ")
-                  .concat(rushResponse.lastName),
+                value: setContactName(rushResponse.firstName,rushResponse.lastName),
                 isNameBold: false,
                 isValueBold: true,
               },
@@ -290,6 +289,16 @@ export default function PackageReview() {
   function reloadDocumentList() {
     setReloadTrigger(!reloadTrigger);
     noop();
+  }
+
+  function setContactName(firstName, lastName) {
+      if (firstName != null && lastName != null) {
+        return firstName
+                  .concat(" ")
+                  .concat(lastName)
+      } else {
+        return "";
+      }
   }
 
   function handleSubmissionSheet(e) {
