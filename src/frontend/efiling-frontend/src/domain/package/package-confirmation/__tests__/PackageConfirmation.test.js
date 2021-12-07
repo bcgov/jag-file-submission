@@ -372,6 +372,29 @@ describe("PackageConfirmation Component", () => {
     expect(rushStatus).toBeInTheDocument();
   });
 
+  test("When package has rush, the screen updates accordingly", async () => {
+    const rush = {
+      rushType: "test",
+    };
+
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount, rush });
+
+    const { getByText, queryByTestId } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await waitFor(() => {});
+
+    expect(getByText("Yes")).toBeInTheDocument();
+
+    expect(queryByTestId("rushRadioOpts")).not.toBeInTheDocument();
+  });
+
   test("take user directly to payment page when coming from bambora redirect", async () => {
     sessionStorage.setItem("isBamboraRedirect", true);
 
