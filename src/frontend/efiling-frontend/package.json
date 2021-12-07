@@ -13,7 +13,6 @@
     "dinero.js": "^1.8.1",
     "file-saver": "^2.0.2",
     "history": "^5.0.0",
-    "immer": "^9.0.7",
     "jsonwebtoken": "^8.5.1",
     "keycloak-js": "^13.0.1",
     "moment": "^2.29.1",
@@ -93,7 +92,11 @@
     "prettier": "2.1.2",
     "pretty-quick": "^3.1.0",
     "react-test-renderer": "^16.12.0",
-    "sass": "^1.44.0"
+    "sass": "^1.44.0",
+    "immer": "^9.0.7"
+  },
+  "resolutions": {
+    "immer": "^9.0.7"
   },
   "jest": {
     "watchPathIgnorePatterns": [
