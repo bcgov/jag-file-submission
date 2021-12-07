@@ -57,7 +57,7 @@ const determineDefaultTabKey = (queryParamTab, isRush, isProtectionOrder) => {
 
 const determineIfProtectionOrder = (documents) => {
   for (let i = 0; i < documents.length; i += 1) {
-    if (documents[i].documentProperties.type === "POR") return true;
+    if (documents[i].rushRequired) return true;
   }
 
   return false;
