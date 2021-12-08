@@ -63,7 +63,7 @@ public class GetValidIndividualRolesTest {
                 Mockito.eq("B"),
                 Mockito.eq("POR,ACMW"))).thenReturn(Arrays.asList(ROLE_TYPES));
         NavigationProperties navigationProperties = new NavigationProperties();
-        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, documentStoreMock, paymentAdapterMock, sftpServiceMock, navigationProperties);
+        sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, null, documentStoreMock, paymentAdapterMock, sftpServiceMock, navigationProperties);
     }
 
     @Test

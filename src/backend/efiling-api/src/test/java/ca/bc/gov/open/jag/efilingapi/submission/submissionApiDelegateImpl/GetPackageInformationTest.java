@@ -101,6 +101,8 @@ public class GetPackageInformationTest {
 
         Mockito.when(submissionStoreMock.get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_1)))).thenReturn(Optional.of(submissionWithParentApplication));
 
+        Mockito.when(submissionServiceMock.isRushRequired(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(true);
+
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator, null);
     }
@@ -122,6 +124,7 @@ public class GetPackageInformationTest {
         Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getBody().getCourt().getParticipatingClass());
         Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getBody().getCourt().getCourtClass());
         Assertions.assertEquals(TestHelpers.TYPE, actual.getBody().getDocuments().get(0).getType());
+        Assertions.assertTrue(actual.getBody().getDocuments().get(0).getRushRequired());
         Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getDocuments().get(0).getDescription());
         Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsAmendment());
         Assertions.assertNull(actual.getBody().getDocuments().get(0).getIsSupremeCourtScheduling());
@@ -149,8 +152,6 @@ public class GetPackageInformationTest {
         InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.getSubmissionFilingPackage(UUID.randomUUID(), TestHelpers.CASE_2));
         Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
     }
-
-
 
     private List<Document> createDocumentListWithNulls() {
         return Arrays.asList(Document.builder()

@@ -788,6 +788,9 @@ components:
         paymentProcessed:
           type: boolean
           description: Has the payment been processed
+        rushRequired:
+          type: boolean
+          description: Does the document require rush
         documentProperties:
           $ref: "#/components/schemas/DocumentProperties"
         status:
@@ -835,6 +838,9 @@ components:
         paymentProcessed:
           type: boolean
           description: Has the payment been processed
+        rushRequired:
+          type: boolean
+          description: Does the document require rush
     EfilingError:
       required:
         - error

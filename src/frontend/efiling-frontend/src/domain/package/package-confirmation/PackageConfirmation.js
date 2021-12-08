@@ -94,7 +94,7 @@ const checkDuplicateFileNames = (files, setShowToast, setToastMessage) => {
 
 const checkPorDocument = (files, setHasPorDocument) => {
   files.forEach((file) => {
-    if (file.documentProperties.type === "POR") {
+    if (file.rushRequired) {
       setHasPorDocument(true);
     }
   });

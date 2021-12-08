@@ -18,6 +18,8 @@ public interface SubmissionService {
 
     Submission updateDocuments(Submission submission, UpdateDocumentRequest updateDocumentRequest, SubmissionKey submissionKey);
 
+    Boolean isRushRequired(String documentType, String courtLevel, String courtClass);
+
     List<String> getValidPartyRoles(GetValidPartyRoleRequest getValidPartyRoleRequest);
 
 }

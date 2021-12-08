@@ -50,7 +50,7 @@ public class GetParentAppDetailsTestTest {
 
         parentProperties.setParents(Arrays.asList(parentAppProperties));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null, parentProperties);
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, null, accountServiceMock, new FilingPackageMapperImpl(), null, parentProperties);
     }
 
 
