@@ -8,6 +8,7 @@ updates:
       interval: "weekly"
       day: "monday"
       time: "05:00"
+    target-branch: "vulnerabilities" #Temporary until security updates are complete
   # npm dependencies - frontend
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-frontend"
