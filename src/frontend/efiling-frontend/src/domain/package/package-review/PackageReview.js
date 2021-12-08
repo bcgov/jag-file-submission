@@ -57,7 +57,7 @@ const determineDefaultTabKey = (queryParamTab, isRush, isProtectionOrder) => {
 
 const determineIfProtectionOrder = (documents) => {
   for (let i = 0; i < documents.length; i += 1) {
-    if (documents[i].documentProperties.type === "POR") return true;
+    if (documents[i].rushRequired) return true;
   }
 
   return false;
@@ -228,9 +228,12 @@ export default function PackageReview() {
               },
               {
                 name: "Contact Name:",
-                value: rushResponse.firstName
-                  .concat(" ")
-                  .concat(rushResponse.lastName),
+                value:
+                  rushResponse.firstName && rushResponse.lastName
+                    ? rushResponse.firstName
+                        .concat(" ")
+                        .concat(rushResponse.lastName)
+                    : "",
                 isNameBold: false,
                 isValueBold: true,
               },

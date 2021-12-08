@@ -85,6 +85,7 @@ const porDocuments = [
     isSupremeCourtScheduling: null,
     mimeType: "application/pdf",
     statutoryFeeAmount: 40,
+    rushRequired: true,
     actionDocument: {
       status: "SUB",
     },
@@ -100,6 +101,7 @@ const porDocuments = [
     isSupremeCourtScheduling: true,
     mimeType: "application/pdf",
     statutoryFeeAmount: 0,
+    rushRequired: true,
     actionDocument: {
       status: "REJ",
     },

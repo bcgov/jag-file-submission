@@ -101,7 +101,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
             logger.info("Submission is a rush");
 
-            csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails, efilingPackage.getRush()));
+            csoFilingPackage.setProcRequest(buildRushedOrderRequest(accountDetails, efilingPackage.getRush(), efilingPackage.isRushedSubmission()));
 
         }
 
@@ -201,7 +201,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private RushOrderRequest buildRushedOrderRequest(AccountDetails accountDetails, RushProcessing rushProcessing) {
+    private RushOrderRequest buildRushedOrderRequest(AccountDetails accountDetails, RushProcessing rushProcessing, Boolean requiredRush) {
 
         logger.info("build rush processing object");
 
@@ -228,7 +228,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         rushOrderRequestItem.setRushFilingReasonTxt((rushProcessing != null ? rushProcessing.getReason() : null));
         rushOrderRequestItem.setProcessReasonCd((rushProcessing != null ? RUSH_TYPES.get(rushProcessing.getRushType().toUpperCase()): RUSH_TYPES.get(RUSH_PROCESS_REASON_CD)));
         rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusRequest(accountDetails));
-        rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusApproved(accountDetails));
+
+        if (requiredRush) {
+            rushOrderRequestItem.getItemStatuses().add(getProcessItemStatusApproved(accountDetails));
+        }
 
         if (rushProcessing != null) {
             rushOrderRequestItem.getSupportDocs().addAll(buildSupportingDocuments(accountDetails, rushProcessing.getSupportingDocuments()));

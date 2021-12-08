@@ -6,6 +6,8 @@ import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.api.model.Rush;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.mapper.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageServiceImpl;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
@@ -19,6 +21,8 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
 public class GetCSOFilingPackageTest {
@@ -29,6 +33,10 @@ public class GetCSOFilingPackageTest {
 
     @Mock
     EfilingReviewService efilingReviewServiceMock;
+
+
+    @Mock
+    EfilingDocumentService efilingDocumentServiceMock;
 
     @Mock
     AccountService accountServiceMock;
@@ -42,7 +50,7 @@ public class GetCSOFilingPackageTest {
 
         Mockito.when(accountServiceMock.getCsoAccountDetails(ArgumentMatchers.eq(TestHelpers.CASE_2_STRING))).thenReturn(TestHelpers.createAccount(null));
 
-        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null, null);
+        sut = new FilingPackageServiceImpl(efilingReviewServiceMock, efilingDocumentServiceMock, accountServiceMock, new FilingPackageMapperImpl(), null, null);
     }
 
     @Test
@@ -50,6 +58,13 @@ public class GetCSOFilingPackageTest {
     public void withValidRequestReturnFilingPackage() {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
+
+        Mockito.when(efilingDocumentServiceMock.getDocumentTypeDetails(any(), any(), any())).thenReturn(new DocumentTypeDetails("description",
+                "type",
+                BigDecimal.TEN,
+                true,
+                true,
+                true));
 
         Optional<FilingPackage> result = sut.getCSOFilingPackage(TestHelpers.CASE_1_STRING, BigDecimal.ONE);
 
@@ -88,6 +103,7 @@ public class GetCSOFilingPackageTest {
         Assertions.assertEquals(TestHelpers.NAME, result.get().getDocuments().get(0).getDocumentProperties().getName());
         Assertions.assertEquals(TestHelpers.STATUS, result.get().getDocuments().get(0).getStatus().getDescription());
         Assertions.assertEquals(TestHelpers.STATUS_CODE, result.get().getDocuments().get(0).getStatus().getCode());
+        Assertions.assertTrue( result.get().getDocuments().get(0).getRushRequired());
         Assertions.assertNotNull(result.get().getDocuments().get(0).getStatus().getChangeDate());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getDocuments().get(0).getStatus().getChangeDate());
         Assertions.assertEquals(EXPECTED_ISO, result.get().getDocuments().get(0).getFilingDate());

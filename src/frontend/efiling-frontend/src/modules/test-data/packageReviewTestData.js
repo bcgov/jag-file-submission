@@ -24,6 +24,7 @@ export const protectionOrderDocuments = [
       description: "Submitted",
       code: "SUB",
     },
+    rushRequired: true,
     filingDate: "2020-05-05T00:00:00.000Z",
   },
 ];

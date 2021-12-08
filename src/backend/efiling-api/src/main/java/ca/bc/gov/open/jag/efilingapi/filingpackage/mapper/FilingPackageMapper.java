@@ -46,6 +46,7 @@ public interface FilingPackageMapper {
     @Mapping(target = "status.code", source = "statusCode")
     @Mapping(target = "status.changeDate", expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.toIsoDate(reviewDocument.getStatusDate()))")
     @Mapping(target = "paymentProcessed", source = "paymentProcessed")
+    @Mapping(target = "rushRequired", source = "rushRequired")
     Document toDocument(ReviewDocument file);
 
     List<Individual> toParties(List<ca.bc.gov.open.jag.efilingcommons.model.Individual> parties);
