@@ -35,7 +35,7 @@ export default function Rush({
   payment,
   setShowRush,
   setIsRush,
-  setCompletedRushRequest,
+  setHasRushInfo,
 }) {
   const isValidPhoneNumber = (phoneNumber, country) => {
     // Size restriction on CSO database column
@@ -167,7 +167,7 @@ export default function Rush({
     submitRush(payment.submissionId, req)
       .then(() => {
         sessionStorage.setItem("validRushExit", true);
-        setCompletedRushRequest(true);
+        setHasRushInfo(true);
         setShowRush(false);
       })
       .catch((err) => {
@@ -214,7 +214,6 @@ export default function Rush({
       contactMethod: contactMethods.filter((list) => list[0] === e && list)[0],
       phoneNumber: "",
       email: "",
-      surname: "",
     });
     setEmailError(null);
     setPhoneError(null);
@@ -683,5 +682,5 @@ Rush.propTypes = {
   payment: PropTypes.object.isRequired,
   setShowRush: PropTypes.func.isRequired,
   setIsRush: PropTypes.func.isRequired,
-  setCompletedRushRequest: PropTypes.func.isRequired,
+  setHasRushInfo: PropTypes.func.isRequired,
 };
