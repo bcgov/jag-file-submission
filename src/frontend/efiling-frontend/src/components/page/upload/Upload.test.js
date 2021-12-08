@@ -58,14 +58,12 @@ describe("Upload Component", () => {
   const submissionFeeAmount = 25.5;
   const setShowLoader = jest.fn();
   const setShowUpload = jest.fn();
-  const setRefreshFiles = jest.fn();
   const files = getJsonDocumentsData();
 
   const upload = {
     submissionId,
     courtData: court,
     setShowUpload,
-    setRefreshFiles,
     files,
   };
 

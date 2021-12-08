@@ -375,6 +375,16 @@ describe("PackageConfirmation Component", () => {
   test("When package has rush, the screen updates accordingly", async () => {
     const rush = {
       rushType: "test",
+      supportingDocuments: [
+        {
+          fileName: "test-support1.pdf",
+          identifier: null,
+        },
+        {
+          fileName: "test-support2.pdf",
+          identifier: null,
+        },
+      ],
     };
 
     mock

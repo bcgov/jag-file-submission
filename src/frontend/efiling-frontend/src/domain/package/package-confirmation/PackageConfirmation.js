@@ -23,23 +23,33 @@ import FileList from "./FileList";
 import { Toast } from "../../../components/toast/Toast";
 import { Radio } from "../../../components/radio/Radio";
 
+const convertSupportingDocuments = (supportingDocuments) => {
+  if (supportingDocuments) {
+    const convertedSupportingDocuments = [];
+    for (let i = 0; i < supportingDocuments.length; i += 1) {
+      const convertedSupportingDocument = {
+        name: supportingDocuments[i].fileName,
+      };
+      convertedSupportingDocuments.push(convertedSupportingDocument);
+    }
+
+    return convertedSupportingDocuments;
+  }
+
+  return [];
+};
+
 const getFilingPackageData = (
   submissionId,
   setFiles,
-  files,
   setCourtData,
   setSubmissionFee,
   setShowPayment,
   setShowToast,
   setToastMessage,
-  refreshFiles,
-  setRefreshFiles,
-  setHasRushInfo
+  setHasRushInfo,
+  setRushSupportingDocuments
 ) => {
-  if (refreshFiles === false) {
-    return;
-  }
-
   axios
     .get(`/submission/${submissionId}/filing-package`)
     .then(({ data: { documents, court, submissionFeeAmount, rush } }) => {
@@ -48,10 +58,12 @@ const getFilingPackageData = (
       setFiles(documents);
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
-      setRefreshFiles(false);
-
       if (rush && rush.rushType) {
         setHasRushInfo(true);
+
+        setRushSupportingDocuments(
+          convertSupportingDocuments(rush.supportingDocuments)
+        );
       } else {
         setHasRushInfo(false);
       }
@@ -111,12 +123,12 @@ export default function PackageConfirmation({
   const [showUpload, setShowUpload] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
-  const [refreshFiles, setRefreshFiles] = useState(true);
   const [showRush, setShowRush] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
   const [hasRushInfo, setHasRushInfo] = useState(false);
   const [hasPorDocument, setHasPorDocument] = useState(false);
+  const [rushSupportingDocuments, setRushSupportingDocuments] = useState([]);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
@@ -160,21 +172,21 @@ export default function PackageConfirmation({
     getFilingPackageData(
       submissionId,
       setFiles,
-      files,
       setCourtData,
       setSubmissionFee,
       setShowPayment,
       setShowToast,
       setToastMessage,
-      refreshFiles,
-      setRefreshFiles,
-      setHasRushInfo
+      setHasRushInfo,
+      setRushSupportingDocuments
     );
+  }, [submissionId, showUpload, hasRushInfo]);
 
+  useEffect(() => {
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
     checkRejectedFiles(files, setHasRejectedDocuments);
     checkPorDocument(files, setHasPorDocument);
-  }, [files, submissionId, showUpload, refreshFiles, hasRushInfo]);
+  }, [files]);
 
   function handleUploadFile(e) {
     if (isClick(e) || isEnter(e)) {
@@ -203,8 +215,7 @@ export default function PackageConfirmation({
           submissionId,
           courtData,
           setShowUpload,
-          setRefreshFiles,
-          files,
+          files: files.concat(rushSupportingDocuments),
         }}
       />
     );
