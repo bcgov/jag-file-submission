@@ -58,6 +58,9 @@
       "last 1 safari version"
     ]
   },
+  "resolutions": {
+    "immer": "^8.0.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/plugin-syntax-typescript": "^7.12.13",
