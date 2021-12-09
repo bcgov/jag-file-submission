@@ -12,7 +12,6 @@ import { Toast } from "../../components/toast/Toast";
 import { getSidecardData } from "../../modules/helpers/sidecardData";
 import { getCreditCardAlerts } from "../../modules/helpers/creditCardAlerts";
 import { errorRedirect } from "../../modules/helpers/errorRedirect";
-import { getJWTData } from "../../modules/helpers/authentication-helper/authenticationHelper";
 import { propTypes } from "../../types/propTypes";
 import PackageConfirmation from "../package/package-confirmation/PackageConfirmation";
 import RushConfirmation from "../package/package-confirmation/RushConfirmation";
