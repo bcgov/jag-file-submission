@@ -428,6 +428,7 @@ export default function Rush({
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getCountries()
       .then((res) => {
         setCountries(
