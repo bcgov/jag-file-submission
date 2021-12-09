@@ -8118,10 +8118,10 @@ ignore@^5.1.4, ignore@^5.1.8:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.9.tgz#9ec1a5cbe8e1446ec60d4420060d43aa6e7382fb"
   integrity sha512-2zeMQpbKz5dhZ9IwL0gbxSW5w0NK/MSAMtNuhgIHEPmaU3vPdKPL0UdvUCXs5SS4JAwsBxysK5sFMW8ocFiVjQ==
 
-immer@8.0.1, immer@^8.0.1:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.4.tgz#3a21605a4e2dded852fb2afd208ad50969737b7a"
-  integrity sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
+immer@8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
+  integrity sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
 
 immutable@^4.0.0:
   version "4.0.0"
@@ -12287,10 +12287,10 @@ react-datepicker@^3.8.0:
     react-onclickoutside "^6.10.0"
     react-popper "^1.3.8"
 
-react-dev-utils@^11.0.3, react-dev-utils@^11.0.4:
-  version "11.0.4"
-  resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-11.0.4.tgz#a7ccb60257a1ca2e0efe7a83e38e6700d17aa37a"
-  integrity sha512-dx0LvIGHcOPtKbeiSUM4jqpBl3TcY7CDjZdfOIcKeznE7BWr9dg0iPG90G5yfVQ+p/rGNMXdbfStvzQZEVEi4A==
+react-dev-utils@11.0.3, react-dev-utils@^11.0.3, react-dev-utils@^11.0.4:
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-11.0.3.tgz#b61ed499c7d74f447d4faddcc547e5e671e97c08"
+  integrity sha512-4lEA5gF4OHrcJLMUV1t+4XbNDiJbsAWCH5Z2uqlTqW6dD7Cf5nEASkeXrCI/Mz83sI2o527oBIFKVMXtRf1Vtg==
   dependencies:
     "@babel/code-frame" "7.10.4"
     address "1.1.2"
