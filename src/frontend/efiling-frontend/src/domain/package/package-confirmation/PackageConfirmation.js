@@ -125,6 +125,7 @@ export default function PackageConfirmation({
   const [toastMessage, setToastMessage] = useState(null);
   const [showRush, setShowRush] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showSidecardModal, setShowSidecardModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
   const [hasRushInfo, setHasRushInfo] = useState(false);
   const [hasPorDocument, setHasPorDocument] = useState(false);
@@ -132,7 +133,8 @@ export default function PackageConfirmation({
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData(setShowRush).rushSubmission;
+  const rushSubmissionSidecard = getSidecardData(setShowSidecardModal)
+    .rushSubmission;
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
@@ -203,6 +205,7 @@ export default function PackageConfirmation({
           courtData,
           files,
           submissionFee,
+          hasRushInfo,
         }}
       />
     );
@@ -243,6 +246,12 @@ export default function PackageConfirmation({
           show={showModal}
           setShow={setShowModal}
           setShowRush={setShowRush}
+        />
+      )}
+      {showSidecardModal && (
+        <RushConfirmation
+          show={showSidecardModal}
+          setShow={setShowSidecardModal}
         />
       )}
       <div className="content col-md-8">
@@ -371,7 +380,7 @@ export default function PackageConfirmation({
         {hasRejectedDocuments && (
           <Sidecard sideCard={rejectedDocumentsSideCard} />
         )}
-        {isRush && rushFeatureFlag === "true" && (
+        {(isRush || hasRushInfo) && rushFeatureFlag === "true" && (
           <Sidecard sideCard={rushSubmissionSidecard} />
         )}
         <Sidecard sideCard={csoAccountDetailsSidecard} />

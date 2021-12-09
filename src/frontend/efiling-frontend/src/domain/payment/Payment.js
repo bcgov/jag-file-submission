@@ -9,13 +9,13 @@ import ConfirmationPopup, {
   Callout,
 } from "shared-components";
 import { Toast } from "../../components/toast/Toast";
-import Rush from "../../components/page/rush/Rush";
 import { getSidecardData } from "../../modules/helpers/sidecardData";
 import { getCreditCardAlerts } from "../../modules/helpers/creditCardAlerts";
 import { errorRedirect } from "../../modules/helpers/errorRedirect";
 import { getJWTData } from "../../modules/helpers/authentication-helper/authenticationHelper";
 import { propTypes } from "../../types/propTypes";
 import PackageConfirmation from "../package/package-confirmation/PackageConfirmation";
+import RushConfirmation from "../package/package-confirmation/RushConfirmation";
 import { generateFileSummaryData } from "../../modules/helpers/generateFileSummaryData";
 
 import "./Payment.scss";
@@ -115,25 +115,31 @@ const checkSubmitEnabled = (
 };
 
 export default function Payment({
-  payment: { confirmationPopup, submissionId, courtData, files, submissionFee },
+  payment: {
+    confirmationPopup,
+    submissionId,
+    courtData,
+    files,
+    submissionFee,
+    hasRushInfo,
+  },
 }) {
-  const rushFlagExists = getJWTData().realm_access.roles.includes("rush_flag");
   const creditCardAlert = getCreditCardType();
 
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
   const [showPackageConfirmation, setShowPackageConfirmation] = useState(false);
-  const [showRush, setShowRush] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData(() => setShowRush(true))
+  const rushSubmissionSidecard = getSidecardData(() => setShowModal(true))
     .rushSubmission;
 
   const fileSummary = generateFileSummaryData(
-    showRush,
+    hasRushInfo,
     files,
     submissionFee,
     true
@@ -179,23 +185,11 @@ export default function Payment({
     );
   }
 
-  if (showRush) {
-    return (
-      <Rush
-        payment={{
-          confirmationPopup,
-          submissionId,
-          courtData,
-          files,
-          submissionFee,
-        }}
-        setShowRush={setShowRush}
-      />
-    );
-  }
-
   return (
     <div className="ct-payment page">
+      {showModal && (
+        <RushConfirmation show={showModal} setShow={setShowModal} />
+      )}
       <div className="content col-md-8">
         {hasSubmissionFee(submissionFee) && paymentSectionElement}
         <br />
@@ -252,7 +246,7 @@ export default function Payment({
         </section>
       </div>
       <div className="sidecard">
-        {rushFlagExists && <Sidecard sideCard={rushSubmissionSidecard} />}
+        {hasRushInfo && <Sidecard sideCard={rushSubmissionSidecard} />}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
         <Sidecard sideCard={aboutCsoSidecard} />
       </div>
@@ -267,5 +261,6 @@ Payment.propTypes = {
     courtData: PropTypes.object.isRequired,
     files: PropTypes.array.isRequired,
     submissionFee: PropTypes.number.isRequired,
+    hasRushInfo: PropTypes.bool.isRequired,
   }).isRequired,
 };
