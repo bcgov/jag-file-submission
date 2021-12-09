@@ -58,9 +58,6 @@
       "last 1 safari version"
     ]
   },
-  "resolutions": {
-    "react-dev-utils": "11.0.3"
-  },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/plugin-syntax-typescript": "^7.12.13",
