@@ -23,18 +23,7 @@ let filesToUpload = {
 };
 
 const checkValidityOfUploadedFiles = () => {
-  const isValid = (currentValue) =>
-    Object.prototype.hasOwnProperty.call(currentValue, "isAmendment") &&
-    Object.prototype.hasOwnProperty.call(
-      currentValue,
-      "isSupremeCourtScheduling"
-    );
-
-  if (
-    filesToUpload.documents.length > 1 &&
-    filesToUpload.documents.every(isValid)
-  )
-    return true;
+  if (filesToUpload.documents.length >= 1) return true;
   return false;
 };
 
