@@ -290,15 +290,19 @@ describe("Payment Component", () => {
     });
   });
 
-  test("Sidecard redirects to rush", async () => {
+  test("Sidecard displays rush info", async () => {
     mock
       .onPost(`/submission/${submissionId}/submit`)
       .reply(200, { packageRef: "packageRef" });
 
-    const { getByText } = render(<Payment payment={payment} />);
+    const { getByText } = render(
+      <Payment payment={{ ...payment, hasRushInfo: true }} />
+    );
 
     const rushCardBtn = getByText("Learn more about rush processing.");
     fireEvent.click(rushCardBtn);
+
+    expect(getByText(/An application made under Rule/i)).toBeInTheDocument();
   });
 
   test("Submit on error generates toast message", async () => {

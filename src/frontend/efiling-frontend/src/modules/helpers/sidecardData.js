@@ -63,7 +63,7 @@ const csoAccountDetails = () => {
   };
 };
 
-const rushSubmission = (setShowRush) => ({
+const rushSubmission = (setShowModal) => ({
   heading: "About Rush Documents",
   content: [
     <p key="rushSubmission">
@@ -77,7 +77,7 @@ const rushSubmission = (setShowRush) => ({
         circumstances.
       </b>
     </p>,
-    <span className="file-href" onClick={() => setShowRush(true)}>
+    <span className="file-href" onClick={() => setShowModal(true)}>
       Learn more about rush processing.
     </span>,
   ],
@@ -139,10 +139,10 @@ const rejectedDocuments = () => ({
   icon: <MdInfoOutline className="bcgov-side-card-icon" />,
 });
 
-export function getSidecardData(setShowRush) {
+export function getSidecardData(setShowModal) {
   const aboutCsoCard = aboutCso();
   const csoAccountDetailsCard = csoAccountDetails();
-  const rushSubmissionCard = rushSubmission(setShowRush);
+  const rushSubmissionCard = rushSubmission(setShowModal);
   const amendmentsCard = amendments();
   const supremeCourtSchedulingCard = supremeCourtScheduling();
   const rejectedDocumentsCard = rejectedDocuments();
