@@ -384,6 +384,37 @@ describe("Upload Component", () => {
     expect(queryByText(container, "ping.json")).not.toBeInTheDocument();
   });
 
+  test("Continue button is only enabled if there is more than one document", async () => {
+    const ui = <Upload upload={upload} />;
+    const { container } = render(ui);
+    const dropzone = container.querySelector('[data-testid="dropdownzone"]');
+
+    const file = new File([JSON.stringify({ ping: true })], "ping.json", {
+      type: "application/json",
+    });
+    const data = mockData([file]);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    const button = getByText(container, "Continue");
+
+    expect(button).toBeDisabled();
+
+    dispatchEvt(dropzone, "drop", data);
+
+    await waitFor(() => {});
+    await flushPromises(ui, container);
+
+    expect(button).toBeEnabled();
+
+    const removeIcon = getByTestId(container, "remove-icon");
+
+    fireEvent.click(removeIcon);
+
+    expect(button).toBeDisabled();
+  });
+
   test("files with same name (duplicates) uploaded shows error message", async () => {
     const ui = <Upload upload={upload} />;
     const { container } = render(ui);
