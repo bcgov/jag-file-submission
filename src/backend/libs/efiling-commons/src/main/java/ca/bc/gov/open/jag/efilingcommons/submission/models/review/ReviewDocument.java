@@ -20,6 +20,7 @@ public class ReviewDocument {
     private DateTime statusDate;
     private Boolean trialDivision;
     private Boolean xmlDoc;
+    private Boolean rushRequired;
 
     public ReviewDocument() {
 
@@ -160,4 +161,9 @@ public class ReviewDocument {
     public void setXmlDoc(Boolean xmlDoc) {
         this.xmlDoc = xmlDoc;
     }
+
+    public Boolean getRushRequired() { return rushRequired; }
+
+    public void setRushRequired(Boolean rushRequired) { this.rushRequired = rushRequired; }
+
 }

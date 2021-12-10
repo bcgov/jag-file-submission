@@ -14,6 +14,7 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.properties.ParentProperties;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -33,6 +34,8 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     private final EfilingReviewService efilingReviewService;
 
+    private final EfilingDocumentService efilingDocumentService;
+
     private final AccountService accountService;
 
     private final FilingPackageMapper filingPackageMapper;
@@ -41,8 +44,9 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
     private final ParentProperties parentProperties;
 
-    public FilingPackageServiceImpl(EfilingReviewService efilingReviewService, AccountService accountService, FilingPackageMapper filingPackageMapper, ActionRequiredDetailsMapper actionRequiredDetailsMapper, ParentProperties parentProperties) {
+    public FilingPackageServiceImpl(EfilingReviewService efilingReviewService, EfilingDocumentService efilingDocumentService, AccountService accountService, FilingPackageMapper filingPackageMapper, ActionRequiredDetailsMapper actionRequiredDetailsMapper, ParentProperties parentProperties) {
         this.efilingReviewService = efilingReviewService;
+        this.efilingDocumentService = efilingDocumentService;
         this.accountService = accountService;
         this.filingPackageMapper = filingPackageMapper;
         this.actionRequiredDetailsMapper = actionRequiredDetailsMapper;
@@ -60,6 +64,10 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         Optional<ReviewFilingPackage> filingPackage = efilingReviewService.findStatusByPackage(request.get());
 
         if (!filingPackage.isPresent()) return Optional.empty();
+
+        filingPackage.get().getDocuments().forEach(
+                reviewDocument -> reviewDocument.setRushRequired(efilingDocumentService.getDocumentTypeDetails(filingPackage.get().getCourt().getLevel(),filingPackage.get().getCourt().getCourtClass(), reviewDocument.getDocumentTypeCd()).isRushRequired())
+        );
 
         return filingPackage.map(filingPackageMapper::toResponseFilingPackage);
 

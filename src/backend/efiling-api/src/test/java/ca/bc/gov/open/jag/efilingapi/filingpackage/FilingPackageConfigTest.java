@@ -4,7 +4,9 @@ import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.CreateCsoAccountRequest;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
+import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.RushDocumentRequest;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.DeleteSubmissionDocumentRequest;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
@@ -48,6 +50,21 @@ public class FilingPackageConfigTest {
 
                 @Override
                 public AccountDetails createAccount(String universalId, String identityProvider ,CreateCsoAccountRequest createAccountRequest) {
+                    return null;
+                }
+            };
+        }
+
+        @Bean
+        public EfilingDocumentService efilingDocumentService() {
+            return new EfilingDocumentService() {
+                @Override
+                public DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
+                    return null;
+                }
+
+                @Override
+                public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
                     return null;
                 }
             };

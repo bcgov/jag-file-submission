@@ -159,7 +159,6 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         }
 
-
         logger.info("attempting to add new document for transaction [{}]", submissionId);
 
         if (updateDocumentRequest == null || updateDocumentRequest.getDocuments().isEmpty())
@@ -340,7 +339,13 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
 
         logger.info("successfully retrieved submission filing package for transactionId [{}]", xTransactionId);
 
-        return ResponseEntity.ok(filingPackageMapper.toApiFilingPackage(fromCacheSubmission.get().getFilingPackage()));
+        SubmissionFilingPackage submissionFilingPackage = filingPackageMapper.toApiFilingPackage(fromCacheSubmission.get().getFilingPackage());
+
+        submissionFilingPackage.getDocuments().forEach(
+                submissionDocument -> submissionDocument.setRushRequired(submissionService.isRushRequired(submissionDocument.getType(),submissionFilingPackage.getCourt().getLevel(),submissionFilingPackage.getCourt().getCourtClass()))
+        );
+
+        return ResponseEntity.ok(submissionFilingPackage);
 
     }
 

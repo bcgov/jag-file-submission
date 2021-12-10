@@ -372,6 +372,76 @@ describe("PackageConfirmation Component", () => {
     expect(rushStatus).toBeInTheDocument();
   });
 
+  test("When package has rush, the screen updates accordingly", async () => {
+    const rush = {
+      rushType: "test",
+      supportingDocuments: [
+        {
+          fileName: "test-support1.pdf",
+          identifier: null,
+        },
+        {
+          fileName: "test-support2.pdf",
+          identifier: null,
+        },
+      ],
+    };
+
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount, rush });
+
+    const { getByText, queryByTestId } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await waitFor(() => {});
+
+    expect(getByText("Yes")).toBeInTheDocument();
+
+    expect(queryByTestId("rushRadioOpts")).not.toBeInTheDocument();
+  });
+
+  test("Sidecard displays rush info", async () => {
+    const rush = {
+      rushType: "test",
+      supportingDocuments: [
+        {
+          fileName: "test-support1.pdf",
+          identifier: null,
+        },
+        {
+          fileName: "test-support2.pdf",
+          identifier: null,
+        },
+      ],
+    };
+
+    mock
+      .onGet(apiRequest)
+      .reply(200, { documents, court, submissionFeeAmount, rush });
+
+    const { getByText, getByLabelText } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    const rushYes = getByLabelText("Yes");
+
+    fireEvent.click(rushYes);
+    expect(getByText("About Rush Documents")).toBeInTheDocument();
+
+    const rushCardBtn = getByText("Learn more about rush processing.");
+    fireEvent.click(rushCardBtn);
+
+    expect(getByText(/An application made under Rule/i)).toBeInTheDocument();
+  });
+
   test("take user directly to payment page when coming from bambora redirect", async () => {
     sessionStorage.setItem("isBamboraRedirect", true);
 
