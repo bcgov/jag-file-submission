@@ -14,6 +14,7 @@ import {
 import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import Payment from "../../../domain/payment/Payment";
+import RushConfirmation from "../../../domain/package/package-confirmation/RushConfirmation";
 
 import "./Rush.scss";
 import { getCountries, submitRush, submitRushDocuments } from "./RushService";
@@ -73,9 +74,6 @@ export default function Rush({
     styling: "bcgov-editable-white",
     isRequired: true,
   };
-  const aboutCsoSidecard = getSidecardData().aboutCso;
-  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData().rushSubmission;
   const contactMethods = [
     ["Email", "email"],
     ["Phone Number", "phoneNumber"],
@@ -109,6 +107,11 @@ export default function Rush({
   const [showToast, setShowToast] = useState(false);
   const [countries, setCountries] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const aboutCsoSidecard = getSidecardData().aboutCso;
+  const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
+  const rushSubmissionSidecard = getSidecardData(setShowModal).rushSubmission;
 
   const clearFields = {
     rushType: fields.rushType,
@@ -568,6 +571,9 @@ export default function Rush({
 
   return (
     <div className="ct-rush page">
+      {showModal && (
+        <RushConfirmation show={showModal} setShow={setShowModal} />
+      )}
       <div className="content col-md-8">
         <h1>Rush Details</h1>
         <h2>Submitting on a rush basis</h2>
