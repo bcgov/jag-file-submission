@@ -36,6 +36,9 @@
     "coverage": "jest --coverage --env=jest-environment-jsdom-sixteen",
     "precommit": "pretty-quick --staged"
   },
+  "resolutions": {
+    "immer": "9.0.6"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
