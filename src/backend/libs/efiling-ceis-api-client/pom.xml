@@ -13,6 +13,7 @@
 		<java.version>1.8</java.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<log4j2.version>2.15.0</log4j2.version>
 	</properties>
 
 	<dependencies>
