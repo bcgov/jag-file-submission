@@ -30,6 +30,7 @@
         <io.cucumber.version>6.1.1</io.cucumber.version>
         <compiler.version>3.8.1</compiler.version>
         <surefire.version>3.0.0-M3</surefire.version>
+        <log4j2.version>2.15.0</log4j2.version>
     </properties>
 
     <dependencies>
