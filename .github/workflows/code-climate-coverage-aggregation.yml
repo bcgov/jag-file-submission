@@ -150,7 +150,7 @@ jobs:
         with:
           repository: bcgov/spring-boot-starters
           path: spring-boot-starters
-          ref: v0.2.1
+          ref: v0.2.2
 
       # TODO REMOVE AFTER SFTP IS IN MAVEN CENTRAL
       - name: Build Spring Starters
