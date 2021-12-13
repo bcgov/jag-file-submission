@@ -28,8 +28,8 @@ import SupportingDocumentList from "./SupportingDocumentList";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import { Toast } from "../../../components/toast/Toast";
 
-const determineIfRushTabDisabled = (isRush) => {
-  if (isRush) {
+const determineIfRushTabDisabled = (isRush, isProtectionOrder) => {
+  if (isRush && !isProtectionOrder) {
     return false;
   }
 
