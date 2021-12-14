@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-one-expression-per-line, react/jsx-no-bind */
 
 import React, { useEffect, useState } from "react";
 import moment from "moment";

@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line, react/jsx-no-bind */
+
 import React, { useState, useEffect } from "react";
 import { Sidecard, Button } from "shared-components";
 import { useLocation } from "react-router-dom";

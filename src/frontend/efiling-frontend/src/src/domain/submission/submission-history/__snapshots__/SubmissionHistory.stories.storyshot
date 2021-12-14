@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Submission History Component Matches the snapshot 1`] = `
+exports[`Storyshots SubmissionHistory Default 1`] = `
 <DocumentFragment>
   <div
     class="ct-submission-history page"
@@ -33,6 +33,26 @@ exports[`Submission History Component Matches the snapshot 1`] = `
       >
         Search
       </button>
+      <div
+        class="alert alert-danger alert-dismissible fade show"
+        data-testid=""
+        role="alert"
+      >
+        Something went wrong while trying to retrieve your submissions.
+        <button
+          aria-label="Close"
+          class="close"
+          data-dismiss="alert"
+          data-testid="toast-close"
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+        </button>
+      </div>
       <div
         class="submission-list-block"
       >
@@ -75,60 +95,7 @@ exports[`Submission History Component Matches the snapshot 1`] = `
                     </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr
-                    class="table-row"
-                  >
-                    <td
-                      class="border-left"
-                    >
-                      <span
-                        class="file-href"
-                        role="button"
-                        tabindex="0"
-                      >
-                        1234567
-                      </span>
-                    </td>
-                    <td>
-                      30-Apr-1996
-                    </td>
-                    <td>
-                      xxxxx
-                    </td>
-                    <td
-                      class="border-right"
-                    >
-                      Kelowna
-                    </td>
-                  </tr>
-                  <tr
-                    class="table-row"
-                  >
-                    <td
-                      class="border-left"
-                    >
-                      <span
-                        class="file-href"
-                        role="button"
-                        tabindex="0"
-                      >
-                        7654321
-                      </span>
-                    </td>
-                    <td>
-                      30-Apr-1996
-                    </td>
-                    <td>
-                      xxxxx
-                    </td>
-                    <td
-                      class="border-right"
-                    >
-                      Victoria
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody />
               </table>
             </div>
           </div>
@@ -202,7 +169,9 @@ exports[`Submission History Component Matches the snapshot 1`] = `
               >
                 <p>
                   CSO account 
-                  <strong />
+                  <strong>
+                    123
+                  </strong>
                    is linked to your Basic BCeID account 
                   <strong>
                     username
