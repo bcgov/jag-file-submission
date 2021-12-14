@@ -1,7 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import { render, fireEvent, getByText } from "@testing-library/react";
-import { MemoryRouter, Route } from "react-router";
+import { render, fireEvent, getByText, waitFor } from "@testing-library/react";
+import { MemoryRouter, Route, Routes } from "react-router";
 import UpdateCreditCard from "./UpdateCreditCard";
 
 const header = {
@@ -21,12 +21,14 @@ describe("Success", () => {
           "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
         ]}
       >
-        <Route
-          component={(routerProps) => (
-            <UpdateCreditCard page={page} routerProps={routerProps} />
-          )}
-          path="/updateCreditCard"
-        />
+        <Routes>
+          <Route
+            component={(routerProps) => (
+              <UpdateCreditCard page={page} routerProps={routerProps} />
+            )}
+            path="/updateCreditCard"
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -42,15 +44,18 @@ describe("Success", () => {
           "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
         ]}
       >
-        <Route
-          component={(routerProps) => (
-            <UpdateCreditCard page={page} routerProps={routerProps} />
-          )}
-          path="/updateCreditCard"
-        />
+        <Routes>
+          <Route
+            component={(routerProps) => (
+              <UpdateCreditCard page={page} routerProps={routerProps} />
+            )}
+            path="/updateCreditCard"
+          />
+        </Routes>
       </MemoryRouter>
     );
 
+    waitFor(() => getByText(container, "Simulate Card Update Failure"));
     fireEvent.click(getByText(container, "Simulate Card Update Failure"));
 
     expect(global.open).toBeCalledWith(
@@ -68,12 +73,14 @@ describe("Success", () => {
           "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
         ]}
       >
-        <Route
-          component={(routerProps) => (
-            <UpdateCreditCard page={page} routerProps={routerProps} />
-          )}
-          path="/updateCreditCard"
-        />
+        <Routes>
+          <Route
+            component={(routerProps) => (
+              <UpdateCreditCard page={page} routerProps={routerProps} />
+            )}
+            path="/updateCreditCard"
+          />
+        </Routes>
       </MemoryRouter>
     );
 
