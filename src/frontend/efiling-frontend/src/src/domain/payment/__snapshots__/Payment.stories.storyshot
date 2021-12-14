@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Payment Component Matches the snapshot with existing credit card 1`] = `
+exports[`Storyshots Payment Mobile 1`] = `
 <DocumentFragment>
   <div
     class="ct-payment page"
@@ -431,7 +431,9 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               >
                 <p>
                   CSO account 
-                  <strong />
+                  <strong>
+                    123
+                  </strong>
                    is linked to your Basic BCeID account 
                   <strong>
                     username
@@ -530,7 +532,7 @@ package and am prepared to submit them for filing. I agree that all fees for thi
 </DocumentFragment>
 `;
 
-exports[`Payment Component Matches the snapshot with no credit card 1`] = `
+exports[`Storyshots Payment With Fees 1`] = `
 <DocumentFragment>
   <div
     class="ct-payment page"
@@ -542,13 +544,13 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
         Payment
       </h1>
       <div
-        class="bcgov-display-box bcgov-error-background bcgov-no-padding-bottom"
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
       >
         <div
           class="bcgov-display-icon"
         >
           <div
-            style="color: rgb(216, 41, 47);"
+            style="color: rgb(46, 133, 64);"
           >
             <svg
               fill="currentColor"
@@ -574,7 +576,7 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
         >
           <p>
             <span>
-              You do not have a valid Credit Card registered with your CSO account.
+              You have a valid Credit Card registered with your CSO account.
             </span>
             <br />
             <span
@@ -582,9 +584,8 @@ exports[`Payment Component Matches the snapshot with no credit card 1`] = `
               role="button"
               tabindex="0"
             >
-              Register a Credit Card now
+              Register a new Credit Card.
             </span>
-             to continue.
           </p>
         </div>
       </div>
@@ -962,7 +963,9 @@ package and am prepared to submit them for filing. I agree that all fees for thi
               >
                 <p>
                   CSO account 
-                  <strong />
+                  <strong>
+                    123
+                  </strong>
                    is linked to your Basic BCeID account 
                   <strong>
                     username
@@ -1061,238 +1064,23 @@ package and am prepared to submit them for filing. I agree that all fees for thi
 </DocumentFragment>
 `;
 
-exports[`Payment Component On back click, it redirects back to the package confirmation page 1`] = `
+exports[`Storyshots Payment Without Fees 1`] = `
 <DocumentFragment>
   <div
-    class="ct-package-confirmation page"
+    class="ct-payment page"
   >
     <div
       class="content col-md-8"
     >
+      <br />
       <h1>
-        Package Confirmation
+        Package Submission Details
       </h1>
-      <span>
-        Review your package for accuracy and upload any additional or supporting documents.
-      </span>
-      <br />
-      <span>
-        If there are any errors in these documents, please Cancel this process and re-submit.
-      </span>
-      <br />
-      <br />
+      <p>
+        Your package will be filed to:
+      </p>
       <div
-        class="ct-file-list "
-      >
-        <div
-          class="header"
-        >
-          <span
-            class="d-none d-lg-inline col-lg-6"
-          >
-            Document Name
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Statutory Fee
-          </span>
-          <span
-            class="d-none d-lg-inline col-lg-3"
-          >
-            Document Type
-          </span>
-        </div>
-        <ul>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 1
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $40.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 1
-            </span>
-          </li>
-          <li>
-            <span
-              class="file-href col-md-12 col-lg-6"
-              data-test-id="uploaded-file"
-              role="button"
-              tabindex="0"
-            >
-              <svg
-                color="#FCBA19"
-                fill="currentColor"
-                height="30"
-                stroke="currentColor"
-                stroke-width="0"
-                style="color: rgb(252, 186, 25);"
-                viewBox="0 0 24 24"
-                width="30"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
-                />
-              </svg>
-              file name 2
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Statutory Fee:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              $0.00
-            </span>
-            <span
-              class="col-md-5 d-lg-none"
-            >
-              Document Type:
-            </span>
-            <span
-              class="col-md-5 col-lg-3"
-            >
-              file description 2
-            </span>
-          </li>
-        </ul>
-      </div>
-      <br />
-      <div
-        class="alert alert-danger show rejectedMsg"
-        role="alert"
-      >
-        <div>
-          <svg
-            fill="currentColor"
-            height="32"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 24 24"
-            width="32"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
-            />
-          </svg>
-        </div>
-        <div>
-          <span>
-            Please ensure you have uploaded all required rejected documents. If you still need to add documents use the upload link below.
-          </span>
-        </div>
-      </div>
-      <h4>
-        Do you have additional documents to upload? 
-        <span
-          class="file-href"
-          data-test-id="upload-link"
-          role="button"
-          tabindex="0"
-        >
-          Upload them now.
-        </span>
-      </h4>
-      <br />
-      <div
-        class="bcgov-row"
-        data-testid="rushRadioOpts"
-      >
-        <span>
-          Do you want to request that this submission be processed on a 
-          <b>
-            rush basis?
-          </b>
-        </span>
-        <label
-          class="bcgov-radio"
-          for="No"
-        >
-          No
-          <input
-            checked=""
-            id="No"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-        <label
-          class="bcgov-radio"
-          for="Yes"
-        >
-          Yes
-          <input
-            id="Yes"
-            name="rush"
-            type="radio"
-          />
-          <span
-            class="bcgov-dot"
-          />
-        </label>
-      </div>
-      <br />
-      <h2>
-        Summary
-      </h2>
-      <p />
-      <div
-        class="near-half-width"
+        class="court-half-width"
       >
         <div
           class="bcgov-table "
@@ -1307,17 +1095,13 @@ exports[`Payment Component On back click, it redirects back to the package confi
               <div
                 class="bcgov-fill-width"
               >
-                Rush Processing:
+                Court File Number:
               </div>
               <div
                 class="bcgov-table-value "
               >
                 <b>
-                  <span>
-                    <b>
-                      No
-                    </b>
-                  </span>
+                  Court file number
                 </b>
               </div>
             </div>
@@ -1327,13 +1111,13 @@ exports[`Payment Component On back click, it redirects back to the package confi
               <div
                 class="bcgov-fill-width"
               >
-                Number of Documents in Package:
+                Location:
               </div>
               <div
                 class="bcgov-table-value "
               >
                 <b>
-                  2
+                  Court location
                 </b>
               </div>
             </div>
@@ -1343,53 +1127,76 @@ exports[`Payment Component On back click, it redirects back to the package confi
               <div
                 class="bcgov-fill-width"
               >
-                Statutory Fees:
+                Level and Class:
               </div>
               <div
                 class="bcgov-table-value "
               >
                 <b>
-                  $40.00
-                </b>
-              </div>
-            </div>
-            <div
-              class="bcgov-row "
-            >
-              <div
-                class="bcgov-fill-width"
-              >
-                Submission Fee:
-              </div>
-              <div
-                class="bcgov-table-value "
-              >
-                <b>
-                  $25.50
+                  Level Class
                 </b>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div
+        class="bcgov-callout-checkbox"
+      >
+        <p>
+          I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing.
+        </p>
+        <label
+          for="agreeCallout"
+          style="float: right;"
+        >
+          <input
+            id="agreeCallout"
+            type="checkbox"
+          />
+           
+          <b>
+            I agree
+          </b>
+          <span
+            class="bcgov-mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+        </label>
+      </div>
       <br />
       <section
-        class="buttons pt-2"
+        class="pt-2 buttons"
       >
         <button
           class="bcgov-button bcgov-normal-white btn"
-          data-testid="main-cancel-btn"
+          data-testid=""
           type="button"
         >
-          Cancel
+          &lt; Back
         </button>
-        <button
-          class="bcgov-button bcgov-normal-blue btn"
-          data-testid="continue-btn"
-          type="button"
+        <div
+          class="button-container"
         >
-          Continue
-        </button>
+          <button
+            class="bcgov-button bcgov-normal-white btn"
+            data-testid="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
+            data-testid=""
+            disabled=""
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
       </section>
     </div>
     <div
@@ -1406,7 +1213,7 @@ exports[`Payment Component On back click, it redirects back to the package confi
           <p />
           <section
             class="bcgov-bluegrey-container"
-            id="rejectedDocumentsCard"
+            id="rushSubmissionCard"
           >
             <div
               class="bcgov-container-background bcgov-bluegrey-heading"
@@ -1431,18 +1238,18 @@ exports[`Payment Component On back click, it redirects back to the package confi
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M0 0h24v24H0V0z"
+                        d="M0 0h24v24H0z"
                         fill="none"
                       />
                       <path
-                        d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                        d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42A8.962 8.962 0 0012 4c-4.97 0-9 4.03-9 9s4.02 9 9 9a8.994 8.994 0 007.03-14.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
                       />
                     </svg>
                   </div>
                   <div
                     class="bcgov-side-card-title"
                   >
-                    Rejected Documents
+                    About Rush Documents
                   </div>
                 </div>
               </h2>
@@ -1461,13 +1268,11 @@ exports[`Payment Component On back click, it redirects back to the package confi
                     Only request processing on an urgent(rush) basis in exceptional circumstances.
                   </b>
                 </p>
-                <p>
-                  <span
-                    class="file-href"
-                  >
-                    Learn more about rejected documents.
-                  </span>
-                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
               </span>
             </div>
           </section>
@@ -1533,7 +1338,9 @@ exports[`Payment Component On back click, it redirects back to the package confi
               >
                 <p>
                   CSO account 
-                  <strong />
+                  <strong>
+                    123
+                  </strong>
                    is linked to your Basic BCeID account 
                   <strong>
                     username
