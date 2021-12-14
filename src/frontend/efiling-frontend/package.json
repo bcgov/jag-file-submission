@@ -96,7 +96,8 @@
     "sass": "^1.44.0"
   },
   "resolutions": {
-    "immer": "9.0.6"
+    "immer": "9.0.6",
+    "trim": "0.0.3"
   },
   "jest": {
     "watchPathIgnorePatterns": [
