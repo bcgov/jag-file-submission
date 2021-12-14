@@ -23,18 +23,7 @@ let filesToUpload = {
 };
 
 const checkValidityOfUploadedFiles = () => {
-  const isValid = (currentValue) =>
-    Object.prototype.hasOwnProperty.call(currentValue, "isAmendment") &&
-    Object.prototype.hasOwnProperty.call(
-      currentValue,
-      "isSupremeCourtScheduling"
-    );
-
-  if (
-    filesToUpload.documents.length > 1 &&
-    filesToUpload.documents.every(isValid)
-  )
-    return true;
+  if (filesToUpload.documents.length >= 1) return true;
   return false;
 };
 
@@ -260,8 +249,7 @@ export const uploadDocuments = (
   acceptedFiles,
   setShowUpload,
   setShowLoader,
-  setContinueBtnEnabled,
-  setRefreshFiles
+  setContinueBtnEnabled
 ) => {
   axios
     .post(
@@ -279,7 +267,6 @@ export const uploadDocuments = (
             documents: [],
           };
           setShowUpload(false);
-          setRefreshFiles(true);
         })
         .catch((error) =>
           handleError(error, setShowLoader, setContinueBtnEnabled)
@@ -315,7 +302,6 @@ export default function Upload({
     submissionId,
     courtData,
     setShowUpload,
-    setRefreshFiles,
     files: previouslyUploadedFiles,
   },
 }) {
@@ -430,8 +416,7 @@ export default function Upload({
                 acceptedFiles,
                 setShowUpload,
                 setShowLoader,
-                setContinueBtnEnabled,
-                setRefreshFiles
+                setContinueBtnEnabled
               );
             }}
             styling="bcgov-normal-blue btn"
@@ -454,7 +439,6 @@ Upload.propTypes = {
     submissionId: PropTypes.string.isRequired,
     courtData: PropTypes.object.isRequired,
     setShowUpload: PropTypes.func.isRequired,
-    setRefreshFiles: PropTypes.func.isRequired,
     files: PropTypes.arrayOf(propTypes.file.isRequired).isRequired,
   }).isRequired,
 };

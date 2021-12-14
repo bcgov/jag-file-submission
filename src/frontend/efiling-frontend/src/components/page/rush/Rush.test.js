@@ -573,4 +573,15 @@ describe("Rush Component", () => {
       ).toBeInTheDocument()
     );
   });
+
+  test("Sidecard displays rush info", async () => {
+    const { getByText } = render(
+      <Rush payment={payment} setIsRush={() => {}} setShowRush={() => {}} />
+    );
+
+    const rushCardBtn = getByText("Learn more about rush processing.");
+    fireEvent.click(rushCardBtn);
+
+    expect(getByText(/An application made under Rule/i)).toBeInTheDocument();
+  });
 });

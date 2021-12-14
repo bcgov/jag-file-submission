@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 
 import "./RushConfirmation.scss";
-// import "../../../components/safety-check/SafetyCheck.scss";
 
 export default function RushConfirmation({ show, setShow, setShowRush }) {
   const handleOnHide = () => {
@@ -85,8 +83,10 @@ export default function RushConfirmation({ show, setShow, setShowRush }) {
   );
 }
 
+RushConfirmation.defaultProps = { setShowRush: () => {} };
+
 RushConfirmation.propTypes = {
   show: PropTypes.bool.isRequired,
   setShow: PropTypes.func.isRequired,
-  setShowRush: PropTypes.func.isRequired,
+  setShowRush: PropTypes.func,
 };

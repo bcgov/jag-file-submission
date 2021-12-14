@@ -23,31 +23,50 @@ import FileList from "./FileList";
 import { Toast } from "../../../components/toast/Toast";
 import { Radio } from "../../../components/radio/Radio";
 
+const convertSupportingDocuments = (supportingDocuments) => {
+  if (supportingDocuments) {
+    const convertedSupportingDocuments = [];
+    for (let i = 0; i < supportingDocuments.length; i += 1) {
+      const convertedSupportingDocument = {
+        name: supportingDocuments[i].fileName,
+      };
+      convertedSupportingDocuments.push(convertedSupportingDocument);
+    }
+
+    return convertedSupportingDocuments;
+  }
+
+  return [];
+};
+
 const getFilingPackageData = (
   submissionId,
   setFiles,
-  files,
   setCourtData,
   setSubmissionFee,
   setShowPayment,
   setShowToast,
   setToastMessage,
-  refreshFiles,
-  setRefreshFiles
+  setHasRushInfo,
+  setRushSupportingDocuments
 ) => {
-  if (refreshFiles === false) {
-    return;
-  }
-
   axios
     .get(`/submission/${submissionId}/filing-package`)
-    .then(({ data: { documents, court, submissionFeeAmount } }) => {
+    .then(({ data: { documents, court, submissionFeeAmount, rush } }) => {
       setCourtData(court);
       setSubmissionFee(submissionFeeAmount);
       setFiles(documents);
       if (sessionStorage.getItem("isBamboraRedirect") === "true")
         setShowPayment(true);
-      setRefreshFiles(false);
+      if (rush && rush.rushType) {
+        setHasRushInfo(true);
+
+        setRushSupportingDocuments(
+          convertSupportingDocuments(rush.supportingDocuments)
+        );
+      } else {
+        setHasRushInfo(false);
+      }
     })
     .catch(() => {
       setToastMessage(
@@ -104,16 +123,18 @@ export default function PackageConfirmation({
   const [showUpload, setShowUpload] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
-  const [refreshFiles, setRefreshFiles] = useState(true);
   const [showRush, setShowRush] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showSidecardModal, setShowSidecardModal] = useState(false);
   const [isRush, setIsRush] = useState(false);
-  const [completedRushRequest, setCompletedRushRequest] = useState(false);
+  const [hasRushInfo, setHasRushInfo] = useState(false);
   const [hasPorDocument, setHasPorDocument] = useState(false);
+  const [rushSupportingDocuments, setRushSupportingDocuments] = useState([]);
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData(setShowRush).rushSubmission;
+  const rushSubmissionSidecard = getSidecardData(setShowSidecardModal)
+    .rushSubmission;
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
@@ -128,7 +149,7 @@ export default function PackageConfirmation({
   };
 
   const handleContinue = () => {
-    if (isRush && rushFeatureFlag === "true" && !completedRushRequest) {
+    if (isRush && rushFeatureFlag === "true" && !hasRushInfo) {
       setShowPayment(false);
       setShowModal(true);
     } else {
@@ -153,20 +174,21 @@ export default function PackageConfirmation({
     getFilingPackageData(
       submissionId,
       setFiles,
-      files,
       setCourtData,
       setSubmissionFee,
       setShowPayment,
       setShowToast,
       setToastMessage,
-      refreshFiles,
-      setRefreshFiles
+      setHasRushInfo,
+      setRushSupportingDocuments
     );
+  }, [submissionId, showUpload, hasRushInfo]);
 
+  useEffect(() => {
     checkDuplicateFileNames(files, setShowToast, setToastMessage);
     checkRejectedFiles(files, setHasRejectedDocuments);
     checkPorDocument(files, setHasPorDocument);
-  }, [files, submissionId, showUpload, refreshFiles]);
+  }, [files]);
 
   function handleUploadFile(e) {
     if (isClick(e) || isEnter(e)) {
@@ -183,6 +205,7 @@ export default function PackageConfirmation({
           courtData,
           files,
           submissionFee,
+          hasRushInfo,
         }}
       />
     );
@@ -195,8 +218,7 @@ export default function PackageConfirmation({
           submissionId,
           courtData,
           setShowUpload,
-          setRefreshFiles,
-          files,
+          files: files.concat(rushSupportingDocuments),
         }}
       />
     );
@@ -213,7 +235,7 @@ export default function PackageConfirmation({
         }}
         setShowRush={setShowRush}
         setIsRush={setIsRush}
-        setCompletedRushRequest={setCompletedRushRequest}
+        setHasRushInfo={setHasRushInfo}
       />
     );
 
@@ -224,6 +246,12 @@ export default function PackageConfirmation({
           show={showModal}
           setShow={setShowModal}
           setShowRush={setShowRush}
+        />
+      )}
+      {showSidecardModal && (
+        <RushConfirmation
+          show={showSidecardModal}
+          setShow={setShowSidecardModal}
         />
       )}
       <div className="content col-md-8">
@@ -290,7 +318,7 @@ export default function PackageConfirmation({
         </h4>
 
         {rushFeatureFlag === "true" &&
-          completedRushRequest === false &&
+          hasRushInfo === false &&
           hasPorDocument === false && (
             <>
               <br />
@@ -322,7 +350,7 @@ export default function PackageConfirmation({
           <Table
             elements={
               generateFileSummaryData(
-                isRush,
+                isRush || hasRushInfo,
                 files,
                 submissionFee,
                 false,
@@ -352,7 +380,7 @@ export default function PackageConfirmation({
         {hasRejectedDocuments && (
           <Sidecard sideCard={rejectedDocumentsSideCard} />
         )}
-        {isRush && rushFeatureFlag === "true" && (
+        {(isRush || hasRushInfo) && rushFeatureFlag === "true" && (
           <Sidecard sideCard={rushSubmissionSidecard} />
         )}
         <Sidecard sideCard={csoAccountDetailsSidecard} />
