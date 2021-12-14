@@ -6,7 +6,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.13.13",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
     "axios-auth-refresh": "^2.2.8",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.5.3",
@@ -14,7 +14,7 @@
     "file-saver": "^2.0.2",
     "history": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "keycloak-js": "^13.0.1",
+    "keycloak-js": "^15.1.0",
     "moment": "^2.29.1",
     "object-hash": "^2.2.0",
     "prop-types": "^15.7.2",
