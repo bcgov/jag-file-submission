@@ -97,7 +97,8 @@
   },
   "resolutions": {
     "immer": "9.0.6",
-    "trim": "0.0.3"
+    "trim": "0.0.3",
+    "glob-parent": "5.1.2"
   },
   "jest": {
     "watchPathIgnorePatterns": [
