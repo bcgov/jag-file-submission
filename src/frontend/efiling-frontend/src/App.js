@@ -3,9 +3,9 @@ import queryString from "query-string";
 import {
   Routes,
   Route,
-  Redirect,
   useNavigate,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import { Header, Footer } from "shared-components";
 import AuthenticationGuard from "./domain/authentication/AuthenticationGuard";
@@ -48,7 +48,7 @@ export default function App() {
       <Header header={header} />
       <AuthenticationGuard>
         <Routes>
-          <Redirect exact from="/" to="/efilinghub" />
+          <Navigate exact from="/" to="/efilinghub" />
           <Route exact path="/efilinghub">
             <Home />
           </Route>
