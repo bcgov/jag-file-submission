@@ -1,10 +1,10 @@
 import React from "react";
 import queryString from "query-string";
 import {
-  Switch,
+  Routes,
   Route,
   Redirect,
-  useHistory,
+  useNavigate,
   useLocation,
 } from "react-router-dom";
 import { Header, Footer } from "shared-components";
@@ -40,14 +40,14 @@ export default function App() {
 
   const header = {
     name: "E-File Submission",
-    history: useHistory(),
+    history: useNavigate(),
   };
 
   return (
     <main>
       <Header header={header} />
       <AuthenticationGuard>
-        <Switch>
+        <Routes>
           <Redirect exact from="/" to="/efilinghub" />
           <Route exact path="/efilinghub">
             <Home />
@@ -58,7 +58,7 @@ export default function App() {
           <Route path="/efilinghub/submissionhistory">
             <SubmissionHistory />
           </Route>
-        </Switch>
+        </Routes>
       </AuthenticationGuard>
       <Footer />
     </main>
