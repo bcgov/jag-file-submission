@@ -1,3 +1,6 @@
+/* eslint-disable no-var */
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable vars-on-top */
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -13,4 +16,6 @@ const mock = new MockAdapter(axios);
 
 mock.onGet("/filingpackages").reply(200, submissions);
 
-export const Default = () => <SubmissionHistory />;
+export var Default = function () {
+  return <SubmissionHistory />;
+};

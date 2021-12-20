@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from "react";
 import { MdHelp } from "react-icons/md";

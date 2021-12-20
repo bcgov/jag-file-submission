@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable camelcase, react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from "react";
 import axios from "axios";

@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/require-default-props, jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from "react";
 import { MdPerson, MdError } from "react-icons/md";

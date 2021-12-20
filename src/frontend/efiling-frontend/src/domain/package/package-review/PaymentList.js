@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-one-expression-per-line, no-nested-ternary */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";

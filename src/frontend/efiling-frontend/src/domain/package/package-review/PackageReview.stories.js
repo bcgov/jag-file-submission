@@ -1,3 +1,6 @@
+/* eslint-disable no-var */
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable vars-on-top */
 import React from "react";
 import PackageReview from "./PackageReview";
 
@@ -14,9 +17,13 @@ export default {
   component: PackageReview,
 };
 
-export const Default = () => <PackageReview />;
+export var Default = function () {
+  return <PackageReview />;
+};
 
-export const Mobile = () => <PackageReview />;
+export var Mobile = function () {
+  return <PackageReview />;
+};
 
 Mobile.parameters = {
   viewport: {

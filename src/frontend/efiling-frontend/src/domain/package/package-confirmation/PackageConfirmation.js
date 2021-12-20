@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MdCheckBox, MdError } from "react-icons/md";
@@ -288,20 +289,17 @@ export default function PackageConfirmation({
         {<FileList submissionId={submissionId} files={files} />}
         <br />
         {hasRejectedDocuments && (
-          <>
-            <div className="alert alert-danger show rejectedMsg" role="alert">
-              <div>
-                <MdError size={32} />
-              </div>
-              <div>
-                <span>
-                  Please ensure you have uploaded all required rejected
-                  documents. If you still need to add documents use the upload
-                  link below.
-                </span>
-              </div>
+          <div className="alert alert-danger show rejectedMsg" role="alert">
+            <div>
+              <MdError size={32} />
             </div>
-          </>
+            <div>
+              <span>
+                Please ensure you have uploaded all required rejected documents.
+                If you still need to add documents use the upload link below.
+              </span>
+            </div>
+          </div>
         )}
         <h4>
           Do you have additional documents to upload?&nbsp;

@@ -1,3 +1,6 @@
+/* eslint-disable no-var */
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable vars-on-top */
 import React from "react";
 import { getDocumentsData } from "../../modules/test-data/documentTestData";
 import { getTestData } from "../../modules/test-data/confirmationPopupTestData";
@@ -36,13 +39,19 @@ const payment = {
   submissionFee,
 };
 
-export const WithFees = () => <Payment payment={payment} />;
+export var WithFees = function () {
+  return <Payment payment={payment} />;
+};
 
-export const WithoutFees = () => (
-  <Payment payment={{ ...payment, submissionFee: 0, files: noFeeFile }} />
-);
+export var WithoutFees = function () {
+  return (
+    <Payment payment={{ ...payment, submissionFee: 0, files: noFeeFile }} />
+  );
+};
 
-export const Mobile = () => <Payment payment={payment} />;
+export var Mobile = function () {
+  return <Payment payment={payment} />;
+};
 
 Mobile.parameters = {
   viewport: {

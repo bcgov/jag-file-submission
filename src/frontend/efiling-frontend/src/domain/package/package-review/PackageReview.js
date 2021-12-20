@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-one-expression-per-line, react/jsx-no-bind */
 
 import React, { useEffect, useState } from "react";
@@ -496,15 +498,13 @@ export default function PackageReview() {
               </span>
             </div>
             {returnUrl && validator.isURL(returnUrl) && (
-              <>
-                <section className="buttons pt-2 row">
-                  <Button
-                    label={returnButtonName}
-                    onClick={() => window.open(returnUrl, "_self")}
-                    styling="bcgov-normal-white btn"
-                  />
-                </section>
-              </>
+              <section className="buttons pt-2 row">
+                <Button
+                  label={returnButtonName}
+                  onClick={() => window.open(returnUrl, "_self")}
+                  styling="bcgov-normal-white btn"
+                />
+              </section>
             )}
             {isParentAppFLA() && <SafefyCheck />}
           </div>

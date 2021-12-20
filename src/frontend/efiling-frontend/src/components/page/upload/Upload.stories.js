@@ -1,3 +1,6 @@
+/* eslint-disable no-var */
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable vars-on-top */
 import React, { useState } from "react";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
@@ -16,7 +19,7 @@ const submissionId = "abc123";
 const files = getDocumentsData();
 const upload = { confirmationPopup, submissionId, courtData, files };
 
-export const Default = () => {
+export var Default = function () {
   // eslint-disable-next-line no-unused-vars
   const [showUpload, setShowUpload] = useState(true);
   // eslint-disable-next-line no-unused-vars
@@ -25,7 +28,7 @@ export const Default = () => {
   return <Upload upload={uploadWithStates} />;
 };
 
-export const Mobile = () => {
+export var Mobile = function () {
   // eslint-disable-next-line no-unused-vars
   const [showUpload, setShowUpload] = useState(true);
   // eslint-disable-next-line no-unused-vars

@@ -1,21 +1,26 @@
+/* eslint-disable no-var */
+/* eslint-disable import/no-mutable-exports */
+/* eslint-disable vars-on-top */
 import React from "react";
 import PropTypes from "prop-types";
 
 import "./Radio.scss";
 
-export const Radio = ({ id, name, label, onSelect, defaultChecked }) => (
-  <label className="bcgov-radio" htmlFor={id}>
-    {label}
-    <input
-      type="radio"
-      name={name}
-      id={id}
-      onChange={(e) => onSelect(e.target.id)}
-      defaultChecked={defaultChecked}
-    />
-    <span className="bcgov-dot" />
-  </label>
-);
+export var Radio = function ({ id, name, label, onSelect, defaultChecked }) {
+  return (
+    <label className="bcgov-radio" htmlFor={id}>
+      {label}
+      <input
+        type="radio"
+        name={name}
+        id={id}
+        onChange={(e) => onSelect(e.target.id)}
+        defaultChecked={defaultChecked}
+      />
+      <span className="bcgov-dot" />
+    </label>
+  );
+};
 
 Radio.propTypes = {
   label: PropTypes.string.isRequired,

@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-one-expression-per-line, react/jsx-no-bind */
 
 import React, { useState, useEffect } from "react";
@@ -68,14 +69,12 @@ export default function SubmissionHistory() {
   );
 
   const submittedPackagesElement = (
-    <>
-      <div className="submission-list-block">
-        <h3>Submitted Packages</h3>
-        <div className="submission-list-container">
-          <SubmissionList submissions={visibleSubmissions} />
-        </div>
+    <div className="submission-list-block">
+      <h3>Submitted Packages</h3>
+      <div className="submission-list-container">
+        <SubmissionList submissions={visibleSubmissions} />
       </div>
-    </>
+    </div>
   );
 
   return (

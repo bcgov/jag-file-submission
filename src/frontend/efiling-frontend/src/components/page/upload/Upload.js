@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-props-no-spreading, react/jsx-curly-newline */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
