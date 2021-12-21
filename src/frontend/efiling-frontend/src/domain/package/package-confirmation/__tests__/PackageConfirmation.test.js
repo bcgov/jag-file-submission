@@ -387,9 +387,12 @@ describe("PackageConfirmation Component", () => {
       ],
     };
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { documents, court, submissionFeeAmount, rush });
+    mock.onGet(apiRequest).reply(200, {
+      documents,
+      court,
+      submissionFeeAmount,
+      rush,
+    });
 
     const { getByText, queryByTestId } = render(
       <PackageConfirmation
@@ -420,9 +423,12 @@ describe("PackageConfirmation Component", () => {
       ],
     };
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { documents, court, submissionFeeAmount, rush });
+    mock.onGet(apiRequest).reply(200, {
+      documents,
+      court,
+      submissionFeeAmount,
+      rush,
+    });
 
     const { getByText, getByLabelText } = render(
       <PackageConfirmation

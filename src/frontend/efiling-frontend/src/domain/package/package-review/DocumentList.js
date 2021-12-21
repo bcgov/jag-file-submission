@@ -127,7 +127,7 @@ export default function DocumentList({
                         id="withdraw-tooltip"
                       />
                       <BcGovTooltip
-                        target={`withdraw-tooltip`}
+                        target="withdraw-tooltip"
                         content={withdrawTooltipData}
                       />
                     </>

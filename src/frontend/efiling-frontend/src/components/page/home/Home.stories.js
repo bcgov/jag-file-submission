@@ -23,7 +23,12 @@ const header = {
 const confirmationPopup = getTestData();
 const submissionId = "abc123";
 const transactionId = "trans123";
-const page = { header, confirmationPopup, submissionId, transactionId };
+const page = {
+  header,
+  confirmationPopup,
+  submissionId,
+  transactionId,
+};
 
 const apiRequest = `/submission/${submissionId}/config`;
 const getFilingPackagePath = `/submission/${submissionId}/filing-package`;

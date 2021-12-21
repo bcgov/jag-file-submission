@@ -1,4 +1,6 @@
-/* eslint-disable react/jsx-one-expression-per-line, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-key */
 import React from "react";
 import { MdInfoOutline, MdPerson, MdTimer } from "react-icons/md";
 import { getJWTData } from "./authentication-helper/authenticationHelper";

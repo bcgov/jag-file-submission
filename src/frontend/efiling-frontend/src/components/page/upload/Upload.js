@@ -335,10 +335,11 @@ export default function Upload({
             if (!hasDuplicates) {
               setAcceptedFiles(acceptedFiles.concat(droppedFiles));
               setErrorMessage(null);
-            } else
+            } else {
               setErrorMessage(
                 "You cannot upload multiple files with the same name."
               );
+            }
           }}
         >
           {({ getRootProps, getInputProps }) => (

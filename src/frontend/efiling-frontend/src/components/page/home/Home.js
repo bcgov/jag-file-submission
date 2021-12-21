@@ -52,7 +52,13 @@ const addUserInfo = (firstName, middleName, lastName) => {
   let username = preferred_username;
   username = username.substring(0, username.indexOf("@"));
 
-  return { bceid: username, email, firstName, middleName, lastName };
+  return {
+    bceid: username,
+    email,
+    firstName,
+    middleName,
+    lastName,
+  };
 };
 
 const setRequiredState = (

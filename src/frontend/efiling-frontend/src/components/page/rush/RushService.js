@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getCountries = () => axios.get(`/countries`);
+export const getCountries = () => axios.get("/countries");
 
 export const submitRush = async (submissionId, rushPackage) => {
   const res = await axios.post(

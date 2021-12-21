@@ -17,7 +17,12 @@ const confirmationPopup = getTestData();
 const courtData = getCourtData();
 const submissionId = "abc123";
 const files = getDocumentsData();
-const upload = { confirmationPopup, submissionId, courtData, files };
+const upload = {
+  confirmationPopup,
+  submissionId,
+  courtData,
+  files,
+};
 
 export var Default = function () {
   // eslint-disable-next-line no-unused-vars

@@ -347,7 +347,7 @@ describe("Rush Component", () => {
 
     const reasonsInput = getByLabelText("Clear and detailed reason(s)");
     userEvent.type(reasonsInput, "I'm in a rush");
-    await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
+    await waitFor(() => expect(reasonsInput.value).toBe("I'm in a rush"));
 
     const dropdown = getAllByTestId("dropdown");
 

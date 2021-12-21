@@ -212,7 +212,7 @@ export default function PackageConfirmation({
     );
   }
 
-  if (showUpload)
+  if (showUpload) {
     return (
       <Upload
         upload={{
@@ -223,8 +223,9 @@ export default function PackageConfirmation({
         }}
       />
     );
+  }
 
-  if (showRush)
+  if (showRush) {
     return (
       <Rush
         payment={{
@@ -239,6 +240,7 @@ export default function PackageConfirmation({
         setHasRushInfo={setHasRushInfo}
       />
     );
+  }
 
   return (
     <div className="ct-package-confirmation page">
@@ -286,7 +288,7 @@ export default function PackageConfirmation({
         </span>
         <br />
         <br />
-        {<FileList submissionId={submissionId} files={files} />}
+        <FileList submissionId={submissionId} files={files} />
         <br />
         {hasRejectedDocuments && (
           <div className="alert alert-danger show rejectedMsg" role="alert">

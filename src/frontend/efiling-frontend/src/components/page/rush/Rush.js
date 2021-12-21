@@ -26,7 +26,8 @@ import { Input } from "../../input/Input";
 import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { checkForDuplicateFilenames } from "../../../modules/helpers/filenameUtil";
 
-const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
+const calloutText =
+  "Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  ";
 
 const generateInputField = (input, onChange) => (
   <div className="form-child">
@@ -475,13 +476,13 @@ export default function Rush({
     const canContinue = () => {
       let mandatoryFields = [];
 
-      if (radio1)
+      if (radio1) {
         mandatoryFields = [
           fields.firstName,
           fields.surname,
           fields[fields.contactMethod[1]],
         ];
-      else if (radio2 || radio3) {
+      } else if (radio2 || radio3) {
         setFields({ ...fields, date: selectedDate });
         mandatoryFields = [
           fields.firstName,
