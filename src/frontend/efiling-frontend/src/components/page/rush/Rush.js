@@ -1,4 +1,4 @@
-/* eslint-disable prefer-regex-literals */
+/* eslint-disable prefer-regex-literals, import/no-named-as-default, import/no-named-as-default-member, import/named */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-props-no-spreading, no-unused-vars */
 import React, { useEffect, useState, useRef } from "react";
@@ -15,7 +15,6 @@ import {
 } from "shared-components";
 import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
-import Payment from "../../../domain/payment/Payment";
 import RushConfirmation from "../../../domain/package/package-confirmation/RushConfirmation";
 
 import "./Rush.scss";
