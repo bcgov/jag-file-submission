@@ -16,6 +16,7 @@
     "dinero.js": "^1.8.1",
     "eslint@": "7.32.0 || ^8.2.0",
     "file-saver": "^2.0.2",
+    "glob-parent": "^5.1.2",
     "history": "^5.0.0",
     "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
