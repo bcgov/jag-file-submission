@@ -1,4 +1,3 @@
-/* eslint-disable prefer-regex-literals */
 /* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-props-no-spreading, no-unused-vars */
 import React, { useEffect, useState, useRef } from "react";
