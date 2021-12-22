@@ -123,7 +123,8 @@
       "!**/node_modules/**",
       "!**/vendor/**",
       "!src/modules/test-data/confirmationPopupTestData.js",
-      "!src/modules/helpers/handleBackEvent.js"
+      "!src/modules/helpers/handleBackEvent.js",
+      "!src/components/input/Input.js"
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
