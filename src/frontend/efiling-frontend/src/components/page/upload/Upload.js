@@ -307,8 +307,8 @@ export default function Upload({
   },
 }) {
   const amendmentsSidecard = getSidecardData().amendments;
-  const supremeCourtSchedulingSidecard = getSidecardData()
-    .supremeCourtScheduling;
+  const supremeCourtSchedulingSidecard =
+    getSidecardData().supremeCourtScheduling;
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [items, setItems] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);

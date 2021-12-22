@@ -135,8 +135,9 @@ export default function Payment({
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData(() => setShowModal(true))
-    .rushSubmission;
+  const rushSubmissionSidecard = getSidecardData(() =>
+    setShowModal(true)
+  ).rushSubmission;
 
   const fileSummary = generateFileSummaryData(
     hasRushInfo,

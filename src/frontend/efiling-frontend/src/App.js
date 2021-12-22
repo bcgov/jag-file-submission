@@ -17,12 +17,8 @@ import SubmissionHistory from "./domain/submission/submission-history/Submission
 export default function App() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const {
-    submissionId,
-    transactionId,
-    responseCode,
-    customerCode,
-  } = queryParams;
+  const { submissionId, transactionId, responseCode, customerCode } =
+    queryParams;
 
   if (responseCode === "19" || responseCode === "17")
     sessionStorage.setItem("bamboraErrorExists", true);

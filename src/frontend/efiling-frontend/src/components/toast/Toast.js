@@ -1,4 +1,4 @@
-/* eslint-disable import/no-mutable-exports */
+/* eslint-disable  */
 /* eslint-disable no-var */
 import React from "react";
 import PropTypes from "prop-types";

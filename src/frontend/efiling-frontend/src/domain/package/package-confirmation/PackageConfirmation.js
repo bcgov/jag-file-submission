@@ -134,8 +134,8 @@ export default function PackageConfirmation({
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData(setShowSidecardModal)
-    .rushSubmission;
+  const rushSubmissionSidecard =
+    getSidecardData(setShowSidecardModal).rushSubmission;
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 

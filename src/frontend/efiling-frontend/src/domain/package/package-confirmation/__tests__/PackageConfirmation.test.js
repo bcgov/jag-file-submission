@@ -101,18 +101,13 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
 
-    const {
-      getByLabelText,
-      getByText,
-      queryByText,
-      getByRole,
-      queryByTestId,
-    } = render(
-      <PackageConfirmation
-        packageConfirmation={packageConfirmation}
-        csoAccountStatus={csoAccountStatus}
-      />
-    );
+    const { getByLabelText, getByText, queryByText, getByRole, queryByTestId } =
+      render(
+        <PackageConfirmation
+          packageConfirmation={packageConfirmation}
+          csoAccountStatus={csoAccountStatus}
+        />
+      );
 
     const rushNo = getByLabelText("No");
     const rushYes = getByLabelText("Yes");

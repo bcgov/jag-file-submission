@@ -1,4 +1,4 @@
-/* eslint-disable import/no-mutable-exports */
+/* eslint-disable  */
 /* eslint-disable no-var */
 /* eslint-disable vars-on-top */
 import React from "react";

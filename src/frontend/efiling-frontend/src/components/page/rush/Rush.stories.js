@@ -1,5 +1,5 @@
 /* eslint-disable no-var */
-/* eslint-disable import/no-mutable-exports */
+/* eslint-disable  */
 /* eslint-disable vars-on-top */
 /* eslint-disable no-constructor-return */
 import React from "react";

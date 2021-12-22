@@ -1,4 +1,4 @@
-/* eslint-disable import/no-mutable-exports */
+/* eslint-disable  */
 /* eslint-disable no-var */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";

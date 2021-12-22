@@ -10,6 +10,7 @@
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.5.3",
     "history": "^5.0.0",
+    "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
     "keycloak-js": "^15.1.0",
     "prop-types": "^15.7.2",

@@ -1,5 +1,5 @@
 /* eslint-disable no-var */
-/* eslint-disable import/no-mutable-exports */
+/* eslint-disable  */
 /* eslint-disable vars-on-top */
 import React from "react";
 import BcGovTooltip from "./Tooltip";

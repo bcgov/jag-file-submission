@@ -1,5 +1,5 @@
 /* eslint-disable no-var */
-/* eslint-disable import/no-mutable-exports */
+/* eslint-disable  */
 /* eslint-disable vars-on-top */
 import React, { useState } from "react";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
