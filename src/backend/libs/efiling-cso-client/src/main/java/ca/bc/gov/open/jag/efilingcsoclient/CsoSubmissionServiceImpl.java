@@ -392,11 +392,8 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
                 if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
                     csoFilingPackage.setAutomatedProcessYn(true);
                     //Set document processing
-//                    document.setFilingProcessCd(AUTO_PROCESSING_STATE);
                     csoFilingPackage.setDelayProcessing(determineDelayProcessing(document));
-                } else {
-//                    document.setFilingProcessCd(MANUAL_PROCESSING_STATE);
-                }
+                } 
             }
         }
 
