@@ -1,4 +1,6 @@
-/* eslint-disable react/require-default-props, jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/function-component-definition */
+/* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
 import { MdPerson, MdError } from "react-icons/md";
 import axios from "axios";
