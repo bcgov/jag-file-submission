@@ -385,6 +385,61 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         String courtLevel = efilingPackage.getCourt().getLevel();
         List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         List<CivilDocument> documents = csoFilingPackage.getDocuments();
         for(CivilDocument document : documents) {
             String documentTypeCd = document.getDocumentTypeCd();
