@@ -1,6 +1,4 @@
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/jsx-one-expression-per-line, react/jsx-no-bind */
-
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member, react/jsx-no-bind */
 import React, { useState, useEffect } from "react";
 import { Sidecard, Button } from "shared-components";
 import { useLocation } from "react-router-dom";

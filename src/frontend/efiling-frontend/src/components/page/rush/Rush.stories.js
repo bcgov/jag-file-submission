@@ -1,7 +1,4 @@
-/* eslint-disable no-var */
-/* eslint-disable  */
-/* eslint-disable vars-on-top */
-/* eslint-disable no-constructor-return */
+/* eslint-disable vars-on-top, import/no-named-as-default, import/no-named-as-default-member, no-constructor-return */
 import React from "react";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
@@ -34,11 +31,11 @@ const payment = {
   submissionFee,
 };
 
-export var Default = function () {
+export const Default = function () {
   return <Rush payment={payment} />;
 };
 
-export var Mobile = function () {
+export const Mobile = function () {
   return <Rush payment={payment} />;
 };
 

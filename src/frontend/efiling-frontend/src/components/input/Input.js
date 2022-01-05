@@ -1,9 +1,8 @@
-/* eslint-disable react/jsx-one-expression-per-line, import/no-mutable-exports, no-var  */
 import React from "react";
 import PropTypes from "prop-types";
 import "./Input.scss";
 
-export var Input = function ({
+export const Input = function ({
   input: {
     ref,
     label,

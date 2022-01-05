@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/jsx-one-expression-per-line, react/jsx-no-bind */
+/* eslint-disable react/function-component-definition, react/jsx-no-bind, import/no-named-as-default, import/no-named-as-default-member, react/jsx-no-useless-fragment */
 
 import React, { useEffect, useState } from "react";
 import moment from "moment";

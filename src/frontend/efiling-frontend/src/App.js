@@ -1,4 +1,5 @@
-/* eslint-disable react/function-component-definition */
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member */
+
 import React from "react";
 import queryString from "query-string";
 import {

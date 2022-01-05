@@ -1,9 +1,7 @@
-/* eslint-disable  */
-/* eslint-disable no-var */
 import React from "react";
 import PropTypes from "prop-types";
 
-export var Toast = function ({ content, setShow, testId }) {
+export const Toast = function ({ content, setShow, testId }) {
   return (
     <div
       className="alert alert-danger alert-dismissible fade show"

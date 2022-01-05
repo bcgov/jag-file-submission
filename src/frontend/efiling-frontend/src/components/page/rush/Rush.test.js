@@ -1,5 +1,4 @@
-/* eslint-disable no-constructor-return */
-/* eslint-disable prefer-destructuring, no-shadow */
+/* eslint-disable no-constructor-return, import/no-named-as-default, import/no-named-as-default-member, prefer-destructuring, no-shadow */
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";

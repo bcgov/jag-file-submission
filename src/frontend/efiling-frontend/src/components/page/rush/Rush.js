@@ -1,6 +1,4 @@
-/* eslint-disable prefer-regex-literals, import/no-named-as-default, import/no-named-as-default-member, import/named */
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/jsx-props-no-spreading, no-unused-vars */
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member, react/jsx-props-no-spreading, react/function-component-definition  */
 import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
@@ -48,11 +46,11 @@ export default function Rush({
 
     // These regexes are used to match the regexes used by CSO
     if (!country || country.code === "1") {
-      const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
+      const domesticRegex = /\d{3}-?\d{3}-?\d{4}/;
       return domesticRegex.test(phoneNumber);
     }
 
-    const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
+    const internationalRegex = /(\d+-?\d+-?)+\d+/;
     return internationalRegex.test(phoneNumber);
   };
 
@@ -94,7 +92,6 @@ export default function Rush({
   };
   const [files, setFiles] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [showPayment, setShowPayment] = useState(false);
   const [radio1, setRadio1] = useState(false);
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
@@ -160,8 +157,8 @@ export default function Rush({
 
     if (files.length > 0) {
       submitRushDocuments(payment.submissionId, formData)
-        .then((res) => {})
-        .catch((err) => {
+        .then(() => {})
+        .catch(() => {
           setToastMessage(
             "Something went wrong while trying to submit your document(s)"
           );
@@ -175,7 +172,7 @@ export default function Rush({
         setHasRushInfo(true);
         setShowRush(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setToastMessage(
           "Something went wrong while trying to process your submission"
         );

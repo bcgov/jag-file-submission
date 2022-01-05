@@ -1,6 +1,4 @@
-/* eslint-disable no-var */
-/* eslint-disable  */
-/* eslint-disable vars-on-top */
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member, */
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -37,7 +35,7 @@ const LoadData = (props) => {
   return props.children({ packageConfirmation, csoAccountStatus });
 };
 
-export var ExistingAccount = function () {
+export const ExistingAccount = function () {
   return (
     <LoadData>
       {(data) => (
@@ -50,7 +48,7 @@ export var ExistingAccount = function () {
   );
 };
 
-export var NewAccount = function () {
+export const NewAccount = function () {
   return (
     <LoadData>
       {(data) => (
@@ -63,7 +61,7 @@ export var NewAccount = function () {
   );
 };
 
-export var Mobile = function () {
+export const Mobile = function () {
   return (
     <LoadData>
       {(data) => (

@@ -1,6 +1,4 @@
-/* eslint-disable no-var */
-/* eslint-disable  */
-/* eslint-disable vars-on-top */
+/* eslint-disable no-var, import/no-named-as-default, import/no-named-as-default-member */
 import React, { useState } from "react";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getCourtData } from "../../../modules/test-data/courtTestData";
@@ -24,7 +22,7 @@ const upload = {
   files,
 };
 
-export var Default = function () {
+export const Default = function () {
   // eslint-disable-next-line no-unused-vars
   const [showUpload, setShowUpload] = useState(true);
   // eslint-disable-next-line no-unused-vars
@@ -33,7 +31,7 @@ export var Default = function () {
   return <Upload upload={uploadWithStates} />;
 };
 
-export var Mobile = function () {
+export const Mobile = function () {
   // eslint-disable-next-line no-unused-vars
   const [showUpload, setShowUpload] = useState(true);
   // eslint-disable-next-line no-unused-vars

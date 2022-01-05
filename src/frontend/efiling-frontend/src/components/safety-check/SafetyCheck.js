@@ -1,5 +1,4 @@
-/* eslint-disable react/function-component-definition */
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member, */
 import React, { useState } from "react";
 import { MdHelp } from "react-icons/md";
 import SafetyCheckHelp from "./SafetyCheckHelp";

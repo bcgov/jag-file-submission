@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable no-shadow, import/no-named-as-default, import/no-named-as-default-member */
 import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";

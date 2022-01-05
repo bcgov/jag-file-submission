@@ -1,4 +1,4 @@
-/* eslint-disable react/function-component-definition */
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member, */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MdCheckBox, MdError } from "react-icons/md";

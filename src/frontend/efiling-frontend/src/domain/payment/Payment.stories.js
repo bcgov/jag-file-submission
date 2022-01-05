@@ -1,6 +1,4 @@
-/* eslint-disable no-var */
-/* eslint-disable  */
-/* eslint-disable vars-on-top */
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
 import React from "react";
 import { getDocumentsData } from "../../modules/test-data/documentTestData";
 import { getTestData } from "../../modules/test-data/confirmationPopupTestData";
@@ -39,17 +37,17 @@ const payment = {
   submissionFee,
 };
 
-export var WithFees = function () {
+export const WithFees = function () {
   return <Payment payment={payment} />;
 };
 
-export var WithoutFees = function () {
+export const WithoutFees = function () {
   return (
     <Payment payment={{ ...payment, submissionFee: 0, files: noFeeFile }} />
   );
 };
 
-export var Mobile = function () {
+export const Mobile = function () {
   return <Payment payment={payment} />;
 };
 

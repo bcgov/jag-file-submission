@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-associated-control, react/function-component-definition */
 /* eslint-disable react/function-component-definition */
-/* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
 import { MdPerson, MdError } from "react-icons/md";
 import axios from "axios";
@@ -217,7 +216,7 @@ export default function CSOAccount({
 }
 
 CSOAccount.propTypes = {
-  confirmationPopup: propTypes.confirmationPopup,
-  applicantInfo: propTypes.applicantInfo,
-  setCsoAccountStatus: propTypes.setState,
+  confirmationPopup: propTypes.confirmationPopup.isRequired,
+  applicantInfo: propTypes.applicantInfo.isRequired,
+  setCsoAccountStatus: propTypes.setState.isRequired,
 };
