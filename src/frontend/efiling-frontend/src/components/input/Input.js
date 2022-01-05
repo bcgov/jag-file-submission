@@ -1,6 +1,4 @@
-/* eslint-disable  */
-/* eslint-disable no-var */
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-one-expression-per-line, import/no-mutable-exports, no-var  */
 import React from "react";
 import PropTypes from "prop-types";
 import "./Input.scss";
