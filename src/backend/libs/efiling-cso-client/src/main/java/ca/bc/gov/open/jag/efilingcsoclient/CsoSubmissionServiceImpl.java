@@ -439,7 +439,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
 
 
-        
+
         List<CivilDocument> documents = csoFilingPackage.getDocuments();
         for(CivilDocument document : documents) {
             String documentTypeCd = document.getDocumentTypeCd();
@@ -501,7 +501,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
         if (actionDocument == null) return null;
 
         //Rejected documents do get the document id applied
-        if (actionDocument.getStatus().equalsIgnoreCase(CSO_DOCUMENT_REJECTED)) return null;
+       // if (actionDocument.getStatus().equalsIgnoreCase(CSO_DOCUMENT_REJECTED)) return null;
 
         return actionDocument.getDocumentId();
 
