@@ -108,7 +108,7 @@ jobs:
         run: |          
           pushd .
           cd ${{github.workspace}}/src/frontend/efiling-demo/
-          ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json coverage/lcov.info
+          ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o ${{github.workspace}}/coverage/frontend-demo-codeclimate.json coverage/lcov.info
           popd
 
       # Formatting the FRONTEND coverage report
@@ -116,7 +116,7 @@ jobs:
         run: |          
           pushd .
           cd ${{github.workspace}}/src/frontend/efiling-frontend/
-          ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json coverage/lcov.info
+          ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o ${{github.workspace}}/coverage/frontend-codeclimate.json coverage/lcov.info
           popd
 
       # List all formatted files in coverage directory
