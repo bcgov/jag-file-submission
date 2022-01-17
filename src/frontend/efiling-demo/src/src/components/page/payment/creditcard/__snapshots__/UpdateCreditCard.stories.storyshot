@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots UpdateCreditCard Default 1`] = `<DocumentFragment />`;
+
+exports[`Storyshots UpdateCreditCard Mobile 1`] = `<DocumentFragment />`;

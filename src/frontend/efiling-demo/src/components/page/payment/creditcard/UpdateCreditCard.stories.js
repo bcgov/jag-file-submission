@@ -1,6 +1,6 @@
 import React from "react";
 import { createMemoryHistory } from "history";
-import { MemoryRouter, Route } from "react-router";
+import { MemoryRouter, Route, Routes } from "react-router";
 
 import UpdateCreditCard from "./UpdateCreditCard";
 
@@ -16,22 +16,22 @@ const header = {
 
 const page = { header };
 
-export const Default = () => {
-  return (
-    <MemoryRouter
-      initialEntries={[
-        "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
-      ]}
-    >
+export const Default = () => (
+  <MemoryRouter
+    initialEntries={[
+      "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
+    ]}
+  >
+    <Routes>
       <Route
-        component={(routerProps) => (
+        element={(routerProps) => (
           <UpdateCreditCard page={page} routerProps={routerProps} />
         )}
         path="/updateCreditCard"
       />
-    </MemoryRouter>
-  );
-};
+    </Routes>
+  </MemoryRouter>
+);
 
 export const Mobile = () => (
   <MemoryRouter
@@ -39,12 +39,14 @@ export const Mobile = () => (
       "/updateCreditCard?serviceVersion=1&merchantId=merchantid&trnLanguage=eng&operationType=N&ref1=customerCode&trnReturnURL=http://localhost:3000/efilinghub&trnOrderNumber=C1234&hashValue=97F9D18E87F902807890CBF8B11D3244&hashExpiry=202012302048",
     ]}
   >
-    <Route
-      component={(routerProps) => (
-        <UpdateCreditCard page={page} routerProps={routerProps} />
-      )}
-      path="/updateCreditCard"
-    />
+    <Routes>
+      <Route
+        element={(routerProps) => (
+          <UpdateCreditCard page={page} routerProps={routerProps} />
+        )}
+        path="/updateCreditCard"
+      />
+    </Routes>
   </MemoryRouter>
 );
 

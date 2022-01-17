@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading, react/jsx-curly-newline */
+/* eslint-disable react/function-component-definition, react/jsx-props-no-spreading */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -306,8 +306,8 @@ export default function Upload({
   },
 }) {
   const amendmentsSidecard = getSidecardData().amendments;
-  const supremeCourtSchedulingSidecard = getSidecardData()
-    .supremeCourtScheduling;
+  const supremeCourtSchedulingSidecard =
+    getSidecardData().supremeCourtScheduling;
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [items, setItems] = useState([]);
   const [continueBtnEnabled, setContinueBtnEnabled] = useState(false);
@@ -334,10 +334,11 @@ export default function Upload({
             if (!hasDuplicates) {
               setAcceptedFiles(acceptedFiles.concat(droppedFiles));
               setErrorMessage(null);
-            } else
+            } else {
               setErrorMessage(
                 "You cannot upload multiple files with the same name."
               );
+            }
           }}
         >
           {({ getRootProps, getInputProps }) => (

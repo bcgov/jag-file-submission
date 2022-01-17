@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member, */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MdCheckBox, MdError } from "react-icons/md";
@@ -133,8 +134,8 @@ export default function PackageConfirmation({
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData(setShowSidecardModal)
-    .rushSubmission;
+  const rushSubmissionSidecard =
+    getSidecardData(setShowSidecardModal).rushSubmission;
   const rejectedDocumentsSideCard = getSidecardData().rejectedDocuments;
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
@@ -211,7 +212,7 @@ export default function PackageConfirmation({
     );
   }
 
-  if (showUpload)
+  if (showUpload) {
     return (
       <Upload
         upload={{
@@ -222,8 +223,9 @@ export default function PackageConfirmation({
         }}
       />
     );
+  }
 
-  if (showRush)
+  if (showRush) {
     return (
       <Rush
         payment={{
@@ -238,6 +240,7 @@ export default function PackageConfirmation({
         setHasRushInfo={setHasRushInfo}
       />
     );
+  }
 
   return (
     <div className="ct-package-confirmation page">
@@ -285,23 +288,20 @@ export default function PackageConfirmation({
         </span>
         <br />
         <br />
-        {<FileList submissionId={submissionId} files={files} />}
+        <FileList submissionId={submissionId} files={files} />
         <br />
         {hasRejectedDocuments && (
-          <>
-            <div className="alert alert-danger show rejectedMsg" role="alert">
-              <div>
-                <MdError size={32} />
-              </div>
-              <div>
-                <span>
-                  Please ensure you have uploaded all required rejected
-                  documents. If you still need to add documents use the upload
-                  link below.
-                </span>
-              </div>
+          <div className="alert alert-danger show rejectedMsg" role="alert">
+            <div>
+              <MdError size={32} />
             </div>
-          </>
+            <div>
+              <span>
+                Please ensure you have uploaded all required rejected documents.
+                If you still need to add documents use the upload link below.
+              </span>
+            </div>
+          </div>
         )}
         <h4>
           Do you have additional documents to upload?&nbsp;

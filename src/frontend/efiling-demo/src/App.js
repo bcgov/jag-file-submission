@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, useHistory, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 import Cancel from "./components/page/cancel/Cancel";
@@ -15,12 +15,12 @@ export default function App() {
 
   const header = {
     name: "eFiling Demo Client",
-    history: useHistory(),
+    history: useNavigate(),
   };
 
   return (
     <div>
-      <Switch>
+      <Routes>
         <Route exact path="/">
           <AuthenticationGuard page={{ header }} />
         </Route>
@@ -36,7 +36,7 @@ export default function App() {
         <Route exact path="/updatecard">
           <UpdateCreditCard page={{ header }} />
         </Route>
-      </Switch>
+      </Routes>
     </div>
   );
 }

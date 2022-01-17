@@ -646,7 +646,7 @@ describe("PackageReview Component", () => {
     const { getByText } = render(<PackageReview />);
     routerDom.useLocation = jest
       .fn()
-      .mockReturnValue({ search: `?defaultTab=rush` });
+      .mockReturnValue({ search: "?defaultTab=rush" });
 
     await act(() => promise);
 
@@ -691,7 +691,7 @@ describe("PackageReview Component", () => {
 
     routerDom.useLocation = jest
       .fn()
-      .mockReturnValue({ search: `?defaultTab=rush` });
+      .mockReturnValue({ search: "?defaultTab=rush" });
 
     await act(() => promise);
 

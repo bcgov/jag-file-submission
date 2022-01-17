@@ -1,11 +1,13 @@
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member */
+
 import React from "react";
 import queryString from "query-string";
 import {
-  Switch,
+  Routes,
   Route,
-  Redirect,
-  useHistory,
+  useNavigate,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import { Header, Footer } from "shared-components";
 import AuthenticationGuard from "./domain/authentication/AuthenticationGuard";
@@ -16,12 +18,8 @@ import SubmissionHistory from "./domain/submission/submission-history/Submission
 export default function App() {
   const location = useLocation();
   const queryParams = queryString.parse(location.search);
-  const {
-    submissionId,
-    transactionId,
-    responseCode,
-    customerCode,
-  } = queryParams;
+  const { submissionId, transactionId, responseCode, customerCode } =
+    queryParams;
 
   if (responseCode === "19" || responseCode === "17")
     sessionStorage.setItem("bamboraErrorExists", true);
@@ -40,15 +38,15 @@ export default function App() {
 
   const header = {
     name: "E-File Submission",
-    history: useHistory(),
+    history: useNavigate(),
   };
 
   return (
     <main>
       <Header header={header} />
       <AuthenticationGuard>
-        <Switch>
-          <Redirect exact from="/" to="/efilinghub" />
+        <Routes>
+          <Navigate exact from="/" to="/efilinghub" />
           <Route exact path="/efilinghub">
             <Home />
           </Route>
@@ -58,7 +56,7 @@ export default function App() {
           <Route path="/efilinghub/submissionhistory">
             <SubmissionHistory />
           </Route>
-        </Switch>
+        </Routes>
       </AuthenticationGuard>
       <Footer />
     </main>

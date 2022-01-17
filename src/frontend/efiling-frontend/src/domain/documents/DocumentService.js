@@ -10,7 +10,7 @@ export const getDocumentTypes = async (courtLevel, courtClassification) => {
     courtClassification,
   };
 
-  const response = await axios.get(`/documents/types`, { params });
+  const response = await axios.get("/documents/types", { params });
 
   return response.data;
 };

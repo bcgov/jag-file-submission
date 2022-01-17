@@ -1,9 +1,8 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 import PropTypes from "prop-types";
 import "./Input.scss";
 
-export const Input = ({
+export const Input = function ({
   input: {
     ref,
     label,
@@ -18,7 +17,7 @@ export const Input = ({
     isControlled,
   },
   onChange,
-}) => {
+}) {
   let asterisk = "";
 
   if (isRequired) {
