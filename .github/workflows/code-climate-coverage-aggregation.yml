@@ -103,6 +103,14 @@ jobs:
       - name: Run Yarn Coverage - eFiling Demo
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
 
+      # Formatting the FRONTEND DEMO coverage report
+      - name: Format the FRONTEND DEMO coverage report
+        run: |          
+          pushd .
+          cd ${{github.workspace}}/src/frontend/efiling-demo/
+          ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o ${{github.workspace}}/coverage/frontend-demo-codeclimate.json coverage/lcov.info
+          popd
+
       # Formatting the FRONTEND coverage report
       - name: Format the FRONTEND coverage report
         run: |          
