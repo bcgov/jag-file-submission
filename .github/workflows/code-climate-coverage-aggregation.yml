@@ -107,7 +107,7 @@ jobs:
       - name: Format the FRONTEND DEMO coverage report
         run: |          
           pushd .
-          cd ${{github.workspace}}/src/frontend/ai-reviewer-admin/
+          cd ${{github.workspace}}/src/frontend/efiling-demo/
           ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json coverage/lcov.info
           popd
 
@@ -115,7 +115,7 @@ jobs:
       - name: Format the FRONTEND coverage report
         run: |          
           pushd .
-          cd ${{github.workspace}}/src/frontend/efiling-demo/
+          cd ${{github.workspace}}/src/frontend/efiling-frontend/
           ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json coverage/lcov.info
           popd
 
