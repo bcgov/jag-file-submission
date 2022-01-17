@@ -103,15 +103,15 @@ jobs:
       - name: Run Yarn Coverage - eFiling Demo
         run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
 
-      # Formatting the FRONTEND coverage report
-      - name: Format the FRONTEND coverage report
-        run: |
-          ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info
-
       # Formatting the FRONTEND DEMO coverage report
       - name: Format the FRONTEND DEMO coverage report
         run: |
-          ./cc-test-reporter format-coverage -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
+          ./cc-test-reporter format-coverage --debug -t lcov -o coverage/frontend-demo-codeclimate.json ${{github.workspace}}/src/frontend/efiling-demo/coverage/lcov.info
+
+      # Formatting the FRONTEND coverage report
+      - name: Format the FRONTEND coverage report
+        run: |
+          ./cc-test-reporter format-coverage --debug -t lcov -o coverage/frontend-codeclimate.json ${{github.workspace}}/src/frontend/efiling-frontend/coverage/lcov.info
 
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
