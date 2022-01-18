@@ -101,7 +101,8 @@
       "!src/*.js",
       "!src/components/hoc/*.js",
       "!**/node_modules/**",
-      "!**/vendor/**"
+      "!**/vendor/**",
+      "!src/components/page/cso-account/CSOAccount.js"
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
