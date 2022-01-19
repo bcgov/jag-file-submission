@@ -46,16 +46,19 @@ export default function App() {
       <Header header={header} />
       <AuthenticationGuard>
         <Routes>
-          <Navigate exact from="/" to="/efilinghub" />
-          <Route exact path="/efilinghub">
-            <Home />
-          </Route>
-          <Route path="/efilinghub/packagereview/:packageId">
-            <PackageReview />
-          </Route>
-          <Route path="/efilinghub/submissionhistory">
-            <SubmissionHistory />
-          </Route>
+          <Route
+            path="/"
+            element={<Navigate exact from="/" to="/efilinghub" />}
+          />
+          <Route exact path="/efilinghub" element={<Home />} />
+          <Route
+            path="/efilinghub/packagereview/:packageId"
+            element={<PackageReview />}
+          />
+          <Route
+            path="/efilinghub/submissionhistory"
+            element={<SubmissionHistory />}
+          />
         </Routes>
       </AuthenticationGuard>
       <Footer />
