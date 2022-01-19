@@ -15,7 +15,8 @@ export default function App() {
 
   const header = {
     name: "eFiling Demo Client",
-    history: useNavigate(),
+    navigate: useNavigate(),
+    location,
   };
 
   return (

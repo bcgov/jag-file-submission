@@ -26,7 +26,7 @@ export default function Error({ page: { header, status, message } }) {
           </p>
           <br />
           <Button
-            onClick={() => header.history.push("/")}
+            onClick={() => header.navigate("/")}
             label="Return home"
             styling="bcgov-normal-white btn"
           />

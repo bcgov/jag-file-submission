@@ -37,7 +37,7 @@ export default function Success({ page: { header, packageRef } }) {
           <br />
           <p>Please click the button below to go back home.</p>
           <Button
-            onClick={() => header.history.push("/")}
+            onClick={() => header.navigate("/")}
             label="Return home"
             styling="bcgov-normal-white btn"
           />
