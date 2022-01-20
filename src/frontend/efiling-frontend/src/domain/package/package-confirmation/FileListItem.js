@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { MdDescription } from "react-icons/md";

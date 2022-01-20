@@ -1,11 +1,11 @@
 import React from "react";
-import { createMemoryHistory } from "history";
 import { render, getByText, fireEvent } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import Error from "./Error";
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory(),
+  navigate: createMemoryHistory,
 };
 
 const status = "400";
@@ -25,6 +25,6 @@ describe("Error", () => {
 
     fireEvent.click(getByText(container, "Return home"));
 
-    expect(header.history.location.pathname).toEqual("/");
+    expect(window.location.pathname).toEqual("/");
   });
 });

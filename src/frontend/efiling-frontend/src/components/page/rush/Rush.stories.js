@@ -1,3 +1,4 @@
+/* eslint-disable vars-on-top, import/no-named-as-default, import/no-named-as-default-member, no-constructor-return */
 import React from "react";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
@@ -30,9 +31,13 @@ const payment = {
   submissionFee,
 };
 
-export const Default = () => <Rush payment={payment} />;
+export const Default = function () {
+  return <Rush payment={payment} />;
+};
 
-export const Mobile = () => <Rush payment={payment} />;
+export const Mobile = function () {
+  return <Rush payment={payment} />;
+};
 
 Mobile.parameters = {
   viewport: {

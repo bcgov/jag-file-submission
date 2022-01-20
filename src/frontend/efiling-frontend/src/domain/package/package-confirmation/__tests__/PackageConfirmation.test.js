@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable no-shadow, import/no-named-as-default, import/no-named-as-default-member */
 import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";
@@ -101,18 +101,13 @@ describe("PackageConfirmation Component", () => {
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
 
-    const {
-      getByLabelText,
-      getByText,
-      queryByText,
-      getByRole,
-      queryByTestId,
-    } = render(
-      <PackageConfirmation
-        packageConfirmation={packageConfirmation}
-        csoAccountStatus={csoAccountStatus}
-      />
-    );
+    const { getByLabelText, getByText, queryByText, getByRole, queryByTestId } =
+      render(
+        <PackageConfirmation
+          packageConfirmation={packageConfirmation}
+          csoAccountStatus={csoAccountStatus}
+        />
+      );
 
     const rushNo = getByLabelText("No");
     const rushYes = getByLabelText("Yes");
@@ -387,9 +382,12 @@ describe("PackageConfirmation Component", () => {
       ],
     };
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { documents, court, submissionFeeAmount, rush });
+    mock.onGet(apiRequest).reply(200, {
+      documents,
+      court,
+      submissionFeeAmount,
+      rush,
+    });
 
     const { getByText, queryByTestId } = render(
       <PackageConfirmation
@@ -420,9 +418,12 @@ describe("PackageConfirmation Component", () => {
       ],
     };
 
-    mock
-      .onGet(apiRequest)
-      .reply(200, { documents, court, submissionFeeAmount, rush });
+    mock.onGet(apiRequest).reply(200, {
+      documents,
+      court,
+      submissionFeeAmount,
+      rush,
+    });
 
     const { getByText, getByLabelText } = render(
       <PackageConfirmation

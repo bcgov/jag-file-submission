@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
 import React from "react";
 import { getDocumentsData } from "../../modules/test-data/documentTestData";
 import { getTestData } from "../../modules/test-data/confirmationPopupTestData";
@@ -36,13 +37,19 @@ const payment = {
   submissionFee,
 };
 
-export const WithFees = () => <Payment payment={payment} />;
+export const WithFees = function () {
+  return <Payment payment={payment} />;
+};
 
-export const WithoutFees = () => (
-  <Payment payment={{ ...payment, submissionFee: 0, files: noFeeFile }} />
-);
+export const WithoutFees = function () {
+  return (
+    <Payment payment={{ ...payment, submissionFee: 0, files: noFeeFile }} />
+  );
+};
 
-export const Mobile = () => <Payment payment={payment} />;
+export const Mobile = function () {
+  return <Payment payment={payment} />;
+};
 
 Mobile.parameters = {
   viewport: {

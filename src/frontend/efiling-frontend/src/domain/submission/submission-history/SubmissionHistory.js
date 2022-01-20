@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member, react/jsx-no-bind */
 import React, { useState, useEffect } from "react";
 import { Sidecard, Button } from "shared-components";
 import { useLocation } from "react-router-dom";
@@ -66,14 +67,12 @@ export default function SubmissionHistory() {
   );
 
   const submittedPackagesElement = (
-    <>
-      <div className="submission-list-block">
-        <h3>Submitted Packages</h3>
-        <div className="submission-list-container">
-          <SubmissionList submissions={visibleSubmissions} />
-        </div>
+    <div className="submission-list-block">
+      <h3>Submitted Packages</h3>
+      <div className="submission-list-container">
+        <SubmissionList submissions={visibleSubmissions} />
       </div>
-    </>
+    </div>
   );
 
   return (

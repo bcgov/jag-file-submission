@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-wrap-multilines */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
@@ -134,8 +135,9 @@ export default function Payment({
 
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
-  const rushSubmissionSidecard = getSidecardData(() => setShowModal(true))
-    .rushSubmission;
+  const rushSubmissionSidecard = getSidecardData(() =>
+    setShowModal(true)
+  ).rushSubmission;
 
   const fileSummary = generateFileSummaryData(
     hasRushInfo,

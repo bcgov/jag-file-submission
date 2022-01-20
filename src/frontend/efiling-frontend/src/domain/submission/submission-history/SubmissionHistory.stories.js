@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -13,4 +14,6 @@ const mock = new MockAdapter(axios);
 
 mock.onGet("/filingpackages").reply(200, submissions);
 
-export const Default = () => <SubmissionHistory />;
+export const Default = function () {
+  return <SubmissionHistory />;
+};

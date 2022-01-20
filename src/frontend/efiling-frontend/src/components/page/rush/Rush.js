@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading, no-unused-vars */
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member, react/jsx-props-no-spreading, react/function-component-definition  */
 import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
@@ -13,7 +13,6 @@ import {
 } from "shared-components";
 import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
-import Payment from "../../../domain/payment/Payment";
 import RushConfirmation from "../../../domain/package/package-confirmation/RushConfirmation";
 
 import "./Rush.scss";
@@ -24,7 +23,8 @@ import { Input } from "../../input/Input";
 import { getJWTData } from "../../../modules/helpers/authentication-helper/authenticationHelper";
 import { checkForDuplicateFilenames } from "../../../modules/helpers/filenameUtil";
 
-const calloutText = `Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  `;
+const calloutText =
+  "Please provide the date of when the direction was made, the name of the Judge who made the direction along with any additional details you feel are necessary.  ";
 
 const generateInputField = (input, onChange) => (
   <div className="form-child">
@@ -46,11 +46,11 @@ export default function Rush({
 
     // These regexes are used to match the regexes used by CSO
     if (!country || country.code === "1") {
-      const domesticRegex = new RegExp("\\d{3}-?\\d{3}-?\\d{4}");
+      const domesticRegex = /\d{3}-?\d{3}-?\d{4}/;
       return domesticRegex.test(phoneNumber);
     }
 
-    const internationalRegex = new RegExp("(\\d+-?\\d+-?)+\\d+");
+    const internationalRegex = /(\d+-?\d+-?)+\d+/;
     return internationalRegex.test(phoneNumber);
   };
 
@@ -92,7 +92,6 @@ export default function Rush({
   };
   const [files, setFiles] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [showPayment, setShowPayment] = useState(false);
   const [radio1, setRadio1] = useState(false);
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
@@ -158,8 +157,8 @@ export default function Rush({
 
     if (files.length > 0) {
       submitRushDocuments(payment.submissionId, formData)
-        .then((res) => {})
-        .catch((err) => {
+        .then(() => {})
+        .catch(() => {
           setToastMessage(
             "Something went wrong while trying to submit your document(s)"
           );
@@ -173,7 +172,7 @@ export default function Rush({
         setHasRushInfo(true);
         setShowRush(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setToastMessage(
           "Something went wrong while trying to process your submission"
         );
@@ -473,13 +472,13 @@ export default function Rush({
     const canContinue = () => {
       let mandatoryFields = [];
 
-      if (radio1)
+      if (radio1) {
         mandatoryFields = [
           fields.firstName,
           fields.surname,
           fields[fields.contactMethod[1]],
         ];
-      else if (radio2 || radio3) {
+      } else if (radio2 || radio3) {
         setFields({ ...fields, date: selectedDate });
         mandatoryFields = [
           fields.firstName,
