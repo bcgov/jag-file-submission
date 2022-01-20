@@ -11,7 +11,7 @@
     <properties>
         <java.version>1.8</java.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
-        <org.maven.version>3.8.1</org.maven.version>
+        <org.maven.version>3.9.0</org.maven.version>
     </properties>
 
     <dependencies>
