@@ -13,6 +13,11 @@ COPY . .
 
 RUN yarn build
 
+FROM alpine as dot-env
+
+COPY .env.template .env
+RUN apk add dos2unix && dos2unix -n .env.template .env
+
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
 #############################################################################################
@@ -27,7 +32,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY ./env.sh .
-COPY .env.template .env
+COPY --from=dot-env .env .env
 
 # CMD ["nginx", "-g", "daemon off;"]
 RUN chmod g+rwx /var/cache/nginx /var/run /var/log/nginx
