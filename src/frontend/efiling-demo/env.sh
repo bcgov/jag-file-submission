@@ -21,7 +21,9 @@ do
   value=$(printf '%s\n' "${!varname}")
   # Otherwise use value from .env file
   [[ -z $value ]] && value=${varvalue}
-  
+  # Fix the line ending if it is a windows one
+  value="$(echo "$value" | sed -e 's/\r//g')"
+
   # Append configuration property to JS file
   echo "  $varname: \"$value\"," >> ./env-config.js
 done < .env
