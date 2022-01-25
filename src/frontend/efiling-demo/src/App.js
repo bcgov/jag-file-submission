@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, useHistory, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import queryString from "query-string";
 import AuthenticationGuard from "./components/hoc/AuthenticationGuard";
 import Cancel from "./components/page/cancel/Cancel";
@@ -15,28 +15,34 @@ export default function App() {
 
   const header = {
     name: "eFiling Demo Client",
-    history: useHistory(),
+    navigate: useNavigate(),
   };
 
   return (
     <div>
-      <Switch>
-        <Route exact path="/">
-          <AuthenticationGuard page={{ header }} />
-        </Route>
-        <Route exact path="/cancel">
-          <Cancel page={{ header }} />
-        </Route>
-        <Route exact path="/error">
-          <Error page={{ header, status, message }} />
-        </Route>
-        <Route exact path="/success">
-          <Success page={{ header, packageRef }} />
-        </Route>
-        <Route exact path="/updatecard">
-          <UpdateCreditCard page={{ header }} />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={<AuthenticationGuard page={{ header }} />}
+        />
+        <Route exact path="/cancel" element={<Cancel page={{ header }} />} />
+        <Route
+          exact
+          path="/error"
+          element={<Error page={{ header, status, message }} />}
+        />
+        <Route
+          exact
+          path="/success"
+          element={<Success page={{ header, packageRef }} />}
+        />
+        <Route
+          exact
+          path="/updatecard"
+          element={<UpdateCreditCard page={{ header }} />}
+        />
+      </Routes>
     </div>
   );
 }

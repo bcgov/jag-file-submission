@@ -1,0 +1,1212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Payment Mobile 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-payment page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Payment
+      </h1>
+      <div
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
+      >
+        <div
+          class="bcgov-display-icon"
+        >
+          <div
+            style="color: rgb(46, 133, 64);"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="bcgov-display-right-element"
+        >
+          <p>
+            <span>
+              You have a valid Credit Card registered with your CSO account.
+            </span>
+            <br />
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
+            >
+              Register a new Credit Card.
+            </span>
+          </p>
+        </div>
+      </div>
+      <br />
+      <div
+        class="half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Number of Documents in Package:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  2
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees bcgov-empty-row"
+            >
+              <div
+                class="bcgov-fill-width"
+              />
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              />
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Total Fee:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $65.50
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h1>
+        Package Submission Details
+      </h1>
+      <p>
+        Your package will be filed to:
+      </p>
+      <div
+        class="court-half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Court File Number:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court file number
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Location:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court location
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Level and Class:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Level Class
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bcgov-callout-checkbox"
+      >
+        <p>
+          I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account. Statutory fees will be processed when documents are filed.
+        </p>
+        <label
+          for="agreeCallout"
+          style="float: right;"
+        >
+          <input
+            id="agreeCallout"
+            type="checkbox"
+          />
+           
+          <b>
+            I agree
+          </b>
+          <span
+            class="bcgov-mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+        </label>
+      </div>
+      <br />
+      <section
+        class="pt-2 buttons"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid=""
+          type="button"
+        >
+          &lt; Back
+        </button>
+        <div
+          class="button-container"
+        >
+          <button
+            class="bcgov-button bcgov-normal-white btn"
+            data-testid="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
+            data-testid=""
+            disabled=""
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0V0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Storyshots Payment With Fees 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-payment page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Payment
+      </h1>
+      <div
+        class="bcgov-display-box bcgov-success-background bcgov-no-padding-bottom"
+      >
+        <div
+          class="bcgov-display-icon"
+        >
+          <div
+            style="color: rgb(46, 133, 64);"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="bcgov-display-right-element"
+        >
+          <p>
+            <span>
+              You have a valid Credit Card registered with your CSO account.
+            </span>
+            <br />
+            <span
+              class="file-href"
+              role="button"
+              tabindex="0"
+            >
+              Register a new Credit Card.
+            </span>
+          </p>
+        </div>
+      </div>
+      <br />
+      <div
+        class="half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Number of Documents in Package:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  2
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row-fees bcgov-empty-row"
+            >
+              <div
+                class="bcgov-fill-width"
+              />
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              />
+            </div>
+            <div
+              class="bcgov-row-fees "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Total Fee:
+              </div>
+              <div
+                class="bcgov-table-value bcgov-right-align"
+              >
+                <b>
+                  $65.50
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h1>
+        Package Submission Details
+      </h1>
+      <p>
+        Your package will be filed to:
+      </p>
+      <div
+        class="court-half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Court File Number:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court file number
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Location:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court location
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Level and Class:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Level Class
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bcgov-callout-checkbox"
+      >
+        <p>
+          I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing. I agree that all fees for this filing package may be charged to the credit card registered to my account. Statutory fees will be processed when documents are filed.
+        </p>
+        <label
+          for="agreeCallout"
+          style="float: right;"
+        >
+          <input
+            id="agreeCallout"
+            type="checkbox"
+          />
+           
+          <b>
+            I agree
+          </b>
+          <span
+            class="bcgov-mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+        </label>
+      </div>
+      <br />
+      <section
+        class="pt-2 buttons"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid=""
+          type="button"
+        >
+          &lt; Back
+        </button>
+        <div
+          class="button-container"
+        >
+          <button
+            class="bcgov-button bcgov-normal-white btn"
+            data-testid="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
+            data-testid=""
+            disabled=""
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0V0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Storyshots Payment Without Fees 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-payment page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <br />
+      <h1>
+        Package Submission Details
+      </h1>
+      <p>
+        Your package will be filed to:
+      </p>
+      <div
+        class="court-half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Court File Number:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court file number
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Location:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Court location
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Level and Class:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  Level Class
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bcgov-callout-checkbox"
+      >
+        <p>
+          I have reviewed the information and the documents in this filing
+package and am prepared to submit them for filing.
+        </p>
+        <label
+          for="agreeCallout"
+          style="float: right;"
+        >
+          <input
+            id="agreeCallout"
+            type="checkbox"
+          />
+           
+          <b>
+            I agree
+          </b>
+          <span
+            class="bcgov-mandatory"
+            id="asterisk"
+          >
+            *
+          </span>
+        </label>
+      </div>
+      <br />
+      <section
+        class="pt-2 buttons"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid=""
+          type="button"
+        >
+          &lt; Back
+        </button>
+        <div
+          class="button-container"
+        >
+          <button
+            class="bcgov-button bcgov-normal-white btn"
+            data-testid="main-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            class="bcgov-button bcgov-normal-blue normal-blue-ml btn"
+            data-testid=""
+            disabled=""
+            type="button"
+          >
+            Submit
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0V0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member, */
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -34,38 +35,44 @@ const LoadData = (props) => {
   return props.children({ packageConfirmation, csoAccountStatus });
 };
 
-export const ExistingAccount = () => (
-  <LoadData>
-    {(data) => (
-      <PackageConfirmation
-        packageConfirmation={data.packageConfirmation}
-        csoAccountStatus={data.csoAccountStatus}
-      />
-    )}
-  </LoadData>
-);
+export const ExistingAccount = function () {
+  return (
+    <LoadData>
+      {(data) => (
+        <PackageConfirmation
+          packageConfirmation={data.packageConfirmation}
+          csoAccountStatus={data.csoAccountStatus}
+        />
+      )}
+    </LoadData>
+  );
+};
 
-export const NewAccount = () => (
-  <LoadData>
-    {(data) => (
-      <PackageConfirmation
-        packageConfirmation={data.packageConfirmation}
-        csoAccountStatus={{ ...data.csoAccountStatus, isNew: true }}
-      />
-    )}
-  </LoadData>
-);
+export const NewAccount = function () {
+  return (
+    <LoadData>
+      {(data) => (
+        <PackageConfirmation
+          packageConfirmation={data.packageConfirmation}
+          csoAccountStatus={{ ...data.csoAccountStatus, isNew: true }}
+        />
+      )}
+    </LoadData>
+  );
+};
 
-export const Mobile = () => (
-  <LoadData>
-    {(data) => (
-      <PackageConfirmation
-        packageConfirmation={data.packageConfirmation}
-        csoAccountStatus={data.csoAccountStatus}
-      />
-    )}
-  </LoadData>
-);
+export const Mobile = function () {
+  return (
+    <LoadData>
+      {(data) => (
+        <PackageConfirmation
+          packageConfirmation={data.packageConfirmation}
+          csoAccountStatus={data.csoAccountStatus}
+        />
+      )}
+    </LoadData>
+  );
+};
 
 Mobile.parameters = {
   viewport: {

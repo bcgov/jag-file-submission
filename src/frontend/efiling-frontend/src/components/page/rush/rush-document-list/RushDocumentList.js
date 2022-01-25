@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member */
 import React from "react";
 import PropTypes from "prop-types";
 import RushDocumentListItem from "./RushDocumentListItem";

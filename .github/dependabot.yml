@@ -12,7 +12,7 @@ updates:
   # npm dependencies - frontend
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-frontend"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 4
     schedule:
       interval: "weekly"
       day: "monday"
@@ -20,7 +20,7 @@ updates:
   # npm dependencies - demo
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-demo"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 4
     schedule:
       interval: "weekly"
       day: "monday"

@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/function-component-definition */
 import React from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";

@@ -1,4 +1,4 @@
-/* eslint-disable prefer-destructuring, no-shadow */
+/* eslint-disable no-constructor-return, import/no-named-as-default, import/no-named-as-default-member, prefer-destructuring, no-shadow */
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -346,7 +346,7 @@ describe("Rush Component", () => {
 
     const reasonsInput = getByLabelText("Clear and detailed reason(s)");
     userEvent.type(reasonsInput, "I'm in a rush");
-    await waitFor(() => expect(reasonsInput.value).toBe(`I'm in a rush`));
+    await waitFor(() => expect(reasonsInput.value).toBe("I'm in a rush"));
 
     const dropdown = getAllByTestId("dropdown");
 

@@ -7,7 +7,7 @@ on:
       - "src/backend/**"
       - ".github/workflows/dev-efiling-admin-build-4.yml"
   workflow_dispatch:
-    branches: [master, akroon3r-patch-3]
+    branches: [master]
 
 jobs:
   build:

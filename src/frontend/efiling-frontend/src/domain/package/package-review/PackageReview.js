@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/function-component-definition, react/jsx-no-bind, import/no-named-as-default, import/no-named-as-default-member, react/jsx-no-useless-fragment */
 
 import React, { useEffect, useState } from "react";
 import moment from "moment";
@@ -81,14 +81,24 @@ export default function PackageReview() {
   const [error, setError] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [packageDetails, setPackageDetails] = useState([
-    { name: "Submitted By:", value: "", isNameBold: false, isValueBold: true },
+    {
+      name: "Submitted By:",
+      value: "",
+      isNameBold: false,
+      isValueBold: true,
+    },
     {
       name: "Submitted Date:",
       value: "",
       isNameBold: false,
       isValueBold: true,
     },
-    { name: "Submitted To:", value: "", isNameBold: false, isValueBold: true },
+    {
+      name: "Submitted To:",
+      value: "",
+      isNameBold: false,
+      isValueBold: true,
+    },
   ]);
   const [courtFileDetails, setCourtFileDetails] = useState([
     {
@@ -186,7 +196,7 @@ export default function PackageReview() {
               },
               {
                 name: "Rush Processing:",
-                value: isRush || protectionOrderFlag ? `Yes` : `No`,
+                value: isRush || protectionOrderFlag ? "Yes" : "No",
                 isNameBold: false,
                 isValueBold: true,
               },
@@ -496,15 +506,13 @@ export default function PackageReview() {
               </span>
             </div>
             {returnUrl && validator.isURL(returnUrl) && (
-              <>
-                <section className="buttons pt-2 row">
-                  <Button
-                    label={returnButtonName}
-                    onClick={() => window.open(returnUrl, "_self")}
-                    styling="bcgov-normal-white btn"
-                  />
-                </section>
-              </>
+              <section className="buttons pt-2 row">
+                <Button
+                  label={returnButtonName}
+                  onClick={() => window.open(returnUrl, "_self")}
+                  styling="bcgov-normal-white btn"
+                />
+              </section>
             )}
             {isParentAppFLA() && <SafefyCheck />}
           </div>

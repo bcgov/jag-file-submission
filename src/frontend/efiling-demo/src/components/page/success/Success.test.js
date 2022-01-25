@@ -1,11 +1,11 @@
 import React from "react";
-import { createMemoryHistory } from "history";
 import { render, getByText, fireEvent } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import Success from "./Success";
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory(),
+  navigate: createMemoryHistory,
 };
 
 let packageRef = "aHR0cHM6L2thZ2VObz0xMTQzMA==";
@@ -33,7 +33,7 @@ describe("Success", () => {
 
     fireEvent.click(getByText(container, "Return home"));
 
-    expect(header.history.location.pathname).toEqual("/");
+    expect(window.location.pathname).toEqual("/");
   });
 
   test("Clicking on link to view package submission details decodes ref and opens the url", () => {

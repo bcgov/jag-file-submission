@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from "react";
 
 const onButtonClick = () => {};
@@ -39,5 +38,10 @@ export function getTestData() {
     body,
   };
 
-  return { modal, mainButton, confirmButton, cancelButton };
+  return {
+    modal,
+    mainButton,
+    confirmButton,
+    cancelButton,
+  };
 }
