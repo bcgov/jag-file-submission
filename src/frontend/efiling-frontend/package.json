@@ -74,7 +74,7 @@
     "@babel/core": "^7.14.3",
     "@babel/plugin-syntax-typescript": "^7.12.13",
     "@babel/preset-env": "^7.14.4",
-    "@storybook/addon-actions": "^6.4.9",
+    "@storybook/addon-actions": "^6.4.17",
     "@storybook/addon-links": "^6.4.9",
     "@storybook/addon-storyshots": "^6.4.9",
     "@storybook/addon-viewport": "^6.4.9",
