@@ -15,7 +15,13 @@ To bring up all the backend docker containers locally, n the root directory
 `jag-file-submission`, run:
 
 ```bash
-docker-compose up efiling-api efiling-frontend keycloak keycloak-config redis
+docker-compose up   \
+  efiling-api       \
+  efiling-frontend  \
+  keycloak          \
+  keycloak-config   \
+  clamav            \
+  redis
 ```
 
 Continue below with `yarn install`
