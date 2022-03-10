@@ -58,6 +58,7 @@ exports[`Home Component matches the snapshot 1`] = `
         <div
           class="dropzone-outer-box"
           data-testid="dropdownzone"
+          role="button"
           tabindex="0"
         >
           <div
