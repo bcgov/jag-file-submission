@@ -45,9 +45,13 @@ const defaultCreateAccount = (
   <CreateAccount>{(data) => baseComponent(data)}</CreateAccount>
 );
 
-export const Default = () => defaultCreateAccount;
+export function Default() {
+  return defaultCreateAccount;
+}
 
-export const Mobile = () => defaultCreateAccount;
+export function Mobile() {
+  return defaultCreateAccount;
+}
 
 Mobile.parameters = {
   viewport: {

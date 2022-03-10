@@ -58,6 +58,7 @@ exports[`Storyshots Home Default 1`] = `
         <div
           class="dropzone-outer-box"
           data-testid="dropdownzone"
+          role="button"
           tabindex="0"
         >
           <div
@@ -265,6 +266,7 @@ exports[`Storyshots Home Mobile 1`] = `
         <div
           class="dropzone-outer-box"
           data-testid="dropdownzone"
+          role="button"
           tabindex="0"
         >
           <div

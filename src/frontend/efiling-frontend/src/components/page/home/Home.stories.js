@@ -111,17 +111,29 @@ const noAccountExistsComponent = (
   </NoAccountExistsStateData>
 );
 
-export const Error = () => loaderComponent;
+export function Error() {
+  return loaderComponent;
+}
 
-export const ErrorMobile = () => loaderComponent;
+export function ErrorMobile() {
+  return loaderComponent;
+}
 
-export const AccountExists = () => accountExistsComponent;
+export function AccountExists() {
+  return accountExistsComponent;
+}
 
-export const AccountExistsMobile = () => accountExistsComponent;
+export function AccountExistsMobile() {
+  return accountExistsComponent;
+}
 
-export const NoAccountExists = () => noAccountExistsComponent;
+export function NoAccountExists() {
+  return noAccountExistsComponent;
+}
 
-export const NoAccountExistsMobile = () => noAccountExistsComponent;
+export function NoAccountExistsMobile() {
+  return noAccountExistsComponent;
+}
 
 const parameters = {
   viewport: {

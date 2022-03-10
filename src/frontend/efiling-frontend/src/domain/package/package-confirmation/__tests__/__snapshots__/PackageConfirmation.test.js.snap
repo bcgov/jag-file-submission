@@ -1651,6 +1651,7 @@ exports[`PackageConfirmation Component On click of Upload them now text, it redi
       <div
         class="dropzone-outer-box"
         data-testid="dropdownzone"
+        role="button"
         tabindex="0"
       >
         <div
