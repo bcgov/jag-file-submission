@@ -9,12 +9,16 @@
             <xs:element name="createEntitlementsResponse" type="tns:createEntitlementsResponse"/>
             <xs:element name="createExternalAgency" type="tns:createExternalAgency"/>
             <xs:element name="createExternalAgencyResponse" type="tns:createExternalAgencyResponse"/>
+            <xs:element name="createLinkedBCRegAccountClient" type="tns:createLinkedBCRegAccountClient"/>
+            <xs:element name="createLinkedBCRegAccountClientResponse" type="tns:createLinkedBCRegAccountClientResponse"/>
             <xs:element name="createProfile" type="tns:createProfile"/>
             <xs:element name="createProfileResponse" type="tns:createProfileResponse"/>
             <xs:element name="createProfileWithPreference" type="tns:createProfileWithPreference"/>
             <xs:element name="createProfileWithPreferenceResponse" type="tns:createProfileWithPreferenceResponse"/>
             <xs:element name="findAccountsByBCOLAccountNo" type="tns:findAccountsByBCOLAccountNo"/>
             <xs:element name="findAccountsByBCOLAccountNoResponse" type="tns:findAccountsByBCOLAccountNoResponse"/>
+            <xs:element name="findAccountsByBCRegAccountNo" type="tns:findAccountsByBCRegAccountNo"/>
+            <xs:element name="findAccountsByBCRegAccountNoResponse" type="tns:findAccountsByBCRegAccountNoResponse"/>
             <xs:element name="findAccountsByGuid" type="tns:findAccountsByGuid"/>
             <xs:element name="findAccountsByGuidResponse" type="tns:findAccountsByGuidResponse"/>
             <xs:element name="findAccountsByName" type="tns:findAccountsByName"/>
@@ -25,6 +29,8 @@
             <xs:element name="findAllExternalAgenciesResponse" type="tns:findAllExternalAgenciesResponse"/>
             <xs:element name="findBCOnlineProfiles" type="tns:findBCOnlineProfiles"/>
             <xs:element name="findBCOnlineProfilesResponse" type="tns:findBCOnlineProfilesResponse"/>
+            <xs:element name="findBCRegistryProfile" type="tns:findBCRegistryProfile"/>
+            <xs:element name="findBCRegistryProfileResponse" type="tns:findBCRegistryProfileResponse"/>
             <xs:element name="findClientsByNotifyFlag" type="tns:findClientsByNotifyFlag"/>
             <xs:element name="findClientsByNotifyFlagResponse" type="tns:findClientsByNotifyFlagResponse"/>
             <xs:element name="findEntitlementsByAgency" type="tns:findEntitlementsByAgency"/>
@@ -48,6 +54,8 @@
             <xs:element name="getAccount" type="tns:getAccount"/>
             <xs:element name="getAccountResponse" type="tns:getAccountResponse"/>
             <xs:element name="getClient" type="tns:getClient"/>
+            <xs:element name="getClientByGUID" type="tns:getClientByGUID"/>
+            <xs:element name="getClientByGUIDResponse" type="tns:getClientByGUIDResponse"/>
             <xs:element name="getClientResponse" type="tns:getClientResponse"/>
             <xs:element name="getClientsByRole" type="tns:getClientsByRole"/>
             <xs:element name="getClientsByRoleResponse" type="tns:getClientsByRoleResponse"/>
@@ -92,6 +100,7 @@
                     <xs:element minOccurs="0" name="agencyNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="authenticatedAccountGuid" type="xs:string"/>
                     <xs:element minOccurs="0" name="bcOnlineAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegAccountNo" type="xs:string"/>
                     <xs:element minOccurs="0" name="cityTxt" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="coaEfilingEntitlements" nillable="true" type="tns:efilingEntitlementAssignment"/>
                     <xs:element minOccurs="0" name="ctryDesc" type="xs:string"/>
@@ -124,18 +133,14 @@
                     <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="clientPrefixTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="clientStatusCd" type="xs:string"/>
-                    <xs:element minOccurs="0" name="emailTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entDtmText" type="xs:string"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="givenNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="internalClientNo" type="xs:string"/>
-                    <xs:element minOccurs="0" name="lastLoginDtm" type="xs:dateTime"/>
-                    <xs:element minOccurs="0" name="lastLoginDtmText" type="xs:string"/>
                     <xs:element minOccurs="0" name="middleNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="registeredCreditCardYnBoolean" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="registeredCreditCardYnText" type="xs:string"/>
-                    <xs:element minOccurs="0" name="serviceConditionsAcceptDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updDtmText" type="xs:string"/>
@@ -170,6 +175,16 @@
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="hasEntitlementYn" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findAccountsByBCRegAccountNo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findAccountsByBCRegAccountNoResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:account"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getClientsByRole">
@@ -263,14 +278,18 @@
                     <xs:element minOccurs="0" name="client" type="tns:client"/>
                     <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="clientPreference" type="tns:clientPreference"/>
+                    <xs:element minOccurs="0" name="emailTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="feeExemptYnBoolean" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="feeExemptYnText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="lastLoginDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="pendingCounselYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="priorBCOnlineAccountNo" type="xs:string"/>
                     <xs:element minOccurs="0" name="profileStatusCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="profileStatusCdDisplayName" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="roles" nillable="true" type="tns:roleAssignment"/>
+                    <xs:element minOccurs="0" name="serviceConditionsAcceptDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="useAccountCreditCardYnBoolean" type="xs:boolean"/>
@@ -357,6 +376,17 @@
                     <xs:element minOccurs="0" name="viewImageYn" type="xs:boolean"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="findBCRegistryProfile">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findBCRegistryProfileResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:clientProfile"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="findProfile">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
@@ -394,6 +424,10 @@
                     <xs:element minOccurs="0" name="arg1" type="tns:client"/>
                     <xs:element minOccurs="0" name="arg2" type="tns:clientPreference"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="arg3" type="tns:roleAssignment"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="createProfileWithPreferenceResponse">
@@ -406,6 +440,10 @@
                     <xs:element minOccurs="0" name="arg0" type="tns:account"/>
                     <xs:element minOccurs="0" name="arg1" type="tns:client"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="arg2" type="tns:roleAssignment"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="createAccountResponse">
@@ -443,6 +481,22 @@
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:clientProfile"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="createLinkedBCRegAccountClient">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:account"/>
+                    <xs:element minOccurs="0" name="arg1" type="tns:client"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg2" type="tns:roleAssignment"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createLinkedBCRegAccountClientResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:clientProfile"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="createEntitlements">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="tns:entitlement"/>
@@ -469,6 +523,10 @@
                     <xs:element minOccurs="0" name="arg0" type="tns:account"/>
                     <xs:element minOccurs="0" name="arg1" type="tns:client"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="arg2" type="tns:roleAssignment"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="createProfileResponse">
@@ -506,6 +564,16 @@
             <xs:complexType name="findProfilesResponse">
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:clientProfile"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getClientByGUID">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getClientByGUIDResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:client"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getNextAccountInternalKey">
@@ -595,6 +663,12 @@
     <wsdl:message name="getNextAccountInternalKeyResponse">
         <wsdl:part element="tns:getNextAccountInternalKeyResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="findAccountsByBCRegAccountNo">
+        <wsdl:part element="tns:findAccountsByBCRegAccountNo" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findAccountsByBCRegAccountNoResponse">
+        <wsdl:part element="tns:findAccountsByBCRegAccountNoResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="updateAccount">
         <wsdl:part element="tns:updateAccount" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -615,6 +689,9 @@
     </wsdl:message>
     <wsdl:message name="findAllExternalAgenciesResponse">
         <wsdl:part element="tns:findAllExternalAgenciesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findBCRegistryProfile">
+        <wsdl:part element="tns:findBCRegistryProfile" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findAccountsByNameResponse">
         <wsdl:part element="tns:findAccountsByNameResponse" name="parameters"></wsdl:part>
@@ -643,6 +720,9 @@
     <wsdl:message name="createEntitlementResponse">
         <wsdl:part element="tns:createEntitlementResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="createLinkedBCRegAccountClient">
+        <wsdl:part element="tns:createLinkedBCRegAccountClient" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="createEntitlements">
         <wsdl:part element="tns:createEntitlements" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -667,6 +747,9 @@
     <wsdl:message name="findProfiles">
         <wsdl:part element="tns:findProfiles" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getClientByGUID">
+        <wsdl:part element="tns:getClientByGUID" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getNextAccountInternalKey">
         <wsdl:part element="tns:getNextAccountInternalKey" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -684,6 +767,9 @@
     </wsdl:message>
     <wsdl:message name="findAccountsByBCOLAccountNo">
         <wsdl:part element="tns:findAccountsByBCOLAccountNo" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findBCRegistryProfileResponse">
+        <wsdl:part element="tns:findBCRegistryProfileResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findAllExternalAgencies">
         <wsdl:part element="tns:findAllExternalAgencies" name="parameters"></wsdl:part>
@@ -736,6 +822,9 @@
     <wsdl:message name="createProfileWithPreference">
         <wsdl:part element="tns:createProfileWithPreference" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getClientByGUIDResponse">
+        <wsdl:part element="tns:getClientByGUIDResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getClient">
         <wsdl:part element="tns:getClient" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -787,6 +876,9 @@
     <wsdl:message name="findClientsByNotifyFlag">
         <wsdl:part element="tns:findClientsByNotifyFlag" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="createLinkedBCRegAccountClientResponse">
+        <wsdl:part element="tns:createLinkedBCRegAccountClientResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:portType name="AccountFacadeBean">
         <wsdl:operation name="findAccountsByBCOLAccountNo">
             <wsdl:input message="tns:findAccountsByBCOLAccountNo" name="findAccountsByBCOLAccountNo"></wsdl:input>
@@ -796,6 +888,11 @@
         <wsdl:operation name="findAllExternalAgencies">
             <wsdl:input message="tns:findAllExternalAgencies" name="findAllExternalAgencies"></wsdl:input>
             <wsdl:output message="tns:findAllExternalAgenciesResponse" name="findAllExternalAgenciesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findAccountsByBCRegAccountNo">
+            <wsdl:input message="tns:findAccountsByBCRegAccountNo" name="findAccountsByBCRegAccountNo"></wsdl:input>
+            <wsdl:output message="tns:findAccountsByBCRegAccountNoResponse" name="findAccountsByBCRegAccountNoResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="getClientsByRole">
@@ -853,6 +950,11 @@
             <wsdl:output message="tns:findEntitlementsByAgencyResponse" name="findEntitlementsByAgencyResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="findBCRegistryProfile">
+            <wsdl:input message="tns:findBCRegistryProfile" name="findBCRegistryProfile"></wsdl:input>
+            <wsdl:output message="tns:findBCRegistryProfileResponse" name="findBCRegistryProfileResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="findProfile">
             <wsdl:input message="tns:findProfile" name="findProfile"></wsdl:input>
             <wsdl:output message="tns:findProfileResponse" name="findProfileResponse"></wsdl:output>
@@ -893,6 +995,10 @@
             <wsdl:output message="tns:findProfilesByLastNameResponse" name="findProfilesByLastNameResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="createLinkedBCRegAccountClient">
+            <wsdl:input message="tns:createLinkedBCRegAccountClient" name="createLinkedBCRegAccountClient"></wsdl:input>
+            <wsdl:output message="tns:createLinkedBCRegAccountClientResponse" name="createLinkedBCRegAccountClientResponse"></wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createEntitlements">
             <wsdl:input message="tns:createEntitlements" name="createEntitlements"></wsdl:input>
             <wsdl:output message="tns:createEntitlementsResponse" name="createEntitlementsResponse"></wsdl:output>
@@ -920,6 +1026,11 @@
         <wsdl:operation name="findProfiles">
             <wsdl:input message="tns:findProfiles" name="findProfiles"></wsdl:input>
             <wsdl:output message="tns:findProfilesResponse" name="findProfilesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getClientByGUID">
+            <wsdl:input message="tns:getClientByGUID" name="getClientByGUID"></wsdl:input>
+            <wsdl:output message="tns:getClientByGUIDResponse" name="getClientByGUIDResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="getNextAccountInternalKey">
@@ -991,12 +1102,12 @@
                 <soap:fault name="NestedEjbException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
-        <wsdl:operation name="getNextClientInternalKey">
+        <wsdl:operation name="findAccountsByBCRegAccountNo">
             <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="getNextClientInternalKey">
+            <wsdl:input name="findAccountsByBCRegAccountNo">
                 <soap:body use="literal"/>
             </wsdl:input>
-            <wsdl:output name="getNextClientInternalKeyResponse">
+            <wsdl:output name="findAccountsByBCRegAccountNoResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1009,6 +1120,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="updateAccountResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getNextClientInternalKey">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getNextClientInternalKey">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getNextClientInternalKeyResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1111,6 +1234,18 @@
                 <soap:fault name="NestedEjbException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="findBCRegistryProfile">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findBCRegistryProfile">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findBCRegistryProfileResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="findProfile">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="findProfile">
@@ -1207,6 +1342,15 @@
                 <soap:fault name="NestedEjbException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="createLinkedBCRegAccountClient">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="createLinkedBCRegAccountClient">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createLinkedBCRegAccountClientResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="createEntitlements">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="createEntitlements">
@@ -1270,6 +1414,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findProfilesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getClientByGUID">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getClientByGUID">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getClientByGUIDResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
