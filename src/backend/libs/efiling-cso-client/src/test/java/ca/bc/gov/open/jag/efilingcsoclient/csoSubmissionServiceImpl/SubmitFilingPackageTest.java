@@ -921,7 +921,7 @@ public class SubmitFilingPackageTest {
     @Test
     public void whenUpdatePaymentForServiceThrowsNestedEjbException_Exception() throws NestedEjbException_Exception {
 
-        Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).updateService(ArgumentMatchers.argThat(service -> service.getFeePaidYn().equals(String.valueOf(true))));
+        Mockito.doThrow(new NestedEjbException_Exception()).when(serviceFacadeBean).updateService(any());
         Service service = new Service();
         Mockito.when(serviceFacadeBean.addService(Mockito.any())).thenReturn(service);
 

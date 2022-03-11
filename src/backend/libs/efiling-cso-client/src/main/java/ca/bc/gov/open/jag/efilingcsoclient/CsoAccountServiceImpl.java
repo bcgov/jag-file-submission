@@ -64,7 +64,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
             Account account = setCreateAccountDetails(createAccountRequest);
             Client client = setCreateAccountClientDetails(createAccountRequest);
             List<RoleAssignment> roles = setCreateAccountRoles();
-            ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles);
+            ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles, CsoHelpers.date2XMLGregorian(new Date()), CsoHelpers.date2XMLGregorian(new Date()), "", "");
 
 
             if (null != clientProfile) {
@@ -167,12 +167,12 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
         client.setAuthoritativePartyId(Keys.IDENTITY_PROVIDERS.get(createAccountRequest.getIdentityProvider().toUpperCase()));
         client.setClientPrefixTxt("CS");
         client.setClientStatusCd("ACT");
-        client.setEmailTxt(createAccountRequest.getEmail());
+        //client.setEmailTxt(createAccountRequest.getEmail());
         client.setEntDtm(date);
         client.setGivenNm(createAccountRequest.getFirstName());
         client.setMiddleNm(createAccountRequest.getMiddleName());
         client.setRegisteredCreditCardYnBoolean(false);
-        client.setServiceConditionsAcceptDtm(date);
+        //client.setServiceConditionsAcceptDtm(date);
         client.setSurnameNm(createAccountRequest.getLastName());
 
         return client;
