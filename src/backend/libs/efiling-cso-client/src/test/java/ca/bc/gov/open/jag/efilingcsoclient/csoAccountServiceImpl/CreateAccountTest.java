@@ -199,12 +199,10 @@ public class CreateAccountTest {
         client.setAuthenticatedClientGuid(CsoHelpers.formatUserGuid(UNIVERSAL_ID));
         client.setClientPrefixTxt(CLIENT_PREFIX_TXT);
         client.setClientStatusCd(CLIENT_STATUS_CD);
-        //client.setEmailTxt(EMAIL);
         client.setEntDtm(CsoHelpers.date2XMLGregorian(DATE));
         client.setGivenNm(FIRST_NAME);
         client.setMiddleNm(MIDDLE_NAME);
         client.setRegisteredCreditCardYnBoolean(false);
-        //client.setServiceConditionsAcceptDtm(CsoHelpers.date2XMLGregorian(DATE));
         client.setSurnameNm(LAST_NAME);
 
         return client;
