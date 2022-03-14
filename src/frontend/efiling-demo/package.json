@@ -14,7 +14,7 @@
     "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
     "keycloak-js": "^15.1.0",
-    "node": "^17.3.0",
+    "node": "^17.7.1",
     "object-path": "^0.11.8",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.6",
