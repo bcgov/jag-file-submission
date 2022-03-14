@@ -171,12 +171,12 @@ jobs:
       - name: Configure keycloak (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: |
-          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up keycloak-config
+          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d --build keycloak keycloak-config
 
       - name: Configure keycloak (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: |
-          docker-compose up keycloak-config
+          docker-compose up -d --build keycloak keycloak-config
 
       - name: Running Integration Tests
         env:
