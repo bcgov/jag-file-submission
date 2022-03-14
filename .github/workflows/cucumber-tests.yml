@@ -135,7 +135,7 @@ jobs:
 
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
-        run: docker-compose pull -q --parallel redis clamav keycloak 
+        run: docker-compose pull -q --parallel --build redis clamav keycloak 
 
       - name: Standup Infra
         run: docker-compose up -d redis clamav keycloak 
