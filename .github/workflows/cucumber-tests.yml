@@ -138,7 +138,7 @@ jobs:
         run: docker-compose pull -q --parallel redis clamav keycloak 
 
       - name: Standup Infra
-        run: docker-compose up -d --build redis clamav keycloak 
+        run: docker-compose up --build redis clamav keycloak 
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -171,7 +171,7 @@ jobs:
       - name: Configure keycloak (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: |
-          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d --build keycloak keycloak-config
+          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up --build keycloak keycloak-config
 
       - name: Configure keycloak (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
