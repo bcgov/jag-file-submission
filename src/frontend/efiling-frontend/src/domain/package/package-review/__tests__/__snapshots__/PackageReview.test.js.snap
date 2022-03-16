@@ -952,7 +952,7 @@ Duis aute irure dolor.
                 <p>
                   CSO account 
                   <strong />
-                   is linked to your Basic BCeID account 
+                   is linked to your BC Services Card account 
                   <strong>
                     username
                   </strong>
@@ -1688,7 +1688,7 @@ exports[`PackageReview Component Reload 1`] = `
                 <p>
                   CSO account 
                   <strong />
-                   is linked to your Basic BCeID account 
+                   is linked to your BC Services Card account 
                   <strong>
                     username
                   </strong>
@@ -2424,7 +2424,7 @@ exports[`PackageReview Component Withdraw document network error 1`] = `
                 <p>
                   CSO account 
                   <strong />
-                   is linked to your Basic BCeID account 
+                   is linked to your BC Services Card account 
                   <strong>
                     username
                   </strong>

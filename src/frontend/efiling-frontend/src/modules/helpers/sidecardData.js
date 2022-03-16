@@ -34,12 +34,19 @@ const csoAccountDetails = () => {
   let username = getJWTData().preferred_username;
   username = username.substring(0, username.indexOf("@"));
 
+  let idp = "";
+  if (getJWTData().identityProviderAlias === "bcsc") {
+    idp = "BC Services Card";
+  } else {
+    idp = "Basic BCeID";
+  }
+
   return {
     heading: "Your CSO Account",
     content: [
       <p key="csoAccountDetails">
         CSO account <strong>{sessionStorage.getItem("csoAccountId")}</strong> is
-        linked to your Basic BCeID account&nbsp;
+        linked to your {idp} account&nbsp;
         <strong>{username}</strong>
         &nbsp;and will be used to file documents.&nbsp;
         <a
