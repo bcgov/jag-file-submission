@@ -35,7 +35,7 @@ const csoAccountDetails = () => {
   username = username.substring(0, username.indexOf("@"));
 
   let idp = "";
-  if (getJWTData().identityProviderAlias == "bcsc") {
+  if (getJWTData().identityProviderAlias === "bcsc") {
     idp = "BC Services Card";
   } else {
     idp = "Basic BCeID";
