@@ -40,16 +40,6 @@ describe("PackageConfirmation Component", () => {
 
   sessionStorage.setItem("listenerExists", true);
   sessionStorage.setItem("csoAccountId", "123");
-  const token = generateJWTToken({
-    preferred_username: "username@bceid",
-    realm_access: {
-      roles: ["rush_flag"],
-    },
-    email: "bobross@paintit.com",
-    family_name: "ross",
-    given_name: "bob",
-  });
-  localStorage.setItem("jwt", token);
   window.scrollTo = jest.fn();
 
   sessionStorage.setItem("validRushExit", "false");
@@ -60,6 +50,17 @@ describe("PackageConfirmation Component", () => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
     FileSaver.saveAs = jest.fn();
+
+    const token = generateJWTToken({
+      preferred_username: "username@bceid",
+      realm_access: {
+        roles: ["rush_flag"],
+      },
+      email: "bobross@paintit.com",
+      family_name: "ross",
+      given_name: "bob",
+    });
+    localStorage.setItem("jwt", token);
   });
 
   test("Matches the existing account snapshot", async () => {
@@ -478,5 +479,52 @@ describe("PackageConfirmation Component", () => {
     await waitFor(() => {});
 
     expect(queryByText("Rush")).not.toBeInTheDocument();
+  });
+
+  test("Sidecard displays BCeID info", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, {
+      documents,
+      court,
+      submissionFeeAmount,
+    });
+
+    const { getByText } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await act(() => promise);
+
+    expect(getByText(/BCeID/i)).toBeInTheDocument();
+  });
+
+  test("Sidecard displays BCSC info", async () => {
+    const promise = Promise.resolve();
+    mock.onGet(apiRequest).reply(200, {
+      documents,
+      court,
+      submissionFeeAmount,
+    });
+
+    const token = generateJWTToken({
+      preferred_username: "username@bceid",
+      email: "username@example.com",
+      identityProviderAlias: "bcsc",
+    });
+    localStorage.setItem("jwt", token);
+
+    const { getByText } = render(
+      <PackageConfirmation
+        packageConfirmation={packageConfirmation}
+        csoAccountStatus={csoAccountStatus}
+      />
+    );
+
+    await act(() => promise);
+
+    expect(getByText(/BC Services Card/i)).toBeInTheDocument();
   });
 });
