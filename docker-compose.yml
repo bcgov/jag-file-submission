@@ -136,7 +136,7 @@ services:
   # ###                                        KEYCLOAK                                       ###
   # #############################################################################################
   keycloak:
-    image: quay.io/keycloak/keycloak
+    image: quay.io/keycloak/keycloak:12.0.3
     environment:
       DB_VENDOR: H2
       KEYCLOAK_USER: admin
