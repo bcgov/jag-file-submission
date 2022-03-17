@@ -176,7 +176,7 @@ jobs:
       - name: Configure keycloak (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: |
-          docker-compose up -d keycloak-config
+          docker-compose up keycloak-config
 
       - name: Running Integration Tests
         env:
