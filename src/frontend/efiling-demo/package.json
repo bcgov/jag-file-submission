@@ -10,9 +10,9 @@
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.5.3",
     "browserslist": "^4.19.1",
-	"crypto-browserify": "^3.12.0",
+    "crypto-browserify": "^3.12.0",
     "history": "^5.0.0",
-	"https-browserify": "^1.0.0",
+    "https-browserify": "^1.0.0",
     "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
     "keycloak-js": "^15.1.0",
@@ -28,7 +28,7 @@
     "react-scripts": "^5.0.1",
     "regenerator-runtime": "^0.13.5",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.4/shared-components-1.2.4.tgz",
-	"stream": "^0.0.2",
+    "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "uuid": "^8.3.1"
@@ -79,8 +79,10 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "7.0.2",
     "@testing-library/user-event": "^13.1.1",
+    "assert": "^2.0.0",
     "axios-mock-adapter": "^1.18.1",
     "babel-loader": "8.2.3",
+    "buffer": "^6.0.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "^3.6.2",
@@ -93,10 +95,13 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest-environment-jsdom-sixteen": "^2.0.0",
     "jest-sonar-reporter": "^2.0.0",
+    "os-browserify": "^0.3.0",
     "prettier": "2.1.2",
     "pretty-quick": "^3.1.0",
-	"react-app-rewired": "^2.2.1",
-    "react-test-renderer": "^16.12.0"
+    "process": "^0.11.10",
+    "react-app-rewired": "^2.2.1",
+    "react-test-renderer": "^16.12.0",
+    "url": "^0.11.0"
   },
   "jest": {
     "watchPathIgnorePatterns": [
