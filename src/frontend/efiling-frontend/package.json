@@ -55,7 +55,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "jest --env=jest-environment-jsdom-sixteen",
+    "test": "jest --env='jsdom'",
     "eject": "react-app-rewired eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
