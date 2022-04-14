@@ -7,7 +7,8 @@ COPY ./package.json ./yarn.lock ./
 
 ENV NODE_ENV=production
 
-RUN yarn install
+RUN yarn install \
+    && yarn add --dev react-app-rewired
 
 COPY . .
 
