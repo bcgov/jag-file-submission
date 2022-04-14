@@ -10,7 +10,9 @@
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.5.3",
     "browserslist": "^4.19.1",
+	"crypto-browserify": "^3.12.0",
     "history": "^5.0.0",
+	"https-browserify": "^1.0.0",
     "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
     "keycloak-js": "^15.1.0",
@@ -26,11 +28,14 @@
     "react-scripts": "^5.0.1",
     "regenerator-runtime": "^0.13.5",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.4/shared-components-1.2.4.tgz",
+	"stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
     "uuid": "^8.3.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "jest --env='jsdom'",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
@@ -90,6 +95,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "prettier": "2.1.2",
     "pretty-quick": "^3.1.0",
+	"react-app-rewired": "^2.2.1",
     "react-test-renderer": "^16.12.0"
   },
   "jest": {
