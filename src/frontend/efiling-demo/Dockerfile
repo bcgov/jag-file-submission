@@ -7,7 +7,8 @@ WORKDIR /app
 
 COPY ./package.json ./yarn.lock ./
 
-RUN yarn install --production=true
+RUN yarn install --production=true \
+    && yarn add --dev react-app-rewired
 
 COPY . .
 
