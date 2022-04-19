@@ -281,15 +281,14 @@ describe("Payment Component", () => {
 
     fireEvent.click(getByRole(container, "checkbox"));
     fireEvent.click(getByText(container, "Submit"));
-    
-    //Why did splitting this fix the test?
+
+    // Why did splitting this fix the test?
     await waitFor(() => {});
 
     expect(window.open).toHaveBeenCalledWith(
-        "success.com?packageRef=packageRef",
-        "_self"
+      "success.com?packageRef=packageRef",
+      "_self"
     );
-
   });
 
   test("Sidecard displays rush info", async () => {
