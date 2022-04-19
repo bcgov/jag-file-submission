@@ -1,6 +1,7 @@
 /* eslint-disable no-promise-executor-return, import/no-named-as-default, import/no-named-as-default-member */
 import React from "react";
 import axios from "axios";
+import {setImmediate} from 'timers'
 import MockAdapter from "axios-mock-adapter";
 import {
   render,
