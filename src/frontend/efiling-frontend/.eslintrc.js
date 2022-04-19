@@ -32,7 +32,7 @@ module.exports = {
     "react/jsx-wrap-multilines": "off",
     "import/no-cycle": "off",
     "react/forbid-prop-types": "off",
-	"no-param-reassign": "off",
+    "no-param-reassign": "off",
     "prettier/prettier": [
       "error",
       {
