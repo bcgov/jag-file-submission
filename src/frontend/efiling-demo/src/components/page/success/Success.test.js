@@ -5,6 +5,7 @@ import Success from "./Success";
 
 const header = {
   name: "eFiling Demo Client",
+  history: new Object(),
   navigate: createMemoryHistory,
 };
 

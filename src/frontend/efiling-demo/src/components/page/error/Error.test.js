@@ -5,6 +5,7 @@ import Error from "./Error";
 
 const header = {
   name: "eFiling Demo Client",
+  history: new Object(),
   navigate: createMemoryHistory,
 };
 
