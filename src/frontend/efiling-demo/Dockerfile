@@ -8,7 +8,7 @@ WORKDIR /app
 COPY ./package.json ./yarn.lock ./
 
 RUN yarn install --production=true \
-    && yarn add --dev react-app-rewired
+    && yarn add --dev react-app-rewired # this line makes sure that react-app-rewired scripts will be in the PATH
 
 COPY . .
 
