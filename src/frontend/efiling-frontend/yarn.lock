@@ -13578,9 +13578,9 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.5/shared-components-1.2.5.tgz":
-  version "1.2.5"
-  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.5/shared-components-1.2.5.tgz#12b3187a0270a10c57becc497db54457a306d61a"
+"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.6/shared-components-1.2.6.tgz":
+  version "1.2.6"
+  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.6/shared-components-1.2.6.tgz#1e4c85c56026ae83a7c671c72e7b025fac399ae7"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
     bootstrap "^4.6.0"
@@ -13592,6 +13592,7 @@ shallowequal@^1.1.0:
     react-icons "^4.2.0"
     react-router-dom "^5.1.2"
     regenerator-runtime "^0.13.7"
+    storybook-addon-state "^1.0.3"
 
 shebang-command@^1.2.0:
   version "1.2.0"
@@ -13904,6 +13905,11 @@ store2@^2.12.0:
   version "2.13.1"
   resolved "https://registry.yarnpkg.com/store2/-/store2-2.13.1.tgz#fae7b5bb9d35fc53dc61cd262df3abb2f6e59022"
   integrity sha512-iJtHSGmNgAUx0b/MCS6ASGxb//hGrHHRgzvN+K5bvkBTN7A9RTpPSf1WSp+nPGvWCJ1jRnvY7MKnuqfoi3OEqg==
+
+storybook-addon-state@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/storybook-addon-state/-/storybook-addon-state-1.0.3.tgz#f7657c7acfb2ac2adcbdccdd2ba6d95ebddd90a7"
+  integrity sha512-0lpedSYu2xIlq4QK/8YH4Cuj6vt2p8iRCcJBb4JFxyLZ6RAMHFFkf072BKl4WrU1LfLq3/7SD4snvxRoTjvsvw==
 
 stream-browserify@^2.0.1:
   version "2.0.2"
