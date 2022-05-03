@@ -1781,6 +1781,7 @@ exports[`Upload Component successful document upload works as expected 1`] = `
                             id="dropdown"
                             name="options"
                           >
+                          
                             <option
                               value="Affidavit"
                             >
