@@ -15,7 +15,7 @@
     "history": "^5.0.0",
     "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
-    "keycloak-js": "^15.1.0",
+    "keycloak-js": "^18.0.0",
     "node": "^17.3.0",
     "object-path": "^0.11.8",
     "postcss-normalize": "^10.0.1",
