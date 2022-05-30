@@ -46,6 +46,8 @@
             <xs:element name="findProfilesByAnyNameResponse" type="tns:findProfilesByAnyNameResponse"/>
             <xs:element name="findProfilesByLastName" type="tns:findProfilesByLastName"/>
             <xs:element name="findProfilesByLastNameResponse" type="tns:findProfilesByLastNameResponse"/>
+            <xs:element name="findProfilesByNotifyFlag" type="tns:findProfilesByNotifyFlag"/>
+            <xs:element name="findProfilesByNotifyFlagResponse" type="tns:findProfilesByNotifyFlagResponse"/>
             <xs:element name="findProfilesForAccount" type="tns:findProfilesForAccount"/>
             <xs:element name="findProfilesForAccountResponse" type="tns:findProfilesForAccountResponse"/>
             <xs:element name="findProfilesForClient" type="tns:findProfilesForClient"/>
@@ -546,6 +548,14 @@
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:clientProfile"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="findProfilesByNotifyFlag">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="findProfilesByNotifyFlagResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:clientProfile"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="findProfilesForClient">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
@@ -705,6 +715,9 @@
     <wsdl:message name="findProfilesResponse">
         <wsdl:part element="tns:findProfilesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="findProfilesByNotifyFlagResponse">
+        <wsdl:part element="tns:findProfilesByNotifyFlagResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="findProfilesForAccountResponse">
         <wsdl:part element="tns:findProfilesForAccountResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -854,6 +867,9 @@
     </wsdl:message>
     <wsdl:message name="createProfile">
         <wsdl:part element="tns:createProfile" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findProfilesByNotifyFlag">
+        <wsdl:part element="tns:findProfilesByNotifyFlag" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findExternalAgencyByAgencyIdentifierCdResponse">
         <wsdl:part element="tns:findExternalAgencyByAgencyIdentifierCdResponse" name="parameters"></wsdl:part>
@@ -1016,6 +1032,11 @@
         <wsdl:operation name="findProfilesByAnyName">
             <wsdl:input message="tns:findProfilesByAnyName" name="findProfilesByAnyName"></wsdl:input>
             <wsdl:output message="tns:findProfilesByAnyNameResponse" name="findProfilesByAnyNameResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findProfilesByNotifyFlag">
+            <wsdl:input message="tns:findProfilesByNotifyFlag" name="findProfilesByNotifyFlag"></wsdl:input>
+            <wsdl:output message="tns:findProfilesByNotifyFlagResponse" name="findProfilesByNotifyFlagResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="findProfilesForClient">
@@ -1390,6 +1411,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findProfilesByAnyNameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findProfilesByNotifyFlag">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findProfilesByNotifyFlag">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findProfilesByNotifyFlagResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
