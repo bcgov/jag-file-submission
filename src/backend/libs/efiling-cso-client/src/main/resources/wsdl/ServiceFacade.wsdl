@@ -138,7 +138,15 @@
                 <xs:complexContent>
                     <xs:extension base="tns:processItem">
                         <xs:sequence>
+                            <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="accountNm" type="xs:string"/>
+                            <xs:element minOccurs="0" name="accountPrefixTxt" type="xs:string"/>
                             <xs:element minOccurs="0" name="approvedRefundAmt" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="bcRegAccountNo" type="xs:string"/>
+                            <xs:element minOccurs="0" name="bcRegEcommTransId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="clientReferenceTxt" type="xs:string"/>
+                            <xs:element minOccurs="0" name="detailDsc" type="xs:string"/>
                             <xs:element minOccurs="0" name="invoiceNo" type="xs:string"/>
                             <xs:element minOccurs="0" name="paymentType" type="xs:string"/>
                             <xs:element minOccurs="0" name="refundChangeReasonCd" type="xs:string"/>
@@ -146,6 +154,9 @@
                             <xs:element minOccurs="0" name="requestedRefundAmt" type="xs:decimal"/>
                             <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
                             <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceTransactions" nillable="true" type="tns:financialTransaction"/>
+                            <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
+                            <xs:element minOccurs="0" name="serviceTypeDsc" type="xs:string"/>
+                            <xs:element minOccurs="0" name="transactionAmt" type="xs:decimal"/>
                             <xs:element minOccurs="0" name="transactionDtm" type="xs:dateTime"/>
                         </xs:sequence>
                     </xs:extension>
