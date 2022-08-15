@@ -138,7 +138,15 @@
                 <xs:complexContent>
                     <xs:extension base="tns:processItem">
                         <xs:sequence>
+                            <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="accountNm" type="xs:string"/>
+                            <xs:element minOccurs="0" name="accountPrefixTxt" type="xs:string"/>
                             <xs:element minOccurs="0" name="approvedRefundAmt" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="bcRegAccountNo" type="xs:string"/>
+                            <xs:element minOccurs="0" name="bcRegEcommTransId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="clientReferenceTxt" type="xs:string"/>
+                            <xs:element minOccurs="0" name="detailDsc" type="xs:string"/>
                             <xs:element minOccurs="0" name="invoiceNo" type="xs:string"/>
                             <xs:element minOccurs="0" name="paymentType" type="xs:string"/>
                             <xs:element minOccurs="0" name="refundChangeReasonCd" type="xs:string"/>
@@ -146,6 +154,9 @@
                             <xs:element minOccurs="0" name="requestedRefundAmt" type="xs:decimal"/>
                             <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
                             <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceTransactions" nillable="true" type="tns:financialTransaction"/>
+                            <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
+                            <xs:element minOccurs="0" name="serviceTypeDsc" type="xs:string"/>
+                            <xs:element minOccurs="0" name="transactionAmt" type="xs:decimal"/>
                             <xs:element minOccurs="0" name="transactionDtm" type="xs:dateTime"/>
                         </xs:sequence>
                     </xs:extension>
@@ -179,6 +190,14 @@
                     <xs:element minOccurs="0" name="bcOnlineSequenceTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="bcOnlineServiceFeeAmt" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="bcOnlineTransactionTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryEcommerceTransactionId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="bcRegistryExistentYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="bcRegistryFeeCodeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryReturnCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryReturnMessageTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryServiceFeeAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="bcRegistryTransactionTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="creditCardTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="ecommerceTransactionId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
@@ -497,14 +516,18 @@
                     <xs:element minOccurs="0" name="client" type="tns:client"/>
                     <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="clientPreference" type="tns:clientPreference"/>
+                    <xs:element minOccurs="0" name="emailTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="feeExemptYnBoolean" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="feeExemptYnText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="lastLoginDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="pendingCounselYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="priorBCOnlineAccountNo" type="xs:string"/>
                     <xs:element minOccurs="0" name="profileStatusCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="profileStatusCdDisplayName" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="roles" nillable="true" type="tns:roleAssignment"/>
+                    <xs:element minOccurs="0" name="serviceConditionsAcceptDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="useAccountCreditCardYnBoolean" type="xs:boolean"/>
@@ -527,7 +550,9 @@
                     <xs:element minOccurs="0" name="agencyNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="authenticatedAccountGuid" type="xs:string"/>
                     <xs:element minOccurs="0" name="bcOnlineAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegAccountNo" type="xs:string"/>
                     <xs:element minOccurs="0" name="cityTxt" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="coaEfilingEntitlements" nillable="true" type="tns:efilingEntitlementAssignment"/>
                     <xs:element minOccurs="0" name="ctryDesc" type="xs:string"/>
                     <xs:element minOccurs="0" name="ctryId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="emailTxt" type="xs:string"/>
@@ -553,26 +578,30 @@
             <xs:complexType name="client">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="authenticatedClientGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authoritativePartyId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="bcOnlineClientNo" type="xs:string"/>
                     <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="clientPrefixTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="clientStatusCd" type="xs:string"/>
-                    <xs:element minOccurs="0" name="emailTxt" type="xs:string"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entDtmText" type="xs:string"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="givenNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="internalClientNo" type="xs:string"/>
-                    <xs:element minOccurs="0" name="lastLoginDtm" type="xs:dateTime"/>
-                    <xs:element minOccurs="0" name="lastLoginDtmText" type="xs:string"/>
                     <xs:element minOccurs="0" name="middleNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="registeredCreditCardYnBoolean" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="registeredCreditCardYnText" type="xs:string"/>
-                    <xs:element minOccurs="0" name="serviceConditionsAcceptDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
                     <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="updDtmText" type="xs:string"/>
                     <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="efilingEntitlementAssignment">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="divisionCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="levelCd" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="clientPreference">
