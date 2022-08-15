@@ -64,6 +64,7 @@ public class CsoAccountServiceImpl implements EfilingAccountService {
             Account account = setCreateAccountDetails(createAccountRequest);
             Client client = setCreateAccountClientDetails(createAccountRequest);
             List<RoleAssignment> roles = setCreateAccountRoles();
+            
             ClientProfile clientProfile = accountFacadeBean.createAccount(account, client, roles, CsoHelpers.date2XMLGregorian(new Date()), CsoHelpers.date2XMLGregorian(new Date()), createAccountRequest.getEmail(), null);
 
             if (null != clientProfile) {
