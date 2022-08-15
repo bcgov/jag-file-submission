@@ -974,6 +974,7 @@
                     <xs:element minOccurs="0" name="documentId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="documentStatusTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="feeAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="largeFile" type="xs:boolean"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="omittedDocuments" nillable="true" type="tns:civilDocument"/>
                     <xs:element minOccurs="0" name="packageId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="server" type="xs:string"/>
