@@ -60,7 +60,7 @@ public class CreateAccountTest {
 
         MockitoAnnotations.openMocks(this);
         accountDetailsMapperMock = new AccountDetailsMapperImpl();
-        Mockito.when(accountFacadeBeanMock.createAccount(any(), any(), any(), any(), any(), any(), any())).thenReturn(createClientProfile());
+        Mockito.when(accountFacadeBeanMock.createAccount(any(), any(), any())).thenReturn(createClientProfile());
 
         RegisteredRole fileRole = new RegisteredRole();
         fileRole.setCode(REGISTERED_CLIENT_ROLE_CD2);
@@ -153,7 +153,7 @@ public class CreateAccountTest {
     @Test
     @DisplayName("Facade throws exception")
     public void withValidValuesFacadeThrowsException() throws NestedEjbException_Exception {
-        Mockito.when(accountFacadeBeanMock.createAccount(any(), any(), any(), any(), any(), any(), any())).thenThrow(NestedEjbException_Exception.class);
+        Mockito.when(accountFacadeBeanMock.createAccount(any(), any(), any())).thenThrow(NestedEjbException_Exception.class);
         Assertions.assertThrows(EfilingAccountServiceException.class, () -> sut.createAccount(createAccountRequest()));
     }
 
@@ -200,9 +200,11 @@ public class CreateAccountTest {
         client.setClientPrefixTxt(CLIENT_PREFIX_TXT);
         client.setClientStatusCd(CLIENT_STATUS_CD);
         client.setEntDtm(CsoHelpers.date2XMLGregorian(DATE));
+        client.setEmailTxt(EMAIL);
         client.setGivenNm(FIRST_NAME);
         client.setMiddleNm(MIDDLE_NAME);
         client.setRegisteredCreditCardYnBoolean(false);
+        client.setServiceConditionsAcceptDtm(CsoHelpers.date2XMLGregorian(DATE));
         client.setSurnameNm(LAST_NAME);
 
         return client;
