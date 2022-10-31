@@ -1525,6 +1525,8 @@ definitions:
         type: string
       cvd_result:
         type: string
+      card_bin:
+        type: string
       avs:
         $ref: "#/definitions/AvsResponse"
   AvsResponse:
