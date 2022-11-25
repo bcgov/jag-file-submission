@@ -1,5 +1,6 @@
 # Deploy an artifact onto Dev, Test, or Prod
-name: "Promote ${{ github.event.inputs.application }}"
+name: Promote
+run-name: "Promote ${{ github.event.inputs.application }}"
 on:
   workflow_dispatch:
     inputs:
