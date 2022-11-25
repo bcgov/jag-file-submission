@@ -30,7 +30,7 @@ on:
           - prod
 
 jobs:
-  wait_for_approval:
+  approval:
     name: "Wait for approval to deploy onto ${{ github.event.inputs.environment }}"
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
@@ -41,6 +41,8 @@ jobs:
           to ${{ github.event.inputs.environment }} was approved."
 
   promote_image:
+    needs:
+      - approval
     uses: SierraSystems/reusable-workflows/.github/workflows/openshift-tag-image.yml@main
     with:
       image_stream_name: "${{ github.event.inputs.application }}"
