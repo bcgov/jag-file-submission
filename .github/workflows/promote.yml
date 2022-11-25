@@ -1,6 +1,8 @@
 # Deploy an artifact onto Dev, Test, or Prod
 name: Promote
-run-name: "Promoting ${{ github.event.inputs.application }}: ${{ github.event.inputs.source_image_tag }} to ${{ github.event.inputs.environment }}"
+run-name: |-
+  Promoting the image ${{ github.event.inputs.application }}:${{ github.event.inputs.source_image_tag }} 
+  to ${{ github.event.inputs.environment }}
 on:
   workflow_dispatch:
     inputs:
