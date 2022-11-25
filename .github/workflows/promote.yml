@@ -3,6 +3,7 @@ name: Promote
 run-name: |-
   Promoting the image ${{ github.event.inputs.application }}:${{ github.event.inputs.source_image_tag }} 
   to ${{ github.event.inputs.environment }}
+
 on:
   workflow_dispatch:
     inputs:
@@ -30,6 +31,7 @@ on:
 
 jobs:
   promote_image:
+    environment: ${{ github.event.inputs.environment }}
     uses: SierraSystems/reusable-workflows/.github/workflows/openshift-tag-image.yml@main
     with:
       image_stream_name: "${{ github.event.inputs.application }}"
