@@ -6,7 +6,7 @@ public class DeleteSubmissionDocumentRequest extends FilingPackageRequest {
     private String documentId;
 
     public DeleteSubmissionDocumentRequest(BigDecimal clientId, BigDecimal packageNo, String parentApplication, String documentId) {
-        super(clientId, packageNo, parentApplication);
+        super(clientId, null, packageNo, parentApplication);
         this.documentId = documentId;
     }
 
