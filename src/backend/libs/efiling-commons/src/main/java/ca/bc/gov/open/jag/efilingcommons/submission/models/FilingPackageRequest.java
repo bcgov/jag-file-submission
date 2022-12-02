@@ -5,11 +5,13 @@ import java.math.BigDecimal;
 public class FilingPackageRequest {
 
     private BigDecimal clientId;
+    private BigDecimal accountId;
     private BigDecimal packageNo;
     private String parentApplication;
 
-    public FilingPackageRequest(BigDecimal clientId, BigDecimal packageNo, String parentApplication) {
+    public FilingPackageRequest(BigDecimal clientId, BigDecimal accountId, BigDecimal packageNo, String parentApplication) {
         this.clientId = clientId;
+        this.accountId = accountId;
         this.packageNo = packageNo;
         this.parentApplication = parentApplication;
     }
@@ -23,4 +25,9 @@ public class FilingPackageRequest {
     }
 
     public String getParentApplication() { return parentApplication; }
+
+    public BigDecimal getAccountId() {
+        return accountId;
+    }
+
 }
