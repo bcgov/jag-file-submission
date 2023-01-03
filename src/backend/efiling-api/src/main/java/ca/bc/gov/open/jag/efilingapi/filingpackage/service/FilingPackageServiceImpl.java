@@ -218,7 +218,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
 
         if (accountDetails.getClientId() == null) return Optional.empty();
 
-        return Optional.of(new FilingPackageRequest(accountDetails.getClientId(), packageNumber, parentApplication));
+        return Optional.of(new FilingPackageRequest(accountDetails.getClientId(), accountDetails.getAccountId(), packageNumber, parentApplication));
 
     }
 
