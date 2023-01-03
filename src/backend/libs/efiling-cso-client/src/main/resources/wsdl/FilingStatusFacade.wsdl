@@ -53,7 +53,8 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="hasThePackagePrivilegeResponse">
@@ -233,7 +234,8 @@
             <xs:complexType name="findStatusByClientId">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findStatusByClientIdResponse">
@@ -485,12 +487,13 @@
                     <xs:element minOccurs="0" name="arg6" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg7" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg8" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="arg9" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg9" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg10" type="xs:string"/>
-                    <xs:element minOccurs="0" name="arg11" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg11" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg12" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="arg13" type="xs:dateTime"/>
-                    <xs:element minOccurs="0" name="arg14" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg13" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg14" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg15" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findStatusBySearchCriteriaResponse">
