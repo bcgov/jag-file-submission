@@ -69,9 +69,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
         try {
 
             logger.info("Calling soap findStatusBySearchCriteria by client id and package service ");
-
+            //Is account ID required? It is the variable after client ID
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.ONE, null, null);
+                    .findStatusBySearchCriteria(null, null, null, null, null, null, filingPackageRequest.getPackageNo(), filingPackageRequest.getClientId(), filingPackageRequest.getAccountId(), null, null, null, null, BigDecimal.ONE, null, null);
 
             if (filingStatus.getFilePackages() == null || filingStatus.getFilePackages().isEmpty()) return Optional.empty();
 
@@ -106,9 +106,9 @@ public class CsoReviewServiceImpl implements EfilingReviewService {
 
             DateTime endDate = DateTime.now();
             DateTime startDate = endDate.minusYears(1);
-
+            //Is account ID required? It is the variable after client ID
             FilingStatus filingStatus = filingStatusFacadeBean
-                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), null, null, null, null, BigDecimal.valueOf(100), null, filingPackageRequest.getParentApplication());
+                    .findStatusBySearchCriteria(null, null, null, DateUtils.getXmlDate(startDate), DateUtils.getXmlDate(endDate), null , null, filingPackageRequest.getClientId(), filingPackageRequest.getAccountId(), null, null, null, null, BigDecimal.valueOf(100), null, filingPackageRequest.getParentApplication());
 
             if (filingStatus.getFilePackages().isEmpty()) return new ArrayList<>();
 
