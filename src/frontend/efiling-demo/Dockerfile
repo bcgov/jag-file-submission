@@ -1,8 +1,6 @@
 # pull official base image
 FROM node:16-alpine as build
 
-ARG SERVICE_NAME
-
 WORKDIR /app
 
 COPY ./package.json ./yarn.lock ./
