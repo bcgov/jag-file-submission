@@ -167,34 +167,6 @@ services:
       - "3310:3310"
     networks:
       - fisu-net
- 
-  #############################################################################################
-  ###                                 MAIL HOG                                              ###
-  #############################################################################################
-  mailhog:
-    image: "mailhog/mailhog"
-    ports:
-      - "8025:8025"
-      - "1025:1025"
-    networks:
-      - fisu-net 
-
-  #############################################################################################
-  ###                             JAG MAIL IT                                               ###
-  #############################################################################################
-  mail-it:
-    build:
-      context: https://github.com/bcgov/jag-mail-it.git#main:src
-    ports:
-      - "8099:8080"
-    environment:
-      - JMT_SPRING_REDIS_PORT=6379
-      - JMT_SPRING_REDIS_HOST=redis
-      - JMT_SPRING_REDIS_PASSWORD=admin
-      - JMT_SPRING_EMAIL_HOST=mailhog
-      - JMT_SPRING_EMAIL_PORT=1025
-    networks:
-        - fisu-net
 
 volumes:
   data-redis:
