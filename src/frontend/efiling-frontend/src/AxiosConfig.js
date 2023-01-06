@@ -3,7 +3,7 @@ import { REACT_APP_API_BASE_URL } from "./EnvConfig";
 
 const api = axios.create({
   baseURL: `${REACT_APP_API_BASE_URL}`,
-  timeout: 600000,
+  timeout: 750000,
 });
 
 api.interceptors.request.use((request) => {

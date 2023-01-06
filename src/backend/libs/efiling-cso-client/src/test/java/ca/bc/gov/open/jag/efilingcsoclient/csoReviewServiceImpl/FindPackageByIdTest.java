@@ -61,6 +61,7 @@ public class FindPackageByIdTest {
     private EfilingLookupService efilingLookupService;
 
     private final BigDecimal SUCCESS_CLIENT = BigDecimal.ONE;
+
     private final BigDecimal SUCCESS_PACKAGE = BigDecimal.ONE;
 
     private final BigDecimal SUCCESS_REJECTED_CLIENT = BigDecimal.valueOf(11);
@@ -74,6 +75,8 @@ public class FindPackageByIdTest {
 
     private final BigDecimal NOTFOUND_CLIENT = BigDecimal.ZERO;
     private final BigDecimal NOTFOUND_PACKAGE = BigDecimal.ZERO;
+
+    private final BigDecimal ACCOUNT = BigDecimal.ONE;
 
     private static CsoReviewServiceImpl sut;
 
@@ -104,15 +107,15 @@ public class FindPackageByIdTest {
         rejectedFilePackage.getFiles().add(documentComplete);
         filingCompleteStatus.getFilePackages().add(completeFilePackage);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_PACKAGE), ArgumentMatchers.eq(SUCCESS_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingStatus);
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_PACKAGE), ArgumentMatchers.eq(SUCCESS_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingStatus);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_REJECTED_PACKAGE), ArgumentMatchers.eq(SUCCESS_REJECTED_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingRejectedStatus);
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_REJECTED_PACKAGE), ArgumentMatchers.eq(SUCCESS_REJECTED_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingRejectedStatus);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_COMPLETE_PACKAGE), ArgumentMatchers.eq(SUCCESS_COMPLETE_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingCompleteStatus);
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_COMPLETE_PACKAGE), ArgumentMatchers.eq(SUCCESS_COMPLETE_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingCompleteStatus);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(NOTFOUND_PACKAGE), ArgumentMatchers.eq(NOTFOUND_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenReturn(createFilingStatus());
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(NOTFOUND_PACKAGE), ArgumentMatchers.eq(NOTFOUND_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(createFilingStatus());
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
         Mockito.when(efilingLookupService.getCountries()).thenReturn(createCountryList());
 
@@ -126,7 +129,7 @@ public class FindPackageByIdTest {
     @Test
     public void testWithFoundResult() throws DatatypeConfigurationException {
 
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, SUCCESS_PACKAGE, null));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_CLIENT, ACCOUNT, SUCCESS_PACKAGE, null));
 
         Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
         Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
@@ -153,7 +156,7 @@ public class FindPackageByIdTest {
     @Test
     public void testWithFoundResultRejected() throws DatatypeConfigurationException {
 
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_REJECTED_CLIENT, SUCCESS_REJECTED_PACKAGE, null));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_REJECTED_CLIENT, ACCOUNT, SUCCESS_REJECTED_PACKAGE, null));
 
         Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
         Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
@@ -180,7 +183,7 @@ public class FindPackageByIdTest {
     @Test
     public void testWithFoundResultComplete() throws DatatypeConfigurationException {
 
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_COMPLETE_CLIENT, SUCCESS_COMPLETE_PACKAGE, null));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(SUCCESS_COMPLETE_CLIENT, ACCOUNT, SUCCESS_COMPLETE_PACKAGE, null));
 
         Assertions.assertEquals(COURT_FILE_NO, result.get().getCourt().getFileNumber());
         Assertions.assertEquals(COURT_CLASS_CD, result.get().getCourt().getCourtClass());
@@ -207,7 +210,7 @@ public class FindPackageByIdTest {
     @Test
     public void testWithNoResult() {
 
-        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, NOTFOUND_PACKAGE, null));
+        Optional<ReviewFilingPackage> result = sut.findStatusByPackage(new FilingPackageRequest(NOTFOUND_CLIENT, ACCOUNT, NOTFOUND_PACKAGE, null));
         Assertions.assertFalse(result.isPresent());
 
     }
@@ -215,7 +218,7 @@ public class FindPackageByIdTest {
     @DisplayName("Exception: filing status facade throws an exception")
     @Test
     public void testWithException() {
-        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByPackage(new FilingPackageRequest(EXCEPTION_CLIENT, EXCEPTION_PACKAGE, null)));
+        Assertions.assertThrows(EfilingStatusServiceException.class, () -> sut.findStatusByPackage(new FilingPackageRequest(EXCEPTION_CLIENT, ACCOUNT, EXCEPTION_PACKAGE, null)));
     }
 
     private FilingStatus createFilingStatus() {
