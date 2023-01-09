@@ -61,6 +61,7 @@
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+	"audit:fix": "npx yarn-audit-fix",
     "coverage": "jest --coverage --env='jsdom'",
     "precommit": "pretty-quick --staged"
   },
@@ -115,7 +116,8 @@
     "pretty-quick": "^3.1.0",
     "react-app-rewired": "^2.2.1",
     "react-test-renderer": "^16.12.0",
-    "sass": "^1.44.0"
+    "sass": "^1.44.0",
+    "yarn-audit-fix": "^9.3.7"
   },
   "resolutions": {
     "immer": "^9.0.6",

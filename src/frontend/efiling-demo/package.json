@@ -40,6 +40,7 @@
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+	"audit:fix": "npx yarn-audit-fix",
     "coverage": "jest --coverage --env='jsdom'",
     "precommit": "pretty-quick --staged"
   },
