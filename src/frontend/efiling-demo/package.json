@@ -40,7 +40,7 @@
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-	"audit:fix": "npx yarn-audit-fix",
+    "audit:fix": "npx yarn-audit-fix",
     "coverage": "jest --coverage --env='jsdom'",
     "precommit": "pretty-quick --staged"
   },
@@ -105,7 +105,8 @@
     "react-test-renderer": "^16.12.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "yarn-audit-fix": "^9.3.7"
   },
   "jest": {
     "watchPathIgnorePatterns": [
