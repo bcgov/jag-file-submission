@@ -483,6 +483,7 @@ paths:
       description: get filing package details from cso
       tags:
         - filingPackages
+        - clientEndpoints
       parameters:
         - $ref: "#/components/parameters/packageIdentifier"
       responses:
@@ -562,6 +563,7 @@ paths:
       description: get registry notice file from cso
       tags:
         - filingPackages
+        - clientEndpoints
       parameters:
         - $ref: "#/components/parameters/packageIdentifier"
       responses:
