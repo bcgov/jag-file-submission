@@ -75,7 +75,7 @@
     "@storybook/preset-create-react-app": "^4.0.0",
     "@storybook/react": "^6.4.19",
     "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.6",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "7.0.2",
     "@testing-library/user-event": "^13.1.1",
     "assert": "^2.0.0",
