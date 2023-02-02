@@ -107,15 +107,15 @@ public class FindPackageByIdTest {
         rejectedFilePackage.getFiles().add(documentComplete);
         filingCompleteStatus.getFilePackages().add(completeFilePackage);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_PACKAGE), ArgumentMatchers.eq(SUCCESS_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingStatus);
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_PACKAGE), ArgumentMatchers.eq(SUCCESS_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingStatus);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_REJECTED_PACKAGE), ArgumentMatchers.eq(SUCCESS_REJECTED_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingRejectedStatus);
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_REJECTED_PACKAGE), ArgumentMatchers.eq(SUCCESS_REJECTED_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingRejectedStatus);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_COMPLETE_PACKAGE), ArgumentMatchers.eq(SUCCESS_COMPLETE_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingCompleteStatus);
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(SUCCESS_COMPLETE_PACKAGE), ArgumentMatchers.eq(SUCCESS_COMPLETE_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(filingCompleteStatus);
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(NOTFOUND_PACKAGE), ArgumentMatchers.eq(NOTFOUND_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(createFilingStatus());
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(NOTFOUND_PACKAGE), ArgumentMatchers.eq(NOTFOUND_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(createFilingStatus());
 
-        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
+        Mockito.when(filingStatusFacadeBean.findStatusBySearchCriteria(any(), any(), any(), any(), any(), any(), any(), ArgumentMatchers.eq(EXCEPTION_PACKAGE), ArgumentMatchers.eq(EXCEPTION_CLIENT), any(), any(), any(), any(), any(), any(), any(), any())).thenThrow(new NestedEjbException_Exception());
 
         Mockito.when(efilingLookupService.getCountries()).thenReturn(createCountryList());
 
