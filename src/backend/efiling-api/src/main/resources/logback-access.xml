@@ -1,10 +1,17 @@
 <configuration>
-
     <appender name="STDOUT"
               class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.access.PatternLayout">
             <Pattern>combined</Pattern>
         </layout>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator class="ch.qos.logback.access.net.URLEvaluator">
+                <URL>/health</URL>
+                <!-- add more URLs as needed -->
+            </evaluator>
+            <OnMismatch>NEUTRAL</OnMismatch>
+            <OnMatch>DENY</OnMatch>
+        </filter>
     </appender>
 
     <appender-ref ref="STDOUT" />
