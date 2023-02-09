@@ -256,6 +256,7 @@ public class SubmissionServiceImpl implements SubmissionService {
                         .serverFileName(MessageFormat.format("fh_{0}_{1}_{2}",submissionKey.getSubmissionId(), submissionKey.getTransactionId(), initialDocument.getName()))
                         .mimeType(FileUtils.guessContentTypeFromName(initialDocument.getName()))
                         .isAmendment(initialDocument.getIsAmendment())
+                        .documentId(initialDocument.getDocumentId())
                         .isSupremeCourtScheduling(initialDocument.getIsSupremeCourtScheduling())
                         .actionDocument(
                                 setActionDocument(initialDocument.getActionDocument())
