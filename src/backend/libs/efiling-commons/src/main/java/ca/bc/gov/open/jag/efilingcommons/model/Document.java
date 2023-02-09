@@ -16,6 +16,7 @@ public class Document {
     private String description;
     private BigDecimal statutoryFeeAmount;
     private String mimeType;
+    private String documentId;
     private String serverFileName;
     private ActionDocument actionDocument;
 
@@ -29,6 +30,7 @@ public class Document {
                     @JsonProperty("description") String description,
                     @JsonProperty("statutoryFeeAmount") BigDecimal statutoryFeeAmount,
                     @JsonProperty("mimeType") String mimeType,
+                    @JsonProperty("documentId") String documentId,
                     @JsonProperty("serverFileName") String serverFileName,
                     @JsonProperty("actionDocument") ActionDocument actionDocument) {
         this.name = name;
@@ -40,6 +42,7 @@ public class Document {
         this.description = description;
         this.statutoryFeeAmount = statutoryFeeAmount;
         this.mimeType = mimeType;
+        this.documentId = documentId;
         this.serverFileName = serverFileName;
         this.actionDocument = actionDocument;
     }
@@ -54,6 +57,7 @@ public class Document {
         this.description = builder.description;
         this.statutoryFeeAmount = builder.statutoryFeeAmount;
         this.mimeType = builder.mimeType;
+        this.documentId = builder.documentId;
         this.serverFileName = builder.serverFileName;
         this.actionDocument = builder.actionDocument;
     }
@@ -94,6 +98,10 @@ public class Document {
         return mimeType;
     }
 
+    public String getDocumentId() {
+        return documentId;
+    }
+
     public String getServerFileName() {
         return serverFileName;
     }
@@ -119,6 +127,7 @@ public class Document {
         private String description;
         private BigDecimal statutoryFeeAmount;
         private String mimeType;
+        private String documentId;
         private String serverFileName;
         private ActionDocument actionDocument;
 
@@ -164,6 +173,11 @@ public class Document {
 
         public Builder mimeType(String mimeType) {
             this.mimeType = mimeType;
+            return this;
+        }
+
+        public Builder documentId(String documentId) {
+            this.documentId = documentId;
             return this;
         }
 
