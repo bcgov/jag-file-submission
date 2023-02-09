@@ -34,6 +34,7 @@ public interface DocumentMapper {
     @Mapping(target = "milestones", source = "milestones")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")
+    @Mapping(target = "parentDocumentId", source = "document.documentId")
     CivilDocument toEfilingDocument(
             Integer index,
             Document document,
