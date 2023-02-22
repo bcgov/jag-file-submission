@@ -126,18 +126,27 @@ const rejectedDocuments = () => ({
   heading: "Rejected Documents",
   content: [
     <p key="rjctdDcmnts">
-      When directed by the court, an order will be processed on an urgent(rush)
-      basis. The registry will consider specific reasons for processing an order
-      on an urgent(rush) basis.
+      If you received a notification that your document(s) is rejected by the
+      court registry, you will need to ensure that you complete the following
+      steps. Review the Registry Notice which registry staff prepare which
+      explains the reason(s) for the rejection. The Registry Notice is located
+      on the Package Details screen. Make the required corrections or complete
+      any additional documents which may be required. Click the Resubmit
+      Documents button to upload the documents that you wish to resubmit.
     </p>,
     <p>
-      <b>
-        Only request processing on an urgent(rush) basis in exceptional
-        circumstances.
-      </b>
+      <b>Notes: </b>
+      You will be charged the $7.00 submission fee to resubmit the documents.
+      The registry will collect any statutory filing fee if the documents are
+      accepted.
     </p>,
     <p>
       <span className="file-href">Learn more about rejected documents.</span>
+    </p>,
+    <p>
+      There will be additional instructions for users when they click the Learn
+      more about rejected documents but this will be based in part on the
+      documentation provided for the parent apps.
     </p>,
   ],
   type: "bluegrey",

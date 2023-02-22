@@ -297,8 +297,9 @@ export default function PackageConfirmation({
             </div>
             <div>
               <span>
-                Please ensure you have uploaded all required rejected documents.
-                If you still need to add documents use the upload link below.
+                Please ensure you have uploaded all documents required to
+                correct the issue(s) identified in the Registry Notice. If you
+                still need to add documents use the upload link below.
               </span>
             </div>
           </div>
