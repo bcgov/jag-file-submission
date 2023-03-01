@@ -77,12 +77,13 @@ const generatePackageData = (files, filingPackage) => {
       type: files[i].data.type,
       isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling,
       isAmendment: files[i].data.isAmendment,
+      documentId: uuidv4(),
       actionDocument: {
         id: files[i].data.actionDocument.id,
         status: files[i].data.actionDocument.status,
         type: files[i].data.actionDocument.type,
       },
-      data: {},
+      data: { test: "somedata" },
       md5: document.md5,
     });
   }
