@@ -65,6 +65,7 @@ public interface DocumentMapper {
     @Mapping(target = "paymentStatusCd",  source = "paymentStatus")
     @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount", defaultValue = "0")
     @Mapping(target = "paymentSeqNo",  constant = "1")
+    @Mapping(target = "documentId", ignore = true)
     DocumentPayments toEfilingDocumentPayment(Document document, AccountDetails accountDetails, String paymentStatus);
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
