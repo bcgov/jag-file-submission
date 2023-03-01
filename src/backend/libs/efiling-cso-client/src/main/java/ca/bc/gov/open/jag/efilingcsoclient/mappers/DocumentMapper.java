@@ -73,6 +73,7 @@ public interface DocumentMapper {
     @Mapping(target = "statusDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "documentStatusTypeCd",  constant = Keys.SUBMISSION_DOCUMENT_STATUS_TYPE_CD)
     @Mapping(target = "documentStatusSeqNo",  constant = "1")
+    @Mapping(target = "documentId", ignore = true)
     DocumentStatuses toEfilingDocumentStatus(Document document, AccountDetails accountDetails);
 
     //Rush Processing Document
