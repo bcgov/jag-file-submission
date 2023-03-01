@@ -208,7 +208,7 @@ public class GenerateUrlRequestValidatorImplTest {
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         InitialPackage initialFilingPackage = new InitialPackage();
 
-        initialFilingPackage.setPackageIdentifier(EXISTING_PACKAGE);
+        initialFilingPackage.setPackageNumber(EXISTING_PACKAGE);
 
         CourtBase court = new CourtBase();
         court.setLevel(COURT_LEVEL);
@@ -790,7 +790,7 @@ public class GenerateUrlRequestValidatorImplTest {
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         InitialPackage initialFilingPackage = new InitialPackage();
 
-        initialFilingPackage.setPackageIdentifier(BigDecimal.TEN);
+        initialFilingPackage.setPackageNumber(BigDecimal.TEN);
 
         CourtBase court = new CourtBase();
         court.setLevel(COURT_LEVEL);
@@ -836,7 +836,7 @@ public class GenerateUrlRequestValidatorImplTest {
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         InitialPackage initialFilingPackage = new InitialPackage();
 
-        initialFilingPackage.setPackageIdentifier(EXISTING_PACKAGE);
+        initialFilingPackage.setPackageNumber(EXISTING_PACKAGE);
 
         CourtBase court = new CourtBase();
         court.setLevel(COURT_LEVEL);
@@ -882,7 +882,7 @@ public class GenerateUrlRequestValidatorImplTest {
         GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
         InitialPackage initialFilingPackage = new InitialPackage();
 
-        initialFilingPackage.setPackageIdentifier(EXISTING_PACKAGE);
+        initialFilingPackage.setPackageNumber(EXISTING_PACKAGE);
 
         CourtBase court = new CourtBase();
         court.setLevel(COURT_LEVEL);

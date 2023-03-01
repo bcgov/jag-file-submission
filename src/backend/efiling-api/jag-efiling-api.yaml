@@ -921,7 +921,7 @@ components:
         - documents
         - court
       properties:
-        packageIdentifier:
+        packageNumber:
           type: number
           description: Identifer of package that is being modified
         court:
