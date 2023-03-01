@@ -6,6 +6,7 @@ public class ReviewDocument {
     private DateTime dateFiled;
     private DateTime dateWithdrawn;
     private String documentId;
+    private String parentDocumentId;
     private String documentType;
     private String documentTypeCd;
     private String documentUploadStatusCd;
@@ -165,5 +166,13 @@ public class ReviewDocument {
     public Boolean getRushRequired() { return rushRequired; }
 
     public void setRushRequired(Boolean rushRequired) { this.rushRequired = rushRequired; }
+
+    public String getParentDocumentId() {
+        return parentDocumentId;
+    }
+
+    public void setParentDocumentId(String parentDocumentId) {
+        this.parentDocumentId = parentDocumentId;
+    }
 
 }
