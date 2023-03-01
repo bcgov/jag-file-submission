@@ -83,7 +83,6 @@ public interface DocumentMapper {
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
     @Mapping(target = "entDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "fileServer", source = "serverHost")
-    @Mapping(target = "documentId", ignore = true)
     ProcessSupportDocument toEfilingRushProcessingDocument(
             Integer index,
             Document document,
