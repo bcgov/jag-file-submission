@@ -829,51 +829,6 @@ public class GenerateUrlRequestValidatorImplTest {
 
     }
 
-    @Test
-    @DisplayName("error: returning submission with bad document number should return a error")
-    public void returningSubmissionWithBadDocumentShouldReturnError() {
-
-        GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
-        InitialPackage initialFilingPackage = new InitialPackage();
-
-        initialFilingPackage.setPackageNumber(EXISTING_PACKAGE);
-
-        CourtBase court = new CourtBase();
-        court.setLevel(COURT_LEVEL);
-        court.setCourtClass(COURT_CLASSIFICATION);
-        court.setLocation(CASE_1);
-        court.setFileNumber(FILE_NUMBER_SUCCESS);
-        initialFilingPackage.setCourt(court);
-
-        List<InitialDocument> documentList = new ArrayList<>();
-        InitialDocument initialDocument = new InitialDocument();
-        initialDocument.setType("ACMW");
-        ActionDocument actionDocument = new ActionDocument();
-        actionDocument.setId(BigDecimal.TEN);
-        initialDocument.setActionDocument(actionDocument);
-        documentList.add(initialDocument);
-        initialFilingPackage.setDocuments(documentList);
-
-        NavigationUrls navigationUrls = new NavigationUrls();
-        navigationUrls.setError("http://error");
-        navigationUrls.setCancel("http://cancel");
-        navigationUrls.setSuccess("http://success");
-        generateUrlRequest.setNavigationUrls(navigationUrls);
-
-        List<Individual> parties = new ArrayList<>();
-        Individual party = new Individual();
-        party.setRoleType(Individual.RoleTypeEnum.APP);
-        party.setLastName(LAST_NAME);
-        initialFilingPackage.setParties(parties);
-
-        generateUrlRequest.setFilingPackage(initialFilingPackage);
-        Notification actual = sut.validate(generateUrlRequest, APPLICATION_CODE, "");
-
-        Assertions.assertTrue(actual.hasError());
-
-        Assertions.assertEquals("Document id 10 is not present", actual.getErrors().get(0));
-
-    }
 
     @Test
     @DisplayName("error: returning submission with no documents should return a error")
