@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ca.bc.gov.open.jag.efilingapi.Keys.COURTESY_CORRECTED_CODE;
-
 public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValidator {
 
     private final SubmissionService submissionService;
