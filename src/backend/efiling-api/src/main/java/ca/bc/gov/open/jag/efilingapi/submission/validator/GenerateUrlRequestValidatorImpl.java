@@ -76,7 +76,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         notification.addError(validateDocumentTypes(generateUrlRequest.getFilingPackage()));
 
         //Validate package number and document ids
-        if (generateUrlRequest.getFilingPackage().getPackageIdentifier() != null) {
+        if (generateUrlRequest.getFilingPackage().getPackageNumber() != null) {
             notification.addError(validateActionsRequired(generateUrlRequest, universalId));
         }
 
@@ -205,7 +205,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         List<String> result = new ArrayList<>();
 
-        Optional<FilingPackage> filingPackage = filingPackageService.getCSOFilingPackage(universalId, generateUrlRequest.getFilingPackage().getPackageIdentifier());
+        Optional<FilingPackage> filingPackage = filingPackageService.getCSOFilingPackage(universalId, generateUrlRequest.getFilingPackage().getPackageNumber());
 
         //Validate Package
         if (!filingPackage.isPresent()) {

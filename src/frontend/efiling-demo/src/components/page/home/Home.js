@@ -24,6 +24,7 @@ import "../page.css";
 import "./Home.css";
 
 const defaultJson = {
+  packageNumber: null,
   court: {
     location: "4801",
     level: "P",
