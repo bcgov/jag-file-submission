@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static ca.bc.gov.open.jag.efilingapi.Keys.COURTESY_CORRECTED_CODE;
+
 public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValidator {
 
     private final SubmissionService submissionService;
@@ -214,13 +216,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         }
 
         //Validate Documents
-        if (!generateUrlRequest.getFilingPackage().getDocuments().isEmpty()) {
-            for (InitialDocument document: generateUrlRequest.getFilingPackage().getDocuments()) {
-                if (filingPackage.get().getDocuments().stream().noneMatch(document1 -> document1.getIdentifier().equals(document.getActionDocument().getId().toPlainString()))) {
-                    result.add(MessageFormat.format("Document id {0} is not present", document.getActionDocument().getId()));
-                }
-            }
-        } else  {
+        if (generateUrlRequest.getFilingPackage().getDocuments().isEmpty()) {
             result.add("For given package there are no documents present");
         }
 
