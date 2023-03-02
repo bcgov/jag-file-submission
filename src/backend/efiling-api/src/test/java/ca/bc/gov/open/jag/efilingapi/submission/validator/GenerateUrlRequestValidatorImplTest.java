@@ -828,7 +828,7 @@ public class GenerateUrlRequestValidatorImplTest {
         Assertions.assertEquals("For given package number and universal id no record was found in cso", actual.getErrors().get(0));
 
     }
-    
+
 
     @Test
     @DisplayName("error: returning submission with no documents should return a error")
