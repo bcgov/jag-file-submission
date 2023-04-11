@@ -111,7 +111,7 @@ const eFilePackage = (
   if (filingPackage === null) {
     alert("The JSON you provided is invalid, please update and try again");
     return false;
-  } 
+  }
   setRequestHeaders(transactionId);
   const { formData, updatedUrlBody } = generatePackageData(
     files,
@@ -360,19 +360,18 @@ export default function Home({ page: { header } }) {
             label="Provide filing package JSON data:"
             onChange={(val) => {
               let parsedVal = null;
-              if (val === null || val === '') {
+              if (val === null || val === "") {
                 parsedVal = defaultJson;
               } else {
                 try {
                   parsedVal = JSON.parse(val);
                 } catch (e) {
-
+                  // empty
                 }
               }
               setFilingPackage(parsedVal);
             }}
-          >
-          </Textarea>
+          />
 
           <br />
           <br />
