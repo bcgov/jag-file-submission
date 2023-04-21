@@ -2,13 +2,14 @@ package ca.bc.gov.open.ui;
 
 import ca.bc.gov.open.jagFileSubmission.CommonUtils;
 import ca.bc.gov.open.jagFileSubmission.WebDriverManager;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
@@ -49,6 +50,10 @@ public class LoginBCID {
         element.sendKeys(bceidPASSWORD);
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("btnSubmit")));
         element.click();
+        //Login successfully
+        new WebDriverWait(driver, Duration.ofSeconds(50)).until(
+                ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), ' New Form ')]")));
+        System.out.println("Login successfully");
 
 
     }
