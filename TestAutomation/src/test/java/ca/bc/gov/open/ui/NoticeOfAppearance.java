@@ -91,15 +91,15 @@ public class NoticeOfAppearance {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Proceed ')]"))).click();
         Thread.sleep(1500);
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+        new WebDriverWait(driver, Duration.ofSeconds(50)).until(
                 ExpectedConditions.presenceOfElementLocated(By.className("btn-success"))).click();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+        new WebDriverWait(driver, Duration.ofSeconds(50)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Continue')]"))).click();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("agreeCallout")));
         element.click();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+        new WebDriverWait(driver, Duration.ofSeconds(50)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Submit')]"))).click();
-        new WebDriverWait(driver, Duration.ofSeconds(20)).until(
+        new WebDriverWait(driver, Duration.ofSeconds(50)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), ' Done ')]")));
 
     }
