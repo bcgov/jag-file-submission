@@ -42,7 +42,7 @@ public class VerifyNoticeSubmitted {
                 By.xpath("/html/body/div/main/div/div/div/div[2]/div[2]/div[3]/div[2]/span"));
         String actualpackageID = e.getText();
 
-        System.out.println(actualpackageID);
+        System.out.println("packageID: " + actualpackageID);
 
         //Click Done
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
