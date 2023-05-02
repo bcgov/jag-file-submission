@@ -62,7 +62,6 @@ describe("Success", () => {
 
   test("Click on failure should redirect to efilinghub with error code 19", () => {
     global.open = jest.fn();
-    //global.window = { location: { pathname: null } };
 
     const { getByText } = render(
       <MemoryRouter
