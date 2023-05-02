@@ -15,7 +15,10 @@ jobs:
 
     name: Create, format and upload Javascript coverage artifact
     runs-on: ubuntu-latest
-    container: node:16.3.0-alpine
+     strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
 
