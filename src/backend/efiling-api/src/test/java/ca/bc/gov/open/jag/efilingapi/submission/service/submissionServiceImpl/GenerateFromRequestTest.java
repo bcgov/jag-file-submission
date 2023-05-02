@@ -275,7 +275,7 @@ public class GenerateFromRequestTest {
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
 
         InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourtBase(), TestHelpers.createInitialDocumentsList());
-        filingPackage.setPackageIdentifier(PACKAGE_IDENTIFIER);
+        filingPackage.setPackageNumber(PACKAGE_IDENTIFIER);
 
         ActionDocument actionDocument = new ActionDocument();
         actionDocument.setId(DOCUMENT_ID);
@@ -337,7 +337,7 @@ public class GenerateFromRequestTest {
         request.setNavigationUrls(TestHelpers.createDefaultNavigation());
 
         InitialPackage filingPackage = TestHelpers.createInitalPackage(TestHelpers.createApiCourtBase(), TestHelpers.createInitialDocumentsList());
-        filingPackage.setPackageIdentifier(PACKAGE_IDENTIFIER);
+        filingPackage.setPackageNumber(PACKAGE_IDENTIFIER);
 
         ActionDocument actionDocument = new ActionDocument();
         actionDocument.setId(DOCUMENT_ID);

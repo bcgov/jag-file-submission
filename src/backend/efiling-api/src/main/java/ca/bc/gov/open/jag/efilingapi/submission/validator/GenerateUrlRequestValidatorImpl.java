@@ -76,7 +76,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         notification.addError(validateDocumentTypes(generateUrlRequest.getFilingPackage()));
 
         //Validate package number and document ids
-        if (generateUrlRequest.getFilingPackage().getPackageIdentifier() != null) {
+        if (generateUrlRequest.getFilingPackage().getPackageNumber() != null) {
             notification.addError(validateActionsRequired(generateUrlRequest, universalId));
         }
 
@@ -205,7 +205,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
 
         List<String> result = new ArrayList<>();
 
-        Optional<FilingPackage> filingPackage = filingPackageService.getCSOFilingPackage(universalId, generateUrlRequest.getFilingPackage().getPackageIdentifier());
+        Optional<FilingPackage> filingPackage = filingPackageService.getCSOFilingPackage(universalId, generateUrlRequest.getFilingPackage().getPackageNumber());
 
         //Validate Package
         if (!filingPackage.isPresent()) {
@@ -214,13 +214,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
         }
 
         //Validate Documents
-        if (!generateUrlRequest.getFilingPackage().getDocuments().isEmpty()) {
-            for (InitialDocument document: generateUrlRequest.getFilingPackage().getDocuments()) {
-                if (filingPackage.get().getDocuments().stream().noneMatch(document1 -> document1.getIdentifier().equals(document.getActionDocument().getId().toPlainString()))) {
-                    result.add(MessageFormat.format("Document id {0} is not present", document.getActionDocument().getId()));
-                }
-            }
-        } else  {
+        if (generateUrlRequest.getFilingPackage().getDocuments().isEmpty()) {
             result.add("For given package there are no documents present");
         }
 
