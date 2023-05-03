@@ -93,6 +93,7 @@ public class NoticeOfAppearance {
         Thread.sleep(1500);
         new WebDriverWait(driver, Duration.ofSeconds(50)).until(
                 ExpectedConditions.presenceOfElementLocated(By.className("btn-success"))).click();
+        Thread.sleep(1000);
         new WebDriverWait(driver, Duration.ofSeconds(50)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Continue')]"))).click();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("agreeCallout")));
