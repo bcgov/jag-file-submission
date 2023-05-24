@@ -27,4 +27,23 @@ public class CommonUtils {
         }
     }
 
+    public static void loginEDivorce() throws Exception {
+
+        WebDriver driver = WebDriverManager.getDriver();
+        WebElement element = WebDriverManager.getElement();
+
+        if (Config.ENVIROMENT.equals(Constants.DEV)) {
+            driver.get("https://test.justice.gov.bc.ca/divorce/prequalification/step_01");
+            driver.navigate().to("https://test.justice.gov.bc.ca/divorce/prequalification/step_01");
+            driver.navigate().refresh();
+
+        } else if (Config.ENVIROMENT.equals(Constants.TST)) {
+            driver.get("");
+            driver.navigate().to("");
+            driver.navigate().refresh();
+        }
+
+    }
+
+
 }
