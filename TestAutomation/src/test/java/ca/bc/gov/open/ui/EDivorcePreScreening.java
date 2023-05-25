@@ -41,7 +41,7 @@ public class EDivorcePreScreening {
         //reset user
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Reset User')]"))).click();
-
+        Thread.sleep(1000);
         driver.switchTo().alert().accept();
 
         //Go E-Divorce page
