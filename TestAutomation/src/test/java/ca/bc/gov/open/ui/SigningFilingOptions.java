@@ -1,6 +1,8 @@
 package ca.bc.gov.open.ui;
 
 import ca.bc.gov.open.jagFileSubmission.WebDriverManager;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,15 +17,15 @@ public class SigningFilingOptions {
 
     private WebDriver driver;
 
-//    @After
-//    public void tearDown() {
-//        driver.close();
-//        driver.quit();
-//    }
-//    @AfterClass
-//    public static void afterClass() {
-//        WebDriverManager.instance = null;
-//    }
+    @After
+    public void tearDown() {
+        driver.close();
+        driver.quit();
+    }
+    @AfterClass
+    public static void afterClass() {
+        WebDriverManager.instance = null;
+    }
 
 
     @Test
@@ -54,6 +56,28 @@ public class SigningFilingOptions {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
                 ExpectedConditions.presenceOfElementLocated(By.linkText("Next"))).click();
         //Final Filing
+//        element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("court_file_number")));
+//        element.clear();
+//        element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("court_file_number")));
+//        element.sendKeys("22122022");
+//        element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("submitDocuments")));
+//        element.click();
+        //Pay
+//        new WebDriverWait(driver, Duration.ofSeconds(60)).until(
+//                ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Continue')]"))).click();
+//        element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("agreeCallout")));
+//        element.click();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                ExpectedConditions.presenceOfElementLocated(By.linkText("Next"))).click();
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                ExpectedConditions.presenceOfElementLocated(By.linkText("Next"))).click();
+//        new WebDriverWait(driver, Duration.ofSeconds(60)).until(
+//                ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Submit')]"))).click();
+//        new WebDriverWait(driver, Duration.ofSeconds(100)).until(
+//                ExpectedConditions.presenceOfElementLocated(By.linkText("Next"))).click();
+        new WebDriverWait(driver, Duration.ofSeconds(60)).until(
+                ExpectedConditions.presenceOfElementLocated(By.xpath("//*[contains(text(), 'Order a Certificate of Divorce')]")));
+
 
 
     }

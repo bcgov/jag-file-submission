@@ -42,8 +42,24 @@ public class CommonUtils {
             driver.navigate().to("");
             driver.navigate().refresh();
         }
-
     }
 
+    public static void FLA() throws Exception {
 
+        WebDriver driver = WebDriverManager.getDriver();
+        WebElement element = WebDriverManager.getElement();
+
+        if (Config.ENVIROMENT.equals(Constants.DEV)) {
+            driver.get("https://family-law-act-dev.apps.silver.devops.gov.bc.ca/apply-for-family-order/");
+            driver.navigate().to("https://family-law-act-dev.apps.silver.devops.gov.bc.ca/apply-for-family-order/");
+            driver.navigate().refresh();
+
+        } else if (Config.ENVIROMENT.equals(Constants.TST)) {
+            driver.get("https://family-law-act-test.apps.silver.devops.gov.bc.ca/apply-for-family-order/");
+            driver.navigate().to("https://family-law-act-test.apps.silver.devops.gov.bc.ca/apply-for-family-order/");
+            driver.navigate().refresh();
+        }
+
+    }
 }
+

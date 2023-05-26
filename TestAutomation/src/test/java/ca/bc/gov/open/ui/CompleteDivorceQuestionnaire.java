@@ -120,7 +120,7 @@ public class CompleteDivorceQuestionnaire {
 
         //Filing Location
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("court_registry_for_filing")));
-        element.sendKeys("Victoria");
+        element.sendKeys("Kelowna");
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(
                 ExpectedConditions.presenceOfElementLocated(By.linkText("Next"))).click();
         new WebDriverWait(driver, Duration.ofSeconds(60)).until(
@@ -189,7 +189,7 @@ public class CompleteDivorceQuestionnaire {
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("where_were_you_married_city")));
         element.clear();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("where_were_you_married_city")));
-        element.sendKeys("Victoria");
+        element.sendKeys("Kelowna");
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("where_were_you_married_prov")));
         element.clear();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("where_were_you_married_prov")));
@@ -222,7 +222,7 @@ public class CompleteDivorceQuestionnaire {
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_city_you")));
         element.clear();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_city_you")));
-        element.sendKeys("Victoria");
+        element.sendKeys("Kelowna");
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_prov_you")));
         element.clear();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_prov_you")));
@@ -242,7 +242,7 @@ public class CompleteDivorceQuestionnaire {
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_city_spouse")));
         element.clear();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_city_spouse")));
-        element.sendKeys("Victoria");
+        element.sendKeys("Kelowna");
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_prov_spouse")));
         element.clear();
         element = driverWait.until(ExpectedConditions.presenceOfElementLocated(By.name("address_to_send_official_document_prov_spouse")));
