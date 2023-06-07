@@ -1,0 +1,14 @@
+/target/
+.classpath
+.idea/
+.metadata/
+.project
+.settings/
+/bin/chromedriver.exe
+/bin/sqljdbc4-4.0.jar
+/src/main/resources/jdbc.properties
+/src/test/resources/jdbc.properties
+debug.log
+src/main/java/ca/epbc/ui/Config.java
+src/test/java/ca/epbc/ui/LoginAccountRecoveryEnv.java
+/src/

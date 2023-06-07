@@ -24,6 +24,7 @@ import "../page.css";
 import "./Home.css";
 
 const defaultJson = {
+  packageNumber: null,
   court: {
     location: "4801",
     level: "P",
@@ -77,12 +78,13 @@ const generatePackageData = (files, filingPackage) => {
       type: files[i].data.type,
       isSupremeCourtScheduling: files[i].data.isSupremeCourtScheduling,
       isAmendment: files[i].data.isAmendment,
+      documentId: uuidv4(),
       actionDocument: {
         id: files[i].data.actionDocument.id,
         status: files[i].data.actionDocument.status,
         type: files[i].data.actionDocument.type,
       },
-      data: {},
+      data: { test: "somedata" },
       md5: document.md5,
     });
   }
@@ -106,6 +108,10 @@ const eFilePackage = (
   setShowLoader
 ) => {
   if (files.length === 0) return false;
+  if (filingPackage === null) {
+    alert("The JSON you provided is invalid, please update and try again");
+    return false;
+  }
   setRequestHeaders(transactionId);
   const { formData, updatedUrlBody } = generatePackageData(
     files,
@@ -352,8 +358,21 @@ export default function Home({ page: { header } }) {
           <Textarea
             id="1"
             label="Provide filing package JSON data:"
-            onChange={(val) => setFilingPackage(JSON.parse(val))}
+            onChange={(val) => {
+              let parsedVal = null;
+              if (val === null || val === "") {
+                parsedVal = defaultJson;
+              } else {
+                try {
+                  parsedVal = JSON.parse(val);
+                } catch (e) {
+                  // empty
+                }
+              }
+              setFilingPackage(parsedVal);
+            }}
           />
+
           <br />
           <br />
           <Button

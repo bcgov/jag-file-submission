@@ -133,7 +133,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(0).getUpdUserId());
         Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(0));
 
-        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(1).getClientFileNm());
+        Assertions.assertEquals("Test1.pdf", result.get().getRushOrder().getSupportDocs().get(1).getClientFileNm());
         Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(1).getEntDtm());
         Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(1).getEntUserId());
         Assertions.assertEquals("www.google.com", result.get().getRushOrder().getSupportDocs().get(1).getFileServer());
@@ -242,7 +242,7 @@ public class EfilingReviewServiceDemoImplTest {
         Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(0).getUpdUserId());
         Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(0).getUpdDtm());
 
-        Assertions.assertEquals("Test.pdf", result.get().getRushOrder().getSupportDocs().get(1).getClientFileNm());
+        Assertions.assertEquals("Test1.pdf", result.get().getRushOrder().getSupportDocs().get(1).getClientFileNm());
         Assertions.assertNotNull(result.get().getRushOrder().getSupportDocs().get(1).getEntDtm());
         Assertions.assertEquals("1", result.get().getRushOrder().getSupportDocs().get(1).getEntUserId());
         Assertions.assertEquals("www.google.com",result.get().getRushOrder().getSupportDocs().get(1).getFileServer());

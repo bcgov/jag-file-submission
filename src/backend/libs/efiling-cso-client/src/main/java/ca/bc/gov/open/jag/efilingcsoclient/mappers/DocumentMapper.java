@@ -34,6 +34,7 @@ public interface DocumentMapper {
     @Mapping(target = "milestones", source = "milestones")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")
+    @Mapping(target = "parentDocumentId", source = "document.documentId")
     CivilDocument toEfilingDocument(
             Integer index,
             Document document,
@@ -64,6 +65,7 @@ public interface DocumentMapper {
     @Mapping(target = "paymentStatusCd",  source = "paymentStatus")
     @Mapping(target = "statutoryFeeAmt",  source = "document.statutoryFeeAmount", defaultValue = "0")
     @Mapping(target = "paymentSeqNo",  constant = "1")
+    @Mapping(target = "documentId", ignore = true)
     DocumentPayments toEfilingDocumentPayment(Document document, AccountDetails accountDetails, String paymentStatus);
 
     @Mapping(target = "entUserId", source = "accountDetails.clientId")
@@ -71,6 +73,7 @@ public interface DocumentMapper {
     @Mapping(target = "statusDtm",  expression = "java(ca.bc.gov.open.jag.efilingcommons.utils.DateUtils.getCurrentXmlDate())")
     @Mapping(target = "documentStatusTypeCd",  constant = Keys.SUBMISSION_DOCUMENT_STATUS_TYPE_CD)
     @Mapping(target = "documentStatusSeqNo",  constant = "1")
+    @Mapping(target = "documentId", ignore = true)
     DocumentStatuses toEfilingDocumentStatus(Document document, AccountDetails accountDetails);
 
     //Rush Processing Document

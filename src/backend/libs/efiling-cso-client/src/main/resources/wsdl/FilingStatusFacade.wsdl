@@ -291,6 +291,7 @@
                     <xs:element minOccurs="0" name="largeFileYn" type="xs:string"/>
                     <xs:element minOccurs="0" name="packageId" type="xs:string"/>
                     <xs:element minOccurs="0" name="packageSeqNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="parentDocumentId" type="xs:string"/>
                     <xs:element minOccurs="0" name="paymentProcessed" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="status" type="xs:string"/>
                     <xs:element minOccurs="0" name="statusCode" type="xs:string"/>
@@ -494,6 +495,7 @@
                     <xs:element minOccurs="0" name="arg13" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="arg14" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="arg15" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg16" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findStatusBySearchCriteriaResponse">

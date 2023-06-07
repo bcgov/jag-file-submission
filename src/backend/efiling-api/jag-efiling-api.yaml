@@ -763,6 +763,9 @@ components:
         data:
           type: object
           description: store additional details
+        documentId:
+          type: string
+          description: identifier of document from parent application
         md5:
           type: string
           description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
@@ -793,6 +796,9 @@ components:
         rushRequired:
           type: boolean
           description: Does the document require rush
+        documentId:
+          type: string
+          description: identifier of document from parent application
         documentProperties:
           $ref: "#/components/schemas/DocumentProperties"
         status:
@@ -915,7 +921,7 @@ components:
         - documents
         - court
       properties:
-        packageIdentifier:
+        packageNumber:
           type: number
           description: Identifer of package that is being modified
         court:
