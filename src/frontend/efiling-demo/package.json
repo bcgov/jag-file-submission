@@ -14,6 +14,7 @@
     "eslint-plugin-airbnb": "^0.0.1-security",
     "history": "^5.0.0",
     "install-peerdeps": "^3.0.3",
+    "jest-canvas-mock": "^2.5.0",
     "jsonwebtoken": "^9.0.0",
     "keycloak-js": "^15.1.0",
     "node": "^17.3.0",
