@@ -120,7 +120,9 @@
   "resolutions": {
     "immer": "^9.0.6",
     "trim": "^0.0.3",
-    "glob-parent": "^5.1.2"
+    "glob-parent": "^5.1.2",
+    "loader-utils": "^2.0.4",
+    "nth-check": "^2.0.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
