@@ -1,6 +1,6 @@
 {
   "name": "efiling-frontend",
-  "version": "0.7.1",
+  "version": "1.5.1",
   "private": true,
   "homepage": "/efilinghub",
   "dependencies": {
