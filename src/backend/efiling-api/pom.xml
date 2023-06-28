@@ -10,7 +10,7 @@
     </parent>
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-api</artifactId>
-    <version>1.5.1</version>
+    <version>1.5.2-SNAPSHOT</version>
     <name>efiling-api</name>
     <description>Demo project for Spring Boot</description>
 
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
             <artifactId>efiling-commons</artifactId>
-            <version>1.5.1</version>
+            <version>1.5.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -183,7 +183,7 @@
             <dependency>
                 <groupId>ca.bc.gov.open.jag</groupId>
                 <artifactId>efiling-bom</artifactId>
-                <version>1.5.1</version>
+                <version>1.5.2-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -212,19 +212,19 @@
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>
                     <artifactId>efiling-cso-starter</artifactId>
-                    <version>1.5.1</version>
+                    <version>1.5.2-SNAPSHOT</version>
                 </dependency>
 
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>
                     <artifactId>efiling-bambora-api-client</artifactId>
-                    <version>1.5.1</version>
+                    <version>1.5.2-SNAPSHOT</version>
                 </dependency>
 
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>
                     <artifactId>efiling-ceis-api-client</artifactId>
-                    <version>1.5.1</version>
+                    <version>1.5.2-SNAPSHOT</version>
                 </dependency>
                 
                 <!-- https://mvnrepository.com/artifact/com.github.java-json-tools/jackson-coreutils -->
@@ -266,7 +266,7 @@
                 <dependency>
                     <groupId>ca.bc.gov.open.jag</groupId>
                     <artifactId>efiling-demo-starter</artifactId>
-                    <version>1.5.1</version>
+                    <version>1.5.2-SNAPSHOT</version>
                 </dependency>
             </dependencies>
         </profile>
