@@ -1,6 +1,6 @@
 {
   "name": "efiling-demo",
-  "version": "0.7.1",
+  "version": "1.5.1",
   "homepage": ".",
   "private": true,
   "dependencies": {
@@ -48,7 +48,12 @@
     "immer": "9.0.6",
     "trim": "0.0.3",
     "glob-parent": "5.1.2",
-    "nth-check": "^2.0.1"
+    "loader-utils": "^2.0.4",
+    "nth-check": "^2.0.1",
+    "terser": "^5.14.2",
+    "json5": "^2.2.2",
+    "minimatch": "^3.0.5",
+    "webpack": "^5.76.0"
   },
   "eslintConfig": {
     "extends": "react-app"
