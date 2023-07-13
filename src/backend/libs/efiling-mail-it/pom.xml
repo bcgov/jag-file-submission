@@ -5,7 +5,7 @@
 	
 	<groupId>ca.bc.gov.open.jag</groupId>
 	<artifactId>efiling-mail-it</artifactId>
-	<version>1.5.1</version>
+	<version>1.5.2-SNAPSHOT</version>
 
 	<name>efiling-mail-it</name>
 	<description>Client for Mailing service</description>
@@ -120,7 +120,7 @@
 			<dependency>
 				<groupId>ca.bc.gov.open.jag</groupId>
 				<artifactId>efiling-bom</artifactId>
-				<version>1.5.1</version>
+				<version>1.5.2-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
