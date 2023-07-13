@@ -63,4 +63,6 @@ public class Keys {
     public static final String AUTO_PROCESSING_STATE = "AUTO";
     public static final String MANUAL_PROCESSING_STATE = "MANUAL";
 
+    public static final String OTHER_DOCUMENT_TYPE = "OTH";
+
 }

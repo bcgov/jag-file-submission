@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ca.bc.gov.open.jag.efilingcsoclient.Keys.OTHER_DOCUMENT_TYPE;
+
 
 public class CsoDocumentServiceImpl implements EfilingDocumentService {
 
@@ -55,10 +57,13 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
 
     private List<DocumentType> getSoapDocumentTypes(String courtLevel, String courtClass) {
 
-        List<DocumentType> documentTypes = new ArrayList<>();
+        List<DocumentType> documentTypes;
 
         try {
-            documentTypes.addAll(filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass));
+            documentTypes = new ArrayList<>(filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass));
+            //Remove other document types. NOTE these are cached and redis requires a restart
+            //TODO: consider feature flagging this
+            documentTypes.removeIf(documentType -> documentType.getDocumentTypeCd().equals(OTHER_DOCUMENT_TYPE));
         } catch (NestedEjbException_Exception e) {
             throw new EfilingDocumentServiceException("Exception while retrieving document details", e.getCause());
         }
