@@ -22,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 @DisplayName("Get Document Type Test Suite")
 public class GetDocumentTypesTest {
     private static final String DOCUMENT_TYPE_CD = "ACODE";
+    private static final String DOCUMENT_TYPE_OTHER_CD = "OTH";
     private static final String DESCRIPTION = "DESCRIPTION";
     private static final String NODOC = "NODOC";
     public static final String COURT_LEVEL = "level1";
@@ -36,15 +37,8 @@ public class GetDocumentTypesTest {
     public void setUp() throws NestedEjbException_Exception {
 
         MockitoAnnotations.openMocks(this);
-        DocumentType documentType = new DocumentType();
-        documentType.setDocumentTypeCd(DOCUMENT_TYPE_CD);
-        documentType.setDocumentTypeDesc(DESCRIPTION);
-        documentType.setDefaultStatutoryFee(BigDecimal.TEN);
-        documentType.setOrderDocumentYn(true);
-        documentType.setRushRequiredYn(true);
-        documentType.setAutoProcessYn(false);
 
-        Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
+        Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(createDocumentTypeList());
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
 
         Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(EXCEPTION),any())).thenThrow(NestedEjbException_Exception.class);
@@ -56,8 +50,11 @@ public class GetDocumentTypesTest {
     @Test
     public void testWithFoundResult() {
         List<DocumentTypeDetails> result = sut.getDocumentTypes(COURT_LEVEL, COURT_CLASS);
+
+        Assertions.assertEquals(1, result.size());
         Assertions.assertEquals(DESCRIPTION, result.get(0).getDescription());
         Assertions.assertEquals(DOCUMENT_TYPE_CD, result.get(0).getType());
+
     }
 
     @DisplayName("Failure: when SOAP service throws NestedEjbException_Exception, service should throw EfilingDocumentServiceException")
@@ -65,6 +62,7 @@ public class GetDocumentTypesTest {
     public void testThrowException() throws NestedEjbException_Exception {
 
         Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentTypes(EXCEPTION, COURT_CLASS));
+
     }
 
     @DisplayName("Exception: courtLevel is required")
@@ -86,5 +84,28 @@ public class GetDocumentTypesTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypes("level", " "));
 
     }
+
+    private List<DocumentType> createDocumentTypeList() {
+
+        DocumentType documentType1 = new DocumentType();
+        documentType1.setDocumentTypeCd(DOCUMENT_TYPE_CD);
+        documentType1.setDocumentTypeDesc(DESCRIPTION);
+        documentType1.setDefaultStatutoryFee(BigDecimal.TEN);
+        documentType1.setOrderDocumentYn(true);
+        documentType1.setRushRequiredYn(true);
+        documentType1.setAutoProcessYn(false);
+
+        DocumentType documentType2 = new DocumentType();
+        documentType2.setDocumentTypeCd(DOCUMENT_TYPE_OTHER_CD);
+        documentType2.setDocumentTypeDesc(DESCRIPTION);
+        documentType2.setDefaultStatutoryFee(BigDecimal.TEN);
+        documentType2.setOrderDocumentYn(true);
+        documentType2.setRushRequiredYn(true);
+        documentType2.setAutoProcessYn(false);
+
+        return Arrays.asList(documentType1, documentType2);
+
+    }
+
 
 }
