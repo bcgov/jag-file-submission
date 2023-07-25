@@ -12960,9 +12960,9 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.6/shared-components-1.2.6.tgz":
-  version "1.2.6"
-  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.6/shared-components-1.2.6.tgz#1e4c85c56026ae83a7c671c72e7b025fac399ae7"
+"shared-components@https://github.com/bcgov/react-shared-components/releases/download/v1.2.7/shared-components-v1.2.7.tgz":
+  version "1.2.7"
+  resolved "https://github.com/bcgov/react-shared-components/releases/download/v1.2.7/shared-components-v1.2.7.tgz#7ea51c22fe74556ff5dddd689de7fbf2c040b3da"
   dependencies:
     "@bcgov/bootstrap-theme" "github:bcgov/bootstrap-theme"
     bootstrap "^4.6.0"
