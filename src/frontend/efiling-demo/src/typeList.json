@@ -142,7 +142,6 @@
     "desc": "Order for Attendance of a Prisoner in a Civil or Family Matter"
   },
   { "id": "OSS", "desc": "Order for Seizure and Sale" },
-  { "id": "OTH", "desc": "Other Document" },
   { "id": "PO", "desc": "Payment Order" },
   { "id": "POD", "desc": "Payment Order (By Default)" },
   { "id": "RFJ", "desc": "Reasons For Judgment" },
