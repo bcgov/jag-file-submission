@@ -30,7 +30,7 @@
     "react-scripts": "^5.0.1",
     "regenerator-runtime": "^0.13.5",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.7/shared-components-v1.2.7.tgz",
-    "uuid": "^8.3.1"
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
