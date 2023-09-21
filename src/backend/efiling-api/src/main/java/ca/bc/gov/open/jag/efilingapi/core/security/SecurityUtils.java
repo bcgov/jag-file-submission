@@ -1,10 +1,8 @@
 package ca.bc.gov.open.jag.efilingapi.core.security;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
-import org.keycloak.KeycloakPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.util.Optional;
+
+import ca.bc.gov.open.jag.efilingapi.Keys;
 
 public class SecurityUtils {
 
@@ -13,8 +11,10 @@ public class SecurityUtils {
 
     public static Optional<String> getClientId() {
         try {
-            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getIssuedFor());
+            return Optional.empty();
+            // FIXME: replace this expression to Keycloak with OAuth2 security
+//            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+//                    .getKeycloakSecurityContext().getToken().getIssuedFor());
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -34,8 +34,10 @@ public class SecurityUtils {
 
     private static Optional<String> getOtherClaim(String claim) {
         try {
-            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(claim).toString());
+        	// FIXME: replace this expression to Keycloak with OAuth2 security
+//            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+//                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(claim).toString());
+            return Optional.empty();
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -47,8 +49,10 @@ public class SecurityUtils {
 
     public static boolean isInRole(String role) {
         try {
-            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getResourceAccess(Keys.EFILING_API_NAME).isUserInRole(role);
+        	// FIXME: replace this expression to Keycloak with OAuth2 security
+//            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+//                    .getKeycloakSecurityContext().getToken().getResourceAccess(Keys.EFILING_API_NAME).isUserInRole(role);
+            return false;
         } catch (Exception e) {
             return false;
         }

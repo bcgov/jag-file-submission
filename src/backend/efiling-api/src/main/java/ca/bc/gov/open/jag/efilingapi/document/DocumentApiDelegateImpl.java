@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -31,7 +30,8 @@ public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
     }
 
     @Override
-    @RolesAllowed({Keys.EFILING_USER_ROLE, Keys.EFILING_CLIENT_ROLE})
+    // FIXME: replace with @PreAuthorize
+    // @RolesAllowed({Keys.EFILING_USER_ROLE, Keys.EFILING_CLIENT_ROLE})
     public ResponseEntity<List<DocumentType>> getDocumentTypes(@NotNull @Valid CourtLevel courtLevel, @NotNull @Valid CourtClassification courtClassification) {
         try {
             return ResponseEntity.ok(documentStore.getDocumentTypes(courtLevel.getValue(), courtClassification.getValue()).stream()

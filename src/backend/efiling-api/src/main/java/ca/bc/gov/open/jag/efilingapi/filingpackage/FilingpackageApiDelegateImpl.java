@@ -20,9 +20,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.RolesAllowed;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.List;
@@ -45,7 +45,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<FilingPackage> getFilingPackage(BigDecimal packageIdentifier) {
 
         logger.info("get filing package request received");
@@ -61,7 +61,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<List<FilingPackage>> getFilingPackages(String parentApplication) {
 
         logger.info("get filing packages request received");
@@ -77,7 +77,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Resource> getSubmissionSheet(BigDecimal packageIdentifier) {
 
         logger.info("get submission sheet request received");
@@ -90,7 +90,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Resource> getPaymentReceipt(BigDecimal packageIdentifier) {
 
         logger.info("get payment receipt request received");
@@ -103,7 +103,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Resource> getRegistryNotice(BigDecimal packageIdentifier) {
 
         logger.info("get registry notice request received");
@@ -138,7 +138,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Resource> getSubmittedDocument(BigDecimal packageIdentifier,
                                                          BigDecimal documentIdentifier) {
 
@@ -162,7 +162,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Void> deleteSubmittedDocument(BigDecimal packageIdentifier, String documentIdentifier) {
 
         logger.info("delete document request received");
@@ -183,7 +183,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Resource> getRushDocument(BigDecimal packageIdentifier, String fileName) {
 
         logger.info("get rush document request received");
@@ -205,7 +205,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
 
     }
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<ActionRequiredDetails> getActionRequiredDetails(BigDecimal packageIdentifier) {
 
         logger.info("get action required details request received");
@@ -222,7 +222,7 @@ public class FilingpackageApiDelegateImpl implements FilingpackagesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<ParentAppDetails> getParentDetails(BigDecimal packageIdentifier) {
 
         logger.info("get parent details request");

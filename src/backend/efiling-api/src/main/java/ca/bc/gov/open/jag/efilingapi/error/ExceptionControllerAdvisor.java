@@ -1,10 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.error;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import ca.bc.gov.open.jag.efilingapi.api.model.EfilingError;
 
 @ControllerAdvice
 public class ExceptionControllerAdvisor {

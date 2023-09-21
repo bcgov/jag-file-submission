@@ -12,15 +12,18 @@ spring:
     multipart:
       max-file-size: ${MAX_FILE_SIZE:10MB}
       max-request-size: ${MAX_REQUEST_SIZE:100MB}
-keycloak:
-  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
-  realm: ${KEYCLOAK_REALM}
-  resource: efiling-api
-  credentials:
-    secret: ${KEYCLOAK_CREDENTIALS_SECRET}
-  use-resource-role-mappings: true
-  bearer-only: true
-  ssl-required: ${KEYCLOAK_SSL_REQUIRED:external}
+
+# FIXME: remove keycloak once OAuth2 is implemented
+#keycloak:
+#  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
+#  realm: ${KEYCLOAK_REALM}
+#  resource: efiling-api
+#  credentials:
+#    secret: ${KEYCLOAK_CREDENTIALS_SECRET}
+#  use-resource-role-mappings: true
+#  bearer-only: true
+#  ssl-required: ${KEYCLOAK_SSL_REQUIRED:external}
+
 jag:
   efiling:
     global:
