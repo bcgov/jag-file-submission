@@ -1,6 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.core.mdc;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,11 +22,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import ca.bc.gov.open.jag.efilingapi.Keys;
+import jakarta.servlet.ServletException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MdcFilterTest {

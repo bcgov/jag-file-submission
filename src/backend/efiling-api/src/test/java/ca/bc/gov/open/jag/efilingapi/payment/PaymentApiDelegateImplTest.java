@@ -1,14 +1,15 @@
 package ca.bc.gov.open.jag.efilingapi.payment;
 
-import ca.bc.gov.open.bambora.payment.starter.BamboraException;
-import ca.bc.gov.open.bambora.payment.starter.managment.BamboraCardService;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
-import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
-import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
-import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
-import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import com.sun.jndi.toolkit.url.Uri;
-import org.junit.jupiter.api.*;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,8 +17,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.net.MalformedURLException;
-import java.util.UUID;
+import ca.bc.gov.open.bambora.payment.starter.BamboraException;
+import ca.bc.gov.open.bambora.payment.starter.managment.BamboraCardService;
+import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
+import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("PaymentApiDelegateImpl")
@@ -36,10 +42,10 @@ public class PaymentApiDelegateImplTest {
     EfilingAccountService efilingAccountServiceMock;
 
     @BeforeAll
-    public void setUp() throws MalformedURLException {
+    public void setUp() throws MalformedURLException, URISyntaxException {
         MockitoAnnotations.initMocks(this);
 
-        Mockito.doReturn(new Uri(REDIRECTED_URL)).when(bamboraCardServiceMock).setupRecurringPayment(
+        Mockito.doReturn(new URI(REDIRECTED_URL)).when(bamboraCardServiceMock).setupRecurringPayment(
                 ArgumentMatchers.argThat(request -> request.getEndUserId().equals(INTERNAL_CLIENT_NUMBER)));
 
         Mockito.doThrow(BamboraException.class).when(bamboraCardServiceMock).setupRecurringPayment(

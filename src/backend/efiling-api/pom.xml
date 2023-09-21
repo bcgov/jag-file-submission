@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
+        <version>3.1.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ca.bc.gov.open.jag</groupId>
@@ -15,10 +15,13 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>1.8</java.version>
-        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <java.version>17</java.version>
+        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <default-package>ca.bc.gov.open.jag.efilingapi</default-package>
         <log4j2.version>2.17.1</log4j2.version>
+        
+        <!-- automatically run annotation processors within the incremental compilation (Eclipse) -->
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
     </properties>
     <dependencies>
 
@@ -68,6 +71,12 @@
         <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>spring-bceid-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct-processor</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -126,17 +135,14 @@
 
         <!-- Swagger -->
         <dependency>
-            <groupId>io.swagger</groupId>
+            <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -286,20 +292,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.2</version>
             </plugin>
 
             <!--openapi server autogen-->
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>5.1.0</version>
+                <version>7.0.0</version>
                 <executions>
                     <execution>
                         <id>spring-boot-api</id>
@@ -312,6 +316,10 @@
                             <configOptions>
                                 <dateLibrary>joda</dateLibrary>
                                 <delegatePattern>true</delegatePattern>
+                                
+                                <!-- javax.* to jakarta.* -->
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                             <library>spring-boot</library>
                             <apiPackage>${default-package}.api</apiPackage>
@@ -374,7 +382,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>3.2.0</version>
 				<executions>
 					<execution>
 						<id>add-source</id>
