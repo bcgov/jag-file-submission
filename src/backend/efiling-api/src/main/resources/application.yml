@@ -1,10 +1,17 @@
 server:
   port: ${SERVER_PORT:8080}
 spring:
-  redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:admin}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8081/auth/realms/efling}
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:admin}
   cache:
     redis:
       time-to-live: ${CACHE_TTL:600000}
@@ -13,6 +20,10 @@ spring:
       max-file-size: ${MAX_FILE_SIZE:10MB}
       max-request-size: ${MAX_REQUEST_SIZE:100MB}
 
+jwt:
+  auth:
+    converter:
+      resource-id: ${KEYCLOAK_RESOURCE:efiling-api}
 # FIXME: remove keycloak once OAuth2 is implemented
 #keycloak:
 #  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}

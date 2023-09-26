@@ -1,7 +1,7 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
-import ca.bc.gov.open.jag.efilingapi.api.DocumentsApiDelegate;
+import ca.bc.gov.open.jag.efilingapi.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtClassification;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLevel;
 import ca.bc.gov.open.jag.efilingapi.api.model.DocumentType;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class DocumentApiDelegateImpl implements DocumentsApiDelegate {
+public class DocumentApiDelegateImpl implements DocumentsApi {
     Logger logger = LoggerFactory.getLogger(DocumentApiDelegateImpl.class);
 
     private static final String DOCUMENT_TYPE_ERROR = "Error while retrieving documents";
