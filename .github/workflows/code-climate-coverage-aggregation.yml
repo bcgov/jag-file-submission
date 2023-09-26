@@ -156,7 +156,7 @@ jobs:
         with:
           repository: bcgov/spring-boot-starters
           path: spring-boot-starters
-          ref: v0.2.2
+          ref: v1.0.0
 
       # TODO REMOVE AFTER SFTP IS IN MAVEN CENTRAL
       - name: Build Spring Starters
@@ -203,10 +203,10 @@ jobs:
         if: env.GIT_BRANCH == 'refs/heads/master'
 
       # Setup Java Environment
-      - name: Set up JDK 1.8
+      - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 17
       #- uses: actions/cache@v1
       #  with:
       #    path: ~/.m2/repository
