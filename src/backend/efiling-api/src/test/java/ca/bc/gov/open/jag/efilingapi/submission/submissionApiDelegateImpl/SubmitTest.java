@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.SubmitResponse;
@@ -23,7 +22,6 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.RushProcessing;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -36,7 +34,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.test.context.TestSecurityContextHolder;
 
 import java.util.*;
 
@@ -75,8 +72,6 @@ public class SubmitTest {
     @Mock
     private Authentication authenticationMock;
 
-
-
     @Mock
     private GenerateUrlRequestValidator generateUrlRequestValidator;
 
@@ -87,10 +82,6 @@ public class SubmitTest {
     public void setUp() {
 
         MockitoAnnotations.openMocks(this);
-
-       //Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        securityContextMock.setAuthentication(authenticationMock);
-        SecurityContextHolder.setContext(securityContextMock);
 
         Submission submissionExists = Submission
                 .builder()
@@ -159,9 +150,7 @@ public class SubmitTest {
         Collection collection = new HashSet();
         collection.add(grantedAuthority);
         Mockito.when(authenticationMock.getAuthorities()).thenReturn(collection);
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,UUID.randomUUID());
-        Mockito.when(jwtMock.getClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.any())).thenReturn(UUID.randomUUID().toString());
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
 
@@ -178,9 +167,7 @@ public class SubmitTest {
     public void withUserHavingValidRequestEarlyAdopterShouldReturnCreated() {
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,UUID.randomUUID());
-        Mockito.when(jwtMock.getClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.any())).thenReturn(UUID.randomUUID().toString());
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -195,9 +182,7 @@ public class SubmitTest {
     public void withErrorInServiceShouldThrowSubmissionException() {
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,UUID.randomUUID());
-        Mockito.when(jwtMock.getClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.any())).thenReturn(UUID.randomUUID().toString());
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -210,9 +195,7 @@ public class SubmitTest {
     public void withErrorInBamboraShouldThrowPaymentException() {
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,UUID.randomUUID());
-        Mockito.when(jwtMock.getClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.any())).thenReturn(UUID.randomUUID().toString());
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -225,9 +208,7 @@ public class SubmitTest {
     public void withSubmissionRequestThatDoesNotExist() {
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,UUID.randomUUID());
-        Mockito.when(jwtMock.getClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.any())).thenReturn(UUID.randomUUID().toString());
         Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -240,9 +221,10 @@ public class SubmitTest {
     @DisplayName("403: with no universal id should throw InvalidUniversalException")
     public void withUserNotHavingUniversalIdShouldThrowInvalidUniversalException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,null);
-        Mockito.when(jwtMock.getClaims()).thenReturn(otherClaims);
+        Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
+        Mockito.when(jwtMock.getClaim(Mockito.any())).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+        SecurityContextHolder.setContext(securityContextMock);
 
         InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.submit(UUID.randomUUID(), TestHelpers.CASE_3, null));
         Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());

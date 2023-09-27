@@ -22,7 +22,7 @@ public class TikaAnalysisTest {
     @BeforeEach
     public void setup() throws IOException {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.doThrow(IOException.class).when(multipartFileMock).getBytes();
     }

@@ -43,7 +43,7 @@ public class PaymentApiDelegateImplTest {
 
     @BeforeAll
     public void setUp() throws MalformedURLException, URISyntaxException {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.doReturn(new URI(REDIRECTED_URL)).when(bamboraCardServiceMock).setupRecurringPayment(
                 ArgumentMatchers.argThat(request -> request.getEndUserId().equals(INTERNAL_CLIENT_NUMBER)));
