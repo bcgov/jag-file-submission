@@ -9,6 +9,7 @@ import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +32,7 @@ public class CourtsApiDelegateImpl implements CourtsApiDelegate {
     }
 
     @Override
-    // FIXME: replace with @PreAuthorize
-    // @RolesAllowed({"efiling-client", "efiling-admin"})
+    @PreAuthorize("hasRole('efiling-client') || hasRole('efiling-admin')")
     public ResponseEntity<CourtLocations> getCourtLocations(String courtLevel) {
 
         logger.info("Request for court level received {}", courtLevel);

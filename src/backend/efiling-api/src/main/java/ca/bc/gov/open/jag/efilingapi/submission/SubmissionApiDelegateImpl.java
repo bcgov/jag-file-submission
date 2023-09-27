@@ -93,8 +93,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    // FIXME: replace with @PreAuthorize
-    // @RolesAllowed({"efiling-client", "efiling-admin"})
+    @PreAuthorize("hasRole('efiling-client') || hasRole('efiling-admin')")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
         if(StringUtils.isBlank(xUserId)) {
@@ -220,8 +219,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    // FIXME: replace with @PreAuthorize
-    // @RolesAllowed({"efiling-client", "efiling-admin"})
+    @PreAuthorize("hasRole('efiling-client') || hasRole('efiling-admin')")
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
         logger.info("Attempting to generate Url Request Received");
