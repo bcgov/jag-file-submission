@@ -19,7 +19,7 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <default-package>ca.bc.gov.open.jag.efilingapi</default-package>
         <log4j2.version>2.17.1</log4j2.version>
-
+        <snakeyaml.version>2.0</snakeyaml.version>
         <!-- automatically run annotation processors within the incremental compilation (Eclipse) --> 
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
     </properties>
