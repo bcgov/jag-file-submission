@@ -30,7 +30,7 @@ import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 public class PaymentApiDelegateImplTest {
 
     private static final String REDIRECT_URL = "SOMEURL";
-    private static final String REDIRECTED_URL = "http:\\www.google.com\bambora";
+    private static final String REDIRECTED_URL = "http://www.google.com/bambora";
     private static final String INTERNAL_CLIENT_NUMBER = "123";
     private static final String FAIL_INTERNAL_CLIENT_NUMBER = "1234";
     private PaymentApiDelegateImpl sut;
