@@ -18,7 +18,7 @@ services:
       args:
         - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
         - SKIP_TESTS=true
-        - STARTERS_V=v0.2.2
+        - STARTERS_V=v1.0.0
 
   # #############################################################################################
   # ###                                        KEYCLOAK Config                                ###
