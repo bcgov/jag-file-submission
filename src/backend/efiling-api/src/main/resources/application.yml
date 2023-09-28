@@ -144,3 +144,8 @@ opentracing:
     enabled: TRUE
     udp-sender:
       host: localhost
+
+logging:
+  level:
+    root: INFO
+    ca.bc.gov.open.jag.aireviewerapi: ${LOGGING_LEVEL:INFO}
