@@ -5,8 +5,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8081/auth/realms/efling-hub}
-          jwk-set-uri: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8081/auth/realms/efling-hub}/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8081/auth/realms/Efiling-Hub}
+          jwk-set-uri: ${KEYCLOAK_JWK_SERVER_URL:http://localhost:8081/auth/realms/Efiling-Hub}/protocol/openid-connect/certs
   data:
     redis:
       host: ${REDIS_HOST:localhost}
