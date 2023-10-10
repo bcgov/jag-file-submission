@@ -186,7 +186,7 @@ jobs:
         run: |
 
           # Maven requires chrome driver.
-          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          wget -q https://dl.google.com/linux/direct/google-chrome-stable_81.0.4044.113-1_amd64.deb
           sudo apt-get -qq -y install ./google-chrome-stable_current_amd64.deb
 
           # We need to test if efiling-api pod and service is running before we can proceed.  Using dockerize to proceed only after efiling-demo:8080 can be reached.
