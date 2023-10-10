@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -85,6 +86,7 @@ public class SecurityUtilsTest {
     }
 
     @Test
+    @DisplayName("Should return universal id")
     public void shouldReturnClaim() {
 
         Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(EXPECTED_CLAIM);
@@ -97,5 +99,12 @@ public class SecurityUtilsTest {
 
     }
 
+    @Test
+    @DisplayName("null should throw")
+    public void exceptionIsInRoleThrows() {
+
+        Assertions.assertFalse(SecurityUtils.isInRole(""));
+
+    }
 
 }

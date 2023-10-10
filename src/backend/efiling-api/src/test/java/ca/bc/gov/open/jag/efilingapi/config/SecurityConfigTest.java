@@ -18,7 +18,7 @@ class SecurityConfigTest {
 	@Mock
 	HttpSecurity http;
 
-	//@Test
+	@Test
 	void testFilterChain() throws Exception {
 		MockitoAnnotations.openMocks(this);
 		when(http.build()).thenReturn(Mockito.mock(DefaultSecurityFilterChain.class));
@@ -27,10 +27,10 @@ class SecurityConfigTest {
 		assertNotNull(config.corsConfigurationSource());
 	}
 
-	//@Test
+	@Test
 	void testSessionAuthenticationStrategy() throws Exception {
 		KeycloakJwtAuthConverter jwtAuthConverter = Mockito.mock(KeycloakJwtAuthConverter.class);
-		//HttpSecurity http = Mockito.mock(HttpSecurity.class);
+		HttpSecurity http = Mockito.mock(HttpSecurity.class);
 
 		SecurityConfig config = new SecurityConfig(jwtAuthConverter);
 		assertNotNull(config.sessionAuthenticationStrategy());
