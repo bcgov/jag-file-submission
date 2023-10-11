@@ -1,8 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.core.mdc;
 
-import java.io.IOException;
-import java.util.UUID;
-
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +14,10 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import jakarta.servlet.ServletException;
 import org.springframework.security.oauth2.jwt.Jwt;
+
+import java.io.IOException;
+import java.util.UUID;
 
 import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 

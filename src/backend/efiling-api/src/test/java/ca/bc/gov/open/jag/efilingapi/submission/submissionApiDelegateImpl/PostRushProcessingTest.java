@@ -1,9 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
+
 import ca.bc.gov.open.clamav.starter.ClamAvService;
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.Rush;
+import ca.bc.gov.open.jag.efilingapi.api.model.RushDocument;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
@@ -17,9 +18,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -30,7 +29,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.UUID;
 
 import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 

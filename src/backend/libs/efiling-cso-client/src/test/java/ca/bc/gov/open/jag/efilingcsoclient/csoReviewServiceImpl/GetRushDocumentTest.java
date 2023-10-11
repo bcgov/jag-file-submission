@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("GetRushDocumentTest")

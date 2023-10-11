@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
-import ca.bc.gov.open.jag.efilingapi.api.DocumentsApi;
 import ca.bc.gov.open.jag.efilingapi.api.DocumentsApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtClassification;
 import ca.bc.gov.open.jag.efilingapi.api.model.CourtLevel;

@@ -1,4 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://filing.csows.ag.gov.bc.ca/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="FilingFacade" targetNamespace="http://filing.csows.ag.gov.bc.ca/">
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://filing.csows.ag.gov.bc.ca/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  name="FilingFacade" targetNamespace="http://filing.csows.ag.gov.bc.ca/">
   <wsdl:types>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://filing.csows.ag.gov.bc.ca/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://filing.csows.ag.gov.bc.ca/" version="1.0">
   <xs:element name="calculateSubmittedDate" type="tns:calculateSubmittedDate"/>

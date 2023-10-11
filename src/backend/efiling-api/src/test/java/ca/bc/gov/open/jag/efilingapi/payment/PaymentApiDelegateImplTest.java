@@ -1,22 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.payment;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.UUID;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import ca.bc.gov.open.bambora.payment.starter.BamboraException;
 import ca.bc.gov.open.bambora.payment.starter.managment.BamboraCardService;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
@@ -24,6 +7,18 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
+import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("PaymentApiDelegateImpl")

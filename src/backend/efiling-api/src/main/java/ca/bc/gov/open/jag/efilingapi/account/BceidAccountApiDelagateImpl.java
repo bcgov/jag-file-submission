@@ -1,13 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.account;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Service;
-
 import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
@@ -15,6 +7,13 @@ import ca.bc.gov.open.jag.efilingapi.account.mappers.BceidAccountMapper;
 import ca.bc.gov.open.jag.efilingapi.api.BceidAccountApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.BceidAccount;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BceidAccountApiDelagateImpl implements BceidAccountApiDelegate {
