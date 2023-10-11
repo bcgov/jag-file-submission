@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
@@ -44,7 +45,7 @@ public class SecurityUtils {
     }
 
     public static boolean isEarlyAdopter() {
-        return isInRole("early-adopters");
+        return isInRole("ROLE_early-adopters");
     }
 
     public static boolean isInRole(String role) {
