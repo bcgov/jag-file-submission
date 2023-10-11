@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,16 +73,22 @@ public class TestConfig {
     @Bean
     @Scope("browserscope")
     public WebDriver chromeDriver() {
-        WebDriverManager.chromedriver().setup();
 
+        //File file = new File("bin/chromedriver.exe");
+
+        //System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+
+        WebDriverManager.chromedriver().setup();
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.default_content_settings.popups", Integer.valueOf(0));
         prefs.put("download.default_directory", Keys.BASE_PATH + Keys.DOWNLOADED_FILES_PATH);
 
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("prefs", prefs);
-        options.setHeadless(true);
+        options.addArguments("--headless=new");
+
         options.addArguments("--window-size=1920,1080");
+        //options.setBinary(file.getAbsolutePath());
 
         return new ChromeDriver(options);
     }

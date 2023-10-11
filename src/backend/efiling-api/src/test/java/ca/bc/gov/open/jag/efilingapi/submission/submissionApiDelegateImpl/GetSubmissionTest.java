@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
 import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionConfigResponse;
@@ -20,9 +19,6 @@ import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestVali
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -32,16 +28,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
+import static ca.bc.gov.open.jag.efilingapi.Keys.IDENTITY_PROVIDER_CLAIM_KEY;
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class GetSubmissionTest {
-
 
     private static final String SERVICE_TYPE_CD = "DCFL";
     private static final String SERVICE_TYPE_CD1 = "NOTDCFL";
@@ -69,13 +70,7 @@ public class GetSubmissionTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
+    private Jwt jwtMock;
 
     @Mock
     private AccountService accountServiceMock;
@@ -92,9 +87,6 @@ public class GetSubmissionTest {
         MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
 
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -147,12 +139,12 @@ public class GetSubmissionTest {
     @DisplayName("404: With null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
-                UUID.randomUUID(), 
+                UUID.randomUUID(),
                 TestHelpers.CASE_1);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
@@ -161,13 +153,13 @@ public class GetSubmissionTest {
     @DisplayName("200: With user having cso account and efiling role return submission details")
     public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
-        otherClaims.put(Keys.IDENTITY_PROVIDER_CLAIM_KEY, IDENTITY_PROVIDER);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_2.toString());
+        Mockito.when(jwtMock.getClaim(Mockito.eq(IDENTITY_PROVIDER_CLAIM_KEY))).thenReturn(IDENTITY_PROVIDER);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(UUID.fromString(
-                TestHelpers.CASE_2_STRING), 
+                TestHelpers.CASE_2_STRING),
                 TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
@@ -181,44 +173,42 @@ public class GetSubmissionTest {
     @DisplayName("200: With user not having cso account")
     public void withUserHavingNoCsoAccountShouldReturnUserDetailsButNoAccount() {
 
-
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
-                TestHelpers.CASE_3, 
+                TestHelpers.CASE_3,
                 UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
+
     }
 
     @Test
     @DisplayName("200: With user not having account details present")
     public void withUserHavingNoAccountDetailsShouldReturnUserDetailsButNoAccount() {
 
-
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
-                TestHelpers.CASE_4, 
+                TestHelpers.CASE_4,
                 UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
         assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
         assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
+
     }
 
     @Test
     @DisplayName("403: With user not having universal id claim should throw MissingUniversalIdException")
     public void withUserNotHavingUniversalIdShouldThrowMissingUniversalIdException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.getSubmissionConfig(UUID.randomUUID(), TestHelpers.CASE_5));
         Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());

@@ -2,14 +2,16 @@ package ca.bc.gov.open.jag.efilingapi.error;
 
 public class EfilingException extends RuntimeException {
 
-    private final ErrorCode errorCode;
+	private static final long serialVersionUID = 1L;
 
-    public EfilingException(String message, ErrorCode errorCode) {
-        super(message);
-        this.errorCode = errorCode;
-    }
+	private final ErrorCode errorCode;
 
-    public String getErrorCode() {
-        return errorCode.name();
-    }
+	public EfilingException(String message, ErrorCode errorCode) {
+		super(message);
+		this.errorCode = errorCode;
+	}
+
+	public String getErrorCode() {
+		return errorCode.name();
+	}
 }

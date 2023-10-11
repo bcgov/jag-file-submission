@@ -8,7 +8,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.Individual;
 import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewDocument;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
-
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.RushDocument;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

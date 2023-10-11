@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsoclient.csoSubmissionServiceImpl;
 
 import ca.bc.gov.ag.csows.filing.FilingFacadeBean;
-import ca.bc.gov.ag.csows.filing.status.DocumentType;
 import ca.bc.gov.ag.csows.services.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingSubmissionServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.*;
@@ -11,9 +10,9 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoSubmissionServiceImpl;
 import ca.bc.gov.open.jag.efilingcsoclient.Keys;
+import ca.bc.gov.open.jag.efilingcsoclient.TestHelpers;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
-import ca.bc.gov.open.jag.efilingcsoclient.TestHelpers;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;

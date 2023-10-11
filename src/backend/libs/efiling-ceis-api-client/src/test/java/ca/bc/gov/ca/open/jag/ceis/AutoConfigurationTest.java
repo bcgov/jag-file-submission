@@ -1,7 +1,6 @@
 package ca.bc.gov.ca.open.jag.ceis;
 
 import ca.bc.gov.open.jag.ceis.AutoConfiguration;
-
 import ca.bc.gov.open.jag.ceis.CeisCourtLocationMapper;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.DefaultApi;
 import ca.bc.gov.open.jag.efilingceisapiclient.api.handler.ApiClient;

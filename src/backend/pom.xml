@@ -15,7 +15,7 @@
 	<url>https://github.com/bcgov/jag-file-submission</url>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 		<log4j2.version>2.17.1</log4j2.version>
 	</properties>
 
@@ -30,7 +30,6 @@
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
-				<module>libs/efiling-mail-it</module>
 				<module>efiling-api</module>
 			</modules>
 		</profile>
@@ -43,7 +42,6 @@
 				<module>libs/efiling-cso-client</module>
 				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
-				<module>libs/efiling-mail-it</module>
 			</modules>
 		</profile>
 		<profile>
@@ -71,7 +69,6 @@
 			<id>efiling-reviewer</id>
 			<modules>
 				<module>libs/efiling-bom</module>
-				<module>libs/efiling-mail-it</module>
 			</modules>
 		</profile>
 	</profiles>
@@ -81,6 +78,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>

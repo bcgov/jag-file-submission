@@ -1,7 +1,6 @@
 package ca.bc.gov.ca.open.jag.bambora;
 
 import ca.bc.gov.open.jag.bambora.AutoConfiguration;
-
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiClient;
 import org.junit.jupiter.api.DisplayName;

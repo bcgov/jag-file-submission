@@ -1,7 +1,7 @@
 #############################################################################################
 ###              Stage where Docker is building spring boot app using maven               ###
 #############################################################################################
-FROM maven:3.6.3-jdk-8 as build
+FROM maven:3.8.3-openjdk-17 as build
 
 ARG MVN_PROFILE
 ARG SERVICE_NAME=efiling-api
@@ -11,11 +11,12 @@ ARG STARTERS_V
 ENV SERVICE_NAME=${SERVICE_NAME}
 ENV STARTERS_V=${STARTERS_V}
 
-RUN mkdir /root/.ssh && \
-    chmod 0700 /root/.ssh  && \
-    ssh-keyscan -t rsa localhost >> ~/.ssh/known_hosts  && \
-    apt-get update  && \
-    apt-get -y install git
+#Temporary removal.
+#RUN mkdir /root/.ssh && \
+#    chmod 0700 /root/.ssh  && \
+#    ssh-keyscan -t rsa localhost >> ~/.ssh/known_hosts  && \
+#    apt-get update  && \
+#    apt-get -y install git
 
 WORKDIR /libs
 
@@ -34,12 +35,11 @@ RUN mvn -B clean install \
         -P ${MVN_PROFILE} \
         -Dmaven.test.skip=${SKIP_TESTS}
 
-#############################################################################################
 
 #############################################################################################
 ### Stage where Docker is running a java process to run a service built in previous stage ###
 #############################################################################################
-FROM openjdk:8-jdk-slim
+FROM eclipse-temurin:17-jre-alpine
 
 # ARG MVN_PROFILES
 ARG SERVICE_NAME=efiling-api
