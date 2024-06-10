@@ -1,6 +1,8 @@
 name: Build Efiling API Image and Push to Openshift 4 Registry
 
 on:
+  schedule:
+    - cron: "0 0 * */3 *"
   push:
     branches: [master]
     paths:
