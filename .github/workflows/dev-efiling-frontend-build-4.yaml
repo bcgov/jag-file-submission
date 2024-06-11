@@ -1,6 +1,8 @@
 name: Build Efiling Frontend Image and Push to Openshift Registry
 
 on:
+  schedule:
+    - cron: "0 0 * */3 *"
   push:
     branches: [master]
     paths:

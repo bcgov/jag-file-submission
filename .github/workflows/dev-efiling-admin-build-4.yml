@@ -1,6 +1,8 @@
 name: Build Efiling Admin Docker Image and Push to Openshift Image Registry
 
 on:
+  schedule:
+    - cron: "0 0 * */3 *"
   push:
     branches: [master]
     paths:
