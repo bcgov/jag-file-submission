@@ -126,7 +126,11 @@
     "terser": "^5.14.2",
     "json5": "^2.2.2",
     "minimatch": "^3.0.5",
-    "webpack": "^5.76.0"
+    "webpack": "^5.76.0",
+    "braces": "^3.0.3",
+    "webpack-dev-middleware": "^5.3.4",
+    "browserify-sign": "4.2.2"
+
   },
   "jest": {
     "watchPathIgnorePatterns": [
