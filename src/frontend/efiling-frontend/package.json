@@ -129,7 +129,8 @@
     "webpack": "^5.76.0",
     "braces": "^3.0.3",
     "webpack-dev-middleware": "^5.3.4",
-    "browserify-sign": "4.2.2"
+    "browserify-sign": "4.2.2",
+    "ws": "^8.17.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
