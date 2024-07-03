@@ -4,12 +4,11 @@ on:
   schedule:
     - cron: "0 0 * */3 *"
   push:
-    branches: [master]
+    branches: [artifactory]
     paths:
       - "src/frontend/efiling-frontend/**"
       - ".github/workflows/dev-efiling-admin-build-4.yml"
   workflow_dispatch:
-    branches: [master]
 
 jobs:
   build:
@@ -18,22 +17,38 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cluster Login
-        uses: redhat-developer/openshift-actions@v1.1
+      - name: Login to Artifactory
+        uses: docker/login-action@v1
         with:
-          openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
-          parameters: '{"apitoken": "${{ secrets.OPENSHIFT4_SA_PASSWORD }}"}'
-          cmd: |
-            'version'
-            
-      - name: Login to Openshift Docker
-        run : |
-          docker login ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT4_SA_USERNAME }} -p ${{ secrets.OPENSHIFT4_SA_PASSWORD }}
-            
-      - name: Build the Docker image
-        run: |          
-          
+          registry: artifacts.developer.gov.bc.ca
+          username: ${{ secrets.EFILING_ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.EFILING_ARTIFACTORY_PASSWORD }}
+      
+      - name: Build Image
+        run: |
           docker-compose build efiling-frontend
-          
-          docker tag jag-file-submission_efiling-frontend ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-frontend:latest
-          docker push ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-frontend:latest
+          docker tag jag-file-submission_efiling-frontend artifacts.developer.gov.bc.ca/efc7-efiling/efiling-frontend:dev
+      
+      - name: Docker Push to Artifactory
+        run: |
+          docker push artifacts.developer.gov.bc.ca/efc7-efiling/efiling-frontend:dev
+
+      #- name: Cluster Login
+      #  uses: redhat-developer/openshift-actions@v1.1
+      #  with:
+      #    openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
+      #    parameters: '{"apitoken": "${{ secrets.OPENSHIFT4_SA_PASSWORD }}"}'
+      #    cmd: |
+      #      'version'
+      #      
+      #- name: Login to Openshift Docker
+      #  run : |
+      #    docker login ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT4_SA_USERNAME }} -p ${{ secrets.OPENSHIFT4_SA_PASSWORD }}
+      #      
+      #- name: Build the Docker image
+      #  run: |          
+      #    
+      #    docker-compose build efiling-frontend
+      #    
+      #    docker tag jag-file-submission_efiling-frontend ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-frontend:latest
+      #    docker push ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-frontend:latest
