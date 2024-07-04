@@ -4,35 +4,30 @@ on:
   schedule:
     - cron: "0 0 * */3 *"
   push:
-    branches: [master]
+    branches: [artifactory]
     paths:
       - "src/frontend/efiling-demo/**"
       - ".github/workflows/dev-efiling-admin-build-4.yml"
   workflow_dispatch:
-    branches: [master]
-
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cluster Login
-        uses: redhat-developer/openshift-actions@v1.1
+      - name: Login to Artifactory
+        uses: docker/login-action@v1
         with:
-          openshift_server_url: ${{ secrets.OPENSHIFT4_SERVER_URL }}
-          parameters: '{"apitoken": "${{ secrets.OPENSHIFT4_SA_PASSWORD }}"}'
-          cmd: |
-            'version'
-      - name: Login to Openshift Docker
-        run : |
-          docker login ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }} -u ${{ secrets.OPENSHIFT4_SA_USERNAME }} -p ${{ secrets.OPENSHIFT4_SA_PASSWORD }}
-      - name: Build the Docker image
-        run: |          
-          
+          registry: artifacts.developer.gov.bc.ca
+          username: ${{ secrets.EFILING_ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.EFILING_ARTIFACTORY_PASSWORD }}
+      
+      - name: Build Image
+        run: |
           docker-compose build efiling-demo
-          
-          docker tag jag-file-submission_efiling-demo ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-admin:latest
-          docker push ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-admin:latest
+          docker tag jag-file-submission_efiling-demo artifacts.developer.gov.bc.ca/efc7-efiling-repo/efiling-admin:dev
+      
+      - name: Docker Push to Artifactory
+        run: |
+          docker push artifacts.developer.gov.bc.ca/efc7-efiling-repo/efiling-admin:dev
