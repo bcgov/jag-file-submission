@@ -25,11 +25,11 @@ jobs:
       - name: Build Image
         run: |
           docker-compose build efiling-frontend
-          docker tag jag-file-submission_efiling-frontend artifacts.developer.gov.bc.ca/efc7-efiling/efiling-frontend:dev
+          docker tag jag-file-submission_efiling-frontend artifacts.developer.gov.bc.ca/efc7-efiling-repo/efiling-frontend:dev
       
       - name: Docker Push to Artifactory
         run: |
-          docker push artifacts.developer.gov.bc.ca/efc7-efiling/efiling-frontend:dev
+          docker push artifacts.developer.gov.bc.ca/efc7-efiling-repo/efiling-frontend:dev
 
       #- name: Cluster Login
       #  uses: redhat-developer/openshift-actions@v1.1
