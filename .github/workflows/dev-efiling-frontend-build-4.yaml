@@ -1,13 +1,11 @@
 name: Build Efiling Frontend Image and Push to Openshift Registry
 
 on:
-  schedule:
-    - cron: "0 0 * */3 *"
   push:
     branches: [artifactory]
     paths:
       - "src/frontend/efiling-frontend/**"
-      - ".github/workflows/dev-efiling-admin-build-4.yml"
+      - ".github/workflows/dev-efiling-frontend-build-4.yml"
   workflow_dispatch:
 
 jobs:
