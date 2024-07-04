@@ -5,7 +5,7 @@ on:
     branches: [artifactory]
     paths:
       - "src/frontend/efiling-frontend/**"
-      - ".github/workflows/dev-efiling-frontend-build-4.yml"
+      - ".github/workflows/dev-efiling-frontend-build-4.yaml"
   workflow_dispatch:
 
 jobs:
