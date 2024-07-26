@@ -25,7 +25,7 @@
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
         <org.apache.commons.version>3.11</org.apache.commons.version>
         <org.apache.commons.collections.collections.version>4.2</org.apache.commons.collections.collections.version>
-        <org.apache.cxf.version>4.0.1</org.apache.cxf.version>
+        <org.apache.cxf.version>4.0.5</org.apache.cxf.version> 
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
         <org.apache.skywalking.version>8.4.0</org.apache.skywalking.version>
         <org.codehaus.janino>3.1.3</org.codehaus.janino>
