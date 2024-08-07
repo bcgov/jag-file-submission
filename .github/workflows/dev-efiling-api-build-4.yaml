@@ -43,7 +43,7 @@ jobs:
           MVN_PROFILE: efiling-api,splunk
         run: |          
           
-          docker-compose build efiling-api
+          docker compose build efiling-api
           
           docker image ls
           
