@@ -40,7 +40,7 @@ jobs:
           MVN_PROFILE: efiling-api,splunk
         run: |          
           
-          docker-compose build efiling-api
+          docker compose build efiling-api
           
           docker tag jag-file-submission_efiling-api ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-api-dark-launch:latest
           docker push ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-api-dark-launch:latest
