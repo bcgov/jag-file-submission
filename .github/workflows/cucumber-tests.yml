@@ -198,14 +198,14 @@ jobs:
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cucumber-spark-report
           path: ./tests/test-output/extent/Spark/Index.html
 
       # Upload Cucumber JSON for debugging purposes
       - name: Upload Cucumber JSON for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cucumber-json-report
           path: ./tests/target/cucumber-reports/CucumberTestReport.json
