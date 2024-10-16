@@ -339,9 +339,9 @@ jobs:
           name: summed-yarn-coverage-report
 
       # See what is inside
-      - name: List items inside java coverage report object
+      - name: List items inside javascript coverage report object
         run: |
-          ls summed-yarn-coverage-report
+          ls
 
       # Copy total Yarn to outside directory
       - name: Copy Yarn Coverage to directory
