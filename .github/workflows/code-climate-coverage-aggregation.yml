@@ -137,7 +137,7 @@ jobs:
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: summed-yarn-coverage-report
           path: coverage/total-codeclimate.json
@@ -263,7 +263,7 @@ jobs:
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: summed-java-coverage-report
           path: coverage/total-codeclimate.json
