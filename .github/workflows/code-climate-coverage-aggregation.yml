@@ -330,7 +330,7 @@ jobs:
       # Copy total java to outside directory
       - name: Copy Java Coverage to directory
         run: |
-          cp summed-java-coverage-report/total-codeclimate.json coverage-reports/total-java-codeclimate.json
+          cp total-codeclimate.json coverage-reports/total-java-codeclimate.json
 
       # Download Yarn coverage report
       - name: Download javascript coverage report
