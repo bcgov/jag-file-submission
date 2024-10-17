@@ -318,14 +318,14 @@ jobs:
 
       # Download Spring-boot coverage report
       - name: Download spring-boot coverage report
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: summed-java-coverage-report
 
       # See what is inside
       - name: List items inside java coverage report object
         run: |
-          ls summed-java-coverage-report
+          ls
 
       # Copy total java to outside directory
       - name: Copy Java Coverage to directory
@@ -334,14 +334,14 @@ jobs:
 
       # Download Yarn coverage report
       - name: Download javascript coverage report
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: summed-yarn-coverage-report
 
       # See what is inside
-      - name: List items inside java coverage report object
+      - name: List items inside javascript coverage report object
         run: |
-          ls summed-yarn-coverage-report
+          ls 
 
       # Copy total Yarn to outside directory
       - name: Copy Yarn Coverage to directory
