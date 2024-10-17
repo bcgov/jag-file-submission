@@ -346,7 +346,7 @@ jobs:
       # Copy total Yarn to outside directory
       - name: Copy Yarn Coverage to directory
         run: |
-          cp summed-yarn-coverage-report/total-codeclimate.json coverage-reports/total-yarn-codeclimate.json
+          cp total-codeclimate.json coverage-reports/total-yarn-codeclimate.json
 
       # See what is inside coverage
       - name: List items inside java coverage report object
