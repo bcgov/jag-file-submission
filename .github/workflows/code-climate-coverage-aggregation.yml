@@ -321,11 +321,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: summed-java-coverage-report
+          path: summed-java-coverage-report
 
       # See what is inside
       - name: List items inside java coverage report object
         run: |
-          ls
+          ls summed-java-coverage-report
 
       # Copy total java to outside directory
       - name: Copy Java Coverage to directory
@@ -337,11 +338,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: summed-yarn-coverage-report
+          path: summed-yarn-coverage-report
 
       # See what is inside
       - name: List items inside javascript coverage report object
         run: |
-          ls 
+          ls summed-yarn-coverage-report
 
       # Copy total Yarn to outside directory
       - name: Copy Yarn Coverage to directory
