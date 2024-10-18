@@ -7,7 +7,7 @@ on:
     branches: [artifactory]
     paths:
       - "src/backend/**"
-      - ".github/workflows/dev-efiling-api-build-4.yaml"
+      - ".github/workflows/dev-efiling-api-build.yaml"
   workflow_dispatch:
 
 jobs:
@@ -26,9 +26,9 @@ jobs:
       
       - name: Build Image
         run: |
-          docker-compose build efiling-api
-          docker tag jag-file-submission_efiling-api artifacts.developer.gov.bc.ca/efc7-efiling-repo/efiling-api:dev
+          docker compose build efiling-api
+          docker tag jag-file-submission-efiling-api artifacts.developer.gov.bc.ca/efc7-efiling-api/efiling-api:dev
       
       - name: Docker Push to Artifactory
         run: |
-          docker push artifacts.developer.gov.bc.ca/efc7-efiling-repo/efiling-api:dev
+          docker push artifacts.developer.gov.bc.ca/efc7-efiling-api/efiling-api:dev
