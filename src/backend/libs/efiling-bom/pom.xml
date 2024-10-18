@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-bom</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <version>2.0.2</version>
 
     <properties>
         <log4j2.version>2.17.1</log4j2.version>
@@ -15,7 +15,7 @@
         <com.github.joschi.jackson.version>2.12.1</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
         <com.splunk.logging.version>1.11.2</com.splunk.logging.version>
-        <commons-io.version>2.13.0</commons-io.version>
+        <commons-io.version>2.14.0</commons-io.version>
         <io.springfox.version>3.0.0</io.springfox.version>
         <io.swagger.version>2.2.9</io.swagger.version>
         <java.version>17</java.version>
@@ -25,7 +25,7 @@
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
         <org.apache.commons.version>3.11</org.apache.commons.version>
         <org.apache.commons.collections.collections.version>4.2</org.apache.commons.collections.collections.version>
-        <org.apache.cxf.version>4.0.1</org.apache.cxf.version>
+        <org.apache.cxf.version>4.0.5</org.apache.cxf.version> 
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
         <org.apache.skywalking.version>8.4.0</org.apache.skywalking.version>
         <org.codehaus.janino>3.1.3</org.codehaus.janino>
@@ -38,7 +38,7 @@
         <org.springdoc.version>1.7.0</org.springdoc.version>
         <org.threeten.version>1.5.1</org.threeten.version>
         <ch.qos.logback.version>1.4.12</ch.qos.logback.version>
-        <org.apache.tomcat.embed.version>10.1.16</org.apache.tomcat.embed.version>
+        <org.apache.tomcat.embed.version>10.1.25</org.apache.tomcat.embed.version> 
         <org.json.version>20231013</org.json.version>
         <org.springframework.security.version>6.1.8</org.springframework.security.version>
         <org.springframework.version>6.0.19</org.springframework.version>
