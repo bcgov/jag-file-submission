@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: bcgov-c/tenant-gitops-fc726a
-          ref: prod
+          ref: stage
           token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
           path: gitops
 
@@ -85,7 +85,7 @@ jobs:
           git add .
           
           git commit -m "Update Prod Admin image tag"
-          git push origin prod  # Update the branch name as needed
+          git push origin stage  # Update the branch name as needed
       
       - name: Update API Helm Values and Commit
         id: helm-api
@@ -120,7 +120,7 @@ jobs:
           git add .
           
           git commit -m "Update Prod API image tag"
-          git push origin prod  # Update the branch name as needed
+          git push origin stage  # Update the branch name as needed
       
       - name: Update FRONTEND Helm Values and Commit
         id: helm-frontend
@@ -155,7 +155,7 @@ jobs:
           git add .
           
           git commit -m "Update Prod FRONTEND image tag"
-          git push origin prod  # Update the branch name as needed
+          git push origin stage  # Update the branch name as needed
  
 
 
