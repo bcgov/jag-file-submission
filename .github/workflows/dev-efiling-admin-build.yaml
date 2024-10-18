@@ -30,4 +30,4 @@ jobs:
       
       - name: Docker Push to Artifactory
         run: |
-          docker push artifacts.developer.gov.bc.ca/efc7-efiling-repo/efiling-admin:dev
+          docker push artifacts.developer.gov.bc.ca/efc7-efiling-admin/efiling-admin:dev
