@@ -1,0 +1,39 @@
+# Deploy an artifact onto Test
+name: Promote to Test
+on:
+  workflow_dispatch:
+    inputs:
+      application:
+        required: true
+        description: What application you want to promote?
+        type: choice
+        options:
+          - efiling-api
+          - efiling-frontend
+          - efiling-admin
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Artifactory
+        uses: docker/login-action@v1
+        with:
+          registry: artifacts.developer.gov.bc.ca
+          username: ${{ secrets.EFILING_ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.EFILING_ARTIFACTORY_PASSWORD }}
+
+      - name: Docker Pull Dev Image from Artifactory
+        working-directory: ${{env.WORKING_DIRECTORY}}
+        run: |
+          docker pull artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:dev
+      
+      - name: Docker Push Test Image To Artifactory
+        working-directory: ${{env.WORKING_DIRECTORY}}
+        run: |
+          docker push artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:test
+ 
+
+
