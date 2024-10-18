@@ -15,7 +15,7 @@
         <com.github.joschi.jackson.version>2.12.1</com.github.joschi.jackson.version>
         <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
         <com.splunk.logging.version>1.11.2</com.splunk.logging.version>
-        <commons-io.version>2.14.0</commons-io.version>
+        <commons-io.version>2.16.1</commons-io.version>
         <io.springfox.version>3.0.0</io.springfox.version>
         <io.swagger.version>2.2.9</io.swagger.version>
         <java.version>17</java.version>
@@ -28,7 +28,7 @@
         <org.apache.cxf.version>4.0.5</org.apache.cxf.version> 
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
         <org.apache.skywalking.version>8.4.0</org.apache.skywalking.version>
-        <org.codehaus.janino>3.1.3</org.codehaus.janino>
+        <org.codehaus.janino>.1.12</org.codehaus.janino>
         <org.glassfish.jersey.inject.version>3.1.3</org.glassfish.jersey.inject.version>
         <org.junit.jupiter.version>5.7.1</org.junit.jupiter.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
@@ -37,11 +37,11 @@
         <org.openapitools.version>0.2.6</org.openapitools.version>
         <org.springdoc.version>1.7.0</org.springdoc.version>
         <org.threeten.version>1.5.1</org.threeten.version>
-        <ch.qos.logback.version>1.4.12</ch.qos.logback.version>
+        <ch.qos.logback.version>1.4.14</ch.qos.logback.version>
         <org.apache.tomcat.embed.version>10.1.25</org.apache.tomcat.embed.version> 
         <org.json.version>20231013</org.json.version>
         <org.springframework.security.version>6.1.8</org.springframework.security.version>
-        <org.springframework.version>6.0.19</org.springframework.version>
+        <org.spring-web.version>6.1.13</org.spring-web.version>
     </properties>
 
     <repositories>
@@ -306,12 +306,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
-                <version>${org.springframework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${org.springframework.version}</version>
+                <version>${org.spring-web.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
