@@ -35,12 +35,9 @@
         <org.mockito.mockito-all.version>1.10.19</org.mockito.mockito-all.version>
         <org.mockito.mockito-core.version>3.6.0</org.mockito.mockito-core.version>
         <org.openapitools.version>0.2.6</org.openapitools.version>
-        <org.springdoc.version>1.7.0</org.springdoc.version>
         <org.threeten.version>1.5.1</org.threeten.version>
         <ch.qos.logback.version>1.4.14</ch.qos.logback.version>
-        <org.apache.tomcat.embed.version>10.1.25</org.apache.tomcat.embed.version> 
         <org.json.version>20231013</org.json.version>
-        <org.springframework.security.version>6.1.8</org.springframework.security.version>
         <org.spring-web.version>6.1.13</org.spring-web.version>
     </properties>
 
@@ -266,32 +263,15 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${org.springdoc.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-access</artifactId>
-                <version>1.4.14</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-core</artifactId>
-                <version>${org.apache.tomcat.embed.version}</version>
+                <version>${ch.qos.logback.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
                 <version>${org.json.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-core</artifactId>
-                <version>${org.springframework.security.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
