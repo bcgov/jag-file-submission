@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "0 0 * */3 *"
   push:
-    branches: [master]
+    branches: [artifactory]
     paths:
       - "src/backend/**"
       - ".github/workflows/dev-efiling-api-build.yaml"
@@ -25,6 +25,8 @@ jobs:
           password: ${{ secrets.EFILING_ARTIFACTORY_PASSWORD }}
       
       - name: Build Image
+        env:
+          MVN_PROFILE: efiling-api,splunk
         run: |
           docker compose build efiling-api
           docker tag jag-file-submission-efiling-api artifacts.developer.gov.bc.ca/efc7-efiling-api/efiling-api:dev
