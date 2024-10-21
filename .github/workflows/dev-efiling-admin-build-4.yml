@@ -34,5 +34,5 @@ jobs:
           
           docker compose build efiling-demo
           
-          docker tag jag-file-submission_efiling-demo ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-admin:latest
+          docker tag jag-file-submission-efiling-demo ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-admin:latest
           docker push ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-admin:latest
