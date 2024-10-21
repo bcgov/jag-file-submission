@@ -33,7 +33,7 @@ jobs:
       - name: Build the Docker image
         run: |          
           
-          docker-compose build efiling-frontend
+          docker compose build efiling-frontend
           
-          docker tag jag-file-submission_efiling-frontend ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-frontend:latest
+          docker tag jag-file-submission-efiling-frontend ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-frontend:latest
           docker push ${{ secrets.OPENSHIFT4_EXTERNAL_REPOSITORY }}/${{ secrets.OPENSHIFT4_TOOLS_NAMESPACE }}/efiling-frontend:latest
