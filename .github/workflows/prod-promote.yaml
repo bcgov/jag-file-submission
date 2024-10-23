@@ -51,7 +51,7 @@ jobs:
         with:
           repository: bcgov-c/tenant-gitops-fc726a
           ref: stage
-          token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
+          token: ${{ secrets.ARGO_PAT }}
           path: gitops
 
       - name: Update ADMIN Helm Values and Commit
