@@ -30,6 +30,8 @@ jobs:
         working-directory: ${{env.WORKING_DIRECTORY}}
         run: |
           docker pull artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:test
+          docker tag artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:test artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:prod
+
       
       - name: Docker Push Prod Image To Artifactory
         working-directory: ${{env.WORKING_DIRECTORY}}
