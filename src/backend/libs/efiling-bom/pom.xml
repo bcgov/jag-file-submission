@@ -41,7 +41,7 @@
         <org.apache.tomcat.embed.version>10.1.25</org.apache.tomcat.embed.version> 
         <org.json.version>20231013</org.json.version>
         <org.springframework.security.version>6.1.8</org.springframework.security.version>
-        <org.springframework.version>6.0.19</org.springframework.version>
+        <org.springframework.version>6.0.23</org.springframework.version> 
     </properties>
 
     <repositories>
