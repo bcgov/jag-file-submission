@@ -28,7 +28,7 @@
         <org.apache.cxf.version>4.0.5</org.apache.cxf.version> 
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
         <org.apache.skywalking.version>8.4.0</org.apache.skywalking.version>
-        <org.codehaus.janino>3.1.3</org.codehaus.janino>
+        <org.codehaus.janino>3.1.12</org.codehaus.janino>
         <org.glassfish.jersey.inject.version>3.1.3</org.glassfish.jersey.inject.version>
         <org.junit.jupiter.version>5.7.1</org.junit.jupiter.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
