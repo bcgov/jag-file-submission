@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="LOGS_PATH" source="logging.path"/>
+    <springProperty scope="context" name="SPLUNK_URL" source="splunk.url"/>
+    <springProperty scope="context" name="SPLUNK_TOKEN" source="splunk.token"/>
+    <springProperty scope="context" name="SPLUNK_SOURCE" source="splunk.source"/>
+    <!--STDOUT-->
+    <appender name="Console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{ISO8601} %highlight(%-5level) [%blue(%t)] %yellow(%C{1}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+    <!--Splunk-->
+    <if condition='isDefined("SPLUNK_URL")'>
+        <then>
+            <appender name="splunk" class="com.splunk.logging.HttpEventCollectorLogbackAppender">
+                <url>${SPLUNK_URL}</url>
+                <token>${SPLUNK_TOKEN}</token>
+                <source>ai-reviewer-api</source>
+                <host>${HOSTNAME}</host>
+                <sourcetype>app-logs</sourcetype>
+                <middleware>HttpEventCollectorUnitTestMiddleware</middleware>
+                <disableCertificateValidation>true</disableCertificateValidation>
+                <batch_size_count>1</batch_size_count>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>%msg</pattern>
+                </layout>
+            </appender>
+
+            <!-- LOG everything at INFO level -->
+            <root level="info">
+                <appender-ref ref="Console"/>
+                <appender-ref ref="splunk"/>
+            </root>
+        </then>
+        <else>
+            <root level="info">
+                <appender-ref ref="Console"/>
+            </root>
+        </else>
+    </if>
+</configuration>
