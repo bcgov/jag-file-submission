@@ -137,7 +137,7 @@ jobs:
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: summed-yarn-coverage-report
           path: coverage/total-codeclimate.json
@@ -263,7 +263,7 @@ jobs:
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: summed-java-coverage-report
           path: coverage/total-codeclimate.json
@@ -318,35 +318,35 @@ jobs:
 
       # Download Spring-boot coverage report
       - name: Download spring-boot coverage report
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: summed-java-coverage-report
 
       # See what is inside
       - name: List items inside java coverage report object
         run: |
-          ls summed-java-coverage-report
+          ls
 
       # Copy total java to outside directory
       - name: Copy Java Coverage to directory
         run: |
-          cp summed-java-coverage-report/total-codeclimate.json coverage-reports/total-java-codeclimate.json
+          cp total-codeclimate.json coverage-reports/total-java-codeclimate.json
 
       # Download Yarn coverage report
       - name: Download javascript coverage report
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4
         with:
           name: summed-yarn-coverage-report
 
       # See what is inside
-      - name: List items inside java coverage report object
+      - name: List items inside javascript coverage report object
         run: |
-          ls summed-yarn-coverage-report
+          ls 
 
       # Copy total Yarn to outside directory
       - name: Copy Yarn Coverage to directory
         run: |
-          cp summed-yarn-coverage-report/total-codeclimate.json coverage-reports/total-yarn-codeclimate.json
+          cp total-codeclimate.json coverage-reports/total-yarn-codeclimate.json
 
       # See what is inside coverage
       - name: List items inside java coverage report object
@@ -359,7 +359,7 @@ jobs:
 
       # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: summed-total-coverage-report
           path: coverage-reports/total-codeclimate.json
