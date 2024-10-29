@@ -9,9 +9,9 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
 import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.RolesAllowed;
 import java.text.MessageFormat;
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<GenerateCardUrlResponse> updateCreditCard(UUID xTransactionId, GenerateCardUrlRequest generateCardUrlRequest) {
 
         GenerateCardUrlResponse generateCardUrlResponse = new GenerateCardUrlResponse();

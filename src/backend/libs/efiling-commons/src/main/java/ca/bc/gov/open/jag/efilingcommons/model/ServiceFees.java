@@ -2,7 +2,6 @@ package ca.bc.gov.open.jag.efilingcommons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.joda.time.*;
 
 import java.math.BigDecimal;
 

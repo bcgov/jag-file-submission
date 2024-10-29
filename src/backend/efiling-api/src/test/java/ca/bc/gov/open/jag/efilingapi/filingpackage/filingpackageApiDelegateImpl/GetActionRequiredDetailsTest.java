@@ -1,18 +1,13 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.api.model.ActionRequiredDetails;
-import ca.bc.gov.open.jag.efilingapi.api.model.FilingPackage;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.FilingPackageNotFoundException;
 import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -22,11 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
+
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilepackageApiDelegateImplTest")
@@ -44,13 +40,7 @@ public class GetActionRequiredDetailsTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
+    private Jwt jwtMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -58,9 +48,6 @@ public class GetActionRequiredDetailsTest {
         MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
 
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -76,9 +63,8 @@ public class GetActionRequiredDetailsTest {
     @DisplayName("200: ok action required details returned")
     public void withValidRequestReturnActionRequiredDetails() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<ActionRequiredDetails> result = sut.getActionRequiredDetails(BigDecimal.ONE);
 
@@ -90,7 +76,8 @@ public class GetActionRequiredDetailsTest {
     @DisplayName("403: when no universal id should return 403")
     public void withNoUniversalIdShouldReturn403() {
 
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.getActionRequiredDetails(BigDecimal.ONE));
         Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
@@ -101,9 +88,8 @@ public class GetActionRequiredDetailsTest {
     @DisplayName("404: when no filling package is found should throw FilingPackageNotFoundException")
     public void withValidRequestNotFoundShouldThrowFilingPackageNotFoundException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2_STRING);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_2.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         FilingPackageNotFoundException exception = Assertions.assertThrows(FilingPackageNotFoundException.class, () -> sut.getActionRequiredDetails(BigDecimal.ONE));
         Assertions.assertEquals(ErrorCode.FILING_PACKAGE_NOT_FOUND.toString(), exception.getErrorCode());

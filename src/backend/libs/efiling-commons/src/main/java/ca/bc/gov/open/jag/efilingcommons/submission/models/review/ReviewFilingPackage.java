@@ -1,7 +1,6 @@
 package ca.bc.gov.open.jag.efilingcommons.submission.models.review;
 
 import ca.bc.gov.open.jag.efilingcommons.model.Individual;
-
 import ca.bc.gov.open.jag.efilingcommons.model.Organization;
 import org.joda.time.DateTime;
 

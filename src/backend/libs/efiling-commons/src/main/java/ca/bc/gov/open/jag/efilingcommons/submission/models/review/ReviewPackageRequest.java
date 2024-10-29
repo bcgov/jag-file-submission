@@ -5,7 +5,6 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.review.access.Status;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.party.Authorizing;
 import org.joda.time.DateTime;
 
-
 import java.math.BigDecimal;
 import java.util.List;
 

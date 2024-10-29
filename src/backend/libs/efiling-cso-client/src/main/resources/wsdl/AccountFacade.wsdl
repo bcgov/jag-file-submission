@@ -1,4 +1,6 @@
-<wsdl:definitions name="AccountFacade" targetNamespace="http://accounts.csows.ag.gov.bc.ca/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://accounts.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<wsdl:definitions name="AccountFacade" targetNamespace="http://accounts.csows.ag.gov.bc.ca/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://accounts.csows.ag.gov.bc.ca/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:types>
         <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://accounts.csows.ag.gov.bc.ca/" xmlns:tns="http://accounts.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:element name="createAccount" type="tns:createAccount"/>

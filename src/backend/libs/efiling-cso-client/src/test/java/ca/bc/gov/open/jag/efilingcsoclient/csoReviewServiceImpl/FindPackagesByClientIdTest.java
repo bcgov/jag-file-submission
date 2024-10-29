@@ -7,7 +7,6 @@ import ca.bc.gov.ag.csows.filing.status.NestedEjbException_Exception;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingStatusServiceException;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingLookupService;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackageRequest;
-import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import ca.bc.gov.open.jag.efilingcommons.submission.models.review.ReviewFilingPackage;
 import ca.bc.gov.open.jag.efilingcommons.utils.DateUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.CsoReviewServiceImpl;
@@ -23,8 +22,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
