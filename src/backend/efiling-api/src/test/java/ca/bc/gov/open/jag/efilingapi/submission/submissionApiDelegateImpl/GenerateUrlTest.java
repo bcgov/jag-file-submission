@@ -25,9 +25,6 @@ import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingDocumentServiceExcept
 import ca.bc.gov.open.jag.efilingcommons.exceptions.InvalidAccountStateException;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.StoreException;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -37,10 +34,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -75,14 +71,7 @@ public class GenerateUrlTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
-
+    private Jwt jwtMock;
 
     @Mock
     private ClamAvService clamAvServiceMock;
@@ -97,10 +86,7 @@ public class GenerateUrlTest {
         MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
-
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
         SecurityContextHolder.setContext(securityContextMock);
 
         NavigationProperties navigationProperties = new NavigationProperties();
@@ -157,9 +143,8 @@ public class GenerateUrlTest {
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, new GenerateUrlResponseMapperImpl(), navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidatorMock, null);
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, CODE);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(Keys.CSO_APPLICATION_CLAIM_KEY))).thenReturn(CODE);
+
     }
 
 
@@ -286,9 +271,7 @@ public class GenerateUrlTest {
     public void whenApplicationCodeNotPresentShouldThrowMissingApplicationCodeException() {
         @Valid GenerateUrlRequest generateUrlRequest = new GenerateUrlRequest();
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.CSO_APPLICATION_CLAIM_KEY, null);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(Keys.CSO_APPLICATION_CLAIM_KEY))).thenReturn(null);
 
         generateUrlRequest.setClientAppName(CLIENT_APP_NAME);
         generateUrlRequest.setNavigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL));

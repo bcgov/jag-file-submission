@@ -7,7 +7,6 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
-import com.sun.jndi.toolkit.url.Uri;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
@@ -17,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -24,7 +25,7 @@ import java.util.UUID;
 public class PaymentApiDelegateImplTest {
 
     private static final String REDIRECT_URL = "SOMEURL";
-    private static final String REDIRECTED_URL = "http:\\www.google.com\bambora";
+    private static final String REDIRECTED_URL = "http://www.google.com/bambora";
     private static final String INTERNAL_CLIENT_NUMBER = "123";
     private static final String FAIL_INTERNAL_CLIENT_NUMBER = "1234";
     private PaymentApiDelegateImpl sut;
@@ -36,10 +37,10 @@ public class PaymentApiDelegateImplTest {
     EfilingAccountService efilingAccountServiceMock;
 
     @BeforeAll
-    public void setUp() throws MalformedURLException {
-        MockitoAnnotations.initMocks(this);
+    public void setUp() throws MalformedURLException, URISyntaxException {
+        MockitoAnnotations.openMocks(this);
 
-        Mockito.doReturn(new Uri(REDIRECTED_URL)).when(bamboraCardServiceMock).setupRecurringPayment(
+        Mockito.doReturn(new URI(REDIRECTED_URL)).when(bamboraCardServiceMock).setupRecurringPayment(
                 ArgumentMatchers.argThat(request -> request.getEndUserId().equals(INTERNAL_CLIENT_NUMBER)));
 
         Mockito.doThrow(BamboraException.class).when(bamboraCardServiceMock).setupRecurringPayment(

@@ -43,7 +43,7 @@
     "react-scripts": "^5.0.1",
     "reactstrap": "^8.9.0",
     "regenerator-runtime": "^0.13.7",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.7/shared-components-v1.2.7.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.8/shared-components-1.2.8.tgz",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
@@ -126,7 +126,15 @@
     "terser": "^5.14.2",
     "json5": "^2.2.2",
     "minimatch": "^3.0.5",
-    "webpack": "^5.76.0"
+    "webpack": "^5.76.0",
+    "braces": "^3.0.3",
+    "webpack-dev-middleware": "^5.3.4",
+    "browserify-sign": "4.2.2",
+    "ws": "^8.17.1",
+    "rollup": "^2.79.2",
+    "body-parser": "^1.20.3",
+    "path-to-regexp": "^0.1.10",
+    "http-proxy-middleware": "^2.0.7"
   },
   "jest": {
     "watchPathIgnorePatterns": [

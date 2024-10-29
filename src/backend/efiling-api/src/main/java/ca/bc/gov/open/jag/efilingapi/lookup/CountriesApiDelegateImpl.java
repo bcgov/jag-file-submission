@@ -7,9 +7,9 @@ import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +25,7 @@ public class CountriesApiDelegateImpl implements CountriesApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<List<CountryCode>> getCountries() {
 
         logger.info("Get countries list request received");

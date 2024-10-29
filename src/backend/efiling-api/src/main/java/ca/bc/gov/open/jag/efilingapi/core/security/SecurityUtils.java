@@ -1,8 +1,9 @@
 package ca.bc.gov.open.jag.efilingapi.core.security;
 
 import ca.bc.gov.open.jag.efilingapi.Keys;
-import org.keycloak.KeycloakPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.Optional;
 
@@ -13,8 +14,9 @@ public class SecurityUtils {
 
     public static Optional<String> getClientId() {
         try {
-            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getIssuedFor());
+            Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            return Optional.of(jwt.getId());
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -34,21 +36,23 @@ public class SecurityUtils {
 
     private static Optional<String> getOtherClaim(String claim) {
         try {
-            return Optional.of(((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getOtherClaims().get(claim).toString());
+            Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return Optional.of(jwt.getClaim(claim));
         } catch (Exception e) {
             return Optional.empty();
         }
     }
 
     public static boolean isEarlyAdopter() {
-        return isInRole("early-adopters");
+        return isInRole("ROLE_early-adopters");
     }
 
     public static boolean isInRole(String role) {
         try {
-            return ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                    .getKeycloakSecurityContext().getToken().getResourceAccess(Keys.EFILING_API_NAME).isUserInRole(role);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            return authentication.getAuthorities().stream()
+                    .anyMatch(r -> r.getAuthority().equals(role));
         } catch (Exception e) {
             return false;
         }

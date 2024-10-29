@@ -1,13 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
+import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.model.SubmittedDocument;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -19,12 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilepackageApiDelegateImplTest")
@@ -50,13 +48,7 @@ public class GetRushDocumentTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
+    private Jwt jwtMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -64,9 +56,6 @@ public class GetRushDocumentTest {
         MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
 
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -75,19 +64,19 @@ public class GetRushDocumentTest {
                 .name("TEST")
                 .create()));
 
-
         Mockito.when(filingPackageService.getRushDocument(Mockito.any(), ArgumentMatchers.eq(BigDecimal.TEN), Mockito.any())).thenReturn(Optional.empty());
 
         sut = new FilingpackageApiDelegateImpl(filingPackageService);
+
     }
 
     @Test
     @DisplayName("200: File is returned")
     public void withValidRequestReturnFilingPackage() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<Resource> result = sut.getRushDocument(BigDecimal.ONE, FOUND_DOCUMENT_IDENTIFIER);
 
@@ -99,7 +88,9 @@ public class GetRushDocumentTest {
     @DisplayName("403: when no universal id should return 403")
     public void withNoUniversalIdShouldReturn403() {
 
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
+
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<?> actual = sut.getRushDocument(BigDecimal.ONE, NOT_FOUND_DOCUMENT_IDENTIFIER);
 
@@ -111,9 +102,8 @@ public class GetRushDocumentTest {
     @DisplayName("404: when no document should return 404")
     public void withNoDocumentShouldReturn404() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<?> actual = sut.getRushDocument(BigDecimal.TEN, NOT_FOUND_DOCUMENT_IDENTIFIER);
 
