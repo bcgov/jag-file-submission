@@ -27,6 +27,7 @@ jobs:
       - name: Build Image
         env:
           MVN_PROFILE: efiling-api,splunk
+          STARTERS_V: v1.0.2
         run: |
           docker compose build efiling-api
           docker tag jag-file-submission-efiling-api artifacts.developer.gov.bc.ca/efc7-efiling-api/efiling-api:dev
