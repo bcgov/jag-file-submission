@@ -43,7 +43,7 @@
     "react-scripts": "^5.0.1",
     "reactstrap": "^8.9.0",
     "regenerator-runtime": "^0.13.7",
-    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.8/shared-components-1.2.8.tgz",
+    "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.2.9/shared-components-1.2.9.tgz",
     "stream": "^0.0.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
