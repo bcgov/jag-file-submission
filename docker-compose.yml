@@ -96,6 +96,9 @@ services:
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
 
+      - MVN_PROFILE=${MVN_PROFILE}
+      - STARTERS_V=${STARTERS_V}
+
     networks:
       - fisu-net
 
