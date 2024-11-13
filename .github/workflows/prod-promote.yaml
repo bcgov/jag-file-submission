@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: bcgov-c/tenant-gitops-fc726a
-          ref: stage
+          ref: main
           token: ${{ secrets.ARGO_PAT }}
           path: gitops
 
@@ -87,7 +87,7 @@ jobs:
           git add .
           
           git commit -m "Update Prod Admin image tag"
-          git push origin stage  # Update the branch name as needed
+          git push origin main  # Update the branch name as needed
       
       - name: Update API Helm Values and Commit
         id: helm-api
@@ -122,7 +122,7 @@ jobs:
           git add .
           
           git commit -m "Update Prod API image tag"
-          git push origin stage  # Update the branch name as needed
+          git push origin main  # Update the branch name as needed
       
       - name: Update FRONTEND Helm Values and Commit
         id: helm-frontend
@@ -157,7 +157,7 @@ jobs:
           git add .
           
           git commit -m "Update Prod FRONTEND image tag"
-          git push origin stage  # Update the branch name as needed
+          git push origin main  # Update the branch name as needed
  
 
 
