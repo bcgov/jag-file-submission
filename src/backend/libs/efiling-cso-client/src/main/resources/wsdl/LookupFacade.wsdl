@@ -1,8 +1,6 @@
-<wsdl:definitions name="LookupFacade" targetNamespace="http://lookups.csows.ag.gov.bc.ca/"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://lookups.csows.ag.gov.bc.ca/"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions name="LookupFacade" targetNamespace="http://lookups.csows.ag.gov.bc.ca/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://lookups.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
-        <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://lookups.csows.ag.gov.bc.ca/" xmlns:tns="http://lookups.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://lookups.csows.ag.gov.bc.ca/" version="1.0" xmlns:tns="http://lookups.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:element name="createApplicationPreference" type="tns:createApplicationPreference"/>
             <xs:element name="createApplicationPreferenceResponse" type="tns:createApplicationPreferenceResponse"/>
             <xs:element name="findApplicationPreferenceByCriteria" type="tns:findApplicationPreferenceByCriteria"/>
@@ -21,6 +19,8 @@
             <xs:element name="getActiveDocumentSchemasResponse" type="tns:getActiveDocumentSchemasResponse"/>
             <xs:element name="getApplicationRecordTypes" type="tns:getApplicationRecordTypes"/>
             <xs:element name="getApplicationRecordTypesResponse" type="tns:getApplicationRecordTypesResponse"/>
+            <xs:element name="getBCRegistryPaymentMethods" type="tns:getBCRegistryPaymentMethods"/>
+            <xs:element name="getBCRegistryPaymentMethodsResponse" type="tns:getBCRegistryPaymentMethodsResponse"/>
             <xs:element name="getCities" type="tns:getCities"/>
             <xs:element name="getCitiesResponse" type="tns:getCitiesResponse"/>
             <xs:element name="getCivilDataElements" type="tns:getCivilDataElements"/>
@@ -43,6 +43,8 @@
             <xs:element name="getEfilingPartyRolesResponse" type="tns:getEfilingPartyRolesResponse"/>
             <xs:element name="getIndustryTypes" type="tns:getIndustryTypes"/>
             <xs:element name="getIndustryTypesResponse" type="tns:getIndustryTypesResponse"/>
+            <xs:element name="getLanguages" type="tns:getLanguages"/>
+            <xs:element name="getLanguagesResponse" type="tns:getLanguagesResponse"/>
             <xs:element name="getLegalRepTypes" type="tns:getLegalRepTypes"/>
             <xs:element name="getLegalRepTypesResponse" type="tns:getLegalRepTypesResponse"/>
             <xs:element name="getPaymentMethods" type="tns:getPaymentMethods"/>
@@ -261,6 +263,14 @@
                     <xs:element minOccurs="0" name="orderDocumentYn" type="xs:boolean"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="getLanguages">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getLanguagesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="getActiveDocumentSchemas">
                 <xs:sequence/>
             </xs:complexType>
@@ -340,6 +350,14 @@
                     <xs:element minOccurs="0" name="courtClassDsc" type="xs:string"/>
                     <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="courtLevelDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getBCRegistryPaymentMethods">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getBCRegistryPaymentMethodsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getCities">
@@ -546,6 +564,9 @@
     <wsdl:message name="getRefundReasons">
         <wsdl:part element="tns:getRefundReasons" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getLanguagesResponse">
+        <wsdl:part element="tns:getLanguagesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getRefundStatusesResponse">
         <wsdl:part element="tns:getRefundStatusesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -600,6 +621,12 @@
     <wsdl:message name="getCitiesResponse">
         <wsdl:part element="tns:getCitiesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="getBCRegistryPaymentMethodsResponse">
+        <wsdl:part element="tns:getBCRegistryPaymentMethodsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getLanguages">
+        <wsdl:part element="tns:getLanguages" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getActiveDocumentSchemas">
         <wsdl:part element="tns:getActiveDocumentSchemas" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -626,6 +653,9 @@
     </wsdl:message>
     <wsdl:message name="getServiceFeeByClassificationResponse">
         <wsdl:part element="tns:getServiceFeeByClassificationResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getBCRegistryPaymentMethods">
+        <wsdl:part element="tns:getBCRegistryPaymentMethods" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getCities">
         <wsdl:part element="tns:getCities" name="parameters"></wsdl:part>
@@ -728,6 +758,11 @@
             <wsdl:output message="tns:getCivilDocumentJurisdictionsResponse" name="getCivilDocumentJurisdictionsResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="getLanguages">
+            <wsdl:input message="tns:getLanguages" name="getLanguages"></wsdl:input>
+            <wsdl:output message="tns:getLanguagesResponse" name="getLanguagesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="getActiveDocumentSchemas">
             <wsdl:input message="tns:getActiveDocumentSchemas" name="getActiveDocumentSchemas"></wsdl:input>
             <wsdl:output message="tns:getActiveDocumentSchemasResponse" name="getActiveDocumentSchemasResponse"></wsdl:output>
@@ -766,6 +801,11 @@
         <wsdl:operation name="getCivilLevelClassGroupings">
             <wsdl:input message="tns:getCivilLevelClassGroupings" name="getCivilLevelClassGroupings"></wsdl:input>
             <wsdl:output message="tns:getCivilLevelClassGroupingsResponse" name="getCivilLevelClassGroupingsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getBCRegistryPaymentMethods">
+            <wsdl:input message="tns:getBCRegistryPaymentMethods" name="getBCRegistryPaymentMethods"></wsdl:input>
+            <wsdl:output message="tns:getBCRegistryPaymentMethodsResponse" name="getBCRegistryPaymentMethodsResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="getCities">
@@ -922,24 +962,24 @@
                 <soap:fault name="NestedEjbException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
-        <wsdl:operation name="getEfilingPartyRoles">
-            <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="getEfilingPartyRoles">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="getEfilingPartyRolesResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-            <wsdl:fault name="NestedEjbException">
-                <soap:fault name="NestedEjbException" use="literal"/>
-            </wsdl:fault>
-        </wsdl:operation>
         <wsdl:operation name="findApplicationPreferenceByName">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="findApplicationPreferenceByName">
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findApplicationPreferenceByNameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getEfilingPartyRoles">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getEfilingPartyRoles">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getEfilingPartyRolesResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -988,6 +1028,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="getCivilDocumentJurisdictionsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getLanguages">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getLanguages">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getLanguagesResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1084,6 +1136,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="getCivilLevelClassGroupingsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getBCRegistryPaymentMethods">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getBCRegistryPaymentMethods">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getBCRegistryPaymentMethodsResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
