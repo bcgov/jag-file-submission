@@ -11,8 +11,8 @@ public class CommonUtils {
 
     public static void login() throws Exception {
 
-        WebDriver driver = WebDriverManager.getDriver();
-        WebElement element = WebDriverManager.getElement();
+        WebDriver driver = CustomWebDriverManager.getDriver();
+        WebElement element = CustomWebDriverManager.getElement();
 
         if (Config.ENVIROMENT.equals(Constants.DEV)) {
             driver.get("https://court-of-appeal-dev.apps.silver.devops.gov.bc.ca/court-of-appeal/");
@@ -29,8 +29,8 @@ public class CommonUtils {
 
     public static void loginEDivorce() throws Exception {
 
-        WebDriver driver = WebDriverManager.getDriver();
-        WebElement element = WebDriverManager.getElement();
+        WebDriver driver = CustomWebDriverManager.getDriver();
+        WebElement element = CustomWebDriverManager.getElement();
 
         if (Config.ENVIROMENT.equals(Constants.DEV)) {
             driver.get("https://test.justice.gov.bc.ca/divorce/prequalification/step_01");
@@ -46,8 +46,8 @@ public class CommonUtils {
 
     public static void FLA() throws Exception {
 
-        WebDriver driver = WebDriverManager.getDriver();
-        WebElement element = WebDriverManager.getElement();
+        WebDriver driver = CustomWebDriverManager.getDriver();
+        WebElement element = CustomWebDriverManager.getElement();
 
         if (Config.ENVIROMENT.equals(Constants.DEV)) {
             driver.get("https://family-law-act-dev.apps.silver.devops.gov.bc.ca/apply-for-family-order/");

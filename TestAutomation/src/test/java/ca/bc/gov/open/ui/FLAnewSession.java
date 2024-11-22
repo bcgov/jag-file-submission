@@ -1,6 +1,6 @@
 package ca.bc.gov.open.ui;
 
-import ca.bc.gov.open.jagFileSubmission.WebDriverManager;
+import ca.bc.gov.open.jagFileSubmission.CustomWebDriverManager;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -15,6 +15,8 @@ import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
 
+import static ca.bc.gov.open.jagFileSubmission.CustomWebDriverManager.getDriver;
+
 public class FLAnewSession {
 
     private WebDriver driver;
@@ -24,18 +26,18 @@ public class FLAnewSession {
         driver.close();
         driver.quit();
     }
+
     @AfterClass
     public static void afterClass() {
-        WebDriverManager.instance = null;
+        CustomWebDriverManager.instance = null;
     }
-
 
     @Test
     public void test() throws Exception {
-        driver = WebDriverManager.getDriver();
-        WebDriverWait driverWait = WebDriverManager.getDriverWait();
-        WebElement element = WebDriverManager.getElement();
-        WebDriverManager.getElements();
+        driver = getDriver();
+        WebDriverWait driverWait = CustomWebDriverManager.getDriverWait();
+        WebElement element;
+        CustomWebDriverManager.getElements();
 
         FLAlogin login = new FLAlogin();
         login.test();
