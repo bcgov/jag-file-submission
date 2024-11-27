@@ -26,6 +26,13 @@ jobs:
           username: ${{ secrets.EFILING_ARTIFACTORY_USERNAME }}
           password: ${{ secrets.EFILING_ARTIFACTORY_PASSWORD }}
 
+      - name: Backup Prod Image from Artifactory
+        working-directory: ${{env.WORKING_DIRECTORY}}
+        run: |
+          docker pull artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:prod
+          docker tag artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:prod artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:prod-backup
+          docker push artifacts.developer.gov.bc.ca/efc7-${{ github.event.inputs.application }}/${{ github.event.inputs.application }}:prod-backup
+
       - name: Docker Pull Test Image from Artifactory
         working-directory: ${{env.WORKING_DIRECTORY}}
         run: |
