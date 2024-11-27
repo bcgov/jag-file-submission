@@ -18,19 +18,19 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     @Override
-    @CachePut(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    @CachePut(cacheNames = "document", key = "{ #p0.universalId, #p0.submissionId, #p0.transactionId, #fileName }", cacheManager = "documentCacheManager")
     public byte[] put(SubmissionKey submissionKey, String fileName, byte[] content) {
         return content;
     }
 
     @Override
-    @Cacheable(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager", unless = "#result == null")
+    @Cacheable(cacheNames = "document", key = "{ #p0.universalId, #p0.submissionId, #p0.transactionId, #fileName }", cacheManager = "documentCacheManager", unless = "#result == null")
     public byte[] get(SubmissionKey submissionKey, String fileName) {
         return null;
     }
 
     @Override
-    @CacheEvict(cacheNames = "document", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    @CacheEvict(cacheNames = "document", key = "{ #p0.universalId, #p0.submissionId,#p0.transactionId, #fileName }", cacheManager = "documentCacheManager")
     public void evict(SubmissionKey submissionKey, String fileName) {
         //This implements Redis delete no code required
     }
@@ -47,19 +47,19 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     @Override
-    @CachePut(cacheNames = "rushDocument", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    @CachePut(cacheNames = "rushDocument", key = "{ #p0.universalId, #p0.submissionId, #p0.transactionId, #fileName }", cacheManager = "documentCacheManager")
     public byte[] putRushDocument(SubmissionKey submissionKey, String fileName, byte[] content) {
         return content;
     }
 
     @Override
-    @Cacheable(cacheNames = "rushDocument", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager", unless = "#result == null")
+    @Cacheable(cacheNames = "rushDocument", key = "{ #p0.universalId, #p0.submissionId, #p0.transactionId, #fileName }", cacheManager = "documentCacheManager", unless = "#result == null")
     public byte[] getRushDocument(SubmissionKey submissionKey, String fileName) {
         return null;
     }
 
     @Override
-    @CacheEvict(cacheNames = "rushDocument", key = "{ #submissionKey.universalId, #submissionKey.submissionId, #submissionKey.transactionId, #fileName }", cacheManager = "documentCacheManager")
+    @CacheEvict(cacheNames = "rushDocument", key = "{ #p0.universalId, #p0.submissionId, #p0.transactionId, #fileName }", cacheManager = "documentCacheManager")
     public void evictRushDocument(SubmissionKey submissionKey, String fileName) {
         //This implements Redis delete no code required
     }
