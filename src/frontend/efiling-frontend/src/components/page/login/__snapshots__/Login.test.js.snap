@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Component BCeID button tries to log in with BCeID 1`] = `
+<DocumentFragment>
+  <div
+    style="text-align: center; line-height: 100px;"
+  >
+    <button
+      class="bcgov-button bcgov-normal-blue btn"
+      data-testid=""
+      type="button"
+    >
+      Log in with BCeID
+    </button>
+    <button
+      class="bcgov-button bcgov-normal-white btn"
+      data-testid=""
+      type="button"
+    >
+      Log in with IDIR
+    </button>
+    <button
+      class="bcgov-button bcgov-normal-blue btn"
+      data-testid=""
+      type="button"
+    >
+      Log in with BC Services Card
+    </button>
+  </div>
+</DocumentFragment>
+`;
