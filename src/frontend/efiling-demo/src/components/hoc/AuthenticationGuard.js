@@ -29,21 +29,23 @@ export default function AuthenticationGuard({ page: { header } }) {
 
   async function keycloakInit() {
     // Initialize client
-    const keycloak = Keycloak(KEYCLOAK);
+    const keycloak = new Keycloak(KEYCLOAK);
 
     await keycloak
       .init({
         checkLoginIframe: false,
       })
-      .success((authenticated) => {
+      .then((authenticated) => {
         if (authenticated) {
-          keycloak.loadUserInfo().success();
-
+          keycloak.loadUserInfo().then();
           localStorage.setItem("jwt", keycloak.token);
           setAuthedKeycloak(keycloak);
         } else {
           keycloak.login();
         }
+      })
+      .catch((exception) => {
+        console.log(exception);
       });
   }
 

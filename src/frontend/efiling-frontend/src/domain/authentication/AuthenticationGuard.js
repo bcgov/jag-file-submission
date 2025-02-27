@@ -47,9 +47,9 @@ export default function AuthenticationGuard(props) {
       .init({
         checkLoginIframe: false,
       })
-      .success((authenticated) => {
+      .then((authenticated) => {
         if (authenticated) {
-          keycloak.loadUserInfo().success();
+          keycloak.loadUserInfo().then();
 
           localStorage.setItem("jwt", keycloak.token);
           setAuthedKeycloak(keycloak);
@@ -58,7 +58,7 @@ export default function AuthenticationGuard(props) {
             idpHint: `${defaultIdentityProvider}`,
           });
         }
-      });
+      });     
   }
 
   useEffect(() => {
