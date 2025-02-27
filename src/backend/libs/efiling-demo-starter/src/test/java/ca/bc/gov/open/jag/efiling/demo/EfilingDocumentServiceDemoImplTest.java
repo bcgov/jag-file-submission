@@ -21,7 +21,7 @@ public class EfilingDocumentServiceDemoImplTest {
         EfilingDocumentServiceDemoImpl service = new EfilingDocumentServiceDemoImpl();
 
         String serviceId = "TestServiceId";
-        DocumentTypeDetails actual = service.getDocumentTypeDetails(serviceId, Mockito.anyString(), Mockito.anyString());
+        DocumentTypeDetails actual = service.getDocumentTypeDetails(serviceId, "", "");
 
         Assertions.assertEquals("This is a doc", actual.getDescription());
         Assertions.assertEquals(BigDecimal.valueOf(7), actual.getStatutoryFeeAmount());
@@ -36,7 +36,7 @@ public class EfilingDocumentServiceDemoImplTest {
 
         EfilingDocumentServiceDemoImpl service = new EfilingDocumentServiceDemoImpl();
 
-        List<DocumentTypeDetails> actual = service.getDocumentTypes(Mockito.anyString(), Mockito.anyString());
+        List<DocumentTypeDetails> actual = service.getDocumentTypes("", "");
 
         Assertions.assertEquals(3, actual.size());
         Assertions.assertEquals("Description1", actual.get(0).getDescription());
