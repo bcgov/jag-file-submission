@@ -172,7 +172,8 @@
       "text",
       "lcov"
     ],
-    "coverageDirectory": "coverage"
+    "coverageDirectory": "coverage",
+    "transformIgnorePatterns": ["node_modules/(?!(.*.mjs$|keycloak.js))"]
   },
   "jestSonar": {
     "reportPath": "coverage",
