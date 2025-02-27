@@ -58,7 +58,7 @@ export default function AuthenticationGuard(props) {
             idpHint: `${defaultIdentityProvider}`,
           });
         }
-      });     
+      });
   }
 
   useEffect(() => {
