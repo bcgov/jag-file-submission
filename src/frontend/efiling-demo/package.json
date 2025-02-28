@@ -16,7 +16,7 @@
     "install-peerdeps": "^3.0.3",
     "jest-canvas-mock": "^2.5.0",
     "jsonwebtoken": "^9.0.0",
-    "keycloak-js": "^26.2.0",
+    "keycloak-js": "^25.0.6",
     "node": "^17.3.0",
     "object-path": "^0.11.8",
     "postcss-normalize": "^10.0.1",
