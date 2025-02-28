@@ -29,7 +29,7 @@ export const KEYCLOAK = {
 };
 
 // Initialize client
-const keycloak = Keycloak(KEYCLOAK);
+const keycloak = new Keycloak(KEYCLOAK);
 
 keycloak.onAuthSuccess = () => localStorage.setItem("jwt", keycloak.token);
 keycloak.onAuthRefreshSuccess = () =>
@@ -47,9 +47,9 @@ export default function AuthenticationGuard(props) {
       .init({
         checkLoginIframe: false,
       })
-      .success((authenticated) => {
+      .then((authenticated) => {
         if (authenticated) {
-          keycloak.loadUserInfo().success();
+          keycloak.loadUserInfo().then();
 
           localStorage.setItem("jwt", keycloak.token);
           setAuthedKeycloak(keycloak);
