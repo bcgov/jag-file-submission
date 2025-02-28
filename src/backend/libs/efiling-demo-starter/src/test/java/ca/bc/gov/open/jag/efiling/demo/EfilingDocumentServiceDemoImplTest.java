@@ -45,6 +45,7 @@ public class EfilingDocumentServiceDemoImplTest {
         Assertions.assertTrue(actual.get(0).isOrderDocument());
         Assertions.assertTrue(actual.get(0).isRushRequired());
         Assertions.assertFalse(actual.get(0).isAutoProcessing());
+        
 
     }
 }
