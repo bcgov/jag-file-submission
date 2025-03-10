@@ -146,14 +146,16 @@ services:
       - KC_HOSTNAME_STRICT_HTTPS=false
       - KEYCLOAK_SSL_REQUIRED=none
       - KC_HOSTNAME_STRICT_BACKCHANNEL=false
-      - KC_HOSTNAME=http://localhost:8081/auth
+      - KC_PROXY_HEADERS=xforwarded
+      - KC_HOSTNAME=localhost
+      - KC_HOSTNAME_PORT=8080
       - DB_VENDOR=H2
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
     volumes:
       - ./infrastructure/keycloak/realm-export.json:/tmp/realm-export.json
     ports:
-      - "8081:8080"
+      - 8081:8080
     restart: unless-stopped
     command: start
     networks:
