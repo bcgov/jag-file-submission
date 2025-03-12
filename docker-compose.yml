@@ -148,16 +148,18 @@ services:
       - KC_HOSTNAME_STRICT_BACKCHANNEL=false
       - KC_PROXY_HEADERS=xforwarded
       - KC_HOSTNAME=localhost
+      - KC_HTTP_RELATIVE_PATH=/auth
       - KC_HOSTNAME_PORT=8080
       - DB_VENDOR=H2
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DIR=/opt/keycloak/data/import
     volumes:
-      - ./infrastructure/keycloak/realm-export.json:/tmp/realm-export.json
+      - ./infrastructure/keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
     ports:
       - 8081:8080
-    restart: unless-stopped
-    command: start
+    restart: always
+    command: start --import-realm
     networks:
       - fisu-net
 
@@ -165,7 +167,7 @@ services:
   # ###                                        KEYCLOAK Config                                ###
   # #############################################################################################
   keycloak-config:
-    command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s /tmp/createuser.sh"
+    command: sh -c "dockerize -timeout 300s /tmp/createuser.sh"
     networks:
       - fisu-net
 
