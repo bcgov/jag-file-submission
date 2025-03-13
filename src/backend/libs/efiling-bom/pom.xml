@@ -40,7 +40,7 @@
         <ch.qos.logback.version>1.5.8</ch.qos.logback.version>
         <org.apache.tomcat.embed.version>10.1.34</org.apache.tomcat.embed.version>
         <org.json.version>20231013</org.json.version>
-        <org.springframework.security.version>6.3.3</org.springframework.security.version>
+        <org.springframework.security.version>6.3.5</org.springframework.security.version>
         <org.springframework.version>6.1.14</org.springframework.version>
     </properties>
 
