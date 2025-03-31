@@ -19,6 +19,8 @@ RUN yarn build
 #############################################################################################
 FROM nginx:1.27.4-alpine
 
+RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt
+
 RUN rm -rf /usr/share/nginx/html/
 COPY --from=build /app/build /etc/nginx/html/efilinghub
 
