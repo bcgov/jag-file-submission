@@ -9,7 +9,7 @@
 
     <properties>
         <log4j2.version>2.17.1</log4j2.version>
-        <ca.bc.gov.open.version>1.0.3</ca.bc.gov.open.version>
+        <ca.bc.gov.open.version>1.0.4</ca.bc.gov.open.version>
         <com.brsanthu.version>2.2</com.brsanthu.version>
         <com.fasterxml.jackson.core.version>2.12.1</com.fasterxml.jackson.core.version>
         <com.github.joschi.jackson.version>2.12.1</com.github.joschi.jackson.version>
@@ -30,7 +30,7 @@
         <org.apache.skywalking.version>8.4.0</org.apache.skywalking.version>
         <org.codehaus.janino>3.1.3</org.codehaus.janino>
         <org.glassfish.jersey.inject.version>3.1.3</org.glassfish.jersey.inject.version>
-        <org.junit.jupiter.version>5.7.1</org.junit.jupiter.version>
+        <org.junit.jupiter.version>5.12.1</org.junit.jupiter.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <org.mockito.mockito-all.version>1.10.19</org.mockito.mockito-all.version>
         <org.mockito.mockito-core.version>3.6.0</org.mockito.mockito-core.version>
@@ -282,9 +282,9 @@
                 <version>${ch.qos.logback.version}</version>
             </dependency>
             <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-access</artifactId>
-                <version>${ch.qos.logback.version}</version>
+                <groupId>ch.qos.logback.access</groupId>
+                <artifactId>logback-access-common</artifactId>
+                <version>2.0.6</version>
             </dependency>
 
             <dependency>
