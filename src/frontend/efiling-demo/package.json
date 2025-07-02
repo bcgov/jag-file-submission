@@ -1,6 +1,6 @@
 {
   "name": "efiling-demo",
-  "version": "1.5.2",
+  "version": "2.0.9-SNAPSHOT",
   "homepage": ".",
   "private": true,
   "dependencies": {
