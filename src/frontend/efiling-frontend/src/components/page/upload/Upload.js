@@ -436,7 +436,6 @@ export default function Upload({
 
 Upload.propTypes = {
   upload: PropTypes.shape({
-    confirmationPopup: propTypes.confirmationPopup,
     submissionId: PropTypes.string.isRequired,
     courtData: PropTypes.object.isRequired,
     setShowUpload: PropTypes.func.isRequired,
