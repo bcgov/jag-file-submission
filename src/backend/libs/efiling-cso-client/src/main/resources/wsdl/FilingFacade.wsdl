@@ -120,6 +120,7 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="amendsAnotherDocumentYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="appearanceDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="appearanceId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="appearanceTm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="appearnceAgenId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="bailiffId" type="xs:decimal"/>
@@ -155,6 +156,7 @@
                     <xs:element minOccurs="0" name="parentDocumentId" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="payments" nillable="true" type="tns:documentPayments"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="statuses" nillable="true" type="tns:documentStatuses"/>
+                    <xs:element minOccurs="0" name="submissionTypeCd" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="supports" nillable="true" type="tns:documentSupport"/>
                     <xs:element minOccurs="0" name="transactionGuid" type="xs:string"/>
                     <xs:element minOccurs="0" name="translatedDocumentYn" type="xs:boolean"/>
@@ -626,6 +628,7 @@
                     <xs:element minOccurs="0" name="arg2" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg3" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:boolean"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="findCivilAppearancesByFileNumberDateResponse">

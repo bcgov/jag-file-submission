@@ -1,13 +1,13 @@
 {
   "name": "efiling-demo",
-  "version": "1.5.1",
+  "version": "2.0.9-SNAPSHOT",
   "homepage": ".",
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.13.13",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
     "@csstools/normalize.css": "csstools/normalize.css",
-    "axios": "^0.25.0",
+    "axios": "^0.30.0",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.5.3",
     "browserslist": "^4.19.1",
