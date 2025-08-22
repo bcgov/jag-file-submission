@@ -30,10 +30,10 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.security.RolesAllowed;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -93,7 +93,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed({"efiling-client", "efiling-admin"})
+    @PreAuthorize("hasRole('efiling-client') || hasRole('efiling-admin')")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadSubmissionDocuments(UUID xTransactionId, String xUserId, List<MultipartFile> files) {
 
         if(StringUtils.isBlank(xUserId)) {
@@ -117,7 +117,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadAdditionalSubmissionDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
@@ -146,7 +146,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<UpdateDocumentResponse> updateDocumentProperties(UUID submissionId, UUID
             xTransactionId, UpdateDocumentRequest updateDocumentRequest) {
 
@@ -189,7 +189,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Resource> getSubmissionDocument(UUID xTransactionId,
                                                           UUID submissionId,
                                                           String filename) {
@@ -219,7 +219,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed({"efiling-client", "efiling-admin"})
+    @PreAuthorize("hasRole('efiling-client') || hasRole('efiling-admin')")
     public ResponseEntity<GenerateUrlResponse> generateUrl(UUID xTransactionId, String xUserId, UUID submissionId, GenerateUrlRequest generateUrlRequest) {
 
         logger.info("Attempting to generate Url Request Received");
@@ -280,7 +280,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<GetSubmissionConfigResponse> getSubmissionConfig(UUID submissionId, UUID xTransactionId) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
@@ -316,7 +316,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<SubmissionFilingPackage> getSubmissionFilingPackage(UUID xTransactionId, UUID submissionId) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
@@ -350,7 +350,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Void> deleteSubmission(UUID submissionId, UUID xTransactionId) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
@@ -379,7 +379,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<SubmitResponse> submit(UUID xTransactionId, UUID submissionId, Object body) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
@@ -459,7 +459,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<Void> postRushProcessing(UUID xTransactionId, UUID submissionId, Rush rush) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();
@@ -497,7 +497,7 @@ public class SubmissionApiDelegateImpl implements SubmissionApiDelegate {
     }
 
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<UploadSubmissionDocumentsResponse> uploadRushDocuments(UUID submissionId, UUID xTransactionId, List<MultipartFile> files) {
 
         Optional<String> universalId = SecurityUtils.getUniversalIdFromContext();

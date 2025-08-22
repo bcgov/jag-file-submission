@@ -1,10 +1,20 @@
 server:
   port: ${SERVER_PORT:8080}
+  tomcat:
+    max-part-count: ${MAX_FILE_COUNT:15}
+    max-part-header-size: ${MAX_HEADER_SIZE:2048}
 spring:
-  redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:admin}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8081/auth/realms/Efiling-Hub}
+          jwk-set-uri: ${KEYCLOAK_JWK_SERVER_URL:http://localhost:8081/auth/realms/Efiling-Hub}/protocol/openid-connect/certs
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:admin}
   cache:
     redis:
       time-to-live: ${CACHE_TTL:600000}
@@ -12,15 +22,12 @@ spring:
     multipart:
       max-file-size: ${MAX_FILE_SIZE:10MB}
       max-request-size: ${MAX_REQUEST_SIZE:100MB}
-keycloak:
-  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
-  realm: ${KEYCLOAK_REALM}
-  resource: efiling-api
-  credentials:
-    secret: ${KEYCLOAK_CREDENTIALS_SECRET}
-  use-resource-role-mappings: true
-  bearer-only: true
-  ssl-required: ${KEYCLOAK_SSL_REQUIRED:external}
+
+jwt:
+  auth:
+    converter:
+      resource-id: ${KEYCLOAK_RESOURCE:efiling-api}
+
 jag:
   efiling:
     global:
@@ -140,3 +147,8 @@ opentracing:
     enabled: TRUE
     udp-sender:
       host: localhost
+
+logging:
+  level:
+    root: INFO
+    ca.bc.gov.open.jag.aireviewerapi: ${LOGGING_LEVEL:INFO}

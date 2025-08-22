@@ -1,6 +1,4 @@
 package ca.bc.gov.open.jag.efilingapi.account;
-
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapper;
 import ca.bc.gov.open.jag.efilingapi.account.mappers.CsoAccountMapperImpl;
@@ -12,9 +10,6 @@ import ca.bc.gov.open.jag.efilingapi.error.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -24,12 +19,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
+import static ca.bc.gov.open.jag.efilingapi.Keys.IDENTITY_PROVIDER_CLAIM_KEY;
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -55,18 +51,16 @@ public class CsoAccountApiDelegateImplTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
+    private Jwt jwtMock;
 
     @BeforeEach
     public void setUp() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
+
+
+        Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
+        SecurityContextHolder.setContext(securityContextMock);
 
         AccountDetails accountDetails = AccountDetails.builder()
                 .fileRolePresent(true)
@@ -105,12 +99,6 @@ public class CsoAccountApiDelegateImplTest {
                 ArgumentMatchers.argThat(x -> x.getInternalClientNumber().equals(FAIL_INTERNAL_CLIENT_NUMBER))
         );
 
-        Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
-
-        SecurityContextHolder.setContext(securityContextMock);
 
         // Testing mapper in this test
         CsoAccountMapper csoAccountMapper = new CsoAccountMapperImpl();
@@ -123,10 +111,9 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("201: should return an account with cso")
     public void whenAccountCreatedShouldReturn201() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
-        otherClaims.put(Keys.IDENTITY_PROVIDER_CLAIM_KEY, TestHelpers.IDENTITY_PROVIDER);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(jwtMock.getClaim(Mockito.eq(IDENTITY_PROVIDER_CLAIM_KEY))).thenReturn(TestHelpers.IDENTITY_PROVIDER);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         CreateCsoAccountRequest request = new CreateCsoAccountRequest();
         request.setLastName(LAST_NAME);
@@ -147,8 +134,9 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("403: when universal id is missing should throw MissingUniversalIdException")
     public void createAccountWithUserNotHavingUniversalIdShouldThrowMissingUniversalIdException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         CreateCsoAccountRequest request = new CreateCsoAccountRequest();
         request.setLastName(LAST_NAME);
@@ -165,10 +153,9 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("500: when exception should throw CreateAccountException")
     public void createAccountWhenEfilingAccountServiceExceptionShouldThrowCreateAccountException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
-        otherClaims.put(Keys.IDENTITY_PROVIDER_CLAIM_KEY, TestHelpers.IDENTITY_PROVIDER);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_2.toString());
+        Mockito.when(jwtMock.getClaim(Mockito.eq(IDENTITY_PROVIDER_CLAIM_KEY))).thenReturn(TestHelpers.IDENTITY_PROVIDER);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         CreateCsoAccountRequest request = new CreateCsoAccountRequest();
         request.setLastName(LAST_NAME);
@@ -184,9 +171,8 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("403: when creating account identity provider is missing should throw MissingIdentityProviderException")
     public void createAccountWithUserNotHavingIdentityProviderShouldThrowMissingIdentityProviderException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_2.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         MissingIdentityProviderException exception = Assertions.assertThrows(MissingIdentityProviderException.class, () -> sut.createAccount(TestHelpers.CASE_3, null));
         Assertions.assertEquals(ErrorCode.MISSING_IDENTITY_PROVIDER.toString(), exception.getErrorCode());
@@ -196,9 +182,9 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("200: should return a cso account")
     public void getAccountWithExistingAccountShouldReturnAccount() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(jwtMock.getClaim(Mockito.eq(IDENTITY_PROVIDER_CLAIM_KEY))).thenReturn(TestHelpers.IDENTITY_PROVIDER);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_1);
 
@@ -210,9 +196,9 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("404: with account not found should return not found")
     public void getAccountWithNoAccountShouldReturnNotFound() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_2);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_2.toString());
+        Mockito.when(jwtMock.getClaim(Mockito.eq(IDENTITY_PROVIDER_CLAIM_KEY))).thenReturn(TestHelpers.IDENTITY_PROVIDER);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<CsoAccount> actual = sut.getCsoAccount(TestHelpers.CASE_1);
 
@@ -234,9 +220,9 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("200: With user having cso account and efiling role return submission details")
     public void updateAccountWithUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(jwtMock.getClaim(Mockito.eq(IDENTITY_PROVIDER_CLAIM_KEY))).thenReturn(TestHelpers.IDENTITY_PROVIDER);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
         clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
@@ -250,9 +236,8 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("403: With user not having cso account should throw InvalidUniversalException")
     public void updateAccountWithUserHavingNoCsoAccountShouldThrowInvalidUniversalException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
         clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);
@@ -265,9 +250,8 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("500: with exception in soap service should throw UpdateClientException")
     public void updateAccountWithExceptionShouldThrowUpdateClientException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
         clientUpdateRequest.setInternalClientNumber(FAIL_INTERNAL_CLIENT_NUMBER);
@@ -280,9 +264,8 @@ public class CsoAccountApiDelegateImplTest {
     @DisplayName("403: with no universal id should throw InvalidUniversalException")
     public void updateAccountWithUserNotHavingUniversalIdShouldThrowInvalidUniversalException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, null);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         CsoAccountUpdateRequest clientUpdateRequest = new CsoAccountUpdateRequest();
         clientUpdateRequest.setInternalClientNumber(INTERNAL_CLIENT_NUMBER);

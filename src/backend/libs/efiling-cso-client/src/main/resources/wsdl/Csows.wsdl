@@ -672,6 +672,7 @@
                     <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="claimAmount" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docLanguage" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentDescription" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentType" type="xs:string"/>
                     <xs:element minOccurs="0" name="edocExistsYn" type="xs:string"/>
@@ -682,6 +683,8 @@
                     <xs:element minOccurs="0" name="isViewableYn" type="xs:string"/>
                     <xs:element minOccurs="0" name="noSubmittedOrder" type="xs:string"/>
                     <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="translationGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="translationLanguage" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="viewCoDocumentOrders">

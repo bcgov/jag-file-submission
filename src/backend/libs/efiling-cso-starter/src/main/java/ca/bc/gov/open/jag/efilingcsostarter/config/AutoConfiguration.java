@@ -13,7 +13,6 @@ import ca.bc.gov.open.jag.efilingcommons.model.Clients;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingSoapClientProperties;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
-import ca.bc.gov.open.jag.efilingcsoclient.SoapUtils;
 import ca.bc.gov.open.jag.efilingcsoclient.*;
 import ca.bc.gov.open.jag.efilingcsoclient.config.CsoProperties;
 import ca.bc.gov.open.jag.efilingcsoclient.mappers.*;
@@ -21,8 +20,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapper;
-import ca.bc.gov.open.jag.efilingcsoclient.mappers.ClientProfileMapperImpl;
 
 @Configuration
 @EnableConfigurationProperties({SoapProperties.class, SpringCsoProperties.class})

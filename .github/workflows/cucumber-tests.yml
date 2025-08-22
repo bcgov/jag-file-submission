@@ -33,7 +33,7 @@ jobs:
           -t efiling-api:builder
           --build-arg SERVICE_NAME=efiling-api
           --build-arg MVN_PROFILE=efiling-api-demo
-          --build-arg STARTERS_V=v0.2.2
+          --build-arg STARTERS_V=v1.0.4
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
       - name: tag & push efiling-api to git container registry
@@ -49,7 +49,7 @@ jobs:
           -t efiling-api:demo
           --build-arg SERVICE_NAME=efiling-api
           --build-arg MVN_PROFILE=efiling-api-demo
-          --build-arg STARTERS_V=v0.2.2
+          --build-arg STARTERS_V=v1.0.4
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
@@ -135,10 +135,10 @@ jobs:
 
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
-        run: docker-compose pull -q --parallel redis clamav keycloak 
+        run: docker compose pull -q --parallel redis clamav keycloak 
 
       - name: Standup Infra
-        run: docker-compose up -d redis clamav keycloak 
+        run: docker compose up -d redis clamav keycloak 
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -148,7 +148,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache local Maven repository
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -157,26 +157,26 @@ jobs:
 
       - name: Pull images (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
+        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
 
       - name: Standup Docker Pods (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
+        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
 
 
       - name: Standup Docker Pods (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
-        run: docker-compose up -d efiling-api efiling-frontend
+        run: docker compose up -d efiling-api efiling-frontend
 
       - name: Configure keycloak (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
         run: |
-          docker-compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up keycloak-config
+          docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up keycloak-config
 
       - name: Configure keycloak (FORK only)
         if: github.event.pull_request.head.repo.full_name != github.repository
         run: |
-          docker-compose up keycloak-config
+          docker compose up keycloak-config
 
       - name: Running Integration Tests
         env:
@@ -198,14 +198,14 @@ jobs:
 
       # Upload Spark report for debugging purposes
       - name: Upload Spark report for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cucumber-spark-report
           path: ./tests/test-output/extent/Spark/Index.html
 
       # Upload Cucumber JSON for debugging purposes
       - name: Upload Cucumber JSON for debugging purposes
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cucumber-json-report
           path: ./tests/target/cucumber-reports/CucumberTestReport.json

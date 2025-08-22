@@ -1,6 +1,6 @@
 <wsdl:definitions name="FilingStatusFacade" targetNamespace="http://status.filing.csows.ag.gov.bc.ca/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://status.filing.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
-        <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://status.filing.csows.ag.gov.bc.ca/" xmlns:tns="http://status.filing.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://status.filing.csows.ag.gov.bc.ca/" version="1.0" xmlns:tns="http://status.filing.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:element name="findAllParticipatingProcessingClasses" type="tns:findAllParticipatingProcessingClasses"/>
             <xs:element name="findAllParticipatingProcessingClassesResponse" type="tns:findAllParticipatingProcessingClassesResponse"/>
             <xs:element name="findAuthPackageParties" type="tns:findAuthPackageParties"/>
@@ -137,6 +137,13 @@
                     <xs:element minOccurs="0" name="initiatingYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="orderDocumentYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="rushRequiredYn" type="xs:boolean"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="supportedLanguageCds" nillable="true" type="tns:codeDescription"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="codeDescription">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getPackageId">
@@ -296,6 +303,7 @@
                     <xs:element minOccurs="0" name="status" type="xs:string"/>
                     <xs:element minOccurs="0" name="statusCode" type="xs:string"/>
                     <xs:element minOccurs="0" name="statusDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="translatedDocumentYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="trialDivision" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="xmlDoc" type="xs:boolean"/>
                 </xs:sequence>

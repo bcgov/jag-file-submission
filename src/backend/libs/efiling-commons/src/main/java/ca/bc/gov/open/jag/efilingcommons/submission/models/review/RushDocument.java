@@ -1,6 +1,7 @@
 package ca.bc.gov.open.jag.efilingcommons.submission.models.review;
 
 import org.joda.time.DateTime;
+
 import java.math.BigDecimal;
 
 public class RushDocument {

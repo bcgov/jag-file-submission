@@ -1,10 +1,10 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
 import ca.bc.gov.open.clamav.starter.ClamAvService;
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
-import ca.bc.gov.open.jag.efilingapi.api.model.*;
+import ca.bc.gov.open.jag.efilingapi.api.model.Rush;
+import ca.bc.gov.open.jag.efilingapi.api.model.RushDocument;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
@@ -18,12 +18,7 @@ import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
 import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -32,8 +27,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.UUID;
+
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -78,40 +78,31 @@ public class PostRushProcessingTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
+    private Jwt jwtMock;
 
     @Mock
     private GenerateUrlRequestValidator generateUrlRequestValidator;
 
     @BeforeEach
     public void setUp() {
+
         MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
 
         SecurityContextHolder.setContext(securityContextMock);
 
         FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
         sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator, new RushProcessingMapperImpl());
+
     }
 
     @Test
     @DisplayName("201")
     public void withValidParamtersReturnDocumentProperties() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
-
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         Submission submission = TestHelpers.buildSubmission();
 
@@ -140,14 +131,13 @@ public class PostRushProcessingTest {
     @DisplayName("404")
     public void withNoSubmissionReturnNotFound() {
 
-
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, UUID.randomUUID());
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity actual = sut.postRushProcessing(TestHelpers.CASE_2, UUID.randomUUID(), null);
 
         Assertions.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
+
     }
 
 
@@ -155,11 +145,12 @@ public class PostRushProcessingTest {
     @DisplayName("403: with no universal id should throw InvalidUniversalException")
     public void withUserNotHavingUniversalIdShouldThrowInvalidUniversalException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY,null);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         InvalidUniversalException exception = Assertions.assertThrows(InvalidUniversalException.class, () -> sut.postRushProcessing(TestHelpers.CASE_2, UUID.randomUUID(), null));
         Assertions.assertEquals(ErrorCode.INVALIDUNIVERSAL.toString(), exception.getErrorCode());
+
     }
+
 }

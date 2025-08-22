@@ -1,22 +1,19 @@
 package ca.bc.gov.open.jag.efilingapi.utils;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Security Utils Test Suite")
@@ -32,23 +29,14 @@ public class SecurityUtilsTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
+    private Jwt jwtMock;
 
     @BeforeEach
     public void setup() {
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
 
         SecurityContextHolder.setContext(securityContextMock);
     }
@@ -58,15 +46,28 @@ public class SecurityUtilsTest {
 
         String expectedUUID = UUID.randomUUID().toString();
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, expectedUUID);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
-
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(expectedUUID);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         Optional<String> actual = SecurityUtils.getUniversalIdFromContext();
 
         Assertions.assertTrue(actual.isPresent());
         Assertions.assertEquals(expectedUUID, actual.get());
+
+    }
+
+    @Test
+    @DisplayName("client Id should return value")
+    public void withClientIdShouldReturnTrue() {
+
+        String username = "username";
+
+        Mockito.when(jwtMock.getId()).thenReturn(username);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
+        Optional<String> actual =  SecurityUtils.getClientId();
+        Assertions.assertTrue(actual.isPresent());
+        Assertions.assertEquals(username, actual.get());
 
     }
 
@@ -81,12 +82,11 @@ public class SecurityUtilsTest {
     }
 
     @Test
+    @DisplayName("Should return universal id")
     public void shouldReturnClaim() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, EXPECTED_CLAIM);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
-
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(EXPECTED_CLAIM);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         Optional<String> actual = SecurityUtils.getUniversalIdFromContext();
 
@@ -95,5 +95,12 @@ public class SecurityUtilsTest {
 
     }
 
+    @Test
+    @DisplayName("null should throw")
+    public void exceptionIsInRoleThrows() {
+
+        Assertions.assertFalse(SecurityUtils.isInRole(""));
+
+    }
 
 }

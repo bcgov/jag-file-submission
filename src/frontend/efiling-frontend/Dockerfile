@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:16-alpine as build
+FROM node:18-alpine as build
 
 WORKDIR /app
 
@@ -17,7 +17,9 @@ RUN yarn build
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
 #############################################################################################
-FROM nginx:1.23.1-alpine
+FROM nginx:1.28.0-alpine
+
+RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt
 
 RUN rm -rf /usr/share/nginx/html/
 COPY --from=build /app/build /etc/nginx/html/efilinghub

@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("FilePackageServiceImplTest")
 public class DeleteSubmittedDocumentTest {

@@ -9,9 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SoapUtilsTest {
 

@@ -3,14 +3,10 @@ package ca.bc.gov.open.jag.efilingapi.account;
 import ca.bc.gov.open.bceid.starter.account.BCeIDAccountService;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
 import ca.bc.gov.open.bceid.starter.account.models.Name;
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.account.mappers.BceidAccountMapper;
 import ca.bc.gov.open.jag.efilingapi.account.mappers.BceidAccountMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.api.model.BceidAccount;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,9 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,13 +39,8 @@ public class BceidAccountApiDelegateImplTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
+    private Jwt jwt;
 
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
 
     @BeforeAll
     public void setup() {
@@ -63,14 +53,11 @@ public class BceidAccountApiDelegateImplTest {
                 "initials"
                 ), null, null, null));
 
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
-
         SecurityContextHolder.setContext(securityContextMock);
+
 
         Mockito
                 .doReturn(identity)
@@ -91,9 +78,9 @@ public class BceidAccountApiDelegateImplTest {
     @DisplayName("200: should return bceid account")
     public void withAccountShouldReturnAccount() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_1);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+
+        Mockito.when(jwt.getClaim(Mockito.any())).thenReturn(CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwt);
 
         ResponseEntity<BceidAccount> actual = sut.getBceidAccount(UUID.randomUUID());
 
@@ -108,7 +95,8 @@ public class BceidAccountApiDelegateImplTest {
     @DisplayName("403: when no universal id should return 403")
     public void withNoUniversalIdShouldReturn403() {
 
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
+        Mockito.when(jwt.getClaim(Mockito.any())).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwt);
 
         ResponseEntity actual = sut.getBceidAccount(UUID.randomUUID());
 
@@ -120,9 +108,8 @@ public class BceidAccountApiDelegateImplTest {
     @DisplayName("404: when user not found should return 404")
     public void withNoUserShouldReturn404() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, CASE_2);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwt.getClaim(Mockito.any())).thenReturn(CASE_2.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwt);
 
         ResponseEntity actual = sut.getBceidAccount(UUID.randomUUID());
 

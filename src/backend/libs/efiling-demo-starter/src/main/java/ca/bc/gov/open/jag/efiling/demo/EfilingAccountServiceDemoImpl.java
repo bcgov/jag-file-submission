@@ -24,7 +24,7 @@ public class EfilingAccountServiceDemoImpl implements EfilingAccountService {
 
     }
 
-    @CachePut(cacheNames = "account", key = "#createAccountRequest.universalId", cacheManager = "demoAccountCacheManager")
+    @CachePut(cacheNames = "account", key = "#p0.universalId", cacheManager = "demoAccountCacheManager")
     public AccountDetails createAccount(CreateAccountRequest createAccountRequest) {
 
         AccountDetails accountDetails = new AccountDetails.Builder()

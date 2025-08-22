@@ -9,9 +9,9 @@ import ca.bc.gov.open.jag.efilingapi.api.model.BceidAccount;
 import ca.bc.gov.open.jag.efilingapi.core.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,9 +27,8 @@ public class BceidAccountApiDelagateImpl implements BceidAccountApiDelegate {
         this.bceidAccountMapper = bceidAccountMapper;
     }
 
-
     @Override
-    @RolesAllowed("efiling-user")
+    @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<BceidAccount> getBceidAccount(UUID xTransactionId) {
 
         Optional<String> userId = SecurityUtils.getUniversalIdFromContext();

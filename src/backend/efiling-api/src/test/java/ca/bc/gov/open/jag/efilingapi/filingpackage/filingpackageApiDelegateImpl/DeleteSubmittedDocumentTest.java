@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.filingpackage.filingpackageApiDelegateImpl;
 
-import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
 import ca.bc.gov.open.jag.efilingapi.error.DeleteDocumentException;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
@@ -9,9 +8,6 @@ import ca.bc.gov.open.jag.efilingapi.filingpackage.FilingpackageApiDelegateImpl;
 import ca.bc.gov.open.jag.efilingapi.filingpackage.service.FilingPackageService;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
 import org.junit.jupiter.api.*;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.AccessToken;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,11 +17,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -44,13 +40,7 @@ public class DeleteSubmittedDocumentTest {
     private Authentication authenticationMock;
 
     @Mock
-    private KeycloakPrincipal keycloakPrincipalMock;
-
-    @Mock
-    private KeycloakSecurityContext keycloakSecurityContextMock;
-
-    @Mock
-    private AccessToken tokenMock;
+    private Jwt jwtMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -58,9 +48,6 @@ public class DeleteSubmittedDocumentTest {
         MockitoAnnotations.openMocks(this);
 
         Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
-        Mockito.when(authenticationMock.getPrincipal()).thenReturn(keycloakPrincipalMock);
-        Mockito.when(keycloakPrincipalMock.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContextMock);
-        Mockito.when(keycloakSecurityContextMock.getToken()).thenReturn(tokenMock);
 
         SecurityContextHolder.setContext(securityContextMock);
 
@@ -77,9 +64,8 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("200: ok document was deleted")
     public void withValidRequestReturnFilingPackage() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         ResponseEntity<?> result = sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_ONE);
 
@@ -91,7 +77,8 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("403: when no universal id should throw MissingUniversalIdException")
     public void withNoUniversalIdShouldThrowMissingUniversalIdException() {
 
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(null);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_ONE));
         Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
@@ -101,9 +88,8 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("400: when delete failed should throw DeleteDocumentException")
     public void withDeleteFailedShouldThrowDeleteDocumentException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         DeleteDocumentException exception = Assertions.assertThrows(DeleteDocumentException.class, () -> sut.deleteSubmittedDocument(BigDecimal.ONE, TestHelpers.DOCUMENT_ID_TWO));
         Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(), exception.getErrorCode());
@@ -114,9 +100,8 @@ public class DeleteSubmittedDocumentTest {
     @DisplayName("404: when delete failed should throw DeleteDocumentException")
     public void withDeleteAccountNotFoundFailedShouldThrowDeleteDocumentException() {
 
-        Map<String, Object> otherClaims = new HashMap<>();
-        otherClaims.put(Keys.UNIVERSAL_ID_CLAIM_KEY, TestHelpers.CASE_1_STRING);
-        Mockito.when(tokenMock.getOtherClaims()).thenReturn(otherClaims);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_1.toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
 
         DeleteDocumentException exception = Assertions.assertThrows(DeleteDocumentException.class, () -> sut.deleteSubmittedDocument(BigDecimal.TEN, TestHelpers.DOCUMENT_ID_TWO));
         Assertions.assertEquals(ErrorCode.DELETE_DOCUMENT_ERROR.toString(), exception.getErrorCode());
