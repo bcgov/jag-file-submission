@@ -16,7 +16,9 @@ RUN yarn build --production=true
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
 #############################################################################################
-FROM nginx:1.27.4-alpine
+FROM nginx:1.28.0-alpine
+
+RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt
 
 RUN rm -rf /usr/share/nginx/html/
 COPY --from=build /app/build /usr/share/nginx/html
