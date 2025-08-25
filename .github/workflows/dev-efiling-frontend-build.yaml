@@ -1,0 +1,103 @@
+name: Build Efiling Frontend Image and Push to Openshift Registry
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "src/frontend/efiling-frontend/**"
+      - ".github/workflows/dev-efiling-frontend-build.yaml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to Artifactory
+        uses: docker/login-action@v1
+        with:
+          registry: artifacts.developer.gov.bc.ca
+          username: ${{ secrets.EFILING_ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.EFILING_ARTIFACTORY_PASSWORD }}
+      
+      - name: Build Image
+        run: |
+          docker compose build efiling-frontend
+          docker tag jag-file-submission-efiling-frontend artifacts.developer.gov.bc.ca/efc7-efiling-frontend/efiling-frontend:dev
+
+      #Run Vulnerability Scan usinig Trivy scanner
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: image
+          image-ref: jag-file-submission-efiling-frontend
+          format: sarif
+          output: trivy-results.sarif
+          exit-code: 1
+          ignore-unfixed: true
+          limit-severities-for-sarif: true
+          severity: HIGH,CRITICAL
+
+      #Upload results to the Github security tab.
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-results.sarif
+      
+      - name: Docker Push to Artifactory
+        run: |
+          docker push artifacts.developer.gov.bc.ca/efc7-efiling-frontend/efiling-frontend:dev
+
+      # Get SHORT_SHA for the version
+      - name: Get short SHA
+        id: short_sha
+        run: |
+          echo "::set-output name=SHORT_SHA::$(git rev-parse --short HEAD)"
+          echo "Short SHA: $SHORT_SHA"
+
+      - name: Checkout ArgoCD Repo
+        id: gitops
+        uses: actions/checkout@v4
+        with:
+          repository: bcgov-c/tenant-gitops-fc726a
+          ref: develop
+          token: ${{ secrets.ARGO_PAT }} # `ARGO_PAT` is a secret that contains your PAT
+          path: gitops
+
+      - name: Update Helm Values and Commit
+        id: helm
+        if: steps.gitops.outcome == 'success'  # Only run if the previous step (publish) was successful
+        run: |
+          # Clone the GitOps deployment configuration repository
+          # Navigate to the directory containing your Helm values file for the environment develop -> DEV, test -> test and 
+          cd gitops/charts
+
+          # Update the Helm values file with the new image tag and version
+          DATETIME=$(date +'%Y-%m-%d %H:%M:%S')  # Get current date and time
+
+          sed -i "s/frontendtag: .*/frontendtag: dev # Image Updated on $DATETIME/" ../deploy/dev_values.yaml
+          sed -i "s/frontendVersion: .*/frontendVersion: ${{ steps.short_sha.outputs.SHORT_SHA }} # Version Updated on $DATETIME/" ../deploy/dev_values.yaml
+          
+          # Commit and push the changes
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          
+          git add .
+          
+          git add ../deploy/dev_values.yaml
+          
+          # Repackage Helm Chart      
+
+          cd efiling-gitops
+
+          helm dependency build
+          
+          cd charts
+
+          git add .
+          
+          git commit -m "Update Dev Frontend image tag"
+          git push origin develop  # Update the branch name as needed

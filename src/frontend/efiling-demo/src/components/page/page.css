@@ -19,6 +19,12 @@ main {
   padding-bottom: 30px;
 }
 
+.href {
+  cursor: pointer;
+  color: #1a5a96;
+  text-decoration: underline;
+}
+
 @media (max-width: 576px) {
   .page {
     flex-direction: column;
