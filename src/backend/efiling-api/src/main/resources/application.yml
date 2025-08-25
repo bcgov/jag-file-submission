@@ -1,5 +1,8 @@
 server:
   port: ${SERVER_PORT:8080}
+  tomcat:
+    max-part-count: ${MAX_FILE_COUNT:15}
+    max-part-header-size: ${MAX_HEADER_SIZE:2048}
 spring:
   security:
     oauth2:
