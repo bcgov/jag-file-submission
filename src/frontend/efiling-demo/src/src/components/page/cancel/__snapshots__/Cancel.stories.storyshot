@@ -1,0 +1,311 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Cancel Default 1`] = `
+<DocumentFragment>
+  <main>
+    <header
+      class="bcgov-header"
+    >
+      <nav
+        aria-label="Header"
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
+      >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand bcgov-pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="bcgov-flex-spacing"
+        >
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Demo Client
+          </div>
+          <div />
+        </div>
+      </nav>
+    </header>
+    <div
+      class="page"
+    >
+      <div
+        class="content col-md-12"
+      >
+        <p>
+          You have cancelled your submission. Please click the button below to go back home.
+        </p>
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid="return-home-btn"
+          type="button"
+        >
+          Return home
+        </button>
+      </div>
+    </div>
+    <footer
+      class="bcgov-footer"
+    >
+      <nav
+        aria-label="Footer"
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
+      >
+        <button
+          class="navbar-toggler"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
+          >
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`Storyshots Cancel Mobile 1`] = `
+<DocumentFragment>
+  <main>
+    <header
+      class="bcgov-header"
+    >
+      <nav
+        aria-label="Header"
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
+      >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand bcgov-pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="bcgov-flex-spacing"
+        >
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Demo Client
+          </div>
+          <div />
+        </div>
+      </nav>
+    </header>
+    <div
+      class="page"
+    >
+      <div
+        class="content col-md-12"
+      >
+        <p>
+          You have cancelled your submission. Please click the button below to go back home.
+        </p>
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid="return-home-btn"
+          type="button"
+        >
+          Return home
+        </button>
+      </div>
+    </div>
+    <footer
+      class="bcgov-footer"
+    >
+      <nav
+        aria-label="Footer"
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
+      >
+        <button
+          class="navbar-toggler"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
+          >
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
+`;
