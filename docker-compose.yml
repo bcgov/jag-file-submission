@@ -96,6 +96,9 @@ services:
       - CLAMAV_HOST=clamav
       - CLAMAV_TIMEOUT=150000
 
+      - MVN_PROFILE=${MVN_PROFILE}
+      - STARTERS_V=${STARTERS_V}
+
     networks:
       - fisu-net
 
@@ -135,17 +138,28 @@ services:
   # ###                                        KEYCLOAK                                       ###
   # #############################################################################################
   keycloak:
-    image: quay.io/keycloak/keycloak:12.0.3
+    image: quay.io/keycloak/keycloak:26.1.3
     environment:
-      DB_VENDOR: H2
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-      KEYCLOAK_IMPORT: /tmp/realm-export.json
-      KEYCLOAK_FRONTEND_URL: http://localhost:8081/auth
+      - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
+      - KC_HTTP_ENABLED=true
+      - KC_HOSTNAME_STRICT_HTTPS=false
+      - KEYCLOAK_SSL_REQUIRED=none
+      - KC_HOSTNAME_STRICT_BACKCHANNEL=false
+      - KC_PROXY_HEADERS=xforwarded
+      - KC_HOSTNAME=localhost
+      - KC_HTTP_RELATIVE_PATH=/auth
+      - KC_HOSTNAME_PORT=8080
+      - DB_VENDOR=H2
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DIR=/opt/keycloak/data/import
     volumes:
-      - ./infrastructure/keycloak/realm-export.json:/tmp/realm-export.json
+      - ./infrastructure/keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
     ports:
-      - "8081:8080"
+      - 8081:8080
+    restart: always
+    command: start --import-realm
     networks:
       - fisu-net
 
@@ -153,7 +167,7 @@ services:
   # ###                                        KEYCLOAK Config                                ###
   # #############################################################################################
   keycloak-config:
-    command: sh -c "dockerize -wait http://keycloak:8080 -timeout 300s /tmp/createuser.sh"
+    command: sh -c "dockerize -timeout 300s /tmp/createuser.sh"
     networks:
       - fisu-net
 

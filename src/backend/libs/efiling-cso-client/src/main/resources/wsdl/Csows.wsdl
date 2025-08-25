@@ -1,6 +1,4 @@
-<wsdl:definitions name="Csows" targetNamespace="http://ceis.csows.ag.gov.bc.ca/"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ceis.csows.ag.gov.bc.ca/"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions name="Csows" targetNamespace="http://ceis.csows.ag.gov.bc.ca/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ceis.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <wsdl:types>
         <xs:schema elementFormDefault="unqualified" targetNamespace="http://ceis.csows.ag.gov.bc.ca/" version="1.0" xmlns:tns="http://ceis.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:element name="coFileNumberSearch" type="tns:coFileNumberSearch"/>
@@ -674,6 +672,7 @@
                     <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="claimAmount" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docLanguage" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentDescription" type="xs:string"/>
                     <xs:element minOccurs="0" name="documentType" type="xs:string"/>
                     <xs:element minOccurs="0" name="edocExistsYn" type="xs:string"/>
@@ -684,6 +683,8 @@
                     <xs:element minOccurs="0" name="isViewableYn" type="xs:string"/>
                     <xs:element minOccurs="0" name="noSubmittedOrder" type="xs:string"/>
                     <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="translationGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="translationLanguage" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="viewCoDocumentOrders">

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep 1m
+
 KEYCLOAK_REALM_URL="$KEYCLOAK_URL/auth/admin/realms/Efiling-Hub"
 USERNAME="bobross"
 ADMIN_GROUP="efiling-admin"
