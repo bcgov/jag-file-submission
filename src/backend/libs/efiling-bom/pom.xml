@@ -9,7 +9,7 @@
 
     <properties>
         <log4j2.version>2.17.1</log4j2.version>
-        <ca.bc.gov.open.version>1.0.4</ca.bc.gov.open.version>
+        <ca.bc.gov.open.version>1.0.5</ca.bc.gov.open.version>
         <com.brsanthu.version>2.2</com.brsanthu.version>
         <com.fasterxml.jackson.core.version>2.19.0</com.fasterxml.jackson.core.version>
         <com.github.joschi.jackson.version>2.18.2</com.github.joschi.jackson.version>
