@@ -45,6 +45,7 @@
     "precommit": "pretty-quick --staged"
   },
   "resolutions": {
+    "form-data": "4.0.4",
     "immer": "9.0.6",
     "trim": "0.0.3",
     "glob-parent": "5.1.2",
