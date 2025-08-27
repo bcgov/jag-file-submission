@@ -17,7 +17,7 @@ RUN yarn build
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
 #############################################################################################
-FROM nginx:1.27.4-alpine
+FROM nginx:1.28.0-alpine
 
 RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt
 

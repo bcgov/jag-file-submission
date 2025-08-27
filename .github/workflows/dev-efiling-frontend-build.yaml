@@ -26,6 +26,26 @@ jobs:
         run: |
           docker compose build efiling-frontend
           docker tag jag-file-submission-efiling-frontend artifacts.developer.gov.bc.ca/efc7-efiling-frontend/efiling-frontend:dev
+
+      #Run Vulnerability Scan usinig Trivy scanner
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: image
+          image-ref: jag-file-submission-efiling-frontend
+          format: sarif
+          output: trivy-results.sarif
+          exit-code: 1
+          ignore-unfixed: true
+          limit-severities-for-sarif: true
+          severity: HIGH,CRITICAL
+
+      #Upload results to the Github security tab.
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-results.sarif
       
       - name: Docker Push to Artifactory
         run: |
