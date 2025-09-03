@@ -33,7 +33,7 @@ jobs:
           -t efiling-api:builder
           --build-arg SERVICE_NAME=efiling-api
           --build-arg MVN_PROFILE=efiling-api-demo
-          --build-arg STARTERS_V=v1.0.4
+          --build-arg STARTERS_V=v1.0.5
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
       - name: tag & push efiling-api to git container registry
@@ -49,7 +49,7 @@ jobs:
           -t efiling-api:demo
           --build-arg SERVICE_NAME=efiling-api
           --build-arg MVN_PROFILE=efiling-api-demo
-          --build-arg STARTERS_V=v1.0.4
+          --build-arg STARTERS_V=v1.0.5
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
