@@ -27,7 +27,7 @@
         <org.apache.commons.collections.collections.version>4.4</org.apache.commons.collections.collections.version>
         <org.apache.cxf.version>4.1.0</org.apache.cxf.version>
         <org.apache.tika.version>1.24.1</org.apache.tika.version>
-        <org.apache.skywalking.version>9.4.0</org.apache.skywalking.version>
+        <org.apache.skywalking.version>9.5.0</org.apache.skywalking.version>
         <org.codehaus.janino>3.1.12</org.codehaus.janino>
         <org.glassfish.jersey.inject.version>3.1.10</org.glassfish.jersey.inject.version>
         <org.junit.jupiter.version>5.12.2</org.junit.jupiter.version>
