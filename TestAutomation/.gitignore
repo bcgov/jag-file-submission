@@ -1,0 +1,16 @@
+### IntelliJ IDEA ###
+tests/target
+tests/.idea
+tests/logs
+*.iml
+*.log
+.idea
+tests/test-output
+tests/src/test/resources/application.properties
+.env
+src/frontend/.vscode/
+src/frontend/efiling-frontend/.vscode/
+src/frontend/efiling-frontend/node_modules
+*.lock
+node_modules
+
