@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-commons</artifactId>
-    <version>2.0.10</version>
+    <version>2.0.11</version>
     <name>efiling-commons</name>
     <description>Contains common functionality to efiling</description>
 
@@ -71,7 +71,7 @@
             <dependency>
                 <groupId>ca.bc.gov.open.jag</groupId>
                 <artifactId>efiling-bom</artifactId>
-                <version>2.0.10</version>
+                <version>2.0.11</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
