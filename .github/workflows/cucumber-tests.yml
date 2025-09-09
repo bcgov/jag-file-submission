@@ -1,0 +1,215 @@
+name: Cucumber Tests
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+
+  efiling-api-gcr:
+    name: Efiling Api GCR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull efiling-api-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
+
+      - name: build efiling-api-builder
+        run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.efiling-api
+          --target build
+          -t efiling-api:builder
+          --build-arg SERVICE_NAME=efiling-api
+          --build-arg MVN_PROFILE=efiling-api-demo
+          --build-arg STARTERS_V=v1.0.5
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
+
+      - name: tag & push efiling-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
+
+      - name: Pull efiling-api-demo
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo || true
+
+      - name: build efiling-api-demo
+        run: docker build ./src/backend
+          -f ./src/backend/Dockerfile.efiling-api
+          -t efiling-api:demo
+          --build-arg SERVICE_NAME=efiling-api
+          --build-arg MVN_PROFILE=efiling-api-demo
+          --build-arg STARTERS_V=v1.0.5
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+
+      # Optional only for branch on repo
+      - name: tag & push efiling-api to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
+
+  efiling-frontend-gcr:
+    name: Efiling Frontend GCR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull efiling-frontend-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder || true
+
+      - name: build efiling-frontend-builder
+        run: docker build ./src/frontend/efiling-frontend
+          --target build
+          -t efiling-frontend:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+
+      - name: tag & push efiling-frontend to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag efiling-frontend:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+
+      - name: Pull efiling-frontend-demo
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo || true
+
+      - name: build efiling-frontend-demo
+        run: docker build ./src/frontend/efiling-frontend
+          -t efiling-frontend:demo
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
+
+      - name: tag & push efiling-frontend to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag efiling-frontend:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
+
+  keycloak-config-gcr:
+    name: Keycloack Config GCR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull efiling-frontend-builder
+        run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo || true
+
+      - name: build efiling-frontend-builder
+        run: docker build ./infrastructure/keycloak
+          -t keycloak-config:demo
+          --build-arg KEYCLOAK_URL=http://keycloak:8080
+          --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
+
+      - name: tag & push keycloak-config to git container registry
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
+
+  cucumber-tests:
+    name: Runs cucumber-tests
+    runs-on: ubuntu-latest
+    needs: [ efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr ]
+    steps:
+      - name: Pull Git repo.
+        uses: actions/checkout@v2
+
+      # pulling images is faster than caching in most of the case
+      - name: pull available docker images first
+        run: docker compose pull -q --parallel redis clamav keycloak 
+
+      - name: Standup Infra
+        run: docker compose up -d redis clamav keycloak 
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Pull images (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
+
+      - name: Standup Docker Pods (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
+
+
+      - name: Standup Docker Pods (FORK only)
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: docker compose up -d efiling-api efiling-frontend
+
+      - name: Configure keycloak (Local REPO only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up keycloak-config
+
+      - name: Configure keycloak (FORK only)
+        if: github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          docker compose up keycloak-config
+
+      - name: Running Integration Tests
+        env:
+          DOCKERIZE_VERSION: v0.6.1
+        continue-on-error: true
+        id: cucumber-test
+        run: |
+
+          # Maven requires chrome driver.
+          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get -qq -y install ./google-chrome-stable_current_amd64.deb
+
+          # We need to test if efiling-api pod and service is running before we can proceed.  Using dockerize to proceed only after efiling-demo:8080 can be reached.
+          wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          tar -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+          ./dockerize -wait http://127.0.0.1:8080/actuator/health -timeout 120s
+          mvn verify -ntp -f tests/pom.xml
+
+      # Upload Spark report for debugging purposes
+      - name: Upload Spark report for debugging purposes
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-spark-report
+          path: ./tests/test-output/extent/Spark/Index.html
+
+      # Upload Cucumber JSON for debugging purposes
+      - name: Upload Cucumber JSON for debugging purposes
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-json-report
+          path: ./tests/target/cucumber-reports/CucumberTestReport.json
+
+      - name: Set action status
+        if: steps.cucumber-test.outcome != 'success'
+        run: exit 1

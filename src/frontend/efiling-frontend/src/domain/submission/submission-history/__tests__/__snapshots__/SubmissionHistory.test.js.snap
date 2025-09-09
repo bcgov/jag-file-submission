@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Submission History Component Matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-submission-history page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Submission History
+      </h1>
+      <br />
+      <h3>
+        Search Packages
+      </h3>
+      <br />
+      <span>
+        Package Number
+      </span>
+      <br />
+      <input
+        class="package-search"
+        data-testid="package-search"
+        name="search"
+        type="number"
+      />
+      <button
+        class="bcgov-button bcgov-normal-blue btn search-btn"
+        data-testid=""
+        type="button"
+      >
+        Search
+      </button>
+      <div
+        class="submission-list-block"
+      >
+        <h3>
+          Submitted Packages
+        </h3>
+        <div
+          class="submission-list-container"
+        >
+          <div
+            class="ct-submission-list"
+          >
+            <div
+              class="table-responsive"
+            >
+              <table
+                class="table"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                    >
+                      Package #
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Date Submitted
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Application
+                    </th>
+                    <th
+                      scope="col"
+                    >
+                      Court Location
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    class="table-row"
+                  >
+                    <td
+                      class="border-left"
+                    >
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
+                      >
+                        1234567
+                      </span>
+                    </td>
+                    <td>
+                      30-Apr-1996
+                    </td>
+                    <td>
+                      xxxxx
+                    </td>
+                    <td
+                      class="border-right"
+                    >
+                      Kelowna
+                    </td>
+                  </tr>
+                  <tr
+                    class="table-row"
+                  >
+                    <td
+                      class="border-left"
+                    >
+                      <span
+                        class="file-href"
+                        role="button"
+                        tabindex="0"
+                      >
+                        7654321
+                      </span>
+                    </td>
+                    <td>
+                      30-Apr-1996
+                    </td>
+                    <td>
+                      xxxxx
+                    </td>
+                    <td
+                      class="border-right"
+                    >
+                      Victoria
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <p>
+        The View Filing Packages screen lets you view any packages you filed, and any packages that you have been given access to by other people in your organization. Packages will be available in this list for 1 year after the registry processes them.
+      </p>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong />
+                   is linked to your BC Services Card account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0V0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
