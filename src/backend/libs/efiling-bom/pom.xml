@@ -34,7 +34,7 @@
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <org.mockito.mockito-all.version>1.10.19</org.mockito.mockito-all.version>
         <org.mockito.mockito-core.version>5.17.0</org.mockito.mockito-core.version>
-        <org.openapitools.version>0.2.6</org.openapitools.version>
+        <org.openapitools.version>0.2.7</org.openapitools.version>
         <org.springdoc.version>1.7.0</org.springdoc.version>
         <org.threeten.version>1.7.0</org.threeten.version>
         <ch.qos.logback.version>1.5.18</ch.qos.logback.version>
