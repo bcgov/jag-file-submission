@@ -11,7 +11,7 @@
 	<properties>
 		<default-package>ca.bc.gov.open.jag.efilingceisapiclient</default-package>
 		<java.version>17</java.version>
-		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<org.mapstruct.version>1.6.3</org.mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<log4j2.version>2.17.1</log4j2.version>
 		
