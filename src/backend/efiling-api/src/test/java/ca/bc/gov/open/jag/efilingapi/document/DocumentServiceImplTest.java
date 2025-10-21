@@ -31,7 +31,7 @@ public class DocumentServiceImplTest {
         List<DocumentTypeDetails> documentList = new ArrayList<>();
         DocumentTypeDetails document = new DocumentTypeDetails("description", "type", BigDecimal.TEN,false, true, true);
         documentList.add(document);
-        Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.eq(COURT_LEVEL), Mockito.eq(COURT_CLASSIFICATION))).thenReturn(documentList);
+        Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.eq(COURT_LEVEL), Mockito.eq(COURT_CLASSIFICATION), Mockito.any())).thenReturn(documentList);
 
         sut = new DocumentServiceImpl(efilingDocumentServiceMock);
 

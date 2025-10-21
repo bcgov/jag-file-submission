@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.document.models.GetValidDocumentTypesRequest;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
@@ -16,7 +17,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<DocumentTypeDetails> getValidDocumentTypes(GetValidDocumentTypesRequest getValidDocumentTypesRequest) {
-        return efilingDocumentService.getDocumentTypes(getValidDocumentTypesRequest.getCourtLevel(), getValidDocumentTypesRequest.getCourtClassification());
+        return efilingDocumentService.getDocumentTypes(getValidDocumentTypesRequest.getCourtLevel(), getValidDocumentTypesRequest.getCourtClassification(), Keys.DEFAULT_DIVISION);
     }
 
 }

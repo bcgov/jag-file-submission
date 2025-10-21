@@ -13,7 +13,7 @@ public interface EfilingDocumentService {
      * @param documentType type code used by cso
      * @return All details related to request document type
      */
-    DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType);
+    DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType, String division);
 
     /**
      * Search for are document types(with details) by parameters
@@ -21,6 +21,6 @@ public interface EfilingDocumentService {
      * @param courtClass class code used by cso
      * @return list of document types
      */
-    List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass);
+    List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass, String division);
 
 }

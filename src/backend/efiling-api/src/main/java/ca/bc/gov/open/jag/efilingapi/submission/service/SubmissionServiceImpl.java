@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
 import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
@@ -170,7 +171,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         return efilingLookupService.getValidPartyRoles(
                 getValidPartyRoleRequest.getCourtLevel(),
                 getValidPartyRoleRequest.getCourtClassification(),
-                getValidPartyRoleRequest.getDocumentTypesAsString()
+                getValidPartyRoleRequest.getDocumentTypesAsString(),
+                getValidPartyRoleRequest.getDivision()
         );
 
     }
@@ -178,7 +180,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     @Override
     public Boolean isRushRequired(String documentType, String courtLevel, String courtClass) {
 
-        DocumentTypeDetails documentTypeDetails = efilingDocumentService.getDocumentTypeDetails(courtLevel, courtClass, documentType);
+        DocumentTypeDetails documentTypeDetails = efilingDocumentService.getDocumentTypeDetails(courtLevel, courtClass, documentType, Keys.DEFAULT_DIVISION);
 
         return documentTypeDetails.isRushRequired();
 

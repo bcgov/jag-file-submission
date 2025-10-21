@@ -35,7 +35,7 @@ public interface DocumentMapper {
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "statuses", source = "statuses")
     @Mapping(target = "parentDocumentId", source = "document.documentId")
-    CivilDocument toEfilingDocument(
+    ca.bc.gov.ag.csows.filing.Document toEfilingDocument(
             Integer index,
             Document document,
             AccountDetails accountDetails,
