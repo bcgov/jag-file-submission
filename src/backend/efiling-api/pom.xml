@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.4</version>
+        <version>3.5.7</version>
 
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
@@ -239,7 +239,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-handler</artifactId>
-            <version>4.1.118.Final</version>
+            <version>4.1.123.Final</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
