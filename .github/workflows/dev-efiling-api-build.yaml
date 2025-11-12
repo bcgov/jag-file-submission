@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "0 0 * */3 *"
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - "src/backend/**"
       - ".github/workflows/dev-efiling-api-build.yaml"
