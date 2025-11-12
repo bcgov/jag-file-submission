@@ -1,4 +1,4 @@
-name: Generate/Upload all Coverage Reports
+name: Build and Test Apps
 
 on:
   push:
