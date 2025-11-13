@@ -1,0 +1,1804 @@
+<wsdl:definitions name="ServiceFacade" targetNamespace="http://services.csows.ag.gov.bc.ca/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.csows.ag.gov.bc.ca/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://services.csows.ag.gov.bc.ca/" xmlns:tns="http://services.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="addService" type="tns:addService"/>
+            <xs:element name="addServiceResponse" type="tns:addServiceResponse"/>
+            <xs:element name="createAgreement" type="tns:createAgreement"/>
+            <xs:element name="createAgreementResponse" type="tns:createAgreementResponse"/>
+            <xs:element name="createRefundRequest" type="tns:createRefundRequest"/>
+            <xs:element name="createRefundRequestResponse" type="tns:createRefundRequestResponse"/>
+            <xs:element name="createServiceSession" type="tns:createServiceSession"/>
+            <xs:element name="createServiceSessionResponse" type="tns:createServiceSessionResponse"/>
+            <xs:element name="createUserSession" type="tns:createUserSession"/>
+            <xs:element name="createUserSessionResponse" type="tns:createUserSessionResponse"/>
+            <xs:element name="endServiceSession" type="tns:endServiceSession"/>
+            <xs:element name="endServiceSessionResponse" type="tns:endServiceSessionResponse"/>
+            <xs:element name="findActiveUserAgreementTemplate" type="tns:findActiveUserAgreementTemplate"/>
+            <xs:element name="findActiveUserAgreementTemplateResponse" type="tns:findActiveUserAgreementTemplateResponse"/>
+            <xs:element name="findFinancialTransactionByInvoice" type="tns:findFinancialTransactionByInvoice"/>
+            <xs:element name="findFinancialTransactionByInvoiceResponse" type="tns:findFinancialTransactionByInvoiceResponse"/>
+            <xs:element name="findFinancialTransactionsByCriteria" type="tns:findFinancialTransactionsByCriteria"/>
+            <xs:element name="findFinancialTransactionsByCriteriaResponse" type="tns:findFinancialTransactionsByCriteriaResponse"/>
+            <xs:element name="findRefundRequestItemByPK" type="tns:findRefundRequestItemByPK"/>
+            <xs:element name="findRefundRequestItemByPKResponse" type="tns:findRefundRequestItemByPKResponse"/>
+            <xs:element name="findRefundRequestsByCriteria" type="tns:findRefundRequestsByCriteria"/>
+            <xs:element name="findRefundRequestsByCriteriaResponse" type="tns:findRefundRequestsByCriteriaResponse"/>
+            <xs:element name="findRefundRequestsByPK" type="tns:findRefundRequestsByPK"/>
+            <xs:element name="findRefundRequestsByPKResponse" type="tns:findRefundRequestsByPKResponse"/>
+            <xs:element name="findRefundsForUserOrAccount" type="tns:findRefundsForUserOrAccount"/>
+            <xs:element name="findRefundsForUserOrAccountResponse" type="tns:findRefundsForUserOrAccountResponse"/>
+            <xs:element name="findServiceByIdAndUser" type="tns:findServiceByIdAndUser"/>
+            <xs:element name="findServiceByIdAndUserResponse" type="tns:findServiceByIdAndUserResponse"/>
+            <xs:element name="findServiceByInvoiceNo" type="tns:findServiceByInvoiceNo"/>
+            <xs:element name="findServiceByInvoiceNoResponse" type="tns:findServiceByInvoiceNoResponse"/>
+            <xs:element name="findServiceByPK" type="tns:findServiceByPK"/>
+            <xs:element name="findServiceByPKResponse" type="tns:findServiceByPKResponse"/>
+            <xs:element name="findServiceByServiceId" type="tns:findServiceByServiceId"/>
+            <xs:element name="findServiceByServiceIdResponse" type="tns:findServiceByServiceIdResponse"/>
+            <xs:element name="findServiceSessions" type="tns:findServiceSessions"/>
+            <xs:element name="findServiceSessionsResponse" type="tns:findServiceSessionsResponse"/>
+            <xs:element name="findServiceSessionsTxns" type="tns:findServiceSessionsTxns"/>
+            <xs:element name="findServiceSessionsTxnsResponse" type="tns:findServiceSessionsTxnsResponse"/>
+            <xs:element name="findServicesByProfile" type="tns:findServicesByProfile"/>
+            <xs:element name="findServicesByProfileResponse" type="tns:findServicesByProfileResponse"/>
+            <xs:element name="getNextInvoiceNumber" type="tns:getNextInvoiceNumber"/>
+            <xs:element name="getNextInvoiceNumberResponse" type="tns:getNextInvoiceNumberResponse"/>
+            <xs:element name="getUsageStats" type="tns:getUsageStats"/>
+            <xs:element name="getUsageStatsResponse" type="tns:getUsageStatsResponse"/>
+            <xs:element name="hasActiveUserAgreement" type="tns:hasActiveUserAgreement"/>
+            <xs:element name="hasActiveUserAgreementResponse" type="tns:hasActiveUserAgreementResponse"/>
+            <xs:element name="hasOpenServiceSession" type="tns:hasOpenServiceSession"/>
+            <xs:element name="hasOpenServiceSessionResponse" type="tns:hasOpenServiceSessionResponse"/>
+            <xs:element name="hasRefundRequest" type="tns:hasRefundRequest"/>
+            <xs:element name="hasRefundRequestResponse" type="tns:hasRefundRequestResponse"/>
+            <xs:element name="insertAudit" type="tns:insertAudit"/>
+            <xs:element name="insertAuditResponse" type="tns:insertAuditResponse"/>
+            <xs:element name="isServicePaid" type="tns:isServicePaid"/>
+            <xs:element name="isServicePaidResponse" type="tns:isServicePaidResponse"/>
+            <xs:element name="latestServiceSession" type="tns:latestServiceSession"/>
+            <xs:element name="latestServiceSessionResponse" type="tns:latestServiceSessionResponse"/>
+            <xs:element name="monthlyStatement" type="tns:monthlyStatement"/>
+            <xs:element name="monthlyStatementResponse" type="tns:monthlyStatementResponse"/>
+            <xs:element name="profileReport" type="tns:profileReport"/>
+            <xs:element name="profileReportResponse" type="tns:profileReportResponse"/>
+            <xs:element name="transactionReport" type="tns:transactionReport"/>
+            <xs:element name="transactionReportResponse" type="tns:transactionReportResponse"/>
+            <xs:element name="updateFinancialTransaction" type="tns:updateFinancialTransaction"/>
+            <xs:element name="updateFinancialTransactionResponse" type="tns:updateFinancialTransactionResponse"/>
+            <xs:element name="updateRefundRequest" type="tns:updateRefundRequest"/>
+            <xs:element name="updateRefundRequestResponse" type="tns:updateRefundRequestResponse"/>
+            <xs:element name="updateService" type="tns:updateService"/>
+            <xs:element name="updateServiceResponse" type="tns:updateServiceResponse"/>
+            <xs:element name="updateServiceSession" type="tns:updateServiceSession"/>
+            <xs:element name="updateServiceSessionResponse" type="tns:updateServiceSessionResponse"/>
+            <xs:element name="updateUserSession" type="tns:updateUserSession"/>
+            <xs:element name="updateUserSessionResponse" type="tns:updateUserSessionResponse"/>
+            <xs:complexType name="createUserSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createUserSessionResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:userSession"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="userSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="startDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userSessionId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findRefundRequestsByPK">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findRefundRequestsByPKResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:refundRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="refundRequest">
+                <xs:complexContent>
+                    <xs:extension base="tns:processRequest">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="currentRefundStatusDsc" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="items" nillable="true" type="tns:refundRequestItem"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType abstract="true" name="processRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="clientNotificationSentDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="contactEmailTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="contactFirstGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="contactOrganizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="contactPhoneNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="contactSurnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="countryCallingNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ctryId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processNotificationSentDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="processRequestId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="processTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processingCommentTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="requestDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="refundRequestItem">
+                <xs:complexContent>
+                    <xs:extension base="tns:processItem">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="accountNm" type="xs:string"/>
+                            <xs:element minOccurs="0" name="accountPrefixTxt" type="xs:string"/>
+                            <xs:element minOccurs="0" name="approvedRefundAmt" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="bcRegAccountNo" type="xs:string"/>
+                            <xs:element minOccurs="0" name="bcRegEcommTransId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="clientReferenceTxt" type="xs:string"/>
+                            <xs:element minOccurs="0" name="detailDsc" type="xs:string"/>
+                            <xs:element minOccurs="0" name="invoiceNo" type="xs:string"/>
+                            <xs:element minOccurs="0" name="paymentType" type="xs:string"/>
+                            <xs:element minOccurs="0" name="refundChangeReasonCd" type="xs:string"/>
+                            <xs:element minOccurs="0" name="refundChangeReasonDsc" type="xs:string"/>
+                            <xs:element minOccurs="0" name="requestedRefundAmt" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceTransactions" nillable="true" type="tns:financialTransaction"/>
+                            <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
+                            <xs:element minOccurs="0" name="serviceTypeDsc" type="xs:string"/>
+                            <xs:element minOccurs="0" name="transactionAmt" type="xs:decimal"/>
+                            <xs:element minOccurs="0" name="transactionDtm" type="xs:dateTime"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType abstract="true" name="processItem">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="currentStatusCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="currentStatusDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="itemStatuses" nillable="true" type="tns:processItemStatus"/>
+                    <xs:element minOccurs="0" name="processItemSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="processItemSubtypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processReasonCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processReasonDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processRequestId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="requesterCommentTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="financialTransaction">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="approvalCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineFeeCodeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineResponseTypeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineReturnCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineReturnMessageTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineSequenceTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineServiceFeeAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="bcOnlineTransactionTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryEcommerceTransactionId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="bcRegistryExistentYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="bcRegistryFeeCodeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryReturnCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryReturnMessageTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegistryServiceFeeAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="bcRegistryTransactionTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="creditCardTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ecommerceTransactionId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="internalClientNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="invoiceNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isoResponseCd" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="processDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="receiptReferenceNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="referenceMessageTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="responseCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="sessionKeyNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="terminalIdentifierNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="transactionStateCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionSubtypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactonDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="processItemStatus">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="agenId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="paasSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="processItemSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="processItemStatusSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="processRejectReasonCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processRejectReasonDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processRequestId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="processStatusCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="processStatusDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="statusCommentTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="systemCreatedYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="uploadedByNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="uploadedByRegUserYn" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createServiceSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:userSession"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createServiceSessionResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceSession"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="serviceSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="nextPageUrlTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="prepaidFileViewQty" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="serviceSessionClosedYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="serviceSessionId" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="services" nillable="true" type="tns:service"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userSessionId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="service">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientReferenceTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentsProcessed" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feePaidYn" type="xs:boolean"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="parameters" nillable="true" type="tns:parameterInstance"/>
+                    <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="serviceReceivedDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="serviceReceivedDtmText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceSessionId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="serviceSubtypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceTypeDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="transactions" nillable="true" type="tns:financialTransaction"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userSessionId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="parameterInstance">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="parameterValueTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="serviceParameterNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="monthlyStatement">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="monthlyStatementResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:monthlyStatementReport"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="monthlyStatementReport">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="clientGroups" nillable="true" type="tns:clientGroup"/>
+                    <xs:element minOccurs="0" name="header" type="tns:statementHeader"/>
+                    <xs:element minOccurs="0" name="total" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="clientGroup">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="givenName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="subTotal" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="surname" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="transactionGroups" nillable="true" type="tns:transactionGroup"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="transactionGroup">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="subTotal" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="transactions" nillable="true" type="tns:statementDetail"/>
+                    <xs:element minOccurs="0" name="XReference" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="statementDetail">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientReferenceTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" name="givenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="invoiceNumber" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceDescParam" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="serviceReceivedDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="serviceReceivedDtmText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="serviceTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="style" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transactionAmt" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="statementHeader">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="accountNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine1Txt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine2Txt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine3Txt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="cityTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ctryLongNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fromDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="fromDateText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="phoneNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="postalCodeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="province" type="xs:string"/>
+                    <xs:element minOccurs="0" name="toDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="toDateText" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getUsageStats">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getUsageStatsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:usageStatsHolder"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="usageStatsHolder">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="totalSessions" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="usageStats" nillable="true" type="tns:usageStats"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="usageStats">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtListView" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="dateUsage" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="docRrequest" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="feeExemptYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="fileSubmit" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="initialSearch" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="mnthStmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="numSessions" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="printFile" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="refineSearch" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="viewFile" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateServiceSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:serviceSession"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateServiceSessionResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="insertAudit">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:auditLog"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="auditLog">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountAgenId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="auditEventTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="auditScenarioCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authenticatingUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physicalFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="insertAuditResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="isServicePaid">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="isServicePaidResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="hasRefundRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="hasRefundRequestResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addService">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:service"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="addServiceResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:service"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findRefundsForUserOrAccount">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findRefundsForUserOrAccountResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:refundResults"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="refundResults">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="recordsFrom" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsTo" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="refundRequests" nillable="true" type="tns:refundRequest"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="profileReport">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="profileReportResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:accountProfileReport"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="accountProfileReport">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="detail" nillable="true" type="tns:clientProfile"/>
+                    <xs:element minOccurs="0" name="header" type="tns:statementHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="clientProfile">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="account" type="tns:account"/>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="client" type="tns:client"/>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientPreference" type="tns:clientPreference"/>
+                    <xs:element minOccurs="0" name="emailTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feeExemptYnBoolean" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="feeExemptYnText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="lastLoginDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="pendingCounselYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="priorBCOnlineAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="profileStatusCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="profileStatusCdDisplayName" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="roles" nillable="true" type="tns:roleAssignment"/>
+                    <xs:element minOccurs="0" name="serviceConditionsAcceptDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="useAccountCreditCardYnBoolean" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="useAccountCreditCardYnText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="verifiedCounselYn" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="account">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="accountManager" type="tns:client"/>
+                    <xs:element minOccurs="0" name="accountNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="accountPrefixTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="accountStatusCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine1Txt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine2Txt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine3Txt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="agenId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="agencyIdCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="agencyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authenticatedAccountGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcOnlineAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="bcRegAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="cityTxt" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="coaEfilingEntitlements" nillable="true" type="tns:efilingEntitlementAssignment"/>
+                    <xs:element minOccurs="0" name="ctryDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ctryId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="emailTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entDtmText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feeExemptYnBoolean" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="feeExemptYnText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="industryCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="internalAccountNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="otherProvinceTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="phoneNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="postalCodeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="provSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="provShortDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="registeredCreditCardYnBoolean" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="registeredCreditCardYnText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updDtmText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="client">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="authenticatedClientGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authoritativePartyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="bcOnlineClientNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientPrefixTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="clientStatusCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entDtmText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="givenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="internalClientNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="middleNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="registeredCreditCardYnBoolean" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="registeredCreditCardYnText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updDtmText" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="efilingEntitlementAssignment">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="divisionCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="levelCd" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="clientPreference">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="preferenceNames" nillable="true" type="xs:anyType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="preferenceValues" nillable="true" type="xs:anyType"/>
+                    <xs:element name="preferences">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element minOccurs="0" name="key" type="xs:anyType"/>
+                                            <xs:element minOccurs="0" name="value" type="xs:anyType"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="roleAssignment">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="activeYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="registeredClientRoleCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateRefundRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:refundRequest"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg1" type="tns:refundRequestItem"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg2" type="tns:processItemStatus"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateRefundRequestResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="findServiceByIdAndUser">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element name="arg3" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceByIdAndUserResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:service"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServicesByProfile">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServicesByProfileResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:clientTransaction"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="clientTransaction">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="profile" type="tns:clientProfile"/>
+                    <xs:element minOccurs="0" name="service" type="tns:service"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findFinancialTransactionsByCriteria">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findFinancialTransactionsByCriteriaResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:financialTransaction"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findActiveUserAgreementTemplate">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findActiveUserAgreementTemplateResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:userAgreementTemplate"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="userAgreementTemplate">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="effectiveDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="userAgreementTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userAgreementTypeCd" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="hasOpenServiceSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="hasOpenServiceSessionResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createAgreement">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:userAgreement"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="userAgreement">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="acceptedDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="accountId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="effectiveDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physicalFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userAgreementSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="userAgreementTypeCd" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createAgreementResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="findRefundRequestItemByPK">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findRefundRequestItemByPKResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:refundRequestItem"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceSessionsTxns">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceSessionsTxnsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceSessions"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="serviceSessions">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="sessions" nillable="true" type="tns:serviceSession"/>
+                    <xs:element name="size" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceByServiceId">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceByServiceIdResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:clientTransaction"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findRefundRequestsByCriteria">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg8" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findRefundRequestsByCriteriaResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:refundRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="latestServiceSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="latestServiceSessionResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceSession"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateService">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:service"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateServiceResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="findFinancialTransactionByInvoice">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findFinancialTransactionByInvoiceResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:financialTransaction"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceByInvoiceNo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceByInvoiceNoResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:clientTransaction"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createRefundRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:refundRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createRefundRequestResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:refundRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceByPK">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceByPKResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:service"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getNextInvoiceNumber">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getNextInvoiceNumberResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="hasActiveUserAgreement">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="hasActiveUserAgreementResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateFinancialTransaction">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:financialTransaction"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateFinancialTransactionResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="endServiceSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="endServiceSessionResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceSession"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="transactionReport">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="transactionReportResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:transactionalGroup"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="transactionalGroup">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="clientId" type="xs:decimal"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="clientTransactions" nillable="true" type="tns:clientTransaction"/>
+                    <xs:element minOccurs="0" name="subtotal" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateUserSession">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:userSession"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateUserSessionResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="findServiceSessions">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findServiceSessionsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceSessions"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="NestedEjbException" type="tns:NestedEjbException"/>
+            <xs:complexType name="NestedEjbException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="EJBException" type="tns:EJBException"/>
+            <xs:complexType name="EJBException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="insertAuditResponse">
+        <wsdl:part element="tns:insertAuditResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundRequestsByPK">
+        <wsdl:part element="tns:findRefundRequestsByPK" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createServiceSession">
+        <wsdl:part element="tns:createServiceSession" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="monthlyStatement">
+        <wsdl:part element="tns:monthlyStatement" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createServiceSessionResponse">
+        <wsdl:part element="tns:createServiceSessionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="insertAudit">
+        <wsdl:part element="tns:insertAudit" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="isServicePaid">
+        <wsdl:part element="tns:isServicePaid" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findActiveUserAgreementTemplateResponse">
+        <wsdl:part element="tns:findActiveUserAgreementTemplateResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByIdAndUser">
+        <wsdl:part element="tns:findServiceByIdAndUser" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="latestServiceSessionResponse">
+        <wsdl:part element="tns:latestServiceSessionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findActiveUserAgreementTemplate">
+        <wsdl:part element="tns:findActiveUserAgreementTemplate" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="hasOpenServiceSession">
+        <wsdl:part element="tns:hasOpenServiceSession" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findFinancialTransactionsByCriteriaResponse">
+        <wsdl:part element="tns:findFinancialTransactionsByCriteriaResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createAgreement">
+        <wsdl:part element="tns:createAgreement" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateServiceResponse">
+        <wsdl:part element="tns:updateServiceResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundsForUserOrAccountResponse">
+        <wsdl:part element="tns:findRefundsForUserOrAccountResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="EJBException">
+        <wsdl:part element="tns:EJBException" name="EJBException"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByInvoiceNoResponse">
+        <wsdl:part element="tns:findServiceByInvoiceNoResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceSessionsResponse">
+        <wsdl:part element="tns:findServiceSessionsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getNextInvoiceNumberResponse">
+        <wsdl:part element="tns:getNextInvoiceNumberResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="profileReportResponse">
+        <wsdl:part element="tns:profileReportResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundRequestsByCriteria">
+        <wsdl:part element="tns:findRefundRequestsByCriteria" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundRequestsByPKResponse">
+        <wsdl:part element="tns:findRefundRequestsByPKResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateService">
+        <wsdl:part element="tns:updateService" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findFinancialTransactionByInvoice">
+        <wsdl:part element="tns:findFinancialTransactionByInvoice" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getNextInvoiceNumber">
+        <wsdl:part element="tns:getNextInvoiceNumber" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findFinancialTransactionByInvoiceResponse">
+        <wsdl:part element="tns:findFinancialTransactionByInvoiceResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundRequestsByCriteriaResponse">
+        <wsdl:part element="tns:findRefundRequestsByCriteriaResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createAgreementResponse">
+        <wsdl:part element="tns:createAgreementResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="endServiceSession">
+        <wsdl:part element="tns:endServiceSession" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="transactionReport">
+        <wsdl:part element="tns:transactionReport" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateUserSession">
+        <wsdl:part element="tns:updateUserSession" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByIdAndUserResponse">
+        <wsdl:part element="tns:findServiceByIdAndUserResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="hasOpenServiceSessionResponse">
+        <wsdl:part element="tns:hasOpenServiceSessionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="hasRefundRequestResponse">
+        <wsdl:part element="tns:hasRefundRequestResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceSessions">
+        <wsdl:part element="tns:findServiceSessions" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="NestedEjbException">
+        <wsdl:part element="tns:NestedEjbException" name="NestedEjbException"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="endServiceSessionResponse">
+        <wsdl:part element="tns:endServiceSessionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createUserSession">
+        <wsdl:part element="tns:createUserSession" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServicesByProfileResponse">
+        <wsdl:part element="tns:findServicesByProfileResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUsageStats">
+        <wsdl:part element="tns:getUsageStats" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateServiceSession">
+        <wsdl:part element="tns:updateServiceSession" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="isServicePaidResponse">
+        <wsdl:part element="tns:isServicePaidResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateFinancialTransactionResponse">
+        <wsdl:part element="tns:updateFinancialTransactionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="hasRefundRequest">
+        <wsdl:part element="tns:hasRefundRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createUserSessionResponse">
+        <wsdl:part element="tns:createUserSessionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addService">
+        <wsdl:part element="tns:addService" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateUserSessionResponse">
+        <wsdl:part element="tns:updateUserSessionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundsForUserOrAccount">
+        <wsdl:part element="tns:findRefundsForUserOrAccount" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUsageStatsResponse">
+        <wsdl:part element="tns:getUsageStatsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="profileReport">
+        <wsdl:part element="tns:profileReport" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateRefundRequest">
+        <wsdl:part element="tns:updateRefundRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServicesByProfile">
+        <wsdl:part element="tns:findServicesByProfile" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByServiceIdResponse">
+        <wsdl:part element="tns:findServiceByServiceIdResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateRefundRequestResponse">
+        <wsdl:part element="tns:updateRefundRequestResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createRefundRequestResponse">
+        <wsdl:part element="tns:createRefundRequestResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findFinancialTransactionsByCriteria">
+        <wsdl:part element="tns:findFinancialTransactionsByCriteria" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="monthlyStatementResponse">
+        <wsdl:part element="tns:monthlyStatementResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceSessionsTxnsResponse">
+        <wsdl:part element="tns:findServiceSessionsTxnsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundRequestItemByPK">
+        <wsdl:part element="tns:findRefundRequestItemByPK" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceSessionsTxns">
+        <wsdl:part element="tns:findServiceSessionsTxns" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="hasActiveUserAgreementResponse">
+        <wsdl:part element="tns:hasActiveUserAgreementResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByServiceId">
+        <wsdl:part element="tns:findServiceByServiceId" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="addServiceResponse">
+        <wsdl:part element="tns:addServiceResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="latestServiceSession">
+        <wsdl:part element="tns:latestServiceSession" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByInvoiceNo">
+        <wsdl:part element="tns:findServiceByInvoiceNo" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createRefundRequest">
+        <wsdl:part element="tns:createRefundRequest" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByPK">
+        <wsdl:part element="tns:findServiceByPK" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findServiceByPKResponse">
+        <wsdl:part element="tns:findServiceByPKResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateServiceSessionResponse">
+        <wsdl:part element="tns:updateServiceSessionResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="hasActiveUserAgreement">
+        <wsdl:part element="tns:hasActiveUserAgreement" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateFinancialTransaction">
+        <wsdl:part element="tns:updateFinancialTransaction" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="transactionReportResponse">
+        <wsdl:part element="tns:transactionReportResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findRefundRequestItemByPKResponse">
+        <wsdl:part element="tns:findRefundRequestItemByPKResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ServiceFacadeBean">
+        <wsdl:operation name="createUserSession">
+            <wsdl:input message="tns:createUserSession" name="createUserSession"></wsdl:input>
+            <wsdl:output message="tns:createUserSessionResponse" name="createUserSessionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundRequestsByPK">
+            <wsdl:input message="tns:findRefundRequestsByPK" name="findRefundRequestsByPK"></wsdl:input>
+            <wsdl:output message="tns:findRefundRequestsByPKResponse" name="findRefundRequestsByPKResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createServiceSession">
+            <wsdl:input message="tns:createServiceSession" name="createServiceSession"></wsdl:input>
+            <wsdl:output message="tns:createServiceSessionResponse" name="createServiceSessionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="monthlyStatement">
+            <wsdl:input message="tns:monthlyStatement" name="monthlyStatement"></wsdl:input>
+            <wsdl:output message="tns:monthlyStatementResponse" name="monthlyStatementResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getUsageStats">
+            <wsdl:input message="tns:getUsageStats" name="getUsageStats"></wsdl:input>
+            <wsdl:output message="tns:getUsageStatsResponse" name="getUsageStatsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+            <wsdl:fault message="tns:EJBException" name="EJBException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateServiceSession">
+            <wsdl:input message="tns:updateServiceSession" name="updateServiceSession"></wsdl:input>
+            <wsdl:output message="tns:updateServiceSessionResponse" name="updateServiceSessionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="insertAudit">
+            <wsdl:input message="tns:insertAudit" name="insertAudit"></wsdl:input>
+            <wsdl:output message="tns:insertAuditResponse" name="insertAuditResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="isServicePaid">
+            <wsdl:input message="tns:isServicePaid" name="isServicePaid"></wsdl:input>
+            <wsdl:output message="tns:isServicePaidResponse" name="isServicePaidResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="hasRefundRequest">
+            <wsdl:input message="tns:hasRefundRequest" name="hasRefundRequest"></wsdl:input>
+            <wsdl:output message="tns:hasRefundRequestResponse" name="hasRefundRequestResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addService">
+            <wsdl:input message="tns:addService" name="addService"></wsdl:input>
+            <wsdl:output message="tns:addServiceResponse" name="addServiceResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundsForUserOrAccount">
+            <wsdl:input message="tns:findRefundsForUserOrAccount" name="findRefundsForUserOrAccount"></wsdl:input>
+            <wsdl:output message="tns:findRefundsForUserOrAccountResponse" name="findRefundsForUserOrAccountResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="profileReport">
+            <wsdl:input message="tns:profileReport" name="profileReport"></wsdl:input>
+            <wsdl:output message="tns:profileReportResponse" name="profileReportResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateRefundRequest">
+            <wsdl:input message="tns:updateRefundRequest" name="updateRefundRequest"></wsdl:input>
+            <wsdl:output message="tns:updateRefundRequestResponse" name="updateRefundRequestResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByIdAndUser">
+            <wsdl:input message="tns:findServiceByIdAndUser" name="findServiceByIdAndUser"></wsdl:input>
+            <wsdl:output message="tns:findServiceByIdAndUserResponse" name="findServiceByIdAndUserResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServicesByProfile">
+            <wsdl:input message="tns:findServicesByProfile" name="findServicesByProfile"></wsdl:input>
+            <wsdl:output message="tns:findServicesByProfileResponse" name="findServicesByProfileResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findFinancialTransactionsByCriteria">
+            <wsdl:input message="tns:findFinancialTransactionsByCriteria" name="findFinancialTransactionsByCriteria"></wsdl:input>
+            <wsdl:output message="tns:findFinancialTransactionsByCriteriaResponse" name="findFinancialTransactionsByCriteriaResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findActiveUserAgreementTemplate">
+            <wsdl:input message="tns:findActiveUserAgreementTemplate" name="findActiveUserAgreementTemplate"></wsdl:input>
+            <wsdl:output message="tns:findActiveUserAgreementTemplateResponse" name="findActiveUserAgreementTemplateResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="hasOpenServiceSession">
+            <wsdl:input message="tns:hasOpenServiceSession" name="hasOpenServiceSession"></wsdl:input>
+            <wsdl:output message="tns:hasOpenServiceSessionResponse" name="hasOpenServiceSessionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createAgreement">
+            <wsdl:input message="tns:createAgreement" name="createAgreement"></wsdl:input>
+            <wsdl:output message="tns:createAgreementResponse" name="createAgreementResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundRequestItemByPK">
+            <wsdl:input message="tns:findRefundRequestItemByPK" name="findRefundRequestItemByPK"></wsdl:input>
+            <wsdl:output message="tns:findRefundRequestItemByPKResponse" name="findRefundRequestItemByPKResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceSessionsTxns">
+            <wsdl:input message="tns:findServiceSessionsTxns" name="findServiceSessionsTxns"></wsdl:input>
+            <wsdl:output message="tns:findServiceSessionsTxnsResponse" name="findServiceSessionsTxnsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByServiceId">
+            <wsdl:input message="tns:findServiceByServiceId" name="findServiceByServiceId"></wsdl:input>
+            <wsdl:output message="tns:findServiceByServiceIdResponse" name="findServiceByServiceIdResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundRequestsByCriteria">
+            <wsdl:input message="tns:findRefundRequestsByCriteria" name="findRefundRequestsByCriteria"></wsdl:input>
+            <wsdl:output message="tns:findRefundRequestsByCriteriaResponse" name="findRefundRequestsByCriteriaResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="latestServiceSession">
+            <wsdl:input message="tns:latestServiceSession" name="latestServiceSession"></wsdl:input>
+            <wsdl:output message="tns:latestServiceSessionResponse" name="latestServiceSessionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateService">
+            <wsdl:input message="tns:updateService" name="updateService"></wsdl:input>
+            <wsdl:output message="tns:updateServiceResponse" name="updateServiceResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findFinancialTransactionByInvoice">
+            <wsdl:input message="tns:findFinancialTransactionByInvoice" name="findFinancialTransactionByInvoice"></wsdl:input>
+            <wsdl:output message="tns:findFinancialTransactionByInvoiceResponse" name="findFinancialTransactionByInvoiceResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByInvoiceNo">
+            <wsdl:input message="tns:findServiceByInvoiceNo" name="findServiceByInvoiceNo"></wsdl:input>
+            <wsdl:output message="tns:findServiceByInvoiceNoResponse" name="findServiceByInvoiceNoResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createRefundRequest">
+            <wsdl:input message="tns:createRefundRequest" name="createRefundRequest"></wsdl:input>
+            <wsdl:output message="tns:createRefundRequestResponse" name="createRefundRequestResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByPK">
+            <wsdl:input message="tns:findServiceByPK" name="findServiceByPK"></wsdl:input>
+            <wsdl:output message="tns:findServiceByPKResponse" name="findServiceByPKResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getNextInvoiceNumber">
+            <wsdl:input message="tns:getNextInvoiceNumber" name="getNextInvoiceNumber"></wsdl:input>
+            <wsdl:output message="tns:getNextInvoiceNumberResponse" name="getNextInvoiceNumberResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="hasActiveUserAgreement">
+            <wsdl:input message="tns:hasActiveUserAgreement" name="hasActiveUserAgreement"></wsdl:input>
+            <wsdl:output message="tns:hasActiveUserAgreementResponse" name="hasActiveUserAgreementResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateFinancialTransaction">
+            <wsdl:input message="tns:updateFinancialTransaction" name="updateFinancialTransaction"></wsdl:input>
+            <wsdl:output message="tns:updateFinancialTransactionResponse" name="updateFinancialTransactionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="endServiceSession">
+            <wsdl:input message="tns:endServiceSession" name="endServiceSession"></wsdl:input>
+            <wsdl:output message="tns:endServiceSessionResponse" name="endServiceSessionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="transactionReport">
+            <wsdl:input message="tns:transactionReport" name="transactionReport"></wsdl:input>
+            <wsdl:output message="tns:transactionReportResponse" name="transactionReportResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateUserSession">
+            <wsdl:input message="tns:updateUserSession" name="updateUserSession"></wsdl:input>
+            <wsdl:output message="tns:updateUserSessionResponse" name="updateUserSessionResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceSessions">
+            <wsdl:input message="tns:findServiceSessions" name="findServiceSessions"></wsdl:input>
+            <wsdl:output message="tns:findServiceSessionsResponse" name="findServiceSessionsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ServiceFacadeSoapBinding" type="tns:ServiceFacadeBean">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="createUserSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="createUserSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createUserSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createServiceSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="createServiceSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createServiceSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundRequestsByPK">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findRefundRequestsByPK">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findRefundRequestsByPKResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="monthlyStatement">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="monthlyStatement">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="monthlyStatementResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getUsageStats">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getUsageStats">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getUsageStatsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="EJBException">
+                <soap:fault name="EJBException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateServiceSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateServiceSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateServiceSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="insertAudit">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="insertAudit">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="insertAuditResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="isServicePaid">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="isServicePaid">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="isServicePaidResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="hasRefundRequest">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="hasRefundRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="hasRefundRequestResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="addService">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="addService">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="addServiceResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundsForUserOrAccount">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findRefundsForUserOrAccount">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findRefundsForUserOrAccountResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="profileReport">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="profileReport">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="profileReportResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateRefundRequest">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateRefundRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateRefundRequestResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByIdAndUser">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findServiceByIdAndUser">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findServiceByIdAndUserResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServicesByProfile">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findServicesByProfile">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findServicesByProfileResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findFinancialTransactionsByCriteria">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findFinancialTransactionsByCriteria">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findFinancialTransactionsByCriteriaResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findActiveUserAgreementTemplate">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findActiveUserAgreementTemplate">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findActiveUserAgreementTemplateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="hasOpenServiceSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="hasOpenServiceSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="hasOpenServiceSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createAgreement">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="createAgreement">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createAgreementResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundRequestItemByPK">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findRefundRequestItemByPK">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findRefundRequestItemByPKResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceSessionsTxns">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findServiceSessionsTxns">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findServiceSessionsTxnsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByServiceId">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findServiceByServiceId">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findServiceByServiceIdResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findRefundRequestsByCriteria">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findRefundRequestsByCriteria">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findRefundRequestsByCriteriaResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="latestServiceSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="latestServiceSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="latestServiceSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateService">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateService">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateServiceResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findFinancialTransactionByInvoice">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findFinancialTransactionByInvoice">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findFinancialTransactionByInvoiceResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByInvoiceNo">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findServiceByInvoiceNo">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findServiceByInvoiceNoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createRefundRequest">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="createRefundRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createRefundRequestResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceByPK">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findServiceByPK">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findServiceByPKResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getNextInvoiceNumber">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getNextInvoiceNumber">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getNextInvoiceNumberResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="hasActiveUserAgreement">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="hasActiveUserAgreement">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="hasActiveUserAgreementResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateFinancialTransaction">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateFinancialTransaction">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateFinancialTransactionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="endServiceSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="endServiceSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="endServiceSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="transactionReport">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="transactionReport">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="transactionReportResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateUserSession">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateUserSession">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateUserSessionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findServiceSessions">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findServiceSessions">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findServiceSessionsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ServiceFacade">
+        <wsdl:port binding="tns:ServiceFacadeSoapBinding" name="ServiceFacadeBeanPort">
+            <soap:address location="http://localhost:11530/csows/ServiceFacade"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
