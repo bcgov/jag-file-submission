@@ -31,13 +31,13 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
      * @return
      */
     @Override
-    public DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
+    public DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType, String division) {
 
         if (StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("courtLevel is required.");
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
         if (StringUtils.isBlank(documentType)) throw new IllegalArgumentException("documentType level is required.");
 
-        return getSoapDocumentTypes(courtLevel, courtClass).stream()
+        return getSoapDocumentTypes(courtLevel, courtClass, division).stream()
                 .filter(doc -> doc.getDocumentTypeCd().equals(documentType))
                 .findFirst()
                 .map(doc -> new DocumentTypeDetails(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn()))
@@ -45,22 +45,22 @@ public class CsoDocumentServiceImpl implements EfilingDocumentService {
 
     }
 
-    public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
+    public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass, String division) {
 
         if (StringUtils.isBlank(courtLevel)) throw new IllegalArgumentException("courtLevel is required.");
         if (StringUtils.isBlank(courtClass)) throw new IllegalArgumentException("courtClass level is required.");
 
-        return getSoapDocumentTypes(courtLevel, courtClass).stream()
+        return getSoapDocumentTypes(courtLevel, courtClass, division).stream()
                 .map(doc -> new DocumentTypeDetails(doc.getDocumentTypeDesc(), doc.getDocumentTypeCd(), doc.getDefaultStatutoryFee(), doc.isOrderDocumentYn(),doc.isRushRequiredYn(), doc.isAutoProcessYn())).collect(Collectors.toList());
 
     }
 
-    private List<DocumentType> getSoapDocumentTypes(String courtLevel, String courtClass) {
+    private List<DocumentType> getSoapDocumentTypes(String courtLevel, String courtClass, String division) {
 
         List<DocumentType> documentTypes;
 
         try {
-            documentTypes = new ArrayList<>(filingStatusFacadeBean.getDocumentTypes(courtLevel, courtClass));
+            documentTypes = new ArrayList<>(filingStatusFacadeBean.getDocumentTypes(division, courtLevel, courtClass));
             //Remove other document types. NOTE these are cached and redis requires a restart
             //TODO: consider feature flagging this
             documentTypes.removeIf(documentType -> documentType.getDocumentTypeCd().equals(OTHER_DOCUMENT_TYPE));

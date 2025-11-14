@@ -32,14 +32,14 @@ public class DocumentStoreImplTest {
         DocumentTypeDetails docummentDetails = new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, true, true, true);
 
         Mockito
-                .when(efilingDocumentServiceMock.getDocumentTypeDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
+                .when(efilingDocumentServiceMock.getDocumentTypeDetails(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.any()))
                 .thenReturn(docummentDetails);
 
 
         List<DocumentTypeDetails> documentTypeDetails = Arrays.asList(new DocumentTypeDetails(DESCRIPTION, TYPE, BigDecimal.TEN, true, true, true));
 
         Mockito
-                .when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString()))
+                .when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString(), Mockito.any()))
                 .thenReturn(documentTypeDetails);
 
         sut = new DocumentStoreImpl(efilingDocumentServiceMock);

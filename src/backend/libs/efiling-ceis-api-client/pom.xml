@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.bc.gov.open.jag</groupId>
 	<artifactId>efiling-ceis-api-client</artifactId>
-	<version>2.0.12-SNAPSHOT</version>
+	<version>2.1.0-SNAPSHOT</version>
 	<name>efiling-ceis-api-client</name>
 	<description>Client for CEIS ORDS</description>
 
@@ -123,7 +123,7 @@
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
             <artifactId>efiling-commons</artifactId>
-            <version>2.0.12-SNAPSHOT</version>
+            <version>2.1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -140,7 +140,7 @@
 			<dependency>
 				<groupId>ca.bc.gov.open.jag</groupId>
 				<artifactId>efiling-bom</artifactId>
-				<version>2.0.12-SNAPSHOT</version>
+				<version>2.1.0-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

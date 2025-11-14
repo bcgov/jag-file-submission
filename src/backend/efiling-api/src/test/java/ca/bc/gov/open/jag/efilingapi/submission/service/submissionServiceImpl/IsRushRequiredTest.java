@@ -58,7 +58,7 @@ public class IsRushRequiredTest {
     @DisplayName("Test is rushRequired")
     public void testRushRequired() {
 
-        Mockito.when(efilingDocumentService.getDocumentTypeDetails(any(), any(), any())).thenReturn(new DocumentTypeDetails("description",
+        Mockito.when(efilingDocumentService.getDocumentTypeDetails(any(), any(), any(), any())).thenReturn(new DocumentTypeDetails("description",
                 "type",
                 BigDecimal.TEN,
                 true,
@@ -73,7 +73,7 @@ public class IsRushRequiredTest {
     @DisplayName("Test is not rushRequired")
     public void testRushNotRequired() {
 
-        Mockito.when(efilingDocumentService.getDocumentTypeDetails(any(), any(), any())).thenReturn(new DocumentTypeDetails("description",
+        Mockito.when(efilingDocumentService.getDocumentTypeDetails(any(), any(), any(), any())).thenReturn(new DocumentTypeDetails("description",
                 "type",
                 BigDecimal.TEN,
                 true,
