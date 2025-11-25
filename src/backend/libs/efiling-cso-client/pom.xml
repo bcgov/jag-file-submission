@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-cso-client</artifactId>
-    <version>2.0.12-SNAPSHOT</version>
+    <version>2.0.13-SNAPSHOT</version>
 
     <properties>
         <java.version>17</java.version>
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>ca.bc.gov.open.jag</groupId>
             <artifactId>efiling-commons</artifactId>
-            <version>2.0.12-SNAPSHOT</version>
+            <version>2.0.13-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -90,7 +90,7 @@
             <dependency>
                 <groupId>ca.bc.gov.open.jag</groupId>
                 <artifactId>efiling-bom</artifactId>
-                <version>2.0.12-SNAPSHOT</version>
+                <version>2.0.13-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
