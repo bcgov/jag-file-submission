@@ -5,6 +5,7 @@
 	<groupId>ca.bc.gov.open.jag</groupId>
 	<artifactId>efiling-ceis-api-client</artifactId>
 	<version>2.1.0-SNAPSHOT</version>
+
 	<name>efiling-ceis-api-client</name>
 	<description>Client for CEIS ORDS</description>
 
@@ -133,7 +134,7 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>3.5.0</version>
+				<version>3.5.7</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
