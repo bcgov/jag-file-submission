@@ -1,6 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsoclient.mappers;
 
-import ca.bc.gov.ag.csows.filing.CivilDocument;
+import ca.bc.gov.ag.csows.filing.Document;
 import ca.bc.gov.ag.csows.filing.CsoParty;
 import ca.bc.gov.ag.csows.filing.FilingPackage;
 import ca.bc.gov.ag.csows.filing.PackageAuthority;
@@ -46,7 +46,7 @@ public interface FilingPackageMapper {
             AccountDetails accountDetails,
             BigDecimal serviceId,
             XMLGregorianCalendar submittedDate,
-            List<CivilDocument> documents,
+            List<Document> documents,
             List<CsoParty> csoParties,
             List<PackageAuthority> packageControls);
 }

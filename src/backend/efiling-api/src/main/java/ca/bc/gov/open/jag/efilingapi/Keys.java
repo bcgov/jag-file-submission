@@ -32,4 +32,6 @@ public class Keys {
     
     public static final String REJECTED_DOCUMENT_CODE = "REJ";
 
+    public static final String DEFAULT_DIVISION = "I";
+
 }

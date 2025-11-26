@@ -120,6 +120,7 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getDocumentTypesResponse">
