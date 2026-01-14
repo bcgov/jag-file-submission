@@ -4,10 +4,10 @@ on:
   schedule:
     - cron: "0 0 * */3 *"
   push:
-    branches: [master]
+    branches: [feature/vulnerability-01-14-2026]
     paths:
       - "src/backend/**"
-      - ".github/workflows/dev-efiling-api-build.yaml"
+      #- ".github/workflows/dev-efiling-api-build.yaml"
   workflow_dispatch:
 
 jobs:
