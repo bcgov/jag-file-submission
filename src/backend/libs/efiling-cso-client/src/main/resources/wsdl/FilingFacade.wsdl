@@ -15,6 +15,8 @@
             <xs:element name="findCivilAppearancesByFileNumberDateResponse" type="tns:findCivilAppearancesByFileNumberDateResponse"/>
             <xs:element name="findCivilFilingsForPackage" type="tns:findCivilFilingsForPackage"/>
             <xs:element name="findCivilFilingsForPackageResponse" type="tns:findCivilFilingsForPackageResponse"/>
+            <xs:element name="findCriminalCaseFiles" type="tns:findCriminalCaseFiles"/>
+            <xs:element name="findCriminalCaseFilesResponse" type="tns:findCriminalCaseFilesResponse"/>
             <xs:element name="findCurrProcTimesByParams" type="tns:findCurrProcTimesByParams"/>
             <xs:element name="findCurrProcTimesByParamsResponse" type="tns:findCurrProcTimesByParamsResponse"/>
             <xs:element name="findDocumentById" type="tns:findDocumentById"/>
@@ -578,6 +580,38 @@
             <xs:complexType name="saveReferenceFileResponse">
                 <xs:sequence/>
             </xs:complexType>
+            <xs:complexType name="findCriminalCaseFiles">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findCriminalCaseFilesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:criminalCaseFile"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="criminalCaseFile">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ccasCaseNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtDivisionCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="locationId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="locationIdentifierCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="locationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="phys_id" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="ticketSeries" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="updateDocumentStatus">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="tns:documentStatuses"/>
@@ -1019,6 +1053,9 @@
     <wsdl:message name="findDocumentByIdResponse">
         <wsdl:part element="tns:findDocumentByIdResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="findCriminalCaseFiles">
+        <wsdl:part element="tns:findCriminalCaseFiles" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="findFilingPackageByIDResponse">
         <wsdl:part element="tns:findFilingPackageByIDResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -1175,6 +1212,9 @@
     <wsdl:message name="getActiveSuppDocImageResponse">
         <wsdl:part element="tns:getActiveSuppDocImageResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="findCriminalCaseFilesResponse">
+        <wsdl:part element="tns:findCriminalCaseFilesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getDocument">
         <wsdl:part element="tns:getDocument" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -1206,6 +1246,11 @@
         <wsdl:operation name="saveReferenceFile">
             <wsdl:input message="tns:saveReferenceFile" name="saveReferenceFile"></wsdl:input>
             <wsdl:output message="tns:saveReferenceFileResponse" name="saveReferenceFileResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findCriminalCaseFiles">
+            <wsdl:input message="tns:findCriminalCaseFiles" name="findCriminalCaseFiles"></wsdl:input>
+            <wsdl:output message="tns:findCriminalCaseFilesResponse" name="findCriminalCaseFilesResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="updateDocumentStatus">
@@ -1382,6 +1427,18 @@
                 <soap:fault name="NestedEjbException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="findCriminalCaseFiles">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findCriminalCaseFiles">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findCriminalCaseFilesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="updateDocumentStatus">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="updateDocumentStatus">
@@ -1442,24 +1499,24 @@
                 <soap:fault name="NestedEjbException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
-        <wsdl:operation name="getActiveSuppDocURL">
-            <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="getActiveSuppDocURL">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="getActiveSuppDocURLResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-            <wsdl:fault name="NestedEjbException">
-                <soap:fault name="NestedEjbException" use="literal"/>
-            </wsdl:fault>
-        </wsdl:operation>
         <wsdl:operation name="findCivilAppearancesByFileNumberDate">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="findCivilAppearancesByFileNumberDate">
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="findCivilAppearancesByFileNumberDateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getActiveSuppDocURL">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getActiveSuppDocURL">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getActiveSuppDocURLResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
