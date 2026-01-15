@@ -1,10 +1,12 @@
 import initStoryshots, {
-  Stories2SnapsConverter
+  Stories2SnapsConverter,
 } from "@storybook/addon-storyshots";
-import { render, wait } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { createSerializer } from "enzyme-to-json";
 
 const converter = new Stories2SnapsConverter();
+
+process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
 
 const runTest = async (story, context) => {
   const filename = converter.getSnapshotFileName(context);
@@ -13,13 +15,14 @@ const runTest = async (story, context) => {
     return;
   }
 
+  window.scrollTo = jest.fn();
   const storyElement = story.render();
 
   const { asFragment } = render(storyElement);
 
-  await wait(() => {
-    expect(asFragment()).toMatchSpecificSnapshot(filename);
-  });
+  await waitFor(() => {});
+
+  expect(asFragment()).toMatchSpecificSnapshot(filename);
 };
 
 initStoryshots({
@@ -27,5 +30,5 @@ initStoryshots({
   snapshotSerializers: [createSerializer()],
   test: ({ story, context, done }) => {
     runTest(story, context).then(done);
-  }
+  },
 });

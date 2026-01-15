@@ -25,3 +25,15 @@ mvn clean install -P libs
 ```
 mvn clean verify -P all
 ```
+
+### Update Version
+
+Run
+
+```
+mvn -f src/backend/pom.xml versions:set -DartifactId=*  -DgroupId=*
+```
+
+## caching
+
+Currently lookups are cached using redis. In the event of a code table change redis should be restarted. Check the api for activity beore doing so. 

@@ -7,23 +7,21 @@ import java.math.BigDecimal;
 
 public class AccountDetails {
 
+    private String universalId;
     private BigDecimal accountId;
     private BigDecimal clientId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String middleName;
+    private String internalClientNumber;
     private boolean fileRolePresent;
+    private boolean cardRegistered;
 
     protected AccountDetails(AccountDetails.Builder builder) {
 
+        this.universalId = builder.universalId;
         this.accountId = builder.accountId;
         this.clientId = builder.clientId;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.email = builder.email;
-        this.middleName = builder.middleName;
         this.fileRolePresent = builder.fileRolePresent;
+        this.cardRegistered = builder.cardRegistered;
+        this.internalClientNumber = builder.internalClientNumber;
 
     }
 
@@ -33,20 +31,27 @@ public class AccountDetails {
     }
 
     @JsonCreator
-    public AccountDetails(@JsonProperty("accountId") BigDecimal accountId,
-                                        @JsonProperty("clientId") BigDecimal clientId,
-                                        @JsonProperty("fileRolePresent") boolean fileRolePresent,
-                                        @JsonProperty("firstName") String firstName,
-                                        @JsonProperty("lastName") String lastName,
-                                        @JsonProperty("middleName") String middleName,
-                                        @JsonProperty("email") String email) {
+    public AccountDetails(
+            @JsonProperty("universalId") String universalId,
+            @JsonProperty("accountId") BigDecimal accountId,
+            @JsonProperty("clientId") BigDecimal clientId,
+            @JsonProperty("internalClientNumber") String internalClientNumber,
+            @JsonProperty("fileRolePresent") boolean fileRolePresent,
+            @JsonProperty("firstName") String firstName,
+            @JsonProperty("lastName") String lastName,
+            @JsonProperty("middleName") String middleName,
+            @JsonProperty("email") String email,
+            @JsonProperty("cardRegistered") Boolean cardRegistered) {
+        this.universalId = universalId;
         this.accountId = accountId;
         this.clientId = clientId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.middleName = middleName;
+        this.internalClientNumber = internalClientNumber;
         this.fileRolePresent = fileRolePresent;
+        this.cardRegistered = cardRegistered;
+    }
+
+    public String getUniversalId() {
+        return universalId;
     }
 
     public BigDecimal getAccountId() {
@@ -57,35 +62,33 @@ public class AccountDetails {
         return clientId;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
+    public String getInternalClientNumber() { return internalClientNumber; }
 
     public boolean isFileRolePresent() {
         return fileRolePresent;
     }
 
+    public boolean isCardRegistered() { return cardRegistered; }
+
+    public void updateInternalClientNumber(String internalClientNumber) {
+        this.internalClientNumber = internalClientNumber;
+        this.cardRegistered = this.internalClientNumber != null;
+    }
+
     public static class Builder {
 
+        private String universalId;
         private BigDecimal accountId;
         private BigDecimal clientId;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String middleName;
+        private String internalClientNumber;
         private boolean fileRolePresent;
+        private boolean cardRegistered;
+
+
+        public Builder universalId(String universalId) {
+            this.universalId = universalId;
+            return this;
+        }
 
         public Builder accountId(BigDecimal accountId) {
             this.accountId = accountId;
@@ -97,28 +100,18 @@ public class AccountDetails {
             return this;
         }
 
-        public Builder firstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public Builder lastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder middleName(String middleName) {
-            this.middleName = middleName;
+        public Builder internalClientNumber(String internalClientNumber) {
+            this.internalClientNumber = internalClientNumber;
             return this;
         }
 
         public Builder fileRolePresent(boolean fileRolePresent) {
             this.fileRolePresent = fileRolePresent;
+            return this;
+        }
+
+        public Builder cardRegistered(boolean cardRegistered) {
+            this.cardRegistered = cardRegistered;
             return this;
         }
 
