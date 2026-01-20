@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Keycloak from "keycloak-js";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
+import Login from "../../components/page/login/Login";
 
 const url = window.env
   ? window.env.REACT_APP_KEYCLOAK_URL
@@ -41,6 +42,7 @@ keycloak.onAuthRefreshSuccess = () =>
 export default function AuthenticationGuard(props) {
   const { children } = props;
   const [authedKeycloak, setAuthedKeycloak] = useState(null);
+  const [redirectPage, setRedirectPage] = useState(null);
 
   async function keycloakInit() {
     await keycloak
@@ -53,7 +55,15 @@ export default function AuthenticationGuard(props) {
 
           localStorage.setItem("jwt", keycloak.token);
           setAuthedKeycloak(keycloak);
-        } else {
+        } else if (
+          window.location.href ===
+          `${window.location.origin}/efilinghub/submissionhistory`
+        ) {
+          setRedirectPage("login");
+        } else if (
+          window.location.href !==
+          `${window.location.origin}/efilinghub/submissionhistory`
+        ) {
           keycloak.login({
             idpHint: `${defaultIdentityProvider}`,
           });
@@ -68,7 +78,10 @@ export default function AuthenticationGuard(props) {
   return (
     <>
       {authedKeycloak && children}
-      {!authedKeycloak && null}
+      {!authedKeycloak && redirectPage === "login" && (
+        <Login keycloak={keycloak} />
+      )}
+      {!authedKeycloak && redirectPage === null && null}
     </>
   );
 }
