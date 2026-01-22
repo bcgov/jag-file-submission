@@ -37,7 +37,7 @@
         <org.openapitools.version>0.2.6</org.openapitools.version>
         <org.springdoc.version>1.7.0</org.springdoc.version>
         <org.threeten.version>1.7.0</org.threeten.version>
-        <ch.qos.logback.version>1.5.18</ch.qos.logback.version>
+        <ch.qos.logback.version>1.5.25</ch.qos.logback.version>
         <logback.access.common.version>2.0.6</logback.access.common.version>
         <org.apache.tomcat.embed.version>11.0.14</org.apache.tomcat.embed.version>
         <org.json.version>20250517</org.json.version>
