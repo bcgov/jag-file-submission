@@ -24,7 +24,7 @@ const registerCard = () => {
     .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
 };
 
-const existingCreditCard = () => (
+const existingCreditCard = (onRegister) => (
   <Alert
     icon={<MdCreditCard size={32} />}
     type="success"
@@ -36,10 +36,10 @@ const existingCreditCard = () => (
         </span>
         <br />
         <span
-          onClick={() => registerCard()}
+          onClick={() => (onRegister())}
           onKeyDown={(e) => {
             if (isEnter(e)) {
-              registerCard();
+              onRegister();
             }
           }}
           className="file-href"
@@ -53,7 +53,7 @@ const existingCreditCard = () => (
   />
 );
 
-const noCreditCard = () => (
+const noCreditCard = (onRegister) => (
   <Alert
     icon={<MdCreditCard size={32} />}
     type="error"
@@ -68,10 +68,10 @@ const noCreditCard = () => (
         </span>
         <br />
         <span
-          onClick={() => registerCard()}
+          onClick={() => (onRegister())}
           onKeyDown={(e) => {
             if (isEnter(e)) {
-              registerCard();
+              onRegister();
             }
           }}
           className="file-href"
@@ -86,7 +86,7 @@ const noCreditCard = () => (
   />
 );
 
-const failedUpdateCreditCard = () => (
+const failedUpdateCreditCard = (onRegister) => (
   <Alert
     icon={<MdCreditCard size={32} />}
     type="warning"
@@ -100,10 +100,10 @@ const failedUpdateCreditCard = () => (
         </span>
         <br />
         <span
-          onClick={() => registerCard()}
+          onClick={() => (onRegister())}
           onKeyDown={(e) => {
             if (isEnter(e)) {
-              registerCard();
+              onRegister();
             }
           }}
           className="file-href"
@@ -117,10 +117,10 @@ const failedUpdateCreditCard = () => (
   />
 );
 
-export function getCreditCardAlerts() {
-  const existingCreditCardData = existingCreditCard();
-  const noCreditCardData = noCreditCard();
-  const failedUpdateCreditCardData = failedUpdateCreditCard();
+export function getCreditCardAlerts(onRegister) {
+  const existingCreditCardData = existingCreditCard(onRegister);
+  const noCreditCardData = noCreditCard(onRegister);
+  const failedUpdateCreditCardData = failedUpdateCreditCard(onRegister);
 
   return {
     existingCreditCard: existingCreditCardData,

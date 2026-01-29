@@ -12,6 +12,7 @@ import ConfirmationPopup, {
 import { Toast } from "../../components/toast/Toast";
 import { getSidecardData } from "../../modules/helpers/sidecardData";
 import { getCreditCardAlerts } from "../../modules/helpers/creditCardAlerts";
+import RegisterPaymentCard from "../../components/register-payment-card/RegisterPaymentCard";
 import { errorRedirect } from "../../modules/helpers/errorRedirect";
 import { propTypes } from "../../types/propTypes";
 import PackageConfirmation from "../package/package-confirmation/PackageConfirmation";
@@ -23,28 +24,28 @@ import "./Payment.scss";
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;
 
-const getCreditCardType = () => {
+const getCreditCardType = (onRegister) => {
   const bamboraSuccess =
-    sessionStorage.getItem("internalClientNumber") !== "null" ||
+    sessionStorage.getItem("paymentProfileId") !== "null" || // formerly internalClientNumber
     sessionStorage.getItem("bamboraSuccess");
   if (bamboraSuccess && sessionStorage.getItem("bamboraErrorExists") !== "true")
-    return getCreditCardAlerts().existingCreditCard;
+    return getCreditCardAlerts(onRegister).existingCreditCard;
 
   if (bamboraSuccess && sessionStorage.getItem("bamboraErrorExists") === "true")
-    return getCreditCardAlerts().failedUpdateCreditCard;
+    return getCreditCardAlerts(onRegister).failedUpdateCreditCard;
 
-  return getCreditCardAlerts().noCreditCard;
+  return getCreditCardAlerts(onRegister).noCreditCard;
 };
 
 const updateCSOAccount = () => {
   const data = {
-    internalClientNumber: sessionStorage.getItem("bamboraSuccess"),
+    paymentProfileId: sessionStorage.getItem("bamboraSuccess"),
   };
 
   axios
     .put("/csoAccount", data)
     .then(({ data: { internalClientNumber } }) =>
-      sessionStorage.setItem("internalClientNumber", internalClientNumber)
+      sessionStorage.setItem("paymentProfileId", internalClientNumber)
     )
     .catch((err) => {
       sessionStorage.setItem("bamboraErrorExists", true);
@@ -109,7 +110,7 @@ const checkSubmitEnabled = (
 ) => {
   const isEnabled =
     (paymentAgreed &&
-      sessionStorage.getItem("internalClientNumber") !== "null") ||
+      sessionStorage.getItem("paymentProfileId") !== "null") ||
     (paymentAgreed && !hasSubmissionFee(submissionFee));
   setSubmitBtnEnabled(isEnabled);
 };
@@ -124,7 +125,11 @@ export default function Payment({
     hasRushInfo,
   },
 }) {
-  const creditCardAlert = getCreditCardType();
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+  const creditCardAlert = getCreditCardType(() => {
+    setShowRegisterModal(true);
+  });
 
   const [paymentAgreed, setPaymentAgreed] = useState(false);
   const [submitBtnEnabled, setSubmitBtnEnabled] = useState(false);
@@ -164,7 +169,7 @@ export default function Payment({
   useEffect(() => {
     if (
       sessionStorage.getItem("bamboraSuccess") &&
-      sessionStorage.getItem("internalClientNumber") === "null"
+      sessionStorage.getItem("paymentProfileId") === "null"
     )
       updateCSOAccount();
 
@@ -190,6 +195,12 @@ export default function Payment({
     <div className="ct-payment page">
       {showModal && (
         <RushConfirmation show={showModal} setShow={setShowModal} />
+      )}
+      {showRegisterModal && (
+        <RegisterPaymentCard
+          showModal={showRegisterModal}
+          onHide={() => setShowRegisterModal(false)}
+        />
       )}
       <div className="content col-md-8">
         {hasSubmissionFee(submissionFee) && paymentSectionElement}
