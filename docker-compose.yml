@@ -90,7 +90,7 @@ services:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=admin
 
-      - NAVIGATION_BASE_URL=http://localhost:3000/efilinghub
+      - NAVIGATION_BASE_URL=${NAVIGATION_BASE_URL:-http://localhost:3000/efilinghub}
       - NAVIGATION_EXPIRYTIME=10
 
       - CLAMAV_HOST=clamav
