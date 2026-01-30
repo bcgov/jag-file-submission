@@ -6,12 +6,15 @@ import ca.bc.gov.open.bambora.payment.starter.managment.models.RecurringPaymentD
 import ca.bc.gov.open.jag.efilingapi.api.PaymentApiDelegate;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
+import ca.bc.gov.open.jag.efilingapi.api.model.SetupCardRequest;
+import ca.bc.gov.open.jag.efilingapi.api.model.SetupCardResponse;
 import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.UUID;
 
@@ -47,4 +50,36 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
         }
 
     }
+
+    @Override
+    @PreAuthorize("hasRole('efiling-user')")
+    public ResponseEntity<SetupCardResponse> createCreditCardProfile(UUID xTransactionId,
+                                                              String internalClientNumber,
+                                                              SetupCardRequest setupCardRequest) {
+
+        SetupCardResponse setupCardResponse = new SetupCardResponse();
+        //TODO: Call service to create card, This will be two calls one to bambora then CSO
+
+        setupCardResponse.setResponseCode("1");
+        setupCardResponse.setResponseDescription("Operation successful");
+        return ResponseEntity.ok(setupCardResponse);
+
+    }
+
+    @Override
+    @PreAuthorize("hasRole('efiling-user')")
+    public ResponseEntity<SetupCardResponse> updateCreditCardProfile(UUID xTransactionId,
+                                                              BigDecimal paymentProfileId,
+                                                              String internalClientNumber,
+                                                              SetupCardRequest setupCardRequest) {
+
+        SetupCardResponse setupCardResponse = new SetupCardResponse();
+        //TODO: Call service to update card, This will be two calls one to bambora then CSO
+
+        setupCardResponse.setResponseCode("1");
+        setupCardResponse.setResponseDescription("Operation successful");
+        return ResponseEntity.ok(setupCardResponse);
+
+    }
+
 }

@@ -432,6 +432,7 @@ paths:
                 $ref: "#/components/schemas/CourtLocations"
   "/payment/generate-update-card":
     post:
+      deprecated: true
       summary: Update card on bambora
       operationId: UpdateCreditCard
       description: For expired credit card get url to update
@@ -453,6 +454,55 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GenerateCardUrlResponse"
+  "/payment/{internalClientNumber}/profile":
+    post:
+      summary: Update card on bambora
+      operationId: CreateCreditCardProfile
+      description: For setting up a payment profile
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/internalClientNumber"
+      requestBody:
+        description: card setup params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetupCardRequest"
+      responses:
+        "200":
+          description: Card Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SetupCardResponse"
+  "/payment/{internalClientNumber}/profile/{paymentProfileId}":
+    post:
+      summary: Update card on bambora
+      operationId: UpdateCreditCardProfile
+      description: For updates to a payment profile
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/paymentProfileId"
+        - $ref: "#/components/parameters/internalClientNumber"
+      requestBody:
+        description: card setup params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetupCardRequest"
+      responses:
+        "200":
+          description: Card Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SetupCardResponse"
   "/filingpackages":
     get:
       summary: Get filing packages
@@ -700,6 +750,20 @@ components:
       required: true
       schema:
         type: number
+    paymentProfileId:
+      name: paymentProfileId
+      in: path
+      description: payment profile identifier
+      required: true
+      schema:
+        type: number
+    internalClientNumber:
+      name: internalClientNumber
+      in: path
+      description: cso internal client number
+      required: true
+      schema:
+        type: string
   schemas:
     BceidAccount:
       type: object
@@ -1097,10 +1161,10 @@ components:
                * `other` - Other
           enum:
             [
-                rule,
-                court,
-                pro,
-                other
+              rule,
+              court,
+              pro,
+              other
             ]
         firstName:
           type: string
@@ -1270,67 +1334,67 @@ components:
                * `WIT` - Witness
           enum:
             [
-                ABC,
-                ADJ,
-                ADP,
-                APL,
-                APP,
-                ANT,
-                AUT,
-                BKP,
-                BKS,
-                CAV,
-                CHD,
-                COF,
-                CIT,
-                CLA,
-                CLA1,
-                CLA2,
-                CLI,
-                CI,
-                CRD,
-                DBT,
-                DEC,
-                DEF,
-                DEO,
-                DIS,
-                FTH,
-                FNA,
-                GRF,
-                GRM,
-                GUA,
-                HSB,
-                INB,
-                INC,
-                ITV,
-                MOT,
-                NIS,
-                OPAR,
-                PAR,
-                PAR1,
-                PA1,
-                PAR2,
-                PA2,
-                PAR3,
-                PAR4,
-                PAR5,
-                PET,
-                PLA,
-                RES,
-                REO,
-                SOL,
-                SP1,
-                SP2,
-                SFH,
-                SMH,
-                TST,
-                TSX,
-                THR,
-                TFN,
-                TRU,
-                UNC,
-                WIF,
-                WIT,
+              ABC,
+              ADJ,
+              ADP,
+              APL,
+              APP,
+              ANT,
+              AUT,
+              BKP,
+              BKS,
+              CAV,
+              CHD,
+              COF,
+              CIT,
+              CLA,
+              CLA1,
+              CLA2,
+              CLI,
+              CI,
+              CRD,
+              DBT,
+              DEC,
+              DEF,
+              DEO,
+              DIS,
+              FTH,
+              FNA,
+              GRF,
+              GRM,
+              GUA,
+              HSB,
+              INB,
+              INC,
+              ITV,
+              MOT,
+              NIS,
+              OPAR,
+              PAR,
+              PAR1,
+              PA1,
+              PAR2,
+              PA2,
+              PAR3,
+              PAR4,
+              PAR5,
+              PET,
+              PLA,
+              RES,
+              REO,
+              SOL,
+              SP1,
+              SP2,
+              SFH,
+              SMH,
+              TST,
+              TSX,
+              THR,
+              TFN,
+              TRU,
+              UNC,
+              WIF,
+              WIT,
             ]
         roleDescription:
           type: string
@@ -1601,11 +1665,11 @@ components:
               * `CCOR` - Courtesy Correction
           enum:
             [
-                SUB,
-                RSUB,
-                REF,
-                REJ,
-                CCOR
+              SUB,
+              RSUB,
+              REF,
+              REJ,
+              CCOR
             ]
         type:
           type: string
@@ -1620,3 +1684,23 @@ components:
         rejectedDocumentFeature:
           type: boolean
           description: the feature is enabled or disabled for this parent
+    SetupCardRequest:
+      description: Setup a payment profile
+      type: object
+      properties:
+        tokenCode:
+          type: string
+          description: card token Code
+        name:
+          type: string
+          description: name on card
+    SetupCardResponse:
+      description: Setup a payment profile response
+      type: object
+      properties:
+        responseCode:
+          type: string
+          description: bambora response code
+        responseDescription:
+          type: string
+          description: response reason description
