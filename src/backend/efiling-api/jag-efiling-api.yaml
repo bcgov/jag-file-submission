@@ -454,7 +454,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GenerateCardUrlResponse"
-  "/payment/{internalClientNumber}/profile":
+  "/payment/{clientId}/profile":
     post:
       summary: Update card on bambora
       operationId: CreateCreditCardProfile
@@ -463,7 +463,7 @@ paths:
         - payment
       parameters:
         - $ref: "#/components/parameters/xTransactionId"
-        - $ref: "#/components/parameters/internalClientNumber"
+        - $ref: "#/components/parameters/clientId"
       requestBody:
         description: card setup params
         required: true
@@ -478,8 +478,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SetupCardResponse"
-  "/payment/{internalClientNumber}/profile/{paymentProfileId}":
-    post:
+  "/payment/{clientId}/profile/{paymentProfileId}":
+    put:
       summary: Update card on bambora
       operationId: UpdateCreditCardProfile
       description: For updates to a payment profile
@@ -488,7 +488,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/xTransactionId"
         - $ref: "#/components/parameters/paymentProfileId"
-        - $ref: "#/components/parameters/internalClientNumber"
+        - $ref: "#/components/parameters/clientId"
       requestBody:
         description: card setup params
         required: true
@@ -756,9 +756,9 @@ components:
       description: payment profile identifier
       required: true
       schema:
-        type: number
-    internalClientNumber:
-      name: internalClientNumber
+        type: string
+    clientId:
+      name: clientId
       in: path
       description: cso internal client number
       required: true

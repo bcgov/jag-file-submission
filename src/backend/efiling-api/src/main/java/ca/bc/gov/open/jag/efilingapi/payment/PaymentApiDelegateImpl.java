@@ -54,7 +54,7 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
     @Override
     @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<SetupCardResponse> createCreditCardProfile(UUID xTransactionId,
-                                                              String internalClientNumber,
+                                                              String clientId,
                                                               SetupCardRequest setupCardRequest) {
 
         SetupCardResponse setupCardResponse = new SetupCardResponse();
@@ -69,8 +69,8 @@ public class PaymentApiDelegateImpl implements PaymentApiDelegate {
     @Override
     @PreAuthorize("hasRole('efiling-user')")
     public ResponseEntity<SetupCardResponse> updateCreditCardProfile(UUID xTransactionId,
-                                                              BigDecimal paymentProfileId,
-                                                              String internalClientNumber,
+                                                              String paymentProfileId,
+                                                              String clientId,
                                                               SetupCardRequest setupCardRequest) {
 
         SetupCardResponse setupCardResponse = new SetupCardResponse();

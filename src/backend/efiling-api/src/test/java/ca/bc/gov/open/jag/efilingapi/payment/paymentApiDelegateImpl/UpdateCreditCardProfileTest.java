@@ -43,7 +43,7 @@ public class UpdateCreditCardProfileTest {
 
         SetupCardRequest setupCardRequest = new SetupCardRequest();
 
-        ResponseEntity<SetupCardResponse> actual = sut.updateCreditCardProfile(UUID.randomUUID(), BigDecimal.ONE, INTERNAL_CLIENT_NUMBER, setupCardRequest);
+        ResponseEntity<SetupCardResponse> actual = sut.updateCreditCardProfile(UUID.randomUUID(), "132", INTERNAL_CLIENT_NUMBER, setupCardRequest);
 
         Assertions.assertEquals(HttpStatus.OK, actual.getStatusCode());
         Assertions.assertEquals("1", actual.getBody().getResponseCode());
