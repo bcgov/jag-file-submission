@@ -59,20 +59,20 @@ const generateCourtDataTable = ({
   locationDescription,
   levelDescription,
   classDescription,
-}) => [
+} = {}) => [
   {
     name: "Court File Number:",
-    value: fileNumber,
+    value: fileNumber || "",
     isValueBold: true,
   },
   {
     name: "Location:",
-    value: locationDescription,
+    value: locationDescription || "",
     isValueBold: true,
   },
   {
     name: "Level and Class:",
-    value: `${levelDescription} ${classDescription}`,
+    value: [levelDescription, classDescription].filter(Boolean).join(" "),
     isValueBold: true,
   },
 ];
@@ -150,10 +150,7 @@ export default function Payment({
       name,
     });
 
-    const paymentProfileId = 
-      // TODO: REMOVEME. Expect this to be paymentProfileId when backend is updated.
-      data?.responseCode ||
-      data?.paymentProfileId || data?.internalClientNumber || null;
+    const paymentProfileId = data?.paymentProfileId || null;
 
     if (!paymentProfileId) {
       throw new Error("Payment profile ID not returned from server.");

@@ -1,28 +1,7 @@
 import React from "react";
-import axios from "axios";
 import { MdCreditCard } from "react-icons/md";
 import { Alert } from "shared-components";
-import { errorRedirect } from "./errorRedirect";
 import { isEnter } from "./eventUtil";
-
-const registerCard = () => {
-  const data = {
-    clientId:
-      sessionStorage.getItem("internalClientNumber") === "null"
-        ? null
-        : sessionStorage.getItem("internalClientNumber"),
-    redirectUrl: sessionStorage.getItem("bamboraRedirectUrl"),
-  };
-
-  axios
-    .post("/payment/generate-update-card", data)
-    .then(({ data: { bamboraUrl } }) => {
-      sessionStorage.setItem("validExit", true);
-      sessionStorage.setItem("isBamboraRedirect", true);
-      window.open(bamboraUrl, "_self");
-    })
-    .catch((error) => errorRedirect(sessionStorage.getItem("errorUrl"), error));
-};
 
 const existingCreditCard = (onRegister) => (
   <Alert
