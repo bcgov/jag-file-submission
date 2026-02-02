@@ -37,11 +37,12 @@ export function generateJWTToken(payload) {
  */
 export function getIdentityProviderAlias() {
   const token = getJWTData();
-  return token.identityProviderAlias;
+  return token ? token.identityProviderAlias : undefined;
 }
 
 /** Returns true if the parent application has a code of FLA, false otherwise. */
 export function isParentAppFLA() {
   const token = getJWTData();
+  if (!token) return false;
   return FLA_PARENT_APP_CODE === token["cso-application-code"];
 }
