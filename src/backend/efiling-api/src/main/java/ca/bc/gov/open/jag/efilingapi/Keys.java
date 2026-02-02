@@ -16,6 +16,10 @@ public class Keys {
 
     public static final String UNIVERSAL_ID_CLAIM_KEY = "universal-id";
 
+    public static final String INVALID_UNIVERSAL_ID = "Invalid universal id.";
+
+    public static final String UNIVERSAL_ID_IS_REQUIRED = "universal Id is required.";
+
     public static final String CSO_APPLICATION_CLAIM_KEY = "cso-application-code";
 
     public static final String IDENTITY_PROVIDER_CLAIM_KEY = "identityProviderAlias";

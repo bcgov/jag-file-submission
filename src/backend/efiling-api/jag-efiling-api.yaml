@@ -1698,6 +1698,9 @@ components:
       description: Setup a payment profile response
       type: object
       properties:
+        paymentProfileId:
+          type: string
+          description: bambora profile id
         responseCode:
           type: string
           description: bambora response code

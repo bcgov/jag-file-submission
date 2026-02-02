@@ -36,9 +36,11 @@ public class BamboraPaymentAdapterTest {
 
     @BeforeEach
     void initialize() {
-        MockitoAnnotations.initMocks(this);
 
-        sut = new BamboraPaymentAdapter(paymentsApiMock);
+        MockitoAnnotations.openMocks(this);
+
+        sut = new BamboraPaymentAdapter(paymentsApiMock, null);
+
     }
 
     @Test

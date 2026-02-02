@@ -5,9 +5,7 @@ import ca.bc.gov.open.bceid.starter.account.GetAccountRequest;
 import ca.bc.gov.open.bceid.starter.account.models.IndividualIdentity;
 import ca.bc.gov.open.bceid.starter.account.models.Name;
 import ca.bc.gov.open.jag.efilingcommons.court.EfilingCourtLocationService;
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
-import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
+import ca.bc.gov.open.jag.efilingcommons.model.*;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import ca.bc.gov.open.jag.efilingcommons.service.*;
 import ca.bc.gov.open.jag.efilingcommons.submission.EfilingReviewService;
@@ -169,6 +167,16 @@ public class AutoConfiguration {
                 }
                 return paymentTransaction;
 
+            }
+
+            @Override
+            public PaymentProfile createProfile(EfilingPaymentProfile efilingPaymentProfile) {
+                return new PaymentProfile(BigDecimal.ONE, 0, "Approved", "123");
+            }
+
+            @Override
+            public PaymentProfile updateProfile(EfilingPaymentProfile efilingPaymentProfile) {
+                return new PaymentProfile(BigDecimal.ONE, 0, "Approved", "123");
             }
         };
     }
