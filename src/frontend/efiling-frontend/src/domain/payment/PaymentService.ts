@@ -1,4 +1,5 @@
-import api from "../../AxiosConfig";
+import axios from "axios";
+
 
 /**
  * Request data required to create/update a payment profile
@@ -14,10 +15,10 @@ export interface SetupCardRequest {
  * Creates a Worldline (formerly Bambora) payment profile for the given clientId.
  */
 export const createPaymentProfile = (clientId: string, data: SetupCardRequest) =>
-    api.post(`/payment/${clientId}/profile`, data);
+    axios.post(`/payment/${clientId}/profile`, data);
 
 /**
  * Updates a Worldline (formerly Bambora) payment profile for the given clientId and paymentProfileId.
  */
 export const updatePaymentProfile = (clientId: string, paymentProfileId: string, data: SetupCardRequest) =>
-    api.put(`/payment/${clientId}/profile/${paymentProfileId}`, data);
+    axios.put(`/payment/${clientId}/profile/${paymentProfileId}`, data);

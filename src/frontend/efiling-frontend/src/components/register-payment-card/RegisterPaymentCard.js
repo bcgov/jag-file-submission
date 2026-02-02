@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { BsExclamationTriangle } from "react-icons/bs";
 
 /** Component Modal for registering a payment card */
-export default function RegisterPaymentCard({ showModal, onHide }) {
+export default function RegisterPaymentCard({ showModal, onHide, onCreateProfile }) {
     const cardNumberId = "rpb-card-number";
     const cardCvvId = "rpb-card-cvv";
     const cardExpiryId = "rpb-card-expiry";
@@ -102,7 +102,7 @@ export default function RegisterPaymentCard({ showModal, onHide }) {
                 setWorldlineFieldsReady(false);
             });
         } catch (e) {
-            console.error("Failed to initialize Bambora inputs", e);
+            console.error("Failed to initialize Worldline inputs", e);
         }
 
         return () => {
@@ -140,22 +140,47 @@ export default function RegisterPaymentCard({ showModal, onHide }) {
             return;
         }
         setPayEnabled(false);
+        setFeedbackMessage("");
+        setFeedbackIsError(false);
 
-        customCheckoutRef.current.createToken((result) => {            
+        customCheckoutRef.current.createToken((result) => {
             if (result.error) {
                 const err = result.error;
                 const msg = typeof err === "string" ? err : JSON.stringify(err);
-                console.error("Bambora tokenization error:", msg);
-                setFeedbackMessage(`Error connecting to payment gateway`);
+                console.error("Worldline tokenization error:", msg);
+                setFeedbackMessage("Error connecting to payment gateway");
                 setFeedbackIsError(true);
                 setPayEnabled(true);
-            } else {
-                // token created - in real flow send token to backend to register card
-                console.log("Bambora token:", result.token);
-                setFeedbackMessage("");
-                setFeedbackIsError(false);
-                onHide();
+                return;
             }
+
+            const tokenCode = result.token;
+            console.debug("Worldline tokenization success, tokenCode:", tokenCode);
+            
+            if (!onCreateProfile) {
+                setFeedbackMessage("Payment profile service is not available.");
+                setFeedbackIsError(true);
+                setPayEnabled(true);
+                return;
+            }
+
+            (async () => {
+                try {
+                    await onCreateProfile({
+                        tokenCode,
+                        name: cardName.trim(),
+                    });
+                    setFeedbackMessage("");
+                    setFeedbackIsError(false);
+                    onHide();
+                } catch (error) {
+                    const message = "Error creating payment profile.";
+                    console.error("Payment profile error:", message);
+                    setFeedbackMessage(message);
+                    setFeedbackIsError(true);
+                    setPayEnabled(true);
+                }
+            })();
         });
     };
 
@@ -244,4 +269,5 @@ export default function RegisterPaymentCard({ showModal, onHide }) {
 RegisterPaymentCard.propTypes = {
     showModal: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
+    onCreateProfile: PropTypes.func.isRequired,
 };

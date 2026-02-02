@@ -18,6 +18,7 @@ import { propTypes } from "../../types/propTypes";
 import PackageConfirmation from "../package/package-confirmation/PackageConfirmation";
 import RushConfirmation from "../package/package-confirmation/RushConfirmation";
 import { generateFileSummaryData } from "../../modules/helpers/generateFileSummaryData";
+import { createPaymentProfile } from "./PaymentService";
 
 import "./Payment.scss";
 
@@ -138,6 +139,30 @@ export default function Payment({
   const [showToast, setShowToast] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const handleCreatePaymentProfile = async ({ tokenCode, name }) => {
+    const clientId = sessionStorage.getItem("csoAccountId");
+    if (!clientId) {
+      throw new Error("CSO account ID is missing.");
+    }
+
+    const { data } = await createPaymentProfile(clientId, {
+      tokenCode,
+      name,
+    });
+
+    const paymentProfileId = 
+      // TODO: REMOVEME. Expect this to be paymentProfileId when backend is updated.
+      data?.responseCode ||
+      data?.paymentProfileId || data?.internalClientNumber || null;
+
+    if (!paymentProfileId) {
+      throw new Error("Payment profile ID not returned from server.");
+    }
+
+    sessionStorage.setItem("paymentProfileId", paymentProfileId);
+    sessionStorage.removeItem("bamboraErrorExists");
+  };
+
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
   const rushSubmissionSidecard = getSidecardData(() =>
@@ -200,6 +225,7 @@ export default function Payment({
         <RegisterPaymentCard
           showModal={showRegisterModal}
           onHide={() => setShowRegisterModal(false)}
+          onCreateProfile={handleCreatePaymentProfile}
         />
       )}
       <div className="content col-md-8">
