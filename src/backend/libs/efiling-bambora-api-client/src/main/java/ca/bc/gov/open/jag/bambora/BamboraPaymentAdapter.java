@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 
 public class BamboraPaymentAdapter implements PaymentAdapter {
 
@@ -90,7 +91,7 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
         } catch (ApiException e) {
 
             logger.error("Bambora create payment profile exception", e);
-            throw new EfilingPaymentException("Bambora payment exception", e.getCause());
+            throw new EfilingPaymentException(MessageFormat.format("Card setup error: {0}", e.getResponseBody()), e.getCause());
 
         }
 
@@ -115,7 +116,7 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
         } catch (ApiException e) {
 
             logger.error("Bambora update payment profile exception", e);
-            throw new EfilingPaymentException("Bambora payment exception", e.getCause());
+            throw new EfilingPaymentException(MessageFormat.format("Card setup error: {0}", e.getResponseBody()), e.getCause());
 
         }
 

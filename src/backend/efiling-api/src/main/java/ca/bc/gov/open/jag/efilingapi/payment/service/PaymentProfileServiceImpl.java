@@ -2,6 +2,10 @@ package ca.bc.gov.open.jag.efilingapi.payment.service;
 
 import ca.bc.gov.open.jag.efilingapi.api.model.SetupCardRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.SetupCardResponse;
+import ca.bc.gov.open.jag.efilingapi.error.AccountException;
+import ca.bc.gov.open.jag.efilingapi.error.PaymentException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingAccountServiceException;
+import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPaymentProfile;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentProfile;
@@ -26,34 +30,63 @@ public class PaymentProfileServiceImpl implements PaymentProfileService {
     @Override
     public SetupCardResponse createPaymentProfile(String universalId, String clientId, SetupCardRequest setupCardRequest) {
 
-        PaymentProfile paymentProfile = bamboraPaymentAdapter.createProfile(new EfilingPaymentProfile(setupCardRequest.getTokenCode(), setupCardRequest.getName(), null));
+        try {
 
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(universalId);
-        accountDetails.updateInternalClientNumber(paymentProfile.getId());
-        efilingAccountService.updateClient(accountDetails);
+            PaymentProfile paymentProfile = bamboraPaymentAdapter.createProfile(new EfilingPaymentProfile(setupCardRequest.getTokenCode(), setupCardRequest.getName(), null));
 
-        SetupCardResponse setupCardResponse = new SetupCardResponse();
-        setupCardResponse.setPaymentProfileId(paymentProfile.getId());
-        setupCardResponse.setResponseCode(paymentProfile.getCode().toEngineeringString());
-        setupCardResponse.setResponseDescription(paymentProfile.getMessage());
-        return setupCardResponse;
+            AccountDetails accountDetails = efilingAccountService.getAccountDetails(universalId);
+            accountDetails.updateInternalClientNumber(paymentProfile.getId());
+            efilingAccountService.updateClient(accountDetails);
+
+            SetupCardResponse setupCardResponse = new SetupCardResponse();
+            setupCardResponse.setPaymentProfileId(paymentProfile.getId());
+            setupCardResponse.setResponseCode(paymentProfile.getCode().toEngineeringString());
+            setupCardResponse.setResponseDescription(paymentProfile.getMessage());
+            return setupCardResponse;
+
+        } catch (EfilingAccountServiceException efilingAccountServiceException) {
+
+            logger.error("Error retrieving account info during card setup ", efilingAccountServiceException);
+            throw new AccountException(efilingAccountServiceException.getMessage());
+
+        } catch (EfilingPaymentException efilingPaymentException) {
+
+            logger.error("Error during Bambora card setup", efilingPaymentException);
+            throw new PaymentException(efilingPaymentException.getMessage());
+
+        }
 
     }
 
     @Override
     public SetupCardResponse updatePaymentProfile(String universalId, String paymentProfileId, String clientId, SetupCardRequest setupCardRequest) {
 
-        PaymentProfile paymentProfile = bamboraPaymentAdapter.updateProfile(new EfilingPaymentProfile(setupCardRequest.getTokenCode(), setupCardRequest.getName(), null));
+        try {
 
-        AccountDetails accountDetails = efilingAccountService.getAccountDetails(universalId);
-        accountDetails.updateInternalClientNumber(paymentProfile.getId());
-        efilingAccountService.updateClient(accountDetails);
+            PaymentProfile paymentProfile = bamboraPaymentAdapter.updateProfile(new EfilingPaymentProfile(setupCardRequest.getTokenCode(), setupCardRequest.getName(), null));
 
-        SetupCardResponse setupCardResponse = new SetupCardResponse();
-        setupCardResponse.setPaymentProfileId(paymentProfile.getId());
-        setupCardResponse.setResponseCode(paymentProfile.getCode().toEngineeringString());
-        setupCardResponse.setResponseDescription(paymentProfile.getMessage());
-        return setupCardResponse;
+            AccountDetails accountDetails = efilingAccountService.getAccountDetails(universalId);
+            accountDetails.updateInternalClientNumber(paymentProfile.getId());
+            efilingAccountService.updateClient(accountDetails);
+
+            SetupCardResponse setupCardResponse = new SetupCardResponse();
+            setupCardResponse.setPaymentProfileId(paymentProfile.getId());
+            setupCardResponse.setResponseCode(paymentProfile.getCode().toEngineeringString());
+            setupCardResponse.setResponseDescription(paymentProfile.getMessage());
+            return setupCardResponse;
+
+        } catch (EfilingAccountServiceException efilingAccountServiceException) {
+
+            logger.error("Error retrieving account info during card setup ", efilingAccountServiceException);
+            throw new AccountException(efilingAccountServiceException.getMessage());
+
+        } catch (EfilingPaymentException efilingPaymentException) {
+
+            logger.error("Error during Bambora card setup", efilingPaymentException);
+            throw new PaymentException(efilingPaymentException.getMessage());
+
+        }
+
 
     }
 
