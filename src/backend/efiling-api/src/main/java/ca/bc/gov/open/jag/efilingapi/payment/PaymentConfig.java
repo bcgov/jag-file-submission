@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.payment;
 
-import ca.bc.gov.open.jag.bambora.BamboraPaymentAdapter;
 import ca.bc.gov.open.jag.efilingapi.payment.service.PaymentProfileService;
 import ca.bc.gov.open.jag.efilingapi.payment.service.PaymentProfileServiceImpl;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
