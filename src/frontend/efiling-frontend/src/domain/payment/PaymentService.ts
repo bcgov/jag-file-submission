@@ -14,11 +14,16 @@ export interface SetupCardRequest {
 /**
  * Creates a Worldline (formerly Bambora) payment profile for the given clientId.
  */
-export const createPaymentProfile = (clientId: string, data: SetupCardRequest) =>
-    axios.post(`/payment/${clientId}/profile`, data);
+export const createPaymentProfile = (clientId: string, data: SetupCardRequest) => {
+    const encodedClientId = encodeURIComponent(clientId ?? "");
+    return axios.post(`/payment/${encodedClientId}/profile`, data);
+};
 
 /**
  * Updates a Worldline (formerly Bambora) payment profile for the given clientId and paymentProfileId.
  */
-export const updatePaymentProfile = (clientId: string, paymentProfileId: string, data: SetupCardRequest) =>
-    axios.put(`/payment/${clientId}/profile/${paymentProfileId}`, data);
+export const updatePaymentProfile = (clientId: string, paymentProfileId: string, data: SetupCardRequest) => {
+    const encodedClientId = encodeURIComponent(clientId ?? "");
+    const encodedPaymentProfileId = encodeURIComponent(paymentProfileId ?? "");
+    return axios.put(`/payment/${encodedClientId}/profile/${encodedPaymentProfileId}`, data);
+};
