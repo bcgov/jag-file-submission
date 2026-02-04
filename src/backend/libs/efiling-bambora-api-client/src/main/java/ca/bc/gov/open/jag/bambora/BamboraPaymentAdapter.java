@@ -77,8 +77,10 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
 
         try {
 
+            logger.info("Inbound token: {} name: {}", efilingPaymentProfile.getCode(), efilingPaymentProfile.getName());
+
             ProfileBody createProfileBody = new ProfileBody();
-            createProfileBody.setValidate(true);
+            //createProfileBody.setValidate(true);
             createProfileBody.setLanguage(PaymentConstants.BAMBORA_LANGUAGE);
             ProfileFromToken profileFromToken = new ProfileFromToken();
             profileFromToken.setCode(efilingPaymentProfile.getCode());
@@ -90,6 +92,7 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
 
         } catch (ApiException e) {
 
+            logger.info("Response code and message {} {}", e.getCode(), e.getMessage());
             logger.error("Bambora create payment profile exception", e);
             throw new EfilingPaymentException(MessageFormat.format("Card setup error: {0}", e.getResponseBody()), e.getCause());
 
