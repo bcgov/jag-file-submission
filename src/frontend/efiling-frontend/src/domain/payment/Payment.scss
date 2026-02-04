@@ -1,0 +1,38 @@
+.ct-payment {
+  .half-width {
+    width: 50%;
+  }
+
+  .court-half-width {
+    width: 50%;
+  }
+
+  .button-container {
+    justify-content: space-between;
+    display: flex;
+  }
+
+  .normal-blue-ml {
+    margin-left: 1rem;
+  }
+
+  label[for="agreeCallout"] {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+
+  @media (max-width: 576px) {
+    .button-container {
+      justify-content: space-between;
+      display: flex;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .half-width {
+      width: 80%;
+    }
+  }
+}

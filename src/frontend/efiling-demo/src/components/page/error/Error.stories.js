@@ -5,26 +5,25 @@ import Error from "./Error";
 
 export default {
   title: "Error",
-  component: Error
+  component: Error,
 };
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: createMemoryHistory(),
 };
 
-const error = "Could not communicate with CSO.";
+const status = "400";
+const message = "Could not communicate with CSO.";
 
-const page = { header, error };
+const page = { header, status, message };
 
 export const Default = () => <Error page={page} />;
 
 export const Mobile = () => <Error page={page} />;
 
-Mobile.story = {
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile2"
-    }
-  }
+Mobile.parameters = {
+  viewport: {
+    defaultViewport: "mobile2",
+  },
 };

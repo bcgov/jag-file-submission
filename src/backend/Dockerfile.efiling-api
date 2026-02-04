@@ -1,0 +1,52 @@
+#############################################################################################
+###              Stage where Docker is building spring boot app using maven               ###
+#############################################################################################
+FROM maven:3.8.3-openjdk-17 AS build
+
+ARG MVN_PROFILE
+ARG SERVICE_NAME=efiling-api
+ARG SKIP_TESTS=false
+ARG STARTERS_V
+
+ENV SERVICE_NAME=${SERVICE_NAME}
+ENV STARTERS_V=${STARTERS_V}
+
+#Temporary removal.
+#RUN mkdir /root/.ssh && \
+#    chmod 0700 /root/.ssh  && \
+#    ssh-keyscan -t rsa localhost >> ~/.ssh/known_hosts  && \
+#    apt-get update  && \
+#    apt-get -y install git
+
+WORKDIR /libs
+
+RUN git clone https://github.com/bcgov/spring-boot-starters.git
+
+WORKDIR /libs/spring-boot-starters
+
+RUN git checkout $STARTERS_V  && \
+    mvn install -P all -f src/pom.xml
+
+WORKDIR /
+
+COPY . .
+
+RUN mvn -B clean install \
+        -P ${MVN_PROFILE} \
+        -Dmaven.test.skip=${SKIP_TESTS}
+
+
+#############################################################################################
+### Stage where Docker is running a java process to run a service built in previous stage ###
+#############################################################################################
+FROM eclipse-temurin:17-jre-alpine
+
+RUN apk update && apk add --upgrade --no-cache libexpat libpng gnupg # CVE fixes
+
+# ARG MVN_PROFILES
+ARG SERVICE_NAME=efiling-api
+
+COPY --from=build ./${SERVICE_NAME}/target/${SERVICE_NAME}-*.jar /app/service.jar
+
+CMD ["java", "-jar", "/app/service.jar"]
+#############################################################################################

@@ -19,20 +19,52 @@ main {
   padding-bottom: 30px;
 }
 
+.sidecard {
+  width: 100%;
+}
+
 @media (max-width: 576px) {
   .page {
     flex-direction: column;
+  }
+
+  .normal-white {
+    min-width: 0px;
+  }
+
+  .normal-blue {
+    min-width: 0px;
+    margin-left: 0.6rem;
   }
 }
 
 @media (min-width: 576px) {
   footer {
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     width: 100%;
     position: absolute;
   }
   .page {
-    padding-bottom: 100px;
+    padding-bottom: 63px;
   }
+}
+
+.fit-table {
+  width: 60%;
+  min-width: fit-content;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  float: right;
+  width: 100%;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
+}
+
+.bcgov-button {
+  min-width: 0;
 }
