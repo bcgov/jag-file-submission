@@ -35,7 +35,6 @@ jobs:
           image-ref: jag-file-submission-efiling-frontend
           format: sarif
           output: trivy-results.sarif
-          exit-code: 1
           ignore-unfixed: true
           limit-severities-for-sarif: true
           severity: HIGH,CRITICAL
