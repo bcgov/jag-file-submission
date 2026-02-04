@@ -1,0 +1,42 @@
+.register-payment-card-modal {
+    .form-group {
+        margin-bottom: 0px;
+    }
+
+    .form-control {
+        background-repeat: no-repeat;
+        background-position: calc(100% - 5px) center;
+        background-size: 35px 30px;
+        padding-top: 10px;
+        padding-right: 45px;
+        font-size: 14px;
+        height: 40px;
+        min-width: 360px;
+        font-family: 'Arial';
+    }
+    
+    .help-block {
+        color: red;
+        font-size: 0.8rem;
+    }
+    
+        .rpb-feedback {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+    
+        .rpb-feedback.is-error {
+            color: #d9534f;
+        }
+    
+        .rpb-feedback__icon {
+            color: #d9534f;
+            font-size: 1.0rem;
+            font-weight: bold;
+        }
+}

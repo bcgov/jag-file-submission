@@ -516,12 +516,12 @@ export default function Rush({
 
   useEffect(() => {
     const resetFields = () => {
-      const jwtData = getJWTData();
+      const jwtData = getJWTData() || {};
       setFields({
         ...clearFields,
-        firstName: jwtData.given_name,
-        surname: jwtData.family_name,
-        email: jwtData.email,
+        firstName: jwtData.given_name || "",
+        surname: jwtData.family_name || "",
+        email: jwtData.email || "",
         country: countries[0],
       });
 
