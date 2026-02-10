@@ -77,22 +77,18 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
 
         try {
 
-            logger.info("Inbound token: {} name: {}", efilingPaymentProfile.getCode(), efilingPaymentProfile.getName());
-
             ProfileBody createProfileBody = new ProfileBody();
             //createProfileBody.setValidate(true);
-            createProfileBody.setLanguage(PaymentConstants.BAMBORA_LANGUAGE);
             ProfileFromToken profileFromToken = new ProfileFromToken();
             profileFromToken.setCode(efilingPaymentProfile.getCode());
             profileFromToken.setName(efilingPaymentProfile.getName());
             createProfileBody.setToken(profileFromToken);
             ProfileResponse response = profilesApi.createProfile(createProfileBody);
 
-            return new PaymentProfile(response.getCode(), response.getValidation().getApproved(), response.getMessage(), response.getValidation().getId());
+            return new PaymentProfile(response.getCode(), 1, response.getMessage(), response.getCustomerCode());
 
         } catch (ApiException e) {
 
-            logger.info("Response code and message {} {}", e.getCode(), e.getMessage());
             logger.error("Bambora create payment profile exception", e);
             throw new EfilingPaymentException(MessageFormat.format("Card setup error: {0}", e.getResponseBody()), e.getCause());
 
@@ -114,7 +110,7 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
             createProfileBody.setToken(profileFromToken);
             ProfileResponse response = profilesApi.updateProfile(efilingPaymentProfile.getProfileId(), createProfileBody);
 
-            return new PaymentProfile(response.getCode(), response.getValidation().getApproved(), response.getMessage(), response.getValidation().getId());
+            return new PaymentProfile(response.getCode(), 1, response.getMessage(), response.getValidation().getId());
 
         } catch (ApiException e) {
 
