@@ -2244,8 +2244,7 @@ definitions:
         type: string
         description: "A decimal value in dollars. Uses up to two decimal places."
       cvd_id:
-        type: integer
-        maxLength: 2
+        type: string
         description: "CVD Response ID"
   Detail:
     properties:
