@@ -103,7 +103,6 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
 
             ProfileBody createProfileBody = new ProfileBody();
             createProfileBody.setValidate(true);
-            createProfileBody.setLanguage(PaymentConstants.BAMBORA_LANGUAGE);
             ProfileFromToken profileFromToken = new ProfileFromToken();
             profileFromToken.setCode(efilingPaymentProfile.getCode());
             profileFromToken.setName(efilingPaymentProfile.getName());
