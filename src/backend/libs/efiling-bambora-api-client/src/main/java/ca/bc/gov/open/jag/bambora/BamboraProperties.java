@@ -41,7 +41,7 @@ public class BamboraProperties {
     }
 
     public String getPaymentEncodedKey() {
-        String apiKey = MessageFormat.format("{0}:{1}", this.merchantId,this.apiPasscode);
+        String apiKey = MessageFormat.format("{0}:{1}", this.merchantId,this.apiPaymentPasscode);
         return Base64.getEncoder().encodeToString(apiKey.getBytes());
     }
 

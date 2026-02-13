@@ -35,7 +35,7 @@ public class AutoConfiguration {
         //Setting this to null will make it use the base path
         apiClient.setServerIndex(null);
         apiClient.setBasePath(bamboraProperties.getApiBasePath());
-        apiClient.setApiKey(MessageFormat.format("Passcode {0}", bamboraProperties.getApiPaymentPasscode()));
+        apiClient.setApiKey(MessageFormat.format("Passcode {0}", bamboraProperties.getPaymentEncodedKey()));
 
         return new PaymentsApi(apiClient);
     }
