@@ -32,6 +32,7 @@ public class AutoConfiguration {
     public PaymentsApi paymentsApi(BamboraProperties bamboraProperties) {
 
         ApiClient apiClient = new ApiClient();
+
         //Setting this to null will make it use the base path
         apiClient.setServerIndex(null);
         apiClient.setBasePath(bamboraProperties.getApiBasePath());
