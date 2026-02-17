@@ -59,12 +59,12 @@ public class FilingPackageConfigTest {
         public EfilingDocumentService efilingDocumentService() {
             return new EfilingDocumentService() {
                 @Override
-                public DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType) {
+                public DocumentTypeDetails getDocumentTypeDetails(String courtLevel, String courtClass, String documentType, String division) {
                     return null;
                 }
 
                 @Override
-                public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
+                public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass, String division) {
                     return null;
                 }
             };
