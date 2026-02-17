@@ -1,0 +1,7 @@
+[
+  { "id": "SUB", "desc": "Submitted" },
+  { "id": "RSUB", "desc": "Resubmitted" },
+  { "id": "REF", "desc": "Referred" },
+  { "id": "REJ", "desc": "Reject" },
+  { "id": "CCOR", "desc": "Courtesy Correction" }
+]

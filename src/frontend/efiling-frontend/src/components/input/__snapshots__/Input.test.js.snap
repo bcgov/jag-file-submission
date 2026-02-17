@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Component matches the snapshot (non-editable-grey) 1`] = `
+<div>
+  <input
+    className="bcgov-editable-white"
+    data-testid="input-test"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    readOnly={true}
+    type="text"
+  />
+  <br />
+  <span
+    className="bcgov-error"
+    data-testid="email-error"
+  />
+</div>
+`;
+
+exports[`Input Component when mandatory and no label matches the snapshot (editable white) 1`] = `
+<div>
+  <input
+    className="bcgov-editable-white"
+    data-testid="input-test"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    readOnly={false}
+    type="text"
+  />
+  <br />
+  <span
+    className="bcgov-error"
+    data-testid="email-error"
+  />
+</div>
+`;
+
+exports[`Input Component when mandatory and with label matches the snapshot (editable white) 1`] = `
+<div>
+  <label
+    className="bcgov-label"
+    htmlFor="textInputId"
+  >
+    <div
+      className="bcgov-input-label"
+    >
+      Submission ID
+    </div>
+    <span
+      className="bcgov-mandatory"
+      id="asterisk"
+    >
+      *
+    </span>
+     
+    <span
+      className="bcgov-note"
+    />
+  </label>
+  <input
+    className="bcgov-editable-white"
+    data-testid="input-test"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    readOnly={false}
+    type="text"
+  />
+  <br />
+  <span
+    className="bcgov-error"
+    data-testid="email-error"
+  />
+</div>
+`;
+
+exports[`Input Component when not mandatory and no label matches the snapshot (editable white) 1`] = `
+<div>
+  <input
+    className="bcgov-editable-white"
+    data-testid="input-test"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    readOnly={false}
+    type="text"
+  />
+  <br />
+  <span
+    className="bcgov-error"
+    data-testid="email-error"
+  />
+</div>
+`;
+
+exports[`Input Component when not mandatory and with label matches the snapshot (editable white) 1`] = `
+<div>
+  <label
+    className="bcgov-label"
+    htmlFor="textInputId"
+  >
+    <div
+      className="bcgov-input-label"
+    >
+      Submission ID
+    </div>
+    
+     
+    <span
+      className="bcgov-note"
+    />
+  </label>
+  <input
+    className="bcgov-editable-white"
+    data-testid="input-test"
+    id="textInputId"
+    onChange={[Function]}
+    placeholder="Enter id"
+    readOnly={false}
+    type="text"
+  />
+  <br />
+  <span
+    className="bcgov-error"
+    data-testid="email-error"
+  />
+</div>
+`;

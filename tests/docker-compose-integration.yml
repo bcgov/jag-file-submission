@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  #############################################################################################
+  ###                                 EFILING FRONTEND                                      ###
+  #############################################################################################
+  efiling-frontend:
+    image: docker.pkg.github.com/bcgov/jag-file-submission/efiling-frontend:demo
+
+  #############################################################################################
+  ###                           Efiling api backend app                                     ###
+  #############################################################################################
+  efiling-api:
+    image: docker.pkg.github.com/bcgov/jag-file-submission/efiling-api:demo
+
+  # #############################################################################################
+  # ###                                        KEYCLOAK Config                                ###
+  # #############################################################################################
+  keycloak-config:
+    image: docker.pkg.github.com/bcgov/jag-file-submission/keycloak-config:demo

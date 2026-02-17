@@ -1,0 +1,1329 @@
+<wsdl:definitions name="LookupFacade" targetNamespace="http://lookups.csows.ag.gov.bc.ca/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://lookups.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://lookups.csows.ag.gov.bc.ca/" version="1.0" xmlns:tns="http://lookups.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="createApplicationPreference" type="tns:createApplicationPreference"/>
+            <xs:element name="createApplicationPreferenceResponse" type="tns:createApplicationPreferenceResponse"/>
+            <xs:element name="findApplicationPreferenceByCriteria" type="tns:findApplicationPreferenceByCriteria"/>
+            <xs:element name="findApplicationPreferenceByCriteriaResponse" type="tns:findApplicationPreferenceByCriteriaResponse"/>
+            <xs:element name="findApplicationPreferenceByName" type="tns:findApplicationPreferenceByName"/>
+            <xs:element name="findApplicationPreferenceByNameResponse" type="tns:findApplicationPreferenceByNameResponse"/>
+            <xs:element name="findApplicationPreferencesByPartialName" type="tns:findApplicationPreferencesByPartialName"/>
+            <xs:element name="findApplicationPreferencesByPartialNameResponse" type="tns:findApplicationPreferencesByPartialNameResponse"/>
+            <xs:element name="getAccessEntitlements" type="tns:getAccessEntitlements"/>
+            <xs:element name="getAccessEntitlementsResponse" type="tns:getAccessEntitlementsResponse"/>
+            <xs:element name="getAccessStatusTypes" type="tns:getAccessStatusTypes"/>
+            <xs:element name="getAccessStatusTypesResponse" type="tns:getAccessStatusTypesResponse"/>
+            <xs:element name="getActiveActs" type="tns:getActiveActs"/>
+            <xs:element name="getActiveActsResponse" type="tns:getActiveActsResponse"/>
+            <xs:element name="getActiveDocumentSchemas" type="tns:getActiveDocumentSchemas"/>
+            <xs:element name="getActiveDocumentSchemasResponse" type="tns:getActiveDocumentSchemasResponse"/>
+            <xs:element name="getApplicationRecordTypes" type="tns:getApplicationRecordTypes"/>
+            <xs:element name="getApplicationRecordTypesResponse" type="tns:getApplicationRecordTypesResponse"/>
+            <xs:element name="getBCRegistryPaymentMethods" type="tns:getBCRegistryPaymentMethods"/>
+            <xs:element name="getBCRegistryPaymentMethodsResponse" type="tns:getBCRegistryPaymentMethodsResponse"/>
+            <xs:element name="getCities" type="tns:getCities"/>
+            <xs:element name="getCitiesResponse" type="tns:getCitiesResponse"/>
+            <xs:element name="getCivilDataElements" type="tns:getCivilDataElements"/>
+            <xs:element name="getCivilDataElementsResponse" type="tns:getCivilDataElementsResponse"/>
+            <xs:element name="getCivilDocumentJurisdictions" type="tns:getCivilDocumentJurisdictions"/>
+            <xs:element name="getCivilDocumentJurisdictionsResponse" type="tns:getCivilDocumentJurisdictionsResponse"/>
+            <xs:element name="getCivilLevelClassGroupings" type="tns:getCivilLevelClassGroupings"/>
+            <xs:element name="getCivilLevelClassGroupingsResponse" type="tns:getCivilLevelClassGroupingsResponse"/>
+            <xs:element name="getCountries" type="tns:getCountries"/>
+            <xs:element name="getCountriesResponse" type="tns:getCountriesResponse"/>
+            <xs:element name="getCountryCodes" type="tns:getCountryCodes"/>
+            <xs:element name="getCountryCodesResponse" type="tns:getCountryCodesResponse"/>
+            <xs:element name="getCriminalDivisionLevelGroupings" type="tns:getCriminalDivisionLevelGroupings"/>
+            <xs:element name="getCriminalDivisionLevelGroupingsResponse" type="tns:getCriminalDivisionLevelGroupingsResponse"/>
+            <xs:element name="getDocumentElements" type="tns:getDocumentElements"/>
+            <xs:element name="getDocumentElementsResponse" type="tns:getDocumentElementsResponse"/>
+            <xs:element name="getDocumentRequestStatuses" type="tns:getDocumentRequestStatuses"/>
+            <xs:element name="getDocumentRequestStatusesResponse" type="tns:getDocumentRequestStatusesResponse"/>
+            <xs:element name="getEfilingPartyRoles" type="tns:getEfilingPartyRoles"/>
+            <xs:element name="getEfilingPartyRolesResponse" type="tns:getEfilingPartyRolesResponse"/>
+            <xs:element name="getIndustryTypes" type="tns:getIndustryTypes"/>
+            <xs:element name="getIndustryTypesResponse" type="tns:getIndustryTypesResponse"/>
+            <xs:element name="getLanguages" type="tns:getLanguages"/>
+            <xs:element name="getLanguagesResponse" type="tns:getLanguagesResponse"/>
+            <xs:element name="getLegalRepTypes" type="tns:getLegalRepTypes"/>
+            <xs:element name="getLegalRepTypesResponse" type="tns:getLegalRepTypesResponse"/>
+            <xs:element name="getParticipantTypes" type="tns:getParticipantTypes"/>
+            <xs:element name="getParticipantTypesResponse" type="tns:getParticipantTypesResponse"/>
+            <xs:element name="getPaymentMethods" type="tns:getPaymentMethods"/>
+            <xs:element name="getPaymentMethodsResponse" type="tns:getPaymentMethodsResponse"/>
+            <xs:element name="getProvinces" type="tns:getProvinces"/>
+            <xs:element name="getProvincesResponse" type="tns:getProvincesResponse"/>
+            <xs:element name="getRefundChangeReasons" type="tns:getRefundChangeReasons"/>
+            <xs:element name="getRefundChangeReasonsResponse" type="tns:getRefundChangeReasonsResponse"/>
+            <xs:element name="getRefundReasons" type="tns:getRefundReasons"/>
+            <xs:element name="getRefundReasonsResponse" type="tns:getRefundReasonsResponse"/>
+            <xs:element name="getRefundRejectReasons" type="tns:getRefundRejectReasons"/>
+            <xs:element name="getRefundRejectReasonsResponse" type="tns:getRefundRejectReasonsResponse"/>
+            <xs:element name="getRefundStatuses" type="tns:getRefundStatuses"/>
+            <xs:element name="getRefundStatusesResponse" type="tns:getRefundStatusesResponse"/>
+            <xs:element name="getRequestItemStatuses" type="tns:getRequestItemStatuses"/>
+            <xs:element name="getRequestItemStatusesResponse" type="tns:getRequestItemStatusesResponse"/>
+            <xs:element name="getServiceFee" type="tns:getServiceFee"/>
+            <xs:element name="getServiceFeeByClassification" type="tns:getServiceFeeByClassification"/>
+            <xs:element name="getServiceFeeByClassificationResponse" type="tns:getServiceFeeByClassificationResponse"/>
+            <xs:element name="getServiceFeeResponse" type="tns:getServiceFeeResponse"/>
+            <xs:element name="getTransactionStates" type="tns:getTransactionStates"/>
+            <xs:element name="getTransactionStatesResponse" type="tns:getTransactionStatesResponse"/>
+            <xs:element name="removeApplicationPreference" type="tns:removeApplicationPreference"/>
+            <xs:element name="removeApplicationPreferenceResponse" type="tns:removeApplicationPreferenceResponse"/>
+            <xs:element name="updateApplicationPreference" type="tns:updateApplicationPreference"/>
+            <xs:element name="updateApplicationPreferenceResponse" type="tns:updateApplicationPreferenceResponse"/>
+            <xs:complexType name="getCriminalDivisionLevelGroupings">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCriminalDivisionLevelGroupingsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:criminalDivisionLevelCombination"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="criminalDivisionLevelCombination">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtDivisionCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtDivisionDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getAccessStatusTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getAccessStatusTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="codeValue">
+                <xs:sequence>
+                    <xs:element name="active" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codeType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" type="xs:string"/>
+                    <xs:element minOccurs="0" name="parentCode" type="xs:string"/>
+                    <xs:element minOccurs="0" name="shortDescription" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getAccessEntitlements">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getAccessEntitlementsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCivilDataElements">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCivilDataElementsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getLegalRepTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getLegalRepTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getDocumentRequestStatuses">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getDocumentRequestStatusesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateApplicationPreference">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="applicationPreference">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="activeYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="applicationPreferfenceNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="preferenceDescriptionTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="preferenceValueTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateApplicationPreferenceResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="removeApplicationPreference">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="removeApplicationPreferenceResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="findApplicationPreferenceByName">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findApplicationPreferenceByNameResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getEfilingPartyRoles">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getEfilingPartyRolesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getServiceFeeByClassification">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getServiceFeeByClassificationResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceFee"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="serviceFee">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="effectiveDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
+                    <xs:element minOccurs="0" name="expiryDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="feeAmt" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="serviceTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="updDtm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCountryCodes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCountryCodesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getDocumentElements">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getDocumentElementsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:documentElement"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="documentElement">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docJurisdictionRuleId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentElementNameCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="elementDataValueCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="mandatorySelection" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="singleSelection" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCivilDocumentJurisdictions">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCivilDocumentJurisdictionsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:documentJurisdiction"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="documentJurisdiction">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="agreementDocumentYn" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassLongDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelLongDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentJurisdictionRuleId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeLongDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderDocumentYn" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getLanguages">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getLanguagesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getActiveDocumentSchemas">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getActiveDocumentSchemasResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:documentSchema"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="documentSchema">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schema" type="xs:string"/>
+                    <xs:element minOccurs="0" name="version" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getRefundChangeReasons">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getRefundChangeReasonsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findApplicationPreferencesByPartialName">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findApplicationPreferencesByPartialNameResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getProvinces">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getProvincesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getTransactionStates">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getTransactionStatesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getIndustryTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getIndustryTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getRefundRejectReasons">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getRefundRejectReasonsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCivilLevelClassGroupings">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCivilLevelClassGroupingsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:civilLevelClassCombination"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="civilLevelClassCombination">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getBCRegistryPaymentMethods">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getBCRegistryPaymentMethodsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCities">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCitiesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:cityCodeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="cityCodeValue">
+                <xs:complexContent>
+                    <xs:extension base="tns:codeValue">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="provSeqNo" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="getServiceFee">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getServiceFeeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:serviceFee"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getRefundStatuses">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getRefundStatusesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getActiveActs">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getActiveActsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getPaymentMethods">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getPaymentMethodsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCountries">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCountriesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findApplicationPreferenceByCriteria">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findApplicationPreferenceByCriteriaResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getApplicationRecordTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getApplicationRecordTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getParticipantTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getParticipantTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createApplicationPreference">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="createApplicationPreferenceResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:applicationPreference"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getRefundReasons">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getRefundReasonsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getRequestItemStatuses">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getRequestItemStatusesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="NestedEjbException" type="tns:NestedEjbException"/>
+            <xs:complexType name="NestedEjbException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getAccessStatusTypes">
+        <wsdl:part element="tns:getAccessStatusTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getDocumentRequestStatuses">
+        <wsdl:part element="tns:getDocumentRequestStatuses" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findApplicationPreferencesByPartialNameResponse">
+        <wsdl:part element="tns:findApplicationPreferencesByPartialNameResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="removeApplicationPreference">
+        <wsdl:part element="tns:removeApplicationPreference" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRequestItemStatusesResponse">
+        <wsdl:part element="tns:getRequestItemStatusesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getDocumentElements">
+        <wsdl:part element="tns:getDocumentElements" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCivilDocumentJurisdictions">
+        <wsdl:part element="tns:getCivilDocumentJurisdictions" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCivilLevelClassGroupingsResponse">
+        <wsdl:part element="tns:getCivilLevelClassGroupingsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getLegalRepTypesResponse">
+        <wsdl:part element="tns:getLegalRepTypesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundRejectReasonsResponse">
+        <wsdl:part element="tns:getRefundRejectReasonsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProvincesResponse">
+        <wsdl:part element="tns:getProvincesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCivilDataElementsResponse">
+        <wsdl:part element="tns:getCivilDataElementsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findApplicationPreferencesByPartialName">
+        <wsdl:part element="tns:findApplicationPreferencesByPartialName" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getProvinces">
+        <wsdl:part element="tns:getProvinces" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getIndustryTypes">
+        <wsdl:part element="tns:getIndustryTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundRejectReasons">
+        <wsdl:part element="tns:getRefundRejectReasons" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCountryCodesResponse">
+        <wsdl:part element="tns:getCountryCodesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCivilLevelClassGroupings">
+        <wsdl:part element="tns:getCivilLevelClassGroupings" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="removeApplicationPreferenceResponse">
+        <wsdl:part element="tns:removeApplicationPreferenceResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getParticipantTypesResponse">
+        <wsdl:part element="tns:getParticipantTypesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getServiceFee">
+        <wsdl:part element="tns:getServiceFee" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findApplicationPreferenceByCriteriaResponse">
+        <wsdl:part element="tns:findApplicationPreferenceByCriteriaResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPaymentMethods">
+        <wsdl:part element="tns:getPaymentMethods" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCountries">
+        <wsdl:part element="tns:getCountries" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findApplicationPreferenceByNameResponse">
+        <wsdl:part element="tns:findApplicationPreferenceByNameResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getApplicationRecordTypes">
+        <wsdl:part element="tns:getApplicationRecordTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAccessEntitlementsResponse">
+        <wsdl:part element="tns:getAccessEntitlementsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundChangeReasonsResponse">
+        <wsdl:part element="tns:getRefundChangeReasonsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getActiveActsResponse">
+        <wsdl:part element="tns:getActiveActsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createApplicationPreference">
+        <wsdl:part element="tns:createApplicationPreference" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundReasons">
+        <wsdl:part element="tns:getRefundReasons" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getLanguagesResponse">
+        <wsdl:part element="tns:getLanguagesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundStatusesResponse">
+        <wsdl:part element="tns:getRefundStatusesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRequestItemStatuses">
+        <wsdl:part element="tns:getRequestItemStatuses" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCriminalDivisionLevelGroupings">
+        <wsdl:part element="tns:getCriminalDivisionLevelGroupings" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAccessEntitlements">
+        <wsdl:part element="tns:getAccessEntitlements" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCivilDataElements">
+        <wsdl:part element="tns:getCivilDataElements" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getLegalRepTypes">
+        <wsdl:part element="tns:getLegalRepTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getApplicationRecordTypesResponse">
+        <wsdl:part element="tns:getApplicationRecordTypesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateApplicationPreference">
+        <wsdl:part element="tns:updateApplicationPreference" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findApplicationPreferenceByName">
+        <wsdl:part element="tns:findApplicationPreferenceByName" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getEfilingPartyRoles">
+        <wsdl:part element="tns:getEfilingPartyRoles" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getEfilingPartyRolesResponse">
+        <wsdl:part element="tns:getEfilingPartyRolesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getDocumentRequestStatusesResponse">
+        <wsdl:part element="tns:getDocumentRequestStatusesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getServiceFeeByClassification">
+        <wsdl:part element="tns:getServiceFeeByClassification" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCountriesResponse">
+        <wsdl:part element="tns:getCountriesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getActiveDocumentSchemasResponse">
+        <wsdl:part element="tns:getActiveDocumentSchemasResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCountryCodes">
+        <wsdl:part element="tns:getCountryCodes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getIndustryTypesResponse">
+        <wsdl:part element="tns:getIndustryTypesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCitiesResponse">
+        <wsdl:part element="tns:getCitiesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getBCRegistryPaymentMethodsResponse">
+        <wsdl:part element="tns:getBCRegistryPaymentMethodsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getLanguages">
+        <wsdl:part element="tns:getLanguages" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getActiveDocumentSchemas">
+        <wsdl:part element="tns:getActiveDocumentSchemas" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAccessStatusTypesResponse">
+        <wsdl:part element="tns:getAccessStatusTypesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPaymentMethodsResponse">
+        <wsdl:part element="tns:getPaymentMethodsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCivilDocumentJurisdictionsResponse">
+        <wsdl:part element="tns:getCivilDocumentJurisdictionsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundChangeReasons">
+        <wsdl:part element="tns:getRefundChangeReasons" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getTransactionStates">
+        <wsdl:part element="tns:getTransactionStates" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCriminalDivisionLevelGroupingsResponse">
+        <wsdl:part element="tns:getCriminalDivisionLevelGroupingsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getTransactionStatesResponse">
+        <wsdl:part element="tns:getTransactionStatesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getServiceFeeByClassificationResponse">
+        <wsdl:part element="tns:getServiceFeeByClassificationResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getBCRegistryPaymentMethods">
+        <wsdl:part element="tns:getBCRegistryPaymentMethods" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCities">
+        <wsdl:part element="tns:getCities" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundStatuses">
+        <wsdl:part element="tns:getRefundStatuses" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="createApplicationPreferenceResponse">
+        <wsdl:part element="tns:createApplicationPreferenceResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getActiveActs">
+        <wsdl:part element="tns:getActiveActs" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findApplicationPreferenceByCriteria">
+        <wsdl:part element="tns:findApplicationPreferenceByCriteria" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateApplicationPreferenceResponse">
+        <wsdl:part element="tns:updateApplicationPreferenceResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getRefundReasonsResponse">
+        <wsdl:part element="tns:getRefundReasonsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getParticipantTypes">
+        <wsdl:part element="tns:getParticipantTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="NestedEjbException">
+        <wsdl:part element="tns:NestedEjbException" name="NestedEjbException"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getDocumentElementsResponse">
+        <wsdl:part element="tns:getDocumentElementsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getServiceFeeResponse">
+        <wsdl:part element="tns:getServiceFeeResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="LookupFacadeBean">
+        <wsdl:operation name="getCriminalDivisionLevelGroupings">
+            <wsdl:input message="tns:getCriminalDivisionLevelGroupings" name="getCriminalDivisionLevelGroupings"></wsdl:input>
+            <wsdl:output message="tns:getCriminalDivisionLevelGroupingsResponse" name="getCriminalDivisionLevelGroupingsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAccessStatusTypes">
+            <wsdl:input message="tns:getAccessStatusTypes" name="getAccessStatusTypes"></wsdl:input>
+            <wsdl:output message="tns:getAccessStatusTypesResponse" name="getAccessStatusTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAccessEntitlements">
+            <wsdl:input message="tns:getAccessEntitlements" name="getAccessEntitlements"></wsdl:input>
+            <wsdl:output message="tns:getAccessEntitlementsResponse" name="getAccessEntitlementsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCivilDataElements">
+            <wsdl:input message="tns:getCivilDataElements" name="getCivilDataElements"></wsdl:input>
+            <wsdl:output message="tns:getCivilDataElementsResponse" name="getCivilDataElementsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getLegalRepTypes">
+            <wsdl:input message="tns:getLegalRepTypes" name="getLegalRepTypes"></wsdl:input>
+            <wsdl:output message="tns:getLegalRepTypesResponse" name="getLegalRepTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentRequestStatuses">
+            <wsdl:input message="tns:getDocumentRequestStatuses" name="getDocumentRequestStatuses"></wsdl:input>
+            <wsdl:output message="tns:getDocumentRequestStatusesResponse" name="getDocumentRequestStatusesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateApplicationPreference">
+            <wsdl:input message="tns:updateApplicationPreference" name="updateApplicationPreference"></wsdl:input>
+            <wsdl:output message="tns:updateApplicationPreferenceResponse" name="updateApplicationPreferenceResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="removeApplicationPreference">
+            <wsdl:input message="tns:removeApplicationPreference" name="removeApplicationPreference"></wsdl:input>
+            <wsdl:output message="tns:removeApplicationPreferenceResponse" name="removeApplicationPreferenceResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findApplicationPreferenceByName">
+            <wsdl:input message="tns:findApplicationPreferenceByName" name="findApplicationPreferenceByName"></wsdl:input>
+            <wsdl:output message="tns:findApplicationPreferenceByNameResponse" name="findApplicationPreferenceByNameResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getEfilingPartyRoles">
+            <wsdl:input message="tns:getEfilingPartyRoles" name="getEfilingPartyRoles"></wsdl:input>
+            <wsdl:output message="tns:getEfilingPartyRolesResponse" name="getEfilingPartyRolesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceFeeByClassification">
+            <wsdl:input message="tns:getServiceFeeByClassification" name="getServiceFeeByClassification"></wsdl:input>
+            <wsdl:output message="tns:getServiceFeeByClassificationResponse" name="getServiceFeeByClassificationResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCountryCodes">
+            <wsdl:input message="tns:getCountryCodes" name="getCountryCodes"></wsdl:input>
+            <wsdl:output message="tns:getCountryCodesResponse" name="getCountryCodesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentElements">
+            <wsdl:input message="tns:getDocumentElements" name="getDocumentElements"></wsdl:input>
+            <wsdl:output message="tns:getDocumentElementsResponse" name="getDocumentElementsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCivilDocumentJurisdictions">
+            <wsdl:input message="tns:getCivilDocumentJurisdictions" name="getCivilDocumentJurisdictions"></wsdl:input>
+            <wsdl:output message="tns:getCivilDocumentJurisdictionsResponse" name="getCivilDocumentJurisdictionsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getLanguages">
+            <wsdl:input message="tns:getLanguages" name="getLanguages"></wsdl:input>
+            <wsdl:output message="tns:getLanguagesResponse" name="getLanguagesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getActiveDocumentSchemas">
+            <wsdl:input message="tns:getActiveDocumentSchemas" name="getActiveDocumentSchemas"></wsdl:input>
+            <wsdl:output message="tns:getActiveDocumentSchemasResponse" name="getActiveDocumentSchemasResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundChangeReasons">
+            <wsdl:input message="tns:getRefundChangeReasons" name="getRefundChangeReasons"></wsdl:input>
+            <wsdl:output message="tns:getRefundChangeReasonsResponse" name="getRefundChangeReasonsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findApplicationPreferencesByPartialName">
+            <wsdl:input message="tns:findApplicationPreferencesByPartialName" name="findApplicationPreferencesByPartialName"></wsdl:input>
+            <wsdl:output message="tns:findApplicationPreferencesByPartialNameResponse" name="findApplicationPreferencesByPartialNameResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getProvinces">
+            <wsdl:input message="tns:getProvinces" name="getProvinces"></wsdl:input>
+            <wsdl:output message="tns:getProvincesResponse" name="getProvincesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getTransactionStates">
+            <wsdl:input message="tns:getTransactionStates" name="getTransactionStates"></wsdl:input>
+            <wsdl:output message="tns:getTransactionStatesResponse" name="getTransactionStatesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getIndustryTypes">
+            <wsdl:input message="tns:getIndustryTypes" name="getIndustryTypes"></wsdl:input>
+            <wsdl:output message="tns:getIndustryTypesResponse" name="getIndustryTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundRejectReasons">
+            <wsdl:input message="tns:getRefundRejectReasons" name="getRefundRejectReasons"></wsdl:input>
+            <wsdl:output message="tns:getRefundRejectReasonsResponse" name="getRefundRejectReasonsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCivilLevelClassGroupings">
+            <wsdl:input message="tns:getCivilLevelClassGroupings" name="getCivilLevelClassGroupings"></wsdl:input>
+            <wsdl:output message="tns:getCivilLevelClassGroupingsResponse" name="getCivilLevelClassGroupingsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getBCRegistryPaymentMethods">
+            <wsdl:input message="tns:getBCRegistryPaymentMethods" name="getBCRegistryPaymentMethods"></wsdl:input>
+            <wsdl:output message="tns:getBCRegistryPaymentMethodsResponse" name="getBCRegistryPaymentMethodsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCities">
+            <wsdl:input message="tns:getCities" name="getCities"></wsdl:input>
+            <wsdl:output message="tns:getCitiesResponse" name="getCitiesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceFee">
+            <wsdl:input message="tns:getServiceFee" name="getServiceFee"></wsdl:input>
+            <wsdl:output message="tns:getServiceFeeResponse" name="getServiceFeeResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundStatuses">
+            <wsdl:input message="tns:getRefundStatuses" name="getRefundStatuses"></wsdl:input>
+            <wsdl:output message="tns:getRefundStatusesResponse" name="getRefundStatusesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getActiveActs">
+            <wsdl:input message="tns:getActiveActs" name="getActiveActs"></wsdl:input>
+            <wsdl:output message="tns:getActiveActsResponse" name="getActiveActsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getPaymentMethods">
+            <wsdl:input message="tns:getPaymentMethods" name="getPaymentMethods"></wsdl:input>
+            <wsdl:output message="tns:getPaymentMethodsResponse" name="getPaymentMethodsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCountries">
+            <wsdl:input message="tns:getCountries" name="getCountries"></wsdl:input>
+            <wsdl:output message="tns:getCountriesResponse" name="getCountriesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findApplicationPreferenceByCriteria">
+            <wsdl:input message="tns:findApplicationPreferenceByCriteria" name="findApplicationPreferenceByCriteria"></wsdl:input>
+            <wsdl:output message="tns:findApplicationPreferenceByCriteriaResponse" name="findApplicationPreferenceByCriteriaResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getApplicationRecordTypes">
+            <wsdl:input message="tns:getApplicationRecordTypes" name="getApplicationRecordTypes"></wsdl:input>
+            <wsdl:output message="tns:getApplicationRecordTypesResponse" name="getApplicationRecordTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getParticipantTypes">
+            <wsdl:input message="tns:getParticipantTypes" name="getParticipantTypes"></wsdl:input>
+            <wsdl:output message="tns:getParticipantTypesResponse" name="getParticipantTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createApplicationPreference">
+            <wsdl:input message="tns:createApplicationPreference" name="createApplicationPreference"></wsdl:input>
+            <wsdl:output message="tns:createApplicationPreferenceResponse" name="createApplicationPreferenceResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundReasons">
+            <wsdl:input message="tns:getRefundReasons" name="getRefundReasons"></wsdl:input>
+            <wsdl:output message="tns:getRefundReasonsResponse" name="getRefundReasonsResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRequestItemStatuses">
+            <wsdl:input message="tns:getRequestItemStatuses" name="getRequestItemStatuses"></wsdl:input>
+            <wsdl:output message="tns:getRequestItemStatusesResponse" name="getRequestItemStatusesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="LookupFacadeSoapBinding" type="tns:LookupFacadeBean">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getAccessStatusTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getAccessStatusTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getAccessStatusTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCriminalDivisionLevelGroupings">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCriminalDivisionLevelGroupings">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCriminalDivisionLevelGroupingsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getAccessEntitlements">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getAccessEntitlements">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getAccessEntitlementsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCivilDataElements">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCivilDataElements">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCivilDataElementsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getLegalRepTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getLegalRepTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getLegalRepTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateApplicationPreference">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateApplicationPreference">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateApplicationPreferenceResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentRequestStatuses">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getDocumentRequestStatuses">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getDocumentRequestStatusesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="removeApplicationPreference">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="removeApplicationPreference">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="removeApplicationPreferenceResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findApplicationPreferenceByName">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findApplicationPreferenceByName">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findApplicationPreferenceByNameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getEfilingPartyRoles">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getEfilingPartyRoles">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getEfilingPartyRolesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceFeeByClassification">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getServiceFeeByClassification">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getServiceFeeByClassificationResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCountryCodes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCountryCodes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCountryCodesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentElements">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getDocumentElements">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getDocumentElementsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCivilDocumentJurisdictions">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCivilDocumentJurisdictions">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCivilDocumentJurisdictionsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getLanguages">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getLanguages">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getLanguagesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getActiveDocumentSchemas">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getActiveDocumentSchemas">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getActiveDocumentSchemasResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundChangeReasons">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getRefundChangeReasons">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRefundChangeReasonsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findApplicationPreferencesByPartialName">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findApplicationPreferencesByPartialName">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findApplicationPreferencesByPartialNameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getProvinces">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getProvinces">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getProvincesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getTransactionStates">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getTransactionStates">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getTransactionStatesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getIndustryTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getIndustryTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getIndustryTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundRejectReasons">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getRefundRejectReasons">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRefundRejectReasonsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCivilLevelClassGroupings">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCivilLevelClassGroupings">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCivilLevelClassGroupingsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getBCRegistryPaymentMethods">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getBCRegistryPaymentMethods">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getBCRegistryPaymentMethodsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCities">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCities">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCitiesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceFee">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getServiceFee">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getServiceFeeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundStatuses">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getRefundStatuses">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRefundStatusesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getActiveActs">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getActiveActs">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getActiveActsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getPaymentMethods">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getPaymentMethods">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getPaymentMethodsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getCountries">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCountries">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCountriesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="findApplicationPreferenceByCriteria">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findApplicationPreferenceByCriteria">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findApplicationPreferenceByCriteriaResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getApplicationRecordTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getApplicationRecordTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getApplicationRecordTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getParticipantTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getParticipantTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getParticipantTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="createApplicationPreference">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="createApplicationPreference">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="createApplicationPreferenceResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRefundReasons">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getRefundReasons">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRefundReasonsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getRequestItemStatuses">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getRequestItemStatuses">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getRequestItemStatusesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="LookupFacade">
+        <wsdl:port binding="tns:LookupFacadeSoapBinding" name="LookupFacadeBeanPort">
+            <soap:address location="http://localhost:11530/csows/LookupFacade"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

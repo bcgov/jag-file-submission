@@ -1,15 +1,11 @@
 package ca.bc.gov.open.jag.efilingapi.submission.models;
 
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.EndpointAccess;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -20,34 +16,39 @@ public class SubmissionTest {
     private static final String CASE_1 = "CASE1";
     private static final String CANCEL = "CANCEL";
     private static final String ERROR = "ERROR";
-    private static final String TYPE = "TYPE";
-    private static final String SUBTYPE = "SUBTYPE";
-    private static final String URL = "http://doc.com";
-    private static final String HEADER = "HEADER";
+    private static final String CLIENT_APP_NAME = "appName";
 
     @Test
     @DisplayName("CASE 1: testing constructor")
     public void testingConstructor() {
-        Fee fee = new Fee(BigDecimal.TEN);
-        AccountDetails accountDetails = new AccountDetails(BigDecimal.TEN, BigDecimal.TEN, true, "firstName", "lastName", "middleName", "email");
 
         Submission actual = new Submission(
                 UUID.randomUUID(),
-                TestHelpers.createDocumentProperties(HEADER, URL, SUBTYPE, TYPE),
+                UUID.randomUUID(),
+                UUID.randomUUID().toString(),
+                CLIENT_APP_NAME,
+                TestHelpers.createPackage(TestHelpers.createCourt(), TestHelpers.createDocumentList(), TestHelpers.createPartyList(), TestHelpers.createOrganizationList()),
                 TestHelpers.createNavigation(CASE_1, CANCEL, ERROR),
-                fee,
-                accountDetails,
                 1);
 
-        Assertions.assertEquals(TYPE, actual.getDocumentProperties().getType());
-        Assertions.assertEquals(SUBTYPE, actual.getDocumentProperties().getSubType());
-        Assertions.assertEquals(URL, actual.getDocumentProperties().getSubmissionAccess().getUrl());
-        Assertions.assertEquals(EndpointAccess.VerbEnum.POST, actual.getDocumentProperties().getSubmissionAccess().getVerb());
-        Assertions.assertEquals(ERROR, actual.getNavigation().getError().getUrl());
-        Assertions.assertEquals(CANCEL, actual.getNavigation().getCancel().getUrl());
-        Assertions.assertEquals(CASE_1, actual.getNavigation().getSuccess().getUrl());
-        Assertions.assertEquals(BigDecimal.TEN, actual.getFee().getAmount());
 
+        Assertions.assertEquals(CLIENT_APP_NAME, actual.getClientAppName());
+        Assertions.assertEquals(ERROR, actual.getNavigationUrls().getError());
+        Assertions.assertEquals(CANCEL, actual.getNavigationUrls().getCancel());
+        Assertions.assertEquals(CASE_1, actual.getNavigationUrls().getSuccess());
+        Assertions.assertEquals(TestHelpers.DIVISION, actual.getFilingPackage().getCourt().getDivision());
+        Assertions.assertEquals(TestHelpers.FILENUMBER, actual.getFilingPackage().getCourt().getFileNumber());
+        Assertions.assertEquals(TestHelpers.LEVEL, actual.getFilingPackage().getCourt().getLevel());
+        Assertions.assertEquals(TestHelpers.LOCATION, actual.getFilingPackage().getCourt().getLocation());
+        Assertions.assertEquals(TestHelpers.PARTICIPATIONCLASS, actual.getFilingPackage().getCourt().getParticipatingClass());
+        Assertions.assertEquals(TestHelpers.PROPERTYCLASS, actual.getFilingPackage().getCourt().getCourtClass());
+        Assertions.assertEquals(TestHelpers.COURT_DESCRIPTION, actual.getFilingPackage().getCourt().getLocationDescription());
+        Assertions.assertEquals(TestHelpers.CLASS_DESCRIPTION, actual.getFilingPackage().getCourt().getClassDescription());
+        Assertions.assertEquals(TestHelpers.LEVEL_DESCRIPTION, actual.getFilingPackage().getCourt().getLevelDescription());
+        Assertions.assertEquals(TestHelpers.TYPE, actual.getFilingPackage().getDocuments().get(0).getType());
+        Assertions.assertEquals(TestHelpers.DESCRIPTION, actual.getFilingPackage().getDocuments().get(0).getDescription());
+        Assertions.assertEquals(true, actual.getFilingPackage().getDocuments().get(0).getIsAmendment());
+        Assertions.assertEquals(true, actual.getFilingPackage().getDocuments().get(0).getIsSupremeCourtScheduling());
     }
 
 }

@@ -1,74 +1,67 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState } from "react";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+/* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member */
+
+import React from "react";
+import queryString from "query-string";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
+import { Header, Footer } from "shared-components";
+import AuthenticationGuard from "./domain/authentication/AuthenticationGuard";
 import Home from "./components/page/home/Home";
-
-const mainButton = {
-  label: "Cancel",
-  styling: "normal-white btn"
-};
-
-const confirmButton = {
-  label: "Yes, cancel E-File Submission",
-  styling: "normal-blue btn consistent-width"
-};
-
-const cancelButton = {
-  label: "No, resume E-File Submission",
-  styling: "normal-white btn consistent-width"
-};
+import PackageReview from "./domain/package/package-review/PackageReview";
+import SubmissionHistory from "./domain/submission/submission-history/SubmissionHistory";
 
 export default function App() {
+  const location = useLocation();
+  const queryParams = queryString.parse(location.search);
+  const { submissionId, transactionId, responseCode, customerCode } =
+    queryParams;
+
+  if (responseCode === "19" || responseCode === "17")
+    sessionStorage.setItem("bamboraErrorExists", true);
+  if (responseCode === "1") {
+    sessionStorage.setItem("bamboraSuccess", customerCode);
+    sessionStorage.setItem("bamboraErrorExists", false);
+  }
+
+  if (typeof customerCode === "undefined")
+    sessionStorage.removeItem("isBamboraRedirect");
+
+  if (submissionId && transactionId) {
+    sessionStorage.setItem("submissionId", submissionId);
+    sessionStorage.setItem("transactionId", transactionId);
+  }
+
   const header = {
     name: "E-File Submission",
-    history: useHistory()
-  };
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const body = () => (
-    <>
-      <p>Your files will not be submitted.</p>
-      <p>
-        You will be returned to:
-        <br />
-        <b>Family Law Protection Order</b> website
-      </p>
-    </>
-  );
-
-  const handleConfirm = () => {
-    const cancelUrl = sessionStorage.getItem("cancelUrl");
-
-    if (cancelUrl) {
-      window.open(cancelUrl, "_self");
-    }
-  };
-
-  const modal = {
-    show,
-    title: "Cancel E-File Submission?",
-    body
-  };
-
-  const confirmationPopup = {
-    modal,
-    mainButton: { ...mainButton, onClick: handleShow },
-    confirmButton: { ...confirmButton, onClick: handleConfirm },
-    cancelButton: { ...cancelButton, onClick: handleClose }
+    history: useNavigate(),
   };
 
   return (
-    <div>
-      <Switch>
-        <Redirect exact from="/" to="/efiling" />
-        <Route exact path="/efiling">
-          <Home page={{ header, confirmationPopup }} />
-        </Route>
-      </Switch>
-    </div>
+    <main>
+      <Header header={header} />
+      <AuthenticationGuard>
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate exact from="/" to="/efilinghub" />}
+          />
+          <Route exact path="/efilinghub" element={<Home />} />
+          <Route
+            path="/efilinghub/packagereview/:packageId"
+            element={<PackageReview />}
+          />
+          <Route
+            path="/efilinghub/submissionhistory"
+            element={<SubmissionHistory />}
+          />
+        </Routes>
+      </AuthenticationGuard>
+      <Footer />
+    </main>
   );
 }

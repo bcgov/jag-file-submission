@@ -1,21 +1,31 @@
 package ca.bc.gov.open.jag.efilingapi.submission.mappers;
 
-import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import ca.bc.gov.open.jag.efilingapi.fee.models.Fee;
-import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateUrlRequest;
+import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.FilingPackage;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+import java.util.UUID;
+
+@Mapper(componentModel = "spring",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+uses = { FilingPackageMapper.class })
 public interface SubmissionMapper {
 
-    @Mapping(source = "generateUrlRequest.documentProperties", target = "documentProperties")
-    @Mapping(source = "generateUrlRequest.navigation", target = "navigation")
-    @Mapping(source = "fee", target = "fee")
-    @Mapping(source = "accountDetails", target = "accountDetails")
+    @Mapping(source = "submissionId", target = "id")
+    @Mapping(source = "universalId", target = "universalId")
+    @Mapping(source = "transactionId", target = "transactionId")
+    @Mapping(source = "generateUrlRequest.navigationUrls", target = "navigationUrls")
+    @Mapping(source = "filingPackage", target = "filingPackage")
     @Mapping(source = "expiryDate", target = "expiryDate")
-    Submission toSubmission(GenerateUrlRequest generateUrlRequest, Fee fee, AccountDetails accountDetails, long expiryDate);
+    Submission toSubmission(
+            String universalId,
+            UUID submissionId,
+            UUID transactionId,
+            GenerateUrlRequest generateUrlRequest,
+            FilingPackage filingPackage,
+            long expiryDate);
 
 }

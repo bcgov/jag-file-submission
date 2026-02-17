@@ -1,0 +1,88 @@
+swagger: "2.0"
+info:
+  title: ORDS generated API for web
+  version: 1.0.0
+host: dev.jag.gov.bc.ca
+basePath: /ords/devj/ceisords/web
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication.
+paths:
+  /courtLocations:
+    get:
+      security:
+        - basicAuth: []
+      description: Get a list of the court locations
+      responses:
+        "200":
+          description: output of the endpoint
+          schema:
+            $ref: "#/definitions/CourtLocations"
+      parameters: []
+  /health:
+    get:
+      description: Dummy endpoint to check that API calls are working
+      responses:
+        "200":
+          description: output of the endpoint
+          schema:
+            type: object
+            properties: {}
+definitions:
+  CourtLocations:
+    properties:
+      courtlocations:
+        type: array
+        items:
+          $ref: "#/definitions/CourtLocation"
+  CourtLocation:
+    type: object
+    description: "Court related information"
+    properties:
+      courtid:
+        type: number
+      courtname:
+        type: string
+      courtcode:
+        type: string
+      timezone:
+        type: string
+      daylightsavings:
+        type: string
+      courtidentifiercode:
+        type: string
+      addressline1:
+        type: string
+      addressline2:
+        type: string
+      addressline3:
+        type: string
+      postalcode:
+        type: string
+      citysequencenumber:
+        type: integer
+      cityabbreviation:
+        type: string
+      cityname:
+        type: string
+      provincesequencenumber:
+        type: integer
+      provinceabbreviation:
+        type: string
+      provincename:
+        type: string
+      countryid:
+        type: integer
+      countryabbreviation:
+        type: string
+      countryname:
+        type: string
+      isprovincialcourt:
+        type: string
+      issupremecourt:
+        type: string

@@ -3,28 +3,46 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>ca.bc.gov.open.jag</groupId>
     <artifactId>efiling-bom</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
-    <packaging>pom</packaging>
+    <version>2.2.0</version>
 
     <properties>
-        <io.github.openfeign.opentracing.version>0.4.1</io.github.openfeign.opentracing.version>
-        <io.opentracing.contrib.version>3.1.2</io.opentracing.contrib.version>
-        <io.springfox.version>2.9.2</io.springfox.version>
-        <io.swagger.version>1.6.2</io.swagger.version>
+        <log4j2.version>2.17.1</log4j2.version>
+        <ca.bc.gov.open.version>1.0.5</ca.bc.gov.open.version>
+        <com.brsanthu.version>2.2</com.brsanthu.version>
+        <com.fasterxml.jackson.core.version>2.19.0</com.fasterxml.jackson.core.version>
+        <com.github.joschi.jackson.version>2.18.2</com.github.joschi.jackson.version>
+        <com.google.code.findbugs.version>3.0.2</com.google.code.findbugs.version>
+        <com.splunk.logging.version>1.11.8</com.splunk.logging.version>
+        <commons-io.version>2.18.0</commons-io.version>
+        <io.springfox.version>3.0.0</io.springfox.version>
+        <io.swagger.version>2.2.29</io.swagger.version>
+        <java.version>17</java.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
-        <joda-time.version>2.10.6</joda-time.version>
+        <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
+        <joda-time.version>2.13.0</joda-time.version>
         <net.rakugakibox.spring.boot.version>2.7.1</net.rakugakibox.spring.boot.version>
-        <org.apache.commons.version>3.10</org.apache.commons.version>
-        <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
-        <org.springdoc.version>1.4.3</org.springdoc.version>
-        <com.splunk.logging.version>1.8.0</com.splunk.logging.version>
-        <org.openapitools.version>0.2.1</org.openapitools.version>
-        <org.apache.cxf.version>3.3.7</org.apache.cxf.version>
-        <com.fasterxml.jackson.core.version>2.11.1</com.fasterxml.jackson.core.version>
+        <org.apache.commons.version>3.18.0</org.apache.commons.version>
+        <org.apache.commons.collections.collections.version>4.4</org.apache.commons.collections.collections.version>
+        <org.apache.cxf.version>4.1.0</org.apache.cxf.version>
+        <org.apache.tika.version>3.2.2</org.apache.tika.version>
+        <org.apache.skywalking.version>9.4.0</org.apache.skywalking.version>
+        <org.codehaus.janino>3.1.12</org.codehaus.janino>
+        <org.glassfish.jersey.inject.version>3.1.10</org.glassfish.jersey.inject.version>
+        <org.junit.jupiter.version>5.12.2</org.junit.jupiter.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
+        <org.mockito.mockito-all.version>1.10.19</org.mockito.mockito-all.version>
+        <org.mockito.mockito-core.version>5.17.0</org.mockito.mockito-core.version>
+        <org.openapitools.version>0.2.6</org.openapitools.version>
+        <org.springdoc.version>1.7.0</org.springdoc.version>
+        <org.threeten.version>1.7.0</org.threeten.version>
+        <ch.qos.logback.version>1.5.18</ch.qos.logback.version>
+        <logback.access.common.version>2.0.6</logback.access.common.version>
+        <org.apache.tomcat.embed.version>11.0.14</org.apache.tomcat.embed.version>
+        <org.json.version>20250517</org.json.version>
+        <org.springframework.security.version>6.5.4</org.springframework.security.version>
+        <org.springframework.version>6.2.12</org.springframework.version>
     </properties>
 
     <repositories>
@@ -34,113 +52,282 @@
             <url>https://splunk.jfrog.io/artifactory/ext-releases-local/</url>
         </repository>
     </repositories>
-
     <dependencyManagement>
         <dependencies>
 
-            <!-- Utils -->
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${org.apache.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>${joda-time.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${javax.validation.version}</version>
+                <groupId>ca.bc.gov.open</groupId>
+                <artifactId>spring-bceid-starter</artifactId>
+                <version>${ca.bc.gov.open.version}</version>
             </dependency>
 
-            <!-- codegen -->
             <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${org.mapstruct.version}</version>
+                <groupId>ca.bc.gov.open</groupId>
+                <artifactId>spring-clamav-starter</artifactId>
+                <version>${ca.bc.gov.open.version}</version>
             </dependency>
 
-            <!-- Open API -->
             <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${io.swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${org.springdoc.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${io.springfox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${io.springfox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openapitools</groupId>
-                <artifactId>jackson-databind-nullable</artifactId>
-                <version>${org.openapitools.version}</version>
+                <groupId>ca.bc.gov.open</groupId>
+                <artifactId>spring-sftp-starter</artifactId>
+                <version>${ca.bc.gov.open.version}</version>
             </dependency>
 
-            <!--logging-->
             <dependency>
-                <groupId>net.rakugakibox.spring.boot</groupId>
-                <artifactId>logback-access-spring-boot-starter</artifactId>
-                <version>${net.rakugakibox.spring.boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.splunk.logging</groupId>
-                <artifactId>splunk-library-javalogging</artifactId>
-                <version>${com.splunk.logging.version}</version>
+                <groupId>ca.bc.gov.open</groupId>
+                <artifactId>bambora-payment-starter</artifactId>
+                <version>${ca.bc.gov.open.version}</version>
             </dependency>
 
-
-            <!-- Open Tracing -->
             <dependency>
-                <groupId>io.opentracing.contrib</groupId>
-                <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-                <version>${io.opentracing.contrib.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.openfeign.opentracing</groupId>
-                <artifactId>feign-opentracing</artifactId>
-                <version>${io.github.openfeign.opentracing.version}</version>
+                <groupId>com.brsanthu</groupId>
+                <artifactId>migbase64</artifactId>
+                <version>${com.brsanthu.version}</version>
             </dependency>
 
-            <!-- jaxws -->
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-frontend-jaxws</artifactId>
-                <version>${org.apache.cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-transports-http</artifactId>
-                <version>${org.apache.cxf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-rt-transports-http-jetty</artifactId>
-                <version>${org.apache.cxf.version}</version>
-            </dependency>
-
-            <!--json-->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>${com.fasterxml.jackson.core.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.github.joschi.jackson</groupId>
+                <artifactId>jackson-datatype-threetenbp</artifactId>
+                <version>${com.github.joschi.jackson.version}</version>
+            </dependency>
 
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${com.google.code.findbugs.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.splunk.logging</groupId>
+                <artifactId>splunk-library-javalogging</artifactId>
+                <version>${com.splunk.logging.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${io.springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${io.springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${io.swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${javax.xml.bind.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.rakugakibox.spring.boot</groupId>
+                <artifactId>logback-access-spring-boot-starter</artifactId>
+                <version>${net.rakugakibox.spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${org.apache.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${org.apache.commons.collections.collections.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-features-logging</artifactId>
+                <version>${org.apache.cxf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                <version>${org.apache.cxf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+                <version>${org.apache.cxf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http-jetty</artifactId>
+                <version>${org.apache.cxf.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${org.apache.tika.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${org.apache.skywalking.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${org.apache.skywalking.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.janino</groupId>
+                <artifactId>janino</artifactId>
+                <version>${org.codehaus.janino}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${org.glassfish.jersey.inject.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${org.junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${org.junit.jupiter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${org.mockito.mockito-all.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${org.mockito.mockito-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openapitools</groupId>
+                <artifactId>jackson-databind-nullable</artifactId>
+                <version>${org.openapitools.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.threeten</groupId>
+                <artifactId>threetenbp</artifactId>
+                <version>${org.threeten.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${org.springdoc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${ch.qos.logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${ch.qos.logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback.access</groupId>
+                <artifactId>logback-access-common</artifactId>
+                <version>${logback.access.common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>${org.apache.tomcat.embed.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${org.json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${org.springframework.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

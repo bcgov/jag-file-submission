@@ -3,39 +3,45 @@
 exports[`Home Component matches the snapshot 1`] = `
 <DocumentFragment>
   <main>
-    <header>
+    <header
+      class="bcgov-header"
+    >
       <nav
+        aria-label="Header"
         class="container-fluid navbar navbar-expand-lg navbar-dark"
       >
         <div
           aria-labelledby="title"
-          class="navbar-brand pointer"
+          class="navbar-brand bcgov-pointer"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-none d-md-block pointer"
+          class="img-fluid d-none d-md-block bcgov-pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-logo-rev-en.svg"
           width="181"
         />
         <img
           alt="B.C. Government Logo"
-          class="img-fluid d-md-none pointer"
+          class="img-fluid d-md-none bcgov-pointer"
           height="44"
-          role="presentation"
           src="undefined/images/bcid-symbol-rev.svg"
           width="64"
         />
         <div
           aria-labelledby="title"
-          class="pointer navbar-brand nav-item nav-link"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
         />
         <div
-          class="navbar-brand"
-          id="title"
+          class="bcgov-flex-spacing"
         >
-          eFiling Demo Client
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Demo Client
+          </div>
+          <div />
         </div>
       </nav>
     </header>
@@ -45,55 +51,76 @@ exports[`Home Component matches the snapshot 1`] = `
       <div
         class="content col-md-12"
       >
-        <div>
-          <label
-            class="label"
-            for="textInputId"
+        <h1>
+          Welcome to the eFiling Demo Client
+        </h1>
+        <br />
+        <div
+          class="dropzone-outer-box"
+          data-testid="dropdownzone"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="dropzone-inner-box"
           >
-            <div
-              class="input-label"
-            >
-              Account GUID
-            </div>
-            <span
-              class="mandatory"
-              id="asterisk"
-            >
-              *
-            </span>
-             
-            <span
-              class="note"
+            <input
+              autocomplete="off"
+              multiple=""
+              style="display: none;"
+              tabindex="-1"
+              type="file"
             />
-          </label>
-          <input
-            class="editable-white"
-            id="textInputId"
-            placeholder="77da92db-0791-491e-8c58-1a969e67d2fa"
-            type="text"
-            value=""
-          />
-          <br />
-          <span
-            class="error"
-          />
+            <span>
+              <h2
+                class="text-center-alignment"
+              >
+                Drag and drop or 
+                <span
+                  class="file-href"
+                >
+                  choose documents
+                </span>
+              </h2>
+            </span>
+          </div>
         </div>
         <br />
-        <div>
-          <button
-            class="normal-blue btn"
-            type="button"
+        <br />
+        <div
+          class="bcgov-input-label"
+        >
+          <label
+            for="1"
           >
-            Generate URL
-          </button>
+            Provide filing package JSON data:
+          </label>
+           
         </div>
+        <textarea
+          class="bcgov-text-input"
+          cols="60"
+          id="1"
+          rows="8"
+        />
+        <br />
+        <br />
+        <button
+          class="bcgov-button bcgov-normal-blue btn"
+          data-testid="generate-url-btn"
+          type="button"
+        >
+          E-File my Package
+        </button>
+        <br />
         <br />
       </div>
     </div>
     <footer
-      class="footer"
+      class="bcgov-footer"
     >
       <nav
+        aria-label="Footer"
         class="navbar navbar-expand-sm navbar-dark justify-content-end"
       >
         <button

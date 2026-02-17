@@ -6,44 +6,85 @@
 
 	<groupId>ca.bc.gov.open</groupId>
 	<artifactId>jag-efiling-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>2.2.0</version>
 
-	<description>FLA Document Upload</description>
+	<description>EfilingHub Backend services</description>
 
 	<name>jag-efiling-backend</name>
 	<packaging>pom</packaging>
 	<url>https://github.com/bcgov/jag-file-submission</url>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
+		<log4j2.version>2.17.1</log4j2.version>
 	</properties>
 
 	<profiles>
 		<profile>
 			<id>all</id>
 			<modules>
+				<module>libs/efiling-bambora-api-client</module>
+				<module>libs/efiling-ceis-api-client</module>
 				<module>libs/efiling-commons</module>
-				<module>libs/efiling-submission-client</module>
-				<module>libs/efiling-lookup-client</module>
-				<module>libs/efiling-status-client</module>
-				<module>libs/efiling-account-client</module>
+				<module>libs/efiling-cso-client</module>
+				<module>libs/efiling-cso-starter</module>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-demo-starter</module>
 				<module>efiling-api</module>
-				<module>efiling-worker</module>
-				<module>efiling-backend-demo</module>
 			</modules>
 		</profile>
 		<profile>
 			<id>libs</id>
 			<modules>
+				<module>libs/efiling-bambora-api-client</module>
+				<module>libs/efiling-ceis-api-client</module>
+				<module>libs/efiling-commons</module>
+				<module>libs/efiling-cso-client</module>
+				<module>libs/efiling-cso-starter</module>
+				<module>libs/efiling-bom</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>efiling-api-demo</id>
+			<modules>
 				<module>libs/efiling-bom</module>
 				<module>libs/efiling-commons</module>
-				<module>libs/efiling-lookup-client</module>
-				<module>libs/efiling-account-client</module>
 				<module>libs/efiling-demo-starter</module>
+				<module>efiling-api</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>efiling-api</id>
+			<modules>
+				<module>libs/efiling-bom</module>
+				<module>libs/efiling-commons</module>
+				<module>libs/efiling-bambora-api-client</module>
+				<module>libs/efiling-ceis-api-client</module>
+				<module>libs/efiling-cso-client</module>
+				<module>libs/efiling-cso-starter</module>
+				<module>efiling-api</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>efiling-reviewer</id>
+			<modules>
+				<module>libs/efiling-bom</module>
 			</modules>
 		</profile>
 	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

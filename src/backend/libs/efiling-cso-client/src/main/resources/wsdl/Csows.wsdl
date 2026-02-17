@@ -1,0 +1,2643 @@
+<wsdl:definitions name="Csows" targetNamespace="http://ceis.csows.ag.gov.bc.ca/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ceis.csows.ag.gov.bc.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xs:schema elementFormDefault="unqualified" targetNamespace="http://ceis.csows.ag.gov.bc.ca/" version="1.0" xmlns:tns="http://ceis.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="coFileNumberSearch" type="tns:coFileNumberSearch"/>
+            <xs:element name="coFileNumberSearchResponse" type="tns:coFileNumberSearchResponse"/>
+            <xs:element name="dateRangeSearch" type="tns:dateRangeSearch"/>
+            <xs:element name="dateRangeSearchResponse" type="tns:dateRangeSearchResponse"/>
+            <xs:element name="deceasedNameSearch" type="tns:deceasedNameSearch"/>
+            <xs:element name="deceasedNameSearchResponse" type="tns:deceasedNameSearchResponse"/>
+            <xs:element name="fileNumberSearch" type="tns:fileNumberSearch"/>
+            <xs:element name="fileNumberSearchResponse" type="tns:fileNumberSearchResponse"/>
+            <xs:element name="getCourtClasses" type="tns:getCourtClasses"/>
+            <xs:element name="getCourtClassesResponse" type="tns:getCourtClassesResponse"/>
+            <xs:element name="getCourtLevels" type="tns:getCourtLevels"/>
+            <xs:element name="getCourtLevelsResponse" type="tns:getCourtLevelsResponse"/>
+            <xs:element name="getCourtLocations" type="tns:getCourtLocations"/>
+            <xs:element name="getCourtLocationsResponse" type="tns:getCourtLocationsResponse"/>
+            <xs:element name="getFileSpecification" type="tns:getFileSpecification"/>
+            <xs:element name="getFileSpecificationResponse" type="tns:getFileSpecificationResponse"/>
+            <xs:element name="getOrderDetails" type="tns:getOrderDetails"/>
+            <xs:element name="getOrderDetailsResponse" type="tns:getOrderDetailsResponse"/>
+            <xs:element name="getParties" type="tns:getParties"/>
+            <xs:element name="getPartiesResponse" type="tns:getPartiesResponse"/>
+            <xs:element name="getPartyRoles" type="tns:getPartyRoles"/>
+            <xs:element name="getPartyRolesResponse" type="tns:getPartyRolesResponse"/>
+            <xs:element name="getPartyTypes" type="tns:getPartyTypes"/>
+            <xs:element name="getPartyTypesResponse" type="tns:getPartyTypesResponse"/>
+            <xs:element name="getSID" type="tns:getSID"/>
+            <xs:element name="getSIDResponse" type="tns:getSIDResponse"/>
+            <xs:element name="inqyFileSearch" type="tns:inqyFileSearch"/>
+            <xs:element name="inqyFileSearchResponse" type="tns:inqyFileSearchResponse"/>
+            <xs:element name="ncFileNumberSearch" type="tns:ncFileNumberSearch"/>
+            <xs:element name="ncFileNumberSearchResponse" type="tns:ncFileNumberSearchResponse"/>
+            <xs:element name="oragCaseBasics" type="tns:oragCaseBasics"/>
+            <xs:element name="oragCaseBasicsResponse" type="tns:oragCaseBasicsResponse"/>
+            <xs:element name="oragDocumentDetails" type="tns:oragDocumentDetails"/>
+            <xs:element name="oragDocumentDetailsResponse" type="tns:oragDocumentDetailsResponse"/>
+            <xs:element name="oragDocuments" type="tns:oragDocuments"/>
+            <xs:element name="oragDocumentsResponse" type="tns:oragDocumentsResponse"/>
+            <xs:element name="oragFileSearch" type="tns:oragFileSearch"/>
+            <xs:element name="oragFileSearchResponse" type="tns:oragFileSearchResponse"/>
+            <xs:element name="parseSID" type="tns:parseSID"/>
+            <xs:element name="parseSIDResponse" type="tns:parseSIDResponse"/>
+            <xs:element name="partyNameSearch" type="tns:partyNameSearch"/>
+            <xs:element name="partyNameSearchResponse" type="tns:partyNameSearchResponse"/>
+            <xs:element name="printFileSummary" type="tns:printFileSummary"/>
+            <xs:element name="printFileSummaryResponse" type="tns:printFileSummaryResponse"/>
+            <xs:element name="viewAppearances" type="tns:viewAppearances"/>
+            <xs:element name="viewAppearancesResponse" type="tns:viewAppearancesResponse"/>
+            <xs:element name="viewCaDocumentBasics" type="tns:viewCaDocumentBasics"/>
+            <xs:element name="viewCaDocumentBasicsResponse" type="tns:viewCaDocumentBasicsResponse"/>
+            <xs:element name="viewCaPartyBasics" type="tns:viewCaPartyBasics"/>
+            <xs:element name="viewCaPartyBasicsResponse" type="tns:viewCaPartyBasicsResponse"/>
+            <xs:element name="viewCaPartyDetails" type="tns:viewCaPartyDetails"/>
+            <xs:element name="viewCaPartyDetailsResponse" type="tns:viewCaPartyDetailsResponse"/>
+            <xs:element name="viewCaseBasics" type="tns:viewCaseBasics"/>
+            <xs:element name="viewCaseBasicsResponse" type="tns:viewCaseBasicsResponse"/>
+            <xs:element name="viewCoDocumentOrders" type="tns:viewCoDocumentOrders"/>
+            <xs:element name="viewCoDocumentOrdersResponse" type="tns:viewCoDocumentOrdersResponse"/>
+            <xs:element name="viewDocumentBasics" type="tns:viewDocumentBasics"/>
+            <xs:element name="viewDocumentBasicsResponse" type="tns:viewDocumentBasicsResponse"/>
+            <xs:element name="viewDocumentDetails" type="tns:viewDocumentDetails"/>
+            <xs:element name="viewDocumentDetailsResponse" type="tns:viewDocumentDetailsResponse"/>
+            <xs:element name="viewInquiryAppearanceDetails" type="tns:viewInquiryAppearanceDetails"/>
+            <xs:element name="viewInquiryAppearanceDetailsResponse" type="tns:viewInquiryAppearanceDetailsResponse"/>
+            <xs:element name="viewInquiryAppearances" type="tns:viewInquiryAppearances"/>
+            <xs:element name="viewInquiryAppearancesResponse" type="tns:viewInquiryAppearancesResponse"/>
+            <xs:element name="viewInquiryCaseBasics" type="tns:viewInquiryCaseBasics"/>
+            <xs:element name="viewInquiryCaseBasicsResponse" type="tns:viewInquiryCaseBasicsResponse"/>
+            <xs:element name="viewInquiryDocumentDetails" type="tns:viewInquiryDocumentDetails"/>
+            <xs:element name="viewInquiryDocumentDetailsResponse" type="tns:viewInquiryDocumentDetailsResponse"/>
+            <xs:element name="viewInquiryDocuments" type="tns:viewInquiryDocuments"/>
+            <xs:element name="viewInquiryDocumentsResponse" type="tns:viewInquiryDocumentsResponse"/>
+            <xs:element name="viewInquiryPartyBasics" type="tns:viewInquiryPartyBasics"/>
+            <xs:element name="viewInquiryPartyBasicsResponse" type="tns:viewInquiryPartyBasicsResponse"/>
+            <xs:element name="viewInquiryPartyDetails" type="tns:viewInquiryPartyDetails"/>
+            <xs:element name="viewInquiryPartyDetailsResponse" type="tns:viewInquiryPartyDetailsResponse"/>
+            <xs:element name="viewInquiryTransfers" type="tns:viewInquiryTransfers"/>
+            <xs:element name="viewInquiryTransfersResponse" type="tns:viewInquiryTransfersResponse"/>
+            <xs:element name="viewPartyBasics" type="tns:viewPartyBasics"/>
+            <xs:element name="viewPartyBasicsResponse" type="tns:viewPartyBasicsResponse"/>
+            <xs:element name="viewPartyDetails" type="tns:viewPartyDetails"/>
+            <xs:element name="viewPartyDetailsResponse" type="tns:viewPartyDetailsResponse"/>
+            <xs:element name="viewTransferDetails" type="tns:viewTransferDetails"/>
+            <xs:element name="viewTransferDetailsResponse" type="tns:viewTransferDetailsResponse"/>
+            <xs:complexType name="printFileSummary">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="printFileSummaryResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoFileSummaryRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSummaryRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="appearanceDocResult" type="tns:csoDocHearingsTab"/>
+                    <xs:element minOccurs="0" name="appearanceResult" type="tns:csoFileSumApprTab"/>
+                    <xs:element minOccurs="0" name="caveatExpiryDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docFilingPartyResult" type="tns:csoFilingPartiesTab"/>
+                    <xs:element minOccurs="0" name="docOrderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="documentHearingResult" type="tns:csoDocHearingsTab"/>
+                    <xs:element minOccurs="0" name="documentResult" type="tns:csoFileSumDocTab"/>
+                    <xs:element minOccurs="0" name="fileOpenedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="grantedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="hasRequestableDocs" type="xs:string"/>
+                    <xs:element minOccurs="0" name="hearingOrderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="initiatingDoc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyAliasResult" type="tns:csoAliasTab"/>
+                    <xs:element minOccurs="0" name="partyCommResult" type="tns:csoCommDevicesTab"/>
+                    <xs:element minOccurs="0" name="partyLegalrepResult" type="tns:csoLegalRepTab"/>
+                    <xs:element minOccurs="0" name="partyResult" type="tns:csoFileSumPartyTab"/>
+                    <xs:element minOccurs="0" name="partyRoleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="probateFileNumberTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoDocHearingsTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoDocHearingsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoDocHearingsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="appearanceDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="appearanceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="appearanceLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="appearanceReason" type="xs:string"/>
+                    <xs:element minOccurs="0" name="appearanceResult" type="xs:string"/>
+                    <xs:element minOccurs="0" name="appearanceTm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="cancelledYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentDescription" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSumApprTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoApprRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoApprRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="appearanceDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="appearanceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="appearanceLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="appearanceTm" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="commentTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="listType" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFilingPartiesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoFilingPartiesRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFilingPartiesRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="firstNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyRole" type="xs:string"/>
+                    <xs:element minOccurs="0" name="secondNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoOrderTermsTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoOrderTermsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoOrderTermsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="appearanceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="orderDocumentSeq" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="orderDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="termSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="termTxt" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSumDocTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoFileSumDocRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSumDocRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="amendedByDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendedByFileSeqNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendedYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendsDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendsFileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="claimAmount" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="nextAppearanceDt" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoAliasTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoAliasRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoAliasRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="enteredDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="nameType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="otherName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCommDevicesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoCommDevicesRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCommDevicesRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="numberTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoLegalRepTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoLegalRepRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoLegalRepRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="legalRepNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="legalRepTypeCode" type="xs:string"/>
+                    <xs:element minOccurs="0" name="legalRepTypeDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSumPartyTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoFileSumPartyRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSumPartyRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="counselNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="counselPhone" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyEnteredDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyRolesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoPartyRolesRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyRolesRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyRole" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyRoleCd" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryPartyDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryPartyDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyPartyDtlsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartyDtlsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="counselName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="counselPhone" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dateEntered" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="firstGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="interpreterLanguage" type="xs:string"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyActiveYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyAddressResult" type="tns:csoEdocsInqyPartyAddrTab"/>
+                    <xs:element minOccurs="0" name="partyAkaResult" type="tns:csoEdocsInqyPartyAkaTab"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyRoleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="partySelfRepresentedYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="secondGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="thirdGivenNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartyAddrTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyPartyAddrRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartyAddrRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="addrAddresee" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addrAttention" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addrEffectiveFromDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="addrEffectiveToDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="addrEnteredDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="addressLine1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressLine3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="city" type="xs:string"/>
+                    <xs:element minOccurs="0" name="country" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fax" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyCounselYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="phone" type="xs:string"/>
+                    <xs:element minOccurs="0" name="postalCodeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="provAbbreviationCd" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartyAkaTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyPartyAkaRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartyAkaRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="akaEnteredDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="akaFirstGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="akaNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="akaOrganizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="akaSecondGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="akaSurnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="akaThirdGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="akaTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaPartyDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaPartyDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCaPartyDetailsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaPartyDetailsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="addressResult" type="tns:csoAddressesTab"/>
+                    <xs:element minOccurs="0" name="aliasResult" type="tns:csoAliasTab"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyEnteredDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="roleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoAddressesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoAddressRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoAddressRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="addressFirstLineTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressSecondLineTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addressSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="addressThirdLineTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="addresseeNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="attentionNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="city" type="xs:string"/>
+                    <xs:element minOccurs="0" name="citySeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="counselYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ctryId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="enteredDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="postalCodeTxt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="province" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaseBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaseBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCaseBasicsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaseBasicsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="caveatExpiryDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="hasRequestableDocs" type="xs:string"/>
+                    <xs:element minOccurs="0" name="initiatingDoc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="probateFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="probateGrantedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryDocuments">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryDocumentsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyDocumentsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyDocumentsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entitledDocumentDetailsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoEdocsInqyDocumentsArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyDocumentsArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyDocumentsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyDocumentsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="amendDocumentNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentDescription" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filingDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderDocumentYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="resultActs" type="tns:csoEdocsDocActsTab"/>
+                    <xs:element minOccurs="0" name="viewImageYn" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsDocActsTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsDocActsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsDocActsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="actCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="actDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentSupportSeqNo" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewTransferDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewTransferDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoTransferDetailsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoTransferDetailsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="hasRequestableDocs" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="transferResult" type="tns:csoTransferTab"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoTransferTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoTransferRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoTransferRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="fromLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="newCourtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="newPhysicalFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="toLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transferAcceptedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="transferDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="transferReasonDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transferType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transferredCourtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transferredPhysicalFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="coFileNumberSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="coFileNumberSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCoFileSrchResultRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCoFileSrchResultRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoCoFileSrchResultArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCoFileSrchResultArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoCoFileSrchResultRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCoFileSrchResultRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocationId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getPartyRoles">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getPartyRolesResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoPartyRoleArr"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyRoleArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoPartyRoleRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyRoleRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="roleTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="roleTypeDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCourtClasses">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCourtClassesResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCourtClassArr"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCourtClassArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoCourtClassRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCourtClassRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="classCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="classDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewDocumentBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewDocumentBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoDocumentBasicsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoDocumentBasicsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="hasRequestableDocs" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="raAuthParties" type="tns:csoAuthorizingPartyArr"/>
+                    <xs:element minOccurs="0" name="raEntitlementCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="raEntitlementDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoDocumentBasicsArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoAuthorizingPartyArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoDocumentBasicsArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoDocumentBasicsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoDocumentBasicsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accessLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendedByDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendedByFileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendedYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendingDocAccessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendsDocAccessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendsDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendsFileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="claimAmount" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docLanguage" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentDescription" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="edocExistsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filingDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isRequestableYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isViewableYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="noSubmittedOrder" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="translationGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="translationLanguage" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCoDocumentOrders">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCoDocumentOrdersResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCoDocumentOrdersRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCoDocumentOrdersRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="acts" type="tns:csoActsTab"/>
+                    <xs:element minOccurs="0" name="amendedYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="claimAmount" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docOrderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="documentComment" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="edocExistsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filedBy" type="tns:csoFilingPartiesTab"/>
+                    <xs:element minOccurs="0" name="filedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoActsTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getFileSpecification">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getFileSpecificationResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoFileSpecificationRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSpecificationRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocationCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocationDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragDocuments">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragDocumentsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsDocumentsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsDocumentsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entitledDocumentDetailsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoEdocsDocumentsArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsDocumentsArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsDocumentsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsDocumentsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="acts" type="tns:csoEdocsDocActsTab"/>
+                    <xs:element minOccurs="0" name="amendDocumentNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentDescription" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filingDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderDocumentYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="viewImageYn" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryTransfers">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryTransfersResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyTransfersRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyTransfersRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoEdocsInqyTransfersArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyTransfersArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyTransfersRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyTransfersRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="acceptedDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="newCourtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="newPhysicalFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="origCourtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="receivingLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="sendingLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transferDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="transferReason" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transferType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="transferredPhysFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCourtLocations">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCourtLocationsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoAgencyArr"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoAgencyArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoAgencyRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoAgencyRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="agenAgencyIdentifierCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="agenAgencyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="agenId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="agenMnemonicCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="agenObsvDstYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="agenTimeZoneCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isProvincialYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isSupremeYn" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewDocumentDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewDocumentDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoDocumentDetailsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoDocumentDetailsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="amendedByDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendedByFileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendedYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendingDocAccessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendsDocAccessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="amendsDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="amendsFileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="claimAmount" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dchrResult" type="tns:csoDocHearingsTab"/>
+                    <xs:element minOccurs="0" name="docOrderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="documentType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="hearingOrderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="nextAppearanceDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="partiesResult" type="tns:csoFilingPartiesTab"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="viewable" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragCaseBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragCaseBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsCaseBasicsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsCaseBasicsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="fmepNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="lastUpdated" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaPartyBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaPartyBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCaPartyBasicsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaPartyBasicsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoCaPartyBasicsArr"/>
+                    <xs:element minOccurs="0" name="roleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaPartyBasicsArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoCaPartyBasicsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaPartyBasicsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="addressExistsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="aliasExistsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="firstNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="secondNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragFileSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg8" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg9" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragFileSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsNameFileSrchRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsNameFileSrchRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoEdocsNameFileSrchArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsNameFileSrchArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsNameFileSrchRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsNameFileSrchRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accessType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="accessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="firstNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fmepNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="hasAnyDataElemEntitleYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="lastUpdated" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="secondNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ncFileNumberSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ncFileNumberSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoNcFileSrchResultRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoNcFileSrchResultRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoNcFileSrchResultArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoNcFileSrchResultArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoNcFileSrchResultRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoNcFileSrchResultRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocationId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getOrderDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getOrderDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoOrderDetailsTab"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoOrderDetailsTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoOrderDetailsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoOrderDetailsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accessLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="appearanceDays" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="decisionType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="givenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="honorificDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderGrantedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getPartyTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getPartyTypesResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoPartyTypesTab"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyTypesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoPartyTypesRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyTypesRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="partyTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyTypeShortDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getCourtLevels">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getCourtLevelsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCourtLevelArr"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCourtLevelArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoCourtLevelRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCourtLevelRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="levelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="levelDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getSID">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getSIDResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="inqyFileSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg8" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg9" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg10" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg11" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg12" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="inqyFileSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsNameFileSrchRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragDocumentDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="oragDocumentDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsOragDocDetailsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsOragDocDetailsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docOrderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filedDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderAdjudicator" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderDateCancelled" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateEnded" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateEntered" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateGranted" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateSubmitted" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateVaried" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDocAccess" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderFirearmsOrderYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderProtectionOrderYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partiesResult" type="tns:csoFilingPartiesTab"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="parseSID">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="parseSIDResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryCaseBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryCaseBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyCaseBasicsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyCaseBasicsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="externalAgencyResult" type="tns:csoEdocsExternalAgencyTab"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="initiatingDocResult" type="tns:csoEdocsInitiatingDocsTab"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="specialProgramResult" type="tns:csoEdocsSpecialProgramsTab"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsExternalAgencyTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsExternalAgencyRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsExternalAgencyRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="externalAgencyFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="externalAgencyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInitiatingDocsTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInitiatingDocsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInitiatingDocsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentTypeCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsSpecialProgramsTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsSpecialProgramsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsSpecialProgramsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="dateIn" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="dateOut" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="reasonIn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="reasonOut" type="xs:string"/>
+                    <xs:element minOccurs="0" name="specialProgramCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="specialProgramShortDsc" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="fileNumberSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg8" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="arg9" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="fileNumberSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoFileSrchResultRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSrchResultRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoFileSrchResultArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSrchResultArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoFileSrchResultRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoFileSrchResultRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accessType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="accessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocationId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="fileStatusCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="lastUpdated" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryPartyBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryPartyBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyPartiesRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartiesRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entitledPartyDetailsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoEdocsInqyPartiesArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartiesArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyPartiesRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartiesRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="firstGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyActiveYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyAkaYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyCounselYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyDateOfBirth" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyRoleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="secondGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="thirdGivenNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewPartyBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewPartyBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoPartyBasicsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyBasicsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="hasRequestableDocs" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoPartyBasicsArr"/>
+                    <xs:element minOccurs="0" name="roleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyBasicsArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoPartyBasicsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyBasicsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="counselNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="counselPhone" type="xs:string"/>
+                    <xs:element minOccurs="0" name="firstNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="secondNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="dateRangeSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="dateRangeSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoFileSrchResultRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="deceasedNameSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="deceasedNameSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoDeceasedSrchResultRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoDeceasedSrchResultRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="resultCaveat" type="tns:csoNameSrchResultArr"/>
+                    <xs:element minOccurs="0" name="resultProbate" type="tns:csoNameSrchResultArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoNameSrchResultArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoNameSrchResultRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoNameSrchResultRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="accessType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="accessYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="caveatExpiryDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="courtClass" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevel" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLocation" type="xs:string"/>
+                    <xs:element minOccurs="0" name="deathDt" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileOpenDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="firstNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="lastUpdated" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="secondNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryAppearances">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryAppearancesResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyHrngRsltRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngRsltRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="entitledHearingDetailsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoEdocsInqyHrngRsltArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngRsltArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyHrngRsltRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngRsltRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="appearanceDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="appearanceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="location" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="reasonDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="resultDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="room" type="xs:string"/>
+                    <xs:element minOccurs="0" name="time" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryDocumentDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryDocumentDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyDocDetailsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyDocDetailsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="docOrderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="documentTypeDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filingBodyCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="filingBodyDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issuesResult" type="tns:csoEdocsInqyDocIssuesTab"/>
+                    <xs:element minOccurs="0" name="orderAdjudicator" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderDateCancelled" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateEnded" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateEntered" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateGranted" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateSubmitted" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDateVaried" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="orderDocAccess" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderDocumentYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderFirearmsOrderYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderProtectionOrderYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyRolesResult" type="tns:csoEdocsInqyPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyDocIssuesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyDocIssuesRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyDocIssuesRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="appearanceDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="issueConcludedYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issueDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issueResultDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issueSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="nextAppearanceDate" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartyRolesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyPartyRolesRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyPartyRolesRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="activeYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="dateEntered" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="firstGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyRole" type="xs:string"/>
+                    <xs:element minOccurs="0" name="secondGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="thirdGivenNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewAppearances">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewAppearancesResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoApprRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoApprRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="apprDocResult" type="tns:csoDocHearingsTab"/>
+                    <xs:element minOccurs="0" name="apprResult" type="tns:csoApprArr"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="hasRequestableDocs" type="xs:string"/>
+                    <xs:element minOccurs="0" name="orderTermResult" type="tns:csoOrderTermsTab"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoApprArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoApprRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="partyNameSearch">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg7" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg8" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg9" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg10" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg11" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="arg12" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg13" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="arg14" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="partyNameSearchResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoNameSrchResultRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoNameSrchResultRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoNameSrchResultArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getParties">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="getPartiesResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoPartiesTab"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartiesTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoPartiesRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartiesRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="aliasResult" type="tns:csoAliasTab"/>
+                    <xs:element minOccurs="0" name="counselNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="counselPhone" type="xs:string"/>
+                    <xs:element minOccurs="0" name="firstNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="legalrepResult" type="tns:csoLegalRepTab"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="roleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="secondNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaDocumentBasics">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewCaDocumentBasicsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoCaDocumentBasicsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaDocumentBasicsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="page" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="records" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="recordsPerPage" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="result" type="tns:csoCaDocumentBasicsArr"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                    <xs:element minOccurs="0" name="totalRecords" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaDocumentBasicsArr">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoCaDocumentBasicsRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoCaDocumentBasicsRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="acts" type="tns:csoActsTab"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="claimAmount" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="documentDescription" type="xs:string"/>
+                    <xs:element minOccurs="0" name="documentType" type="xs:string"/>
+                    <xs:element minOccurs="0" name="edocExistsYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="fileSeqNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="filingDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="initiatingDocYn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="levelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="objectGuid" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryAppearanceDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewInquiryAppearanceDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoEdocsInqyHrngDtlsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngDtlsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="adjournedPriorDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="appearanceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="hearingIssueResult" type="tns:csoEdocsInqyHrngIssueTab"/>
+                    <xs:element minOccurs="0" name="hearingPartyResult" type="tns:csoEdocsInqyHrngPartyTab"/>
+                    <xs:element minOccurs="0" name="nextAppearanceDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngIssueTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyHrngIssueRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngIssueRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="civilDocumentId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="issueDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issueResultCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issueResultDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issueSeqNo" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngPartyTab">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="tns:csoEdocsInqyHrngPartyRec"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoEdocsInqyHrngPartyRec">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="appearanceId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="attendanceMethod" type="xs:string"/>
+                    <xs:element minOccurs="0" name="counselAttendMethod" type="xs:string"/>
+                    <xs:element minOccurs="0" name="counselName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="firstGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="interpreterLanguage" type="xs:string"/>
+                    <xs:element minOccurs="0" name="organizationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyRoleDsc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="secondGivenNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="surnameNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="thirdGivenNm" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewPartyDetails">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="viewPartyDetailsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:csoPartyDetailsRet"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="csoPartyDetailsRet">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="aliasResult" type="tns:csoAliasTab"/>
+                    <xs:element minOccurs="0" name="commResult" type="tns:csoCommDevicesTab"/>
+                    <xs:element minOccurs="0" name="counselNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="counselPhone" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="legalrepResult" type="tns:csoLegalRepTab"/>
+                    <xs:element minOccurs="0" name="partyEnteredDt" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="partyId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="partyNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="physFileId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="roleResult" type="tns:csoPartyRolesTab"/>
+                    <xs:element minOccurs="0" name="searchId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="styleOfCause" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="printFileSummary">
+        <wsdl:part element="tns:printFileSummary" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCoDocumentOrdersResponse">
+        <wsdl:part element="tns:viewCoDocumentOrdersResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getSIDResponse">
+        <wsdl:part element="tns:getSIDResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryAppearanceDetailsResponse">
+        <wsdl:part element="tns:viewInquiryAppearanceDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryPartyDetails">
+        <wsdl:part element="tns:viewInquiryPartyDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryDocuments">
+        <wsdl:part element="tns:viewInquiryDocuments" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewTransferDetails">
+        <wsdl:part element="tns:viewTransferDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getOrderDetailsResponse">
+        <wsdl:part element="tns:getOrderDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewDocumentBasicsResponse">
+        <wsdl:part element="tns:viewDocumentBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryAppearancesResponse">
+        <wsdl:part element="tns:viewInquiryAppearancesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryTransfersResponse">
+        <wsdl:part element="tns:viewInquiryTransfersResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="inqyFileSearchResponse">
+        <wsdl:part element="tns:inqyFileSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragDocuments">
+        <wsdl:part element="tns:oragDocuments" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="partyNameSearchResponse">
+        <wsdl:part element="tns:partyNameSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragDocumentsResponse">
+        <wsdl:part element="tns:oragDocumentsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCourtLocations">
+        <wsdl:part element="tns:getCourtLocations" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryCaseBasicsResponse">
+        <wsdl:part element="tns:viewInquiryCaseBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="fileNumberSearchResponse">
+        <wsdl:part element="tns:fileNumberSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewDocumentDetails">
+        <wsdl:part element="tns:viewDocumentDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaPartyBasics">
+        <wsdl:part element="tns:viewCaPartyBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragDocumentDetailsResponse">
+        <wsdl:part element="tns:oragDocumentDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewTransferDetailsResponse">
+        <wsdl:part element="tns:viewTransferDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ncFileNumberSearch">
+        <wsdl:part element="tns:ncFileNumberSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPartyTypes">
+        <wsdl:part element="tns:getPartyTypes" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaPartyBasicsResponse">
+        <wsdl:part element="tns:viewCaPartyBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ncFileNumberSearchResponse">
+        <wsdl:part element="tns:ncFileNumberSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getSID">
+        <wsdl:part element="tns:getSID" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="inqyFileSearch">
+        <wsdl:part element="tns:inqyFileSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragDocumentDetails">
+        <wsdl:part element="tns:oragDocumentDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryPartyBasics">
+        <wsdl:part element="tns:viewInquiryPartyBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewPartyBasics">
+        <wsdl:part element="tns:viewPartyBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deceasedNameSearch">
+        <wsdl:part element="tns:deceasedNameSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaseBasicsResponse">
+        <wsdl:part element="tns:viewCaseBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaDocumentBasicsResponse">
+        <wsdl:part element="tns:viewCaDocumentBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryAppearances">
+        <wsdl:part element="tns:viewInquiryAppearances" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryDocumentDetails">
+        <wsdl:part element="tns:viewInquiryDocumentDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewAppearances">
+        <wsdl:part element="tns:viewAppearances" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryPartyBasicsResponse">
+        <wsdl:part element="tns:viewInquiryPartyBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPartyTypesResponse">
+        <wsdl:part element="tns:getPartyTypesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaDocumentBasics">
+        <wsdl:part element="tns:viewCaDocumentBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryAppearanceDetails">
+        <wsdl:part element="tns:viewInquiryAppearanceDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPartiesResponse">
+        <wsdl:part element="tns:getPartiesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="printFileSummaryResponse">
+        <wsdl:part element="tns:printFileSummaryResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="parseSIDResponse">
+        <wsdl:part element="tns:parseSIDResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaPartyDetails">
+        <wsdl:part element="tns:viewCaPartyDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaseBasics">
+        <wsdl:part element="tns:viewCaseBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="coFileNumberSearch">
+        <wsdl:part element="tns:coFileNumberSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPartyRoles">
+        <wsdl:part element="tns:getPartyRoles" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCourtLocationsResponse">
+        <wsdl:part element="tns:getCourtLocationsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCourtClasses">
+        <wsdl:part element="tns:getCourtClasses" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewDocumentBasics">
+        <wsdl:part element="tns:viewDocumentBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCoDocumentOrders">
+        <wsdl:part element="tns:viewCoDocumentOrders" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryDocumentDetailsResponse">
+        <wsdl:part element="tns:viewInquiryDocumentDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewDocumentDetailsResponse">
+        <wsdl:part element="tns:viewDocumentDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="deceasedNameSearchResponse">
+        <wsdl:part element="tns:deceasedNameSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getFileSpecificationResponse">
+        <wsdl:part element="tns:getFileSpecificationResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewPartyBasicsResponse">
+        <wsdl:part element="tns:viewPartyBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getFileSpecification">
+        <wsdl:part element="tns:getFileSpecification" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragCaseBasicsResponse">
+        <wsdl:part element="tns:oragCaseBasicsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragFileSearchResponse">
+        <wsdl:part element="tns:oragFileSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryTransfers">
+        <wsdl:part element="tns:viewInquiryTransfers" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragCaseBasics">
+        <wsdl:part element="tns:oragCaseBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="oragFileSearch">
+        <wsdl:part element="tns:oragFileSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewPartyDetailsResponse">
+        <wsdl:part element="tns:viewPartyDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCourtClassesResponse">
+        <wsdl:part element="tns:getCourtClassesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewAppearancesResponse">
+        <wsdl:part element="tns:viewAppearancesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getOrderDetails">
+        <wsdl:part element="tns:getOrderDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCourtLevels">
+        <wsdl:part element="tns:getCourtLevels" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="parseSID">
+        <wsdl:part element="tns:parseSID" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryDocumentsResponse">
+        <wsdl:part element="tns:viewInquiryDocumentsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryCaseBasics">
+        <wsdl:part element="tns:viewInquiryCaseBasics" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="fileNumberSearch">
+        <wsdl:part element="tns:fileNumberSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="dateRangeSearchResponse">
+        <wsdl:part element="tns:dateRangeSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPartyRolesResponse">
+        <wsdl:part element="tns:getPartyRolesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="dateRangeSearch">
+        <wsdl:part element="tns:dateRangeSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewCaPartyDetailsResponse">
+        <wsdl:part element="tns:viewCaPartyDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCourtLevelsResponse">
+        <wsdl:part element="tns:getCourtLevelsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="partyNameSearch">
+        <wsdl:part element="tns:partyNameSearch" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewInquiryPartyDetailsResponse">
+        <wsdl:part element="tns:viewInquiryPartyDetailsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="coFileNumberSearchResponse">
+        <wsdl:part element="tns:coFileNumberSearchResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getParties">
+        <wsdl:part element="tns:getParties" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="viewPartyDetails">
+        <wsdl:part element="tns:viewPartyDetails" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="Csows">
+        <wsdl:operation name="printFileSummary">
+            <wsdl:input message="tns:printFileSummary" name="printFileSummary"></wsdl:input>
+            <wsdl:output message="tns:printFileSummaryResponse" name="printFileSummaryResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryPartyDetails">
+            <wsdl:input message="tns:viewInquiryPartyDetails" name="viewInquiryPartyDetails"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryPartyDetailsResponse" name="viewInquiryPartyDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaPartyDetails">
+            <wsdl:input message="tns:viewCaPartyDetails" name="viewCaPartyDetails"></wsdl:input>
+            <wsdl:output message="tns:viewCaPartyDetailsResponse" name="viewCaPartyDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaseBasics">
+            <wsdl:input message="tns:viewCaseBasics" name="viewCaseBasics"></wsdl:input>
+            <wsdl:output message="tns:viewCaseBasicsResponse" name="viewCaseBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryDocuments">
+            <wsdl:input message="tns:viewInquiryDocuments" name="viewInquiryDocuments"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryDocumentsResponse" name="viewInquiryDocumentsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewTransferDetails">
+            <wsdl:input message="tns:viewTransferDetails" name="viewTransferDetails"></wsdl:input>
+            <wsdl:output message="tns:viewTransferDetailsResponse" name="viewTransferDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="coFileNumberSearch">
+            <wsdl:input message="tns:coFileNumberSearch" name="coFileNumberSearch"></wsdl:input>
+            <wsdl:output message="tns:coFileNumberSearchResponse" name="coFileNumberSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getPartyRoles">
+            <wsdl:input message="tns:getPartyRoles" name="getPartyRoles"></wsdl:input>
+            <wsdl:output message="tns:getPartyRolesResponse" name="getPartyRolesResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCourtClasses">
+            <wsdl:input message="tns:getCourtClasses" name="getCourtClasses"></wsdl:input>
+            <wsdl:output message="tns:getCourtClassesResponse" name="getCourtClassesResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewDocumentBasics">
+            <wsdl:input message="tns:viewDocumentBasics" name="viewDocumentBasics"></wsdl:input>
+            <wsdl:output message="tns:viewDocumentBasicsResponse" name="viewDocumentBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCoDocumentOrders">
+            <wsdl:input message="tns:viewCoDocumentOrders" name="viewCoDocumentOrders"></wsdl:input>
+            <wsdl:output message="tns:viewCoDocumentOrdersResponse" name="viewCoDocumentOrdersResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getFileSpecification">
+            <wsdl:input message="tns:getFileSpecification" name="getFileSpecification"></wsdl:input>
+            <wsdl:output message="tns:getFileSpecificationResponse" name="getFileSpecificationResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragDocuments">
+            <wsdl:input message="tns:oragDocuments" name="oragDocuments"></wsdl:input>
+            <wsdl:output message="tns:oragDocumentsResponse" name="oragDocumentsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryTransfers">
+            <wsdl:input message="tns:viewInquiryTransfers" name="viewInquiryTransfers"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryTransfersResponse" name="viewInquiryTransfersResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCourtLocations">
+            <wsdl:input message="tns:getCourtLocations" name="getCourtLocations"></wsdl:input>
+            <wsdl:output message="tns:getCourtLocationsResponse" name="getCourtLocationsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewDocumentDetails">
+            <wsdl:input message="tns:viewDocumentDetails" name="viewDocumentDetails"></wsdl:input>
+            <wsdl:output message="tns:viewDocumentDetailsResponse" name="viewDocumentDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragCaseBasics">
+            <wsdl:input message="tns:oragCaseBasics" name="oragCaseBasics"></wsdl:input>
+            <wsdl:output message="tns:oragCaseBasicsResponse" name="oragCaseBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaPartyBasics">
+            <wsdl:input message="tns:viewCaPartyBasics" name="viewCaPartyBasics"></wsdl:input>
+            <wsdl:output message="tns:viewCaPartyBasicsResponse" name="viewCaPartyBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragFileSearch">
+            <wsdl:input message="tns:oragFileSearch" name="oragFileSearch"></wsdl:input>
+            <wsdl:output message="tns:oragFileSearchResponse" name="oragFileSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ncFileNumberSearch">
+            <wsdl:input message="tns:ncFileNumberSearch" name="ncFileNumberSearch"></wsdl:input>
+            <wsdl:output message="tns:ncFileNumberSearchResponse" name="ncFileNumberSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getOrderDetails">
+            <wsdl:input message="tns:getOrderDetails" name="getOrderDetails"></wsdl:input>
+            <wsdl:output message="tns:getOrderDetailsResponse" name="getOrderDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getPartyTypes">
+            <wsdl:input message="tns:getPartyTypes" name="getPartyTypes"></wsdl:input>
+            <wsdl:output message="tns:getPartyTypesResponse" name="getPartyTypesResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCourtLevels">
+            <wsdl:input message="tns:getCourtLevels" name="getCourtLevels"></wsdl:input>
+            <wsdl:output message="tns:getCourtLevelsResponse" name="getCourtLevelsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getSID">
+            <wsdl:input message="tns:getSID" name="getSID"></wsdl:input>
+            <wsdl:output message="tns:getSIDResponse" name="getSIDResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="inqyFileSearch">
+            <wsdl:input message="tns:inqyFileSearch" name="inqyFileSearch"></wsdl:input>
+            <wsdl:output message="tns:inqyFileSearchResponse" name="inqyFileSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragDocumentDetails">
+            <wsdl:input message="tns:oragDocumentDetails" name="oragDocumentDetails"></wsdl:input>
+            <wsdl:output message="tns:oragDocumentDetailsResponse" name="oragDocumentDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="parseSID">
+            <wsdl:input message="tns:parseSID" name="parseSID"></wsdl:input>
+            <wsdl:output message="tns:parseSIDResponse" name="parseSIDResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryCaseBasics">
+            <wsdl:input message="tns:viewInquiryCaseBasics" name="viewInquiryCaseBasics"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryCaseBasicsResponse" name="viewInquiryCaseBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="fileNumberSearch">
+            <wsdl:input message="tns:fileNumberSearch" name="fileNumberSearch"></wsdl:input>
+            <wsdl:output message="tns:fileNumberSearchResponse" name="fileNumberSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryPartyBasics">
+            <wsdl:input message="tns:viewInquiryPartyBasics" name="viewInquiryPartyBasics"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryPartyBasicsResponse" name="viewInquiryPartyBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewPartyBasics">
+            <wsdl:input message="tns:viewPartyBasics" name="viewPartyBasics"></wsdl:input>
+            <wsdl:output message="tns:viewPartyBasicsResponse" name="viewPartyBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="dateRangeSearch">
+            <wsdl:input message="tns:dateRangeSearch" name="dateRangeSearch"></wsdl:input>
+            <wsdl:output message="tns:dateRangeSearchResponse" name="dateRangeSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deceasedNameSearch">
+            <wsdl:input message="tns:deceasedNameSearch" name="deceasedNameSearch"></wsdl:input>
+            <wsdl:output message="tns:deceasedNameSearchResponse" name="deceasedNameSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryAppearances">
+            <wsdl:input message="tns:viewInquiryAppearances" name="viewInquiryAppearances"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryAppearancesResponse" name="viewInquiryAppearancesResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryDocumentDetails">
+            <wsdl:input message="tns:viewInquiryDocumentDetails" name="viewInquiryDocumentDetails"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryDocumentDetailsResponse" name="viewInquiryDocumentDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewAppearances">
+            <wsdl:input message="tns:viewAppearances" name="viewAppearances"></wsdl:input>
+            <wsdl:output message="tns:viewAppearancesResponse" name="viewAppearancesResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="partyNameSearch">
+            <wsdl:input message="tns:partyNameSearch" name="partyNameSearch"></wsdl:input>
+            <wsdl:output message="tns:partyNameSearchResponse" name="partyNameSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getParties">
+            <wsdl:input message="tns:getParties" name="getParties"></wsdl:input>
+            <wsdl:output message="tns:getPartiesResponse" name="getPartiesResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaDocumentBasics">
+            <wsdl:input message="tns:viewCaDocumentBasics" name="viewCaDocumentBasics"></wsdl:input>
+            <wsdl:output message="tns:viewCaDocumentBasicsResponse" name="viewCaDocumentBasicsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryAppearanceDetails">
+            <wsdl:input message="tns:viewInquiryAppearanceDetails" name="viewInquiryAppearanceDetails"></wsdl:input>
+            <wsdl:output message="tns:viewInquiryAppearanceDetailsResponse" name="viewInquiryAppearanceDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewPartyDetails">
+            <wsdl:input message="tns:viewPartyDetails" name="viewPartyDetails"></wsdl:input>
+            <wsdl:output message="tns:viewPartyDetailsResponse" name="viewPartyDetailsResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CsowsSoapBinding" type="tns:Csows">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="printFileSummary">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="printFileSummary">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="printFileSummaryResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryPartyDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryPartyDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryPartyDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaPartyDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewCaPartyDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewCaPartyDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaseBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewCaseBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewCaseBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryDocuments">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryDocuments">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryDocumentsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewTransferDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewTransferDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewTransferDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="coFileNumberSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="coFileNumberSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="coFileNumberSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getPartyRoles">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getPartyRoles">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getPartyRolesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCourtClasses">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCourtClasses">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCourtClassesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewDocumentBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewDocumentBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewDocumentBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCoDocumentOrders">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewCoDocumentOrders">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewCoDocumentOrdersResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getFileSpecification">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getFileSpecification">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getFileSpecificationResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragDocuments">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="oragDocuments">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="oragDocumentsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryTransfers">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryTransfers">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryTransfersResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCourtLocations">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCourtLocations">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCourtLocationsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewDocumentDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewDocumentDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewDocumentDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragCaseBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="oragCaseBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="oragCaseBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaPartyBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewCaPartyBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewCaPartyBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragFileSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="oragFileSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="oragFileSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ncFileNumberSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="ncFileNumberSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ncFileNumberSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getOrderDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getOrderDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getOrderDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getPartyTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getPartyTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getPartyTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getCourtLevels">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getCourtLevels">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCourtLevelsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getSID">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getSID">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getSIDResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="inqyFileSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="inqyFileSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="inqyFileSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oragDocumentDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="oragDocumentDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="oragDocumentDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="parseSID">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="parseSID">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="parseSIDResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryCaseBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryCaseBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryCaseBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="fileNumberSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="fileNumberSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="fileNumberSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryPartyBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryPartyBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryPartyBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewPartyBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewPartyBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewPartyBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="dateRangeSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="dateRangeSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="dateRangeSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="deceasedNameSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="deceasedNameSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="deceasedNameSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryAppearances">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryAppearances">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryAppearancesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryDocumentDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryDocumentDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryDocumentDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewAppearances">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewAppearances">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewAppearancesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="partyNameSearch">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="partyNameSearch">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="partyNameSearchResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getParties">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getParties">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getPartiesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewCaDocumentBasics">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewCaDocumentBasics">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewCaDocumentBasicsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewInquiryAppearanceDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewInquiryAppearanceDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewInquiryAppearanceDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="viewPartyDetails">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="viewPartyDetails">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="viewPartyDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Csows">
+        <wsdl:port binding="tns:CsowsSoapBinding" name="CsowsPort">
+            <soap:address location="http://localhost:11530/csows/Csows"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

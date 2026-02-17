@@ -9,6 +9,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class NavigationProperties {
 
     private String baseUrl;
+
+    private String csoBaseUrl;
+
     /**
      * Returns the base url to create a secure upload url
      * @return
@@ -21,4 +24,11 @@ public class NavigationProperties {
         this.baseUrl = baseUrl;
     }
 
+    public String getCsoBaseUrl() {
+        return csoBaseUrl;
+    }
+
+    public void setCsoBaseUrl(String csoBaseUrl) {
+        this.csoBaseUrl = csoBaseUrl;
+    }
 }

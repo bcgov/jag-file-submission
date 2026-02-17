@@ -1,0 +1,78 @@
+.ct-upload {
+  .dropzone-outer-box {
+    border: 1px dashed #707070;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .dropzone-inner-box {
+    display: flex;
+  }
+
+  .dropzone-inner-box span {
+    align-self: center;
+  }
+
+  .dropzone-inner-box div {
+    text-align: center;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .table-value {
+    display: flex;
+    margin-left: 50px;
+  }
+
+  @media (max-width: 598px) {
+    .table-value {
+      display: flex;
+      margin-left: 0px;
+    }
+
+    .top-spacing {
+      margin-top: 20px;
+    }
+  }
+
+  .text-center-alignment {
+    text-align: center;
+  }
+
+  .center-alignment {
+    display: flex;
+    align-items: center;
+  }
+
+  .fill-space {
+    width: 100%;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: stretch;
+  }
+
+  .minor-margin-left {
+    margin-left: 5px;
+  }
+
+  .major-padding-left {
+    padding-left: 37px;
+  }
+
+  @media (max-width: 598px) {
+    .major-padding-left {
+      padding-left: 0px;
+    }
+  }
+
+  .minor-margin-right {
+    margin-right: 5%;
+  }
+
+  .error {
+    color: #d8292f;
+  }
+}

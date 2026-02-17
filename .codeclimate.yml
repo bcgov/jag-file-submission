@@ -22,15 +22,14 @@ exclude_patterns:
   - "src/backend/efiling-api/src/main/java/ca/bc/gov/open/jag/efilingapi/submission/mappers/SubmissionMapper.java"
   - "src/backend/efiling-api/src/main/java/ca/bc/gov/open/jag/efilingapi/submission/service/SubmissionService.java"
   - "src/backend/efiling-backend-demo/src/main/java/ca/bc/gov/open/jag/efilingbackenddemo/EfilingBackendDemoApplication.java"
-  - "src/backend/efiling-worker/src/main/java/ca/bc/gov/open/jag/efilingworker/EfilingWorkerApplication.java"
-  - "src/backend/efiling-worker/src/main/java/ca/bc/gov/open/jag/efilingworker/service/DocumentStoreService.java"
   - "src/backend/libs/efiling-lookup-client/src/main/java/ca/bc/gov/open/jag/efilinglookupclient/EfilingLookupService.java"
   - "src/backend/libs/efiling-status-client/src/main/java/ca/bc/gov/open/jag/efilingstatusclient/EfilingStatusService.java"
   - "src/backend/libs/efiling-submission-client/src/main/java/ca/bc/gov/open/jag/efilingsubmissionclient/EfilingSubmissionService.java"
+  - "src/backend/**/test/**"
 
   # Frontend Pattern Excludes
   - "src/frontend/*/src/*.js"
+  - "src/frontend/*/src/components/hoc/*.js"
   - "src/frontend/efiling-frontend/src/modules/confirmationPopupTestData.js"
-  - "src/frontend/shared-components/src/modules/termsOfUseTestData.js"
   - "src/frontend/*/public/"
   - "src/frontend/*/.storybook/"

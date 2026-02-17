@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Header, Footer, Button } from "shared-components";
 import { propTypes } from "../../../types/propTypes";
+import "./Error.css";
 
-export default function Error({ page: { header, error } }) {
+export default function Error({ page: { header, status, message } }) {
   return (
     <main>
       <Header header={header} />
@@ -13,14 +14,21 @@ export default function Error({ page: { header, error } }) {
             The following error occurred with your submission. Please click the
             button below to go back home.
           </p>
-          <p>
-            <b>{error}</b>
+          <p className="error-info">
+            <b>
+              Status:&nbsp;
+              {status}
+            </b>
+            <b>
+              Message:&nbsp;
+              {message}
+            </b>
           </p>
           <br />
           <Button
-            onClick={() => header.history.push("/")}
+            onClick={() => header.navigate("/")}
             label="Return home"
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
           />
         </div>
       </div>
@@ -32,6 +40,7 @@ export default function Error({ page: { header, error } }) {
 Error.propTypes = {
   page: PropTypes.shape({
     header: propTypes.header,
-    error: PropTypes.string.isRequired
-  }).isRequired
+    status: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+  }).isRequired,
 };

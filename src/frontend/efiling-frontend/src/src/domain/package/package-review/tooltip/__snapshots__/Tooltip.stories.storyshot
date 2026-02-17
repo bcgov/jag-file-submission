@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Tooltip Withdraw Tooltip 1`] = `
+<DocumentFragment>
+  <div
+    style="margin-left: 45%; margin-top: 20%;"
+  >
+    <span
+      id="tiptarget"
+    >
+      withdraw
+      <div
+        class="bcgov-withdraw-tooltip "
+      />
+    </span>
+  </div>
+</DocumentFragment>
+`;

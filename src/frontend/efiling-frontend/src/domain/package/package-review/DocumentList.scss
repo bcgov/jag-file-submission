@@ -1,0 +1,59 @@
+.ct-document-list {
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+  }
+  .label {
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+  ul {
+    margin: 5px 0px;
+    padding: 0px;
+  }
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    border: 1px solid #bfbfbf;
+    padding: 10px 0px;
+    margin: 10px 0px;
+  }
+  .REJ, .CCOR {
+    border: 1px solid #e88387 !important;
+  }
+
+  li span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  li span.file-cell {
+    padding-top: 1px;
+  }
+  .hidden {
+    display: none;
+  }
+  .modal-body p,
+  .modal-body .row div {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .modal-body .data {
+    font-weight: bold;
+  }
+  .modal-footer {
+    display: block;
+    align-items: normal;
+    justify-content: normal;
+  }
+  .pull-left {
+    float: left;
+  }
+  .pull-right {
+    float: right;
+  }
+  svg {
+    margin-right: 10px;
+  }
+}

@@ -1,0 +1,347 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Success Component matches the snapshot 1`] = `
+<DocumentFragment>
+  <main>
+    <header
+      class="bcgov-header"
+    >
+      <nav
+        aria-label="Header"
+        class="container-fluid navbar navbar-expand-lg navbar-dark"
+      >
+        <div
+          aria-labelledby="title"
+          class="navbar-brand bcgov-pointer"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-none d-md-block bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-logo-rev-en.svg"
+          width="181"
+        />
+        <img
+          alt="B.C. Government Logo"
+          class="img-fluid d-md-none bcgov-pointer"
+          height="44"
+          src="undefined/images/bcid-symbol-rev.svg"
+          width="64"
+        />
+        <div
+          aria-labelledby="title"
+          class="bcgov-pointer navbar-brand nav-item nav-link"
+        />
+        <div
+          class="bcgov-flex-spacing"
+        >
+          <div
+            class="navbar-brand bcgov-vertical-center"
+            id="title"
+          >
+            eFiling Demo Client
+          </div>
+          <div />
+        </div>
+      </nav>
+    </header>
+    <div
+      class="page"
+    >
+      <div
+        class="content container"
+      >
+        <div
+          class="row justify-content-md-center"
+        >
+          <div
+            class="col-md-8 col-sm-12"
+          >
+            <div
+              class="card"
+            >
+              <div
+                class="card-body"
+              >
+                <h5
+                  class="card-title"
+                >
+                  Query String values
+                </h5>
+                <div
+                  class="bcgov-table "
+                >
+                  <b />
+                  <div
+                    class="bcgov-table-body"
+                  >
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        hashExpiry
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          202012302048
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        hashValue
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          97F9D18E87F902807890CBF8B11D3244
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        merchantId
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          merchantid
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        operationType
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          N
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        ref1
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          customerCode
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        serviceVersion
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          1
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        trnLanguage
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          eng
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        trnOrderNumber
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          C1234
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="bcgov-row "
+                    >
+                      <div
+                        class="bcgov-fill-width"
+                      >
+                        trnReturnURL
+                      </div>
+                      <div
+                        class="bcgov-table-value "
+                      >
+                        <b>
+                          http://localhost:3000/efilinghub
+                        </b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div
+          class="row justify-content-md-center"
+        >
+          <div
+            class="col-md-4 col-sm-12 mt-2"
+          >
+            <button
+              class="bcgov-button btn btn-success mx-auto"
+              data-testid=""
+              type="button"
+            >
+              Simulate Card Update Success
+            </button>
+          </div>
+          <div
+            class="col-md-4 col-sm-12 mt-2"
+          >
+            <button
+              class="bcgov-button btn btn-danger mx-auto"
+              data-testid=""
+              type="button"
+            >
+              Simulate Card Update Failure
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer
+      class="bcgov-footer"
+    >
+      <nav
+        aria-label="Footer"
+        class="navbar navbar-expand-sm navbar-dark justify-content-end"
+      >
+        <button
+          class="navbar-toggler"
+          data-target="#footerBar"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse flex-grow-0"
+          id="footerBar"
+        >
+          <ul
+            class="navbar-nav text-right"
+          >
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                BC Government
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Disclaimer
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Accessibility
+              </a>
+            </li>
+            <li
+              class="nav-item m-1"
+            >
+              <a
+                class="nav-link"
+                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Copyright
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </footer>
+  </main>
+</DocumentFragment>
+`;

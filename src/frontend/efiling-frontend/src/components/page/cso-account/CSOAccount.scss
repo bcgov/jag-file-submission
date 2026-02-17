@@ -1,0 +1,31 @@
+.ct-cso-account {
+  * {
+    outline: none !important;
+  }
+  .email-form {
+    margin-left: 75px;
+  }
+  .email-input {
+    margin-bottom: 5px;
+  }
+  .cso-label {
+    font-weight: bold;
+    margin: 0 0 3px 0;
+  }
+  .cso-input {
+    border: 1px solid;
+    width: 330px;
+  }
+  .red {
+    color: red;
+  }
+  .error {
+    margin-left: 5px;
+  }
+
+  @media (max-width: 430px) {
+    .cso-input {
+      width: 100%;
+    }
+  }
+}

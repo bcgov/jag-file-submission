@@ -1,56 +1,71 @@
-# Frontend Tests
+# Test Automation
 
 ## Folder Structure
 
-The folder structure for the frontend automation will be as follows:
+The folder structure for test automation will be as follows:
 
 ```
 tests
 ├── src
 │    └── main
-|    |   └──config
-|    |   └──pages
-|    |   └──util
 |    └── test
-|    |   └──tests
 |    |   └──resources
 ├── .gitignore
 ├── pom.xml
 └── README.md
 ```
 
-## Running the maven Tests without cucumber tags
+## To run locally
 
-1. Add values to the keys in config.properties file.
-1. Add test data values to the json files in 'test/java/testdatasource' package.
+Docker-compose up and then run mvn command from the root
 
-In the 'tests' directory, you can run:
+```bash
+mvn verify -f tests/pom.xml
+```
 
-### `mvn clean install`
+## To run with different auth providers
 
-Installs all the required mvn dependencies.
+Tests can be run with BCEID and BC Services card on dev
 
-### `mvn test`
+Assign value to the "AUTH_PROVIDER" env variable as below
 
-Runs the tests on the specified browser.
+```bash
+AUTH_PROVIDER:bceid
+```
+or 
 
-## Running the Cucumber Tests with tags
+```bash
+AUTH_PROVIDER:bcsc
+```
 
-Add values to the keys in config.properties file
-Update tags value in 'RunCucumberTest' class
+Running the tests create an html report [here](test-output/extent/HtmlReport/ExtentHtml.html)
 
-In the 'tests' directory, you can run:
+## Cucumber Tags
 
-### `mvn test -Dcucumber.options="--tags '@tagname'"`
+We support running the tests with the current tags:
 
-This runs the tests that are tagged with the specific tag name.
-Without the 'tags' option all tests gets executed.
+```bash
+@frontend
+```
 
-Alternatively, both frontend and backend tests can be run from
-RunCucumberTest.java class
+### Tags
 
-## Reports
+Using tags will only run the specified tests.
 
-Html reports will be saved in the test-output folder to view the test results in the browser
+```bash
+cd tests
+```
 
-### `test/test-output/extent`
+```bash
+mvn verify -Dcucumber.options="--tags '@backend'"
+```
+
+```bash
+mvn verify -Dcucumber.options="--tags '@frontend'"
+```
+### Plugins
+
+Useful cucumber plugins to write feature files
+
+* Cucumber for java from Jetbrains
+* Gherkin from Jetbrains

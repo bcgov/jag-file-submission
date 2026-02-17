@@ -1,11 +1,12 @@
 import React from "react";
-import { createMemoryHistory } from "history";
 import { render, getByText, fireEvent } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import Cancel from "./Cancel";
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: {},
+  navigate: createMemoryHistory,
 };
 
 const page = { header };
@@ -22,6 +23,6 @@ describe("Cancel", () => {
 
     fireEvent.click(getByText(container, "Return home"));
 
-    expect(header.history.location.pathname).toEqual("/");
+    expect(window.location.pathname).toEqual("/");
   });
 });

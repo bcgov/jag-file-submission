@@ -1,6 +1,6 @@
 {
-  "short_name": "eFiling Frontend",
-  "name": "JAG File Submission Frontend App",
+  "short_name": "eFiling Demo",
+  "name": "JAG File Submission Demo App",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

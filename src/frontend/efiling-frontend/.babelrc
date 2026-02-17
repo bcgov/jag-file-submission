@@ -2,14 +2,19 @@
   "env": {
     "test": {
       "presets": [
+        "@babel/preset-react",
         "@babel/preset-env",
-        "@babel/preset-react"
+        "@babel/preset-typescript"
+        
       ],
       "plugins": [
+        "@babel/plugin-syntax-jsx",
         "transform-export-extensions"
       ],
       "only": [
         "./**/*.js",
+        "./**/*.ts",
+        "./**/*.tsx",
         "node_modules/jest-runtime"
       ]
     }
