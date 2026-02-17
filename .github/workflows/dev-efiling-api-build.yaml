@@ -7,7 +7,7 @@ on:
     branches: [master]
     paths:
       - "src/backend/**"
-      - ".github/workflows/dev-efiling-api-build.yaml"
+      #- ".github/workflows/dev-efiling-api-build.yaml"
   workflow_dispatch:
 
 jobs:

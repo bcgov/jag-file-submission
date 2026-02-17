@@ -96,7 +96,7 @@ export default function CSOAccount({
     axios
       .post("/csoAccount", applicantDetails)
       .then(({ data: { clientId, internalClientNumber } }) => {
-        sessionStorage.setItem("internalClientNumber", internalClientNumber);
+        sessionStorage.setItem("paymentProfileId", internalClientNumber); // Worldline (formerly Bambora) now calls this paymentProfileId (formerly internalClientNumber)
         sessionStorage.setItem("csoAccountId", clientId);
         setCsoAccountStatus({ exists: true, isNew: true });
       })

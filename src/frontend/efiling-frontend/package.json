@@ -111,6 +111,7 @@
     "jest-environment-jsdom-sixteen": "^2.0.0",
     "jest-sonar-reporter": "^2.0.0",
     "moment-timezone": "^0.5.40",
+    "@babel/preset-typescript": "^7.24.0",
     "prettier": ">=2.0.0",
     "pretty-quick": "^3.1.0",
     "react-app-rewired": "^2.2.1",

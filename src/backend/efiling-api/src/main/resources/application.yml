@@ -92,6 +92,7 @@ cso:
 bambora:
   apiBasePath: ${BAMBORA_APIBASEPATH:http://localhost:8080}
   apiPasscode: ${BAMBORA_APIPASSCODE}
+  apiPaymentPasscode: ${BAMBORA_APIPAYMENTPASSCODE}
   merchantId: ${BAMBORA_MERCHANTID}
   hostedProfileUrl: ${BAMBORA_PROFILE_URL}
   hostedProfileServiceVersion: ${BAMBORA_PROFILE_SERVICE_VERSION}

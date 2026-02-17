@@ -96,7 +96,7 @@ const checkCSOAccountStatus = (
       axios
         .get("/csoAccount")
         .then(({ data: { clientId, internalClientNumber } }) => {
-          sessionStorage.setItem("internalClientNumber", internalClientNumber);
+          sessionStorage.setItem("paymentProfileId", internalClientNumber); // Worldline (formerly Bambora) now calls this paymentProfileId (formerly internalClientNumber)
           sessionStorage.setItem("csoAccountId", clientId);
           setCsoAccountStatus({ isNew: false, exists: true });
         })

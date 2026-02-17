@@ -9,6 +9,7 @@ import {
   getByText,
   getByRole,
   waitFor,
+  screen,
 } from "@testing-library/react";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
 import { getDocumentsData } from "../../../modules/test-data/documentTestData";
@@ -52,7 +53,7 @@ describe("Payment Component", () => {
   beforeEach(() => {
     mock = new MockAdapter(axios);
     window.open = jest.fn();
-    sessionStorage.setItem("internalClientNumber", "ABC123");
+    sessionStorage.setItem("paymentProfileId", "ABC123");
     sessionStorage.setItem("bamboraRedirectUrl", "efilinghub.com");
 
     mock
@@ -67,7 +68,7 @@ describe("Payment Component", () => {
   });
 
   test("Matches the snapshot with no credit card", () => {
-    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("paymentProfileId", null);
 
     const { asFragment } = render(<Payment payment={payment} />);
 
@@ -75,7 +76,7 @@ describe("Payment Component", () => {
   });
 
   test("Allows submission with no submission fee", () => {
-    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("paymentProfileId", null);
     const { container } = render(<Payment payment={noFeePayment} />);
 
     expect(getByText(container, "Submit").disabled).toBeTruthy();
@@ -85,20 +86,18 @@ describe("Payment Component", () => {
     expect(getByText(container, "Submit").disabled).toBeFalsy();
   });
 
-  test("Click on register a credit card when no card exists takes user to bambora", async () => {
-    sessionStorage.setItem("internalClientNumber", null);
+  test("Click on register a credit card when no card exists opens the register card modal", async () => {
+    sessionStorage.setItem("paymentProfileId", null);
 
     const { container } = render(<Payment payment={payment} />);
 
     fireEvent.click(getByText(container, "Register a Credit Card now"));
 
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+    expect(await screen.findByText("Register a Credit Card")).toBeTruthy();
   });
 
-  test("Keydown on register a credit card when no card exists and bambora error exists takes user to bambora, enter", async () => {
-    sessionStorage.setItem("internalClientNumber", null);
+  test("Keydown on register a credit card when no card exists opens the register card modal, enter", async () => {
+    sessionStorage.setItem("paymentProfileId", null);
 
     const { container } = render(<Payment payment={payment} />);
 
@@ -107,13 +106,11 @@ describe("Payment Component", () => {
       keyCode: "13",
     });
 
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+    expect(await screen.findByText("Register a Credit Card")).toBeTruthy();
   });
 
-  test("Keydown on register a credit card when no card exists and bambora error exists takes user to bambora, tab", async () => {
-    sessionStorage.setItem("internalClientNumber", null);
+  test("Keydown on register a credit card when no card exists does not open modal on tab", async () => {
+    sessionStorage.setItem("paymentProfileId", null);
 
     const { container } = render(<Payment payment={payment} />);
 
@@ -124,24 +121,22 @@ describe("Payment Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).not.toHaveBeenCalledWith("bambora.com", "_self");
+    expect(screen.queryByText("Register a Credit Card")).toBeNull();
   });
 
-  test("Click on register a new credit card when card exists takes user to bambora", async () => {
-    sessionStorage.setItem("internalClientNumber", "ABC123");
+  test("Click on register a new credit card when card exists opens the register card modal", async () => {
+    sessionStorage.setItem("paymentProfileId", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", false);
 
     const { container } = render(<Payment payment={payment} />);
 
     fireEvent.click(getByText(container, "Register a new Credit Card."));
 
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+    expect(await screen.findByText("Register a Credit Card")).toBeTruthy();
   });
 
-  test("Keydown on register a new credit card when card exists takes user to bambora, enter", async () => {
-    sessionStorage.setItem("internalClientNumber", "ABC123");
+  test("Keydown on register a new credit card when card exists opens the register card modal, enter", async () => {
+    sessionStorage.setItem("paymentProfileId", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", false);
 
     const { container } = render(<Payment payment={payment} />);
@@ -151,13 +146,11 @@ describe("Payment Component", () => {
       keyCode: "13",
     });
 
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+    expect(await screen.findByText("Register a Credit Card")).toBeTruthy();
   });
 
-  test("Keydown on register a new credit card when card exists takes user to bambora, tab", async () => {
-    sessionStorage.setItem("internalClientNumber", "ABC123");
+  test("Keydown on register a new credit card when card exists does not open modal on tab", async () => {
+    sessionStorage.setItem("paymentProfileId", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", false);
 
     const { container } = render(<Payment payment={payment} />);
@@ -169,24 +162,22 @@ describe("Payment Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).not.toHaveBeenCalledWith("bambora.com", "_self");
+    expect(screen.queryByText("Register a Credit Card")).toBeNull();
   });
 
-  test("Click on register a new credit card on failed update takes user to bambora", async () => {
-    sessionStorage.setItem("internalClientNumber", "ABC123");
+  test("Click on register a new credit card on failed update opens the register card modal", async () => {
+    sessionStorage.setItem("paymentProfileId", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", true);
 
     const { container } = render(<Payment payment={payment} />);
 
     fireEvent.click(getByText(container, "Register a new Credit Card."));
 
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+    expect(await screen.findByText("Register a Credit Card")).toBeTruthy();
   });
 
-  test("Keydown on register a new credit card on failed update takes user to bambora, enter", async () => {
-    sessionStorage.setItem("internalClientNumber", "ABC123");
+  test("Keydown on register a new credit card on failed update opens the register card modal, enter", async () => {
+    sessionStorage.setItem("paymentProfileId", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", true);
 
     const { container } = render(<Payment payment={payment} />);
@@ -196,13 +187,11 @@ describe("Payment Component", () => {
       keyCode: "13",
     });
 
-    await waitFor(() => {});
-
-    expect(window.open).toHaveBeenCalledWith("bambora.com", "_self");
+    expect(await screen.findByText("Register a Credit Card")).toBeTruthy();
   });
 
-  test("Keydown on register a new credit card on failed update takes user to bambora, tab", async () => {
-    sessionStorage.setItem("internalClientNumber", "ABC123");
+  test("Keydown on register a new credit card on failed update does not open modal on tab", async () => {
+    sessionStorage.setItem("paymentProfileId", "ABC123");
     sessionStorage.setItem("bamboraErrorExists", true);
 
     const { container } = render(<Payment payment={payment} />);
@@ -214,29 +203,17 @@ describe("Payment Component", () => {
 
     await waitFor(() => {});
 
-    expect(window.open).not.toHaveBeenCalledWith("bambora.com", "_self");
+    expect(screen.queryByText("Register a Credit Card")).toBeNull();
   });
 
-  test("Click on register a credit card takes user to error page when call fails", async () => {
-    sessionStorage.setItem("errorUrl", "error.com");
-
-    mock
-      .onPost("/payment/generate-update-card")
-      .reply(400, { message: "There was an error." });
-
+  test("Click on register a credit card does not redirect to bambora", async () => {
     const { container } = render(<Payment payment={payment} />);
 
-    fireEvent.keyDown(getByText(container, "Register a new Credit Card."), {
-      key: "Enter",
-      keyCode: "13",
-    });
+    fireEvent.click(getByText(container, "Register a new Credit Card."));
 
-    await waitFor(() => {});
+    expect(await screen.findByText("Register a Credit Card")).toBeTruthy();
 
-    expect(window.open).toHaveBeenCalledWith(
-      "error.com?status=400&message=There was an error.",
-      "_self"
-    );
+    expect(window.open).not.toHaveBeenCalled();
   });
 
   test("Agreeing to conditions toggles button disabled state", () => {
@@ -325,8 +302,8 @@ describe("Payment Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("when coming from a successful bambora card registration, and a successful call to set-bambora-cso, set the internal client number", async () => {
-    sessionStorage.setItem("internalClientNumber", null);
+  test("when coming from a successful bambora card registration, and a successful call to set-bambora-cso, set the payment profile id", async () => {
+    sessionStorage.setItem("paymentProfileId", null);
     sessionStorage.setItem("bamboraSuccess", "1234");
 
     mock.onPut("csoAccount").reply(200, { internalClientNumber: "1234" });
@@ -335,12 +312,13 @@ describe("Payment Component", () => {
 
     await waitFor(() => {});
 
-    expect(sessionStorage.getItem("internalClientNumber")).toEqual("1234");
+    expect(sessionStorage.getItem("paymentProfileId")).toEqual("1234");
   });
 
   test("when coming from a successful bambora card registration, and a failed call to set-bambora-cso, redirects to error page", async () => {
-    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("paymentProfileId", null);
     sessionStorage.setItem("bamboraSuccess", "1234");
+    sessionStorage.setItem("errorUrl", "error.com");
 
     mock.onPut("csoAccount").reply(400, {
       message: "There was an error.",
