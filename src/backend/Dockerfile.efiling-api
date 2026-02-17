@@ -1,7 +1,7 @@
 #############################################################################################
 ###              Stage where Docker is building spring boot app using maven               ###
 #############################################################################################
-FROM maven:3.8.3-openjdk-17 as build
+FROM maven:3.8.3-openjdk-17 AS build
 
 ARG MVN_PROFILE
 ARG SERVICE_NAME=efiling-api
@@ -41,7 +41,7 @@ RUN mvn -B clean install \
 #############################################################################################
 FROM eclipse-temurin:17-jre-alpine
 
-RUN apk update && apk add --upgrade --no-cache libexpat # fix CVE-2024-8176
+RUN apk update && apk add --upgrade --no-cache libexpat libpng gnupg # CVE fixes
 
 # ARG MVN_PROFILES
 ARG SERVICE_NAME=efiling-api

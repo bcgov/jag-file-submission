@@ -13,6 +13,8 @@ public class GetValidPartyRoleRequest {
     private String courtLevel;
     private String courtClassification;
 
+    private String division;
+
     public List<InitialDocument> getInitialDocuments() {
         return initialDocuments;
     }
@@ -25,6 +27,10 @@ public class GetValidPartyRoleRequest {
         return courtClassification;
     }
 
+    public String getDivision() {
+        return division;
+    }
+
     public String getDocumentTypesAsString() {
         return this.initialDocuments.stream().map(InitialDocument::getType).collect(Collectors.joining(","));
     }
@@ -32,6 +38,7 @@ public class GetValidPartyRoleRequest {
     public GetValidPartyRoleRequest(Builder builder) {
         this.initialDocuments = builder.documents;
         this.courtLevel = builder.courtLevel;
+        this.division = builder.division;
         this.courtClassification = builder.courtClassification;
     }
 
@@ -46,6 +53,7 @@ public class GetValidPartyRoleRequest {
         }
 
         private String courtLevel;
+        private String division;
 
         public Builder courtLevel(String courtLevel) {
             this.courtLevel = courtLevel;
@@ -56,6 +64,11 @@ public class GetValidPartyRoleRequest {
 
         public Builder courtClassification(String courtClassification) {
             this.courtClassification = courtClassification;
+            return this;
+        }
+
+        public Builder division(String division) {
+            this.division = division;
             return this;
         }
 

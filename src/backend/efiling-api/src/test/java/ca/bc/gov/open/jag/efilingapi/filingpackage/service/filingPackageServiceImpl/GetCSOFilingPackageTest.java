@@ -59,7 +59,7 @@ public class GetCSOFilingPackageTest {
 
         Mockito.when(efilingReviewServiceMock.findStatusByPackage(ArgumentMatchers.any())).thenReturn(Optional.of(TestHelpers.createFilingPackage(true)));
 
-        Mockito.when(efilingDocumentServiceMock.getDocumentTypeDetails(any(), any(), any())).thenReturn(new DocumentTypeDetails("description",
+        Mockito.when(efilingDocumentServiceMock.getDocumentTypeDetails(any(), any(), any(), any())).thenReturn(new DocumentTypeDetails("description",
                 "type",
                 BigDecimal.TEN,
                 true,
