@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.submission.validator;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.api.model.*;
 import ca.bc.gov.open.jag.efilingapi.court.models.GetCourtDetailsRequest;
 import ca.bc.gov.open.jag.efilingapi.court.models.IsValidCourtFileNumberRequest;
@@ -142,6 +143,7 @@ public class GenerateUrlRequestValidatorImpl implements GenerateUrlRequestValida
                 .courtClassification(initialPackage.getCourt().getCourtClass())
                 .courtLevel(initialPackage.getCourt().getLevel())
                 .documents(initialPackage.getDocuments())
+                .division(Keys.DEFAULT_DIVISION)
                 .create());
 
         List<String> validationResult = new ArrayList<>();

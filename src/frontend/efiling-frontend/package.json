@@ -1,6 +1,6 @@
 {
   "name": "efiling-frontend",
-  "version": "2.0.11",
+  "version": "2.0.13",
   "private": true,
   "homepage": "/efilinghub",
   "dependencies": {
@@ -23,7 +23,7 @@
     "install-peerdeps": "^3.0.3",
     "jsonwebtoken": "^9.0.0",
     "jwa": "^2.0.0",
-    "jws": "^4.0.0",
+    "jws": "^4.0.1",
     "keycloak-js": "^25.0.6",
     "moment": "^2.29.4",
     "object-hash": "^3.0.0",
@@ -50,7 +50,7 @@
     "typescript": "^4",
     "url": "^0.11.0",
     "util": "^0.12.4",
-    "validator": "^13.7.0"
+    "validator": "^13.15.22"
   },
   "scripts": {
     "start": "react-app-rewired start",
