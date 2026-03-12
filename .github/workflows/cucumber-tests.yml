@@ -49,6 +49,7 @@ jobs:
           -t efiling-api:demo
           --build-arg SERVICE_NAME=efiling-api
           --build-arg MVN_PROFILE=efiling-api-demo
+          --build-arg SKIP_TESTS=true
           --build-arg STARTERS_V=v1.0.5
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
