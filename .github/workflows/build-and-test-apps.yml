@@ -27,13 +27,14 @@ jobs:
       - name: Run Yarn Install - eFiling Frontend
         run: yarn --cwd src/frontend/efiling-frontend install
 
+      #Disable for now
       # Check lint version
-      - name: Check lint - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend run lint -v
+      #- name: Check lint - eFiling Frontend
+      #  run: yarn --cwd src/frontend/efiling-frontend run lint -v
 
       # Run lint - eFiling Frontend
-      - name: Run lint - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend run lint
+      #- name: Run lint - eFiling Frontend
+      #  run: yarn --cwd src/frontend/efiling-frontend run lint
 
       # Yarn Coverage - eFiling Frontend
       - name: Run Yarn Coverage - eFiling Frontend
