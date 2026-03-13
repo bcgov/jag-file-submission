@@ -1,4 +1,4 @@
-package ca.bc.gov.open.jag.efilingapi.payment;
+package ca.bc.gov.open.jag.efilingapi.payment.paymentApiDelegateImpl;
 
 import ca.bc.gov.open.bambora.payment.starter.BamboraException;
 import ca.bc.gov.open.bambora.payment.starter.managment.BamboraCardService;
@@ -6,6 +6,8 @@ import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlRequest;
 import ca.bc.gov.open.jag.efilingapi.api.model.GenerateCardUrlResponse;
 import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
 import ca.bc.gov.open.jag.efilingapi.error.UrlGenerationException;
+import ca.bc.gov.open.jag.efilingapi.payment.PaymentApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.payment.service.PaymentProfileService;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingAccountService;
 import org.junit.jupiter.api.*;
 import org.mockito.ArgumentMatchers;
@@ -22,7 +24,7 @@ import java.util.UUID;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("PaymentApiDelegateImpl")
-public class PaymentApiDelegateImplTest {
+public class UpdateCreditCardTest {
 
     private static final String REDIRECT_URL = "SOMEURL";
     private static final String REDIRECTED_URL = "http://www.google.com/bambora";
@@ -36,6 +38,9 @@ public class PaymentApiDelegateImplTest {
     @Mock
     EfilingAccountService efilingAccountServiceMock;
 
+    @Mock
+    PaymentProfileService paymentProfileServiceMock;
+
     @BeforeAll
     public void setUp() throws MalformedURLException, URISyntaxException {
         MockitoAnnotations.openMocks(this);
@@ -46,7 +51,7 @@ public class PaymentApiDelegateImplTest {
         Mockito.doThrow(BamboraException.class).when(bamboraCardServiceMock).setupRecurringPayment(
                 ArgumentMatchers.argThat(request -> request.getEndUserId().equals(FAIL_INTERNAL_CLIENT_NUMBER)));
 
-        sut = new PaymentApiDelegateImpl(bamboraCardServiceMock, efilingAccountServiceMock);
+        sut = new PaymentApiDelegateImpl(bamboraCardServiceMock, efilingAccountServiceMock, paymentProfileServiceMock);
     }
 
     @Test
