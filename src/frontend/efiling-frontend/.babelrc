@@ -3,7 +3,8 @@
     "test": {
       "presets": [
         "@babel/preset-react",
-        "@babel/preset-env"
+        "@babel/preset-env",
+        "@babel/preset-typescript"
         
       ],
       "plugins": [
@@ -12,6 +13,8 @@
       ],
       "only": [
         "./**/*.js",
+        "./**/*.ts",
+        "./**/*.tsx",
         "node_modules/jest-runtime"
       ]
     }

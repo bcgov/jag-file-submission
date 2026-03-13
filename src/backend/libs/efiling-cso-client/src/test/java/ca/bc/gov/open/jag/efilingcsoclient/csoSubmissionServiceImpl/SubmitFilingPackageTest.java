@@ -121,7 +121,7 @@ public class SubmitFilingPackageTest {
         DocumentTypeDetails documentTypeDetailsNoAutoProcessing = new DocumentTypeDetails("description", "type1", BigDecimal.ONE, false, false, false);
         DocumentTypeDetails documentTypeDetailsAutoProcessing = new DocumentTypeDetails("description", "type2", BigDecimal.ONE, false, false, true);
         List<DocumentTypeDetails> documentTypeDetailsList = Arrays.asList(documentTypeDetailsNoAutoProcessing, documentTypeDetailsAutoProcessing);
-        Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString())).thenReturn(documentTypeDetailsList);
+        Mockito.when(efilingDocumentServiceMock.getDocumentTypes(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(documentTypeDetailsList);
 
         sut = new CsoSubmissionServiceImpl(filingFacadeBeanMock, serviceFacadeBean, new ServiceMapperImpl(), new FilingPackageMapperImpl(), new FinancialTransactionMapperImpl(), csoPropertiesMock, documentMapper, csoPartyMapper, new PackageAuthorityMapperImpl(), efilingDocumentServiceMock);
 

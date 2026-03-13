@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:18-alpine as build
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
@@ -16,9 +16,10 @@ RUN yarn build --production=true
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
 #############################################################################################
-FROM nginx:1.28.0-alpine
+FROM nginx:alpine
 
-RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt
+RUN apk -U upgrade
+RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt curl
 
 RUN rm -rf /usr/share/nginx/html/
 COPY --from=build /app/build /usr/share/nginx/html

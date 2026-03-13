@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingapi.document;
 
+import ca.bc.gov.open.jag.efilingapi.Keys;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionKey;
 import ca.bc.gov.open.jag.efilingcommons.model.DocumentTypeDetails;
 import ca.bc.gov.open.jag.efilingcommons.service.EfilingDocumentService;
@@ -38,12 +39,12 @@ public class DocumentStoreImpl implements DocumentStore {
     @Override
     @Cacheable(cacheNames = "documentDetails", cacheManager = "documentTypeDetailsCacheManager", unless = "#result == null")
     public DocumentTypeDetails getDocumentDetails(String courtLevel, String courtClass, String documentType) {
-        return this.efilingDocumentService.getDocumentTypeDetails(courtLevel, courtClass, documentType);
+        return this.efilingDocumentService.getDocumentTypeDetails(courtLevel, courtClass, documentType, Keys.DEFAULT_DIVISION);
     }
 
     @Override
     public List<DocumentTypeDetails> getDocumentTypes(String courtLevel, String courtClass) {
-        return this.efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
+        return this.efilingDocumentService.getDocumentTypes(courtLevel, courtClass, Keys.DEFAULT_DIVISION);
     }
 
     @Override

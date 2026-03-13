@@ -190,7 +190,7 @@ describe("CSOAccount Component", () => {
     };
 
     sessionStorage.setItem("csoAccountId", null);
-    sessionStorage.setItem("internalClientNumber", null);
+    sessionStorage.setItem("paymentProfileId", null);
 
     mock.onPost(API_REQUEST).reply(201, {
       internalClientNumber: "ABC123",
@@ -215,7 +215,7 @@ describe("CSOAccount Component", () => {
 
     expect(setCsoAccountStatus).toHaveBeenCalled();
     expect(sessionStorage.getItem("csoAccountId")).toEqual("123");
-    expect(sessionStorage.getItem("internalClientNumber")).toEqual("ABC123");
+    expect(sessionStorage.getItem("paymentProfileId")).toEqual("ABC123");
   });
 
   test("Failed Account Creation: should create toast alert", async () => {
