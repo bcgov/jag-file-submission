@@ -1,0 +1,144 @@
+<wsdl:definitions name="ReportService" targetNamespace="http://reports.csows.ag.gov.bc.ca/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://reports.csows.ag.gov.bc.ca/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <xs:schema elementFormDefault="unqualified" targetNamespace="http://reports.csows.ag.gov.bc.ca/" version="1.0" xmlns:tns="http://reports.csows.ag.gov.bc.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:element name="getName" type="tns:getName"/>
+            <xs:element name="getNameResponse" type="tns:getNameResponse"/>
+            <xs:element name="refreshRuntime" type="tns:refreshRuntime"/>
+            <xs:element name="refreshRuntimeResponse" type="tns:refreshRuntimeResponse"/>
+            <xs:element name="runReport" type="tns:runReport"/>
+            <xs:element name="runReportByName" type="tns:runReportByName"/>
+            <xs:element name="runReportByNameResponse" type="tns:runReportByNameResponse"/>
+            <xs:element name="runReportResponse" type="tns:runReportResponse"/>
+            <xs:complexType name="getName">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getNameResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="refreshRuntime">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="refreshRuntimeResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="runReportByName">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="runReportByNameResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="runReport">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:report"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="report">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="parameters" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="runReportResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="refreshRuntimeResponse">
+        <wsdl:part element="tns:refreshRuntimeResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="refreshRuntime">
+        <wsdl:part element="tns:refreshRuntime" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="runReportResponse">
+        <wsdl:part element="tns:runReportResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="runReport">
+        <wsdl:part element="tns:runReport" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="runReportByNameResponse">
+        <wsdl:part element="tns:runReportByNameResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getName">
+        <wsdl:part element="tns:getName" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="runReportByName">
+        <wsdl:part element="tns:runReportByName" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getNameResponse">
+        <wsdl:part element="tns:getNameResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ReportService">
+        <wsdl:operation name="getName">
+            <wsdl:input message="tns:getName" name="getName"></wsdl:input>
+            <wsdl:output message="tns:getNameResponse" name="getNameResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="refreshRuntime">
+            <wsdl:input message="tns:refreshRuntime" name="refreshRuntime"></wsdl:input>
+            <wsdl:output message="tns:refreshRuntimeResponse" name="refreshRuntimeResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="runReportByName">
+            <wsdl:input message="tns:runReportByName" name="runReportByName"></wsdl:input>
+            <wsdl:output message="tns:runReportByNameResponse" name="runReportByNameResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="runReport">
+            <wsdl:input message="tns:runReport" name="runReport"></wsdl:input>
+            <wsdl:output message="tns:runReportResponse" name="runReportResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ReportServiceSoapBinding" type="tns:ReportService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getName">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getName">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getNameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="refreshRuntime">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="refreshRuntime">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="refreshRuntimeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="runReportByName">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="runReportByName">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="runReportByNameResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="runReport">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="runReport">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="runReportResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ReportService">
+        <wsdl:port binding="tns:ReportServiceSoapBinding" name="ReportServicePort">
+            <soap:address location="http://localhost:11530/csows/ReportService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

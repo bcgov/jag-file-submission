@@ -1,0 +1,1679 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots PackageConfirmation Existing Account 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-package-confirmation page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Package Confirmation
+      </h1>
+      <span>
+        Review your package for accuracy and upload any additional or supporting documents.
+      </span>
+      <br />
+      <span>
+        If there are any errors in these documents, please Cancel this process and re-submit.
+      </span>
+      <br />
+      <br />
+      <div
+        class="ct-file-list "
+      >
+        <div
+          class="header"
+        >
+          <span
+            class="d-none d-lg-inline col-lg-6"
+          >
+            Document Name
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Statutory Fee
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Document Type
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                color="#FCBA19"
+                fill="currentColor"
+                height="30"
+                stroke="currentColor"
+                stroke-width="0"
+                style="color: rgb(252, 186, 25);"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+              file name 1
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $40.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 1
+            </span>
+          </li>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                color="#FCBA19"
+                fill="currentColor"
+                height="30"
+                stroke="currentColor"
+                stroke-width="0"
+                style="color: rgb(252, 186, 25);"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+              file name 2
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $0.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 2
+            </span>
+          </li>
+        </ul>
+      </div>
+      <br />
+      <div
+        class="alert alert-danger show rejectedMsg"
+        role="alert"
+      >
+        <div>
+          <svg
+            fill="currentColor"
+            height="32"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+            />
+          </svg>
+        </div>
+        <div>
+          <span>
+            Please ensure you have uploaded all required rejected documents. If you still need to add documents use the upload link below.
+          </span>
+        </div>
+      </div>
+      <h4>
+        Do you have additional documents to upload? 
+        <span
+          class="file-href"
+          data-test-id="upload-link"
+          role="button"
+          tabindex="0"
+        >
+          Upload them now.
+        </span>
+      </h4>
+      <br />
+      <div
+        class="bcgov-row"
+        data-testid="rushRadioOpts"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            checked=""
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
+      <h2>
+        Summary
+      </h2>
+      <p />
+      <div
+        class="near-half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Number of Documents in Package:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  2
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid="main-cancel-btn"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button bcgov-normal-blue btn"
+          data-testid="continue-btn"
+          type="button"
+        >
+          Continue
+        </button>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="rejectedDocumentsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Rejected Documents
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
+                </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <p>
+                  <span
+                    class="file-href"
+                  >
+                    Learn more about rejected documents.
+                  </span>
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Storyshots PackageConfirmation Mobile 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-package-confirmation page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Package Confirmation
+      </h1>
+      <span>
+        Review your package for accuracy and upload any additional or supporting documents.
+      </span>
+      <br />
+      <span>
+        If there are any errors in these documents, please Cancel this process and re-submit.
+      </span>
+      <br />
+      <br />
+      <div
+        class="ct-file-list "
+      >
+        <div
+          class="header"
+        >
+          <span
+            class="d-none d-lg-inline col-lg-6"
+          >
+            Document Name
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Statutory Fee
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Document Type
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                color="#FCBA19"
+                fill="currentColor"
+                height="30"
+                stroke="currentColor"
+                stroke-width="0"
+                style="color: rgb(252, 186, 25);"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+              file name 1
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $40.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 1
+            </span>
+          </li>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                color="#FCBA19"
+                fill="currentColor"
+                height="30"
+                stroke="currentColor"
+                stroke-width="0"
+                style="color: rgb(252, 186, 25);"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+              file name 2
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $0.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 2
+            </span>
+          </li>
+        </ul>
+      </div>
+      <br />
+      <div
+        class="alert alert-danger show rejectedMsg"
+        role="alert"
+      >
+        <div>
+          <svg
+            fill="currentColor"
+            height="32"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+            />
+          </svg>
+        </div>
+        <div>
+          <span>
+            Please ensure you have uploaded all required rejected documents. If you still need to add documents use the upload link below.
+          </span>
+        </div>
+      </div>
+      <h4>
+        Do you have additional documents to upload? 
+        <span
+          class="file-href"
+          data-test-id="upload-link"
+          role="button"
+          tabindex="0"
+        >
+          Upload them now.
+        </span>
+      </h4>
+      <br />
+      <div
+        class="bcgov-row"
+        data-testid="rushRadioOpts"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            checked=""
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
+      <h2>
+        Summary
+      </h2>
+      <p />
+      <div
+        class="near-half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Number of Documents in Package:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  2
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid="main-cancel-btn"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button bcgov-normal-blue btn"
+          data-testid="continue-btn"
+          type="button"
+        >
+          Continue
+        </button>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="rejectedDocumentsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Rejected Documents
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
+                </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <p>
+                  <span
+                    class="file-href"
+                  >
+                    Learn more about rejected documents.
+                  </span>
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Storyshots PackageConfirmation New Account 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-package-confirmation page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <div
+        class="bcgov-display-box bcgov-success-background"
+      >
+        <div
+          class="bcgov-display-icon"
+        >
+          <div
+            style="color: rgb(46, 133, 64);"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="bcgov-display-right-element"
+        >
+          CSO Account created successfully.
+        </div>
+      </div>
+      <br />
+      <h1>
+        Package Confirmation
+      </h1>
+      <span>
+        Review your package for accuracy and upload any additional or supporting documents.
+      </span>
+      <br />
+      <span>
+        If there are any errors in these documents, please Cancel this process and re-submit.
+      </span>
+      <br />
+      <br />
+      <div
+        class="ct-file-list "
+      >
+        <div
+          class="header"
+        >
+          <span
+            class="d-none d-lg-inline col-lg-6"
+          >
+            Document Name
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Statutory Fee
+          </span>
+          <span
+            class="d-none d-lg-inline col-lg-3"
+          >
+            Document Type
+          </span>
+        </div>
+        <ul>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                color="#FCBA19"
+                fill="currentColor"
+                height="30"
+                stroke="currentColor"
+                stroke-width="0"
+                style="color: rgb(252, 186, 25);"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+              file name 1
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $40.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 1
+            </span>
+          </li>
+          <li>
+            <span
+              class="file-href col-md-12 col-lg-6"
+              data-test-id="uploaded-file"
+              role="button"
+              tabindex="0"
+            >
+              <svg
+                color="#FCBA19"
+                fill="currentColor"
+                height="30"
+                stroke="currentColor"
+                stroke-width="0"
+                style="color: rgb(252, 186, 25);"
+                viewBox="0 0 24 24"
+                width="30"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+                />
+              </svg>
+              file name 2
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Statutory Fee:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              $0.00
+            </span>
+            <span
+              class="col-md-5 d-lg-none"
+            >
+              Document Type:
+            </span>
+            <span
+              class="col-md-5 col-lg-3"
+            >
+              file description 2
+            </span>
+          </li>
+        </ul>
+      </div>
+      <br />
+      <div
+        class="alert alert-danger show rejectedMsg"
+        role="alert"
+      >
+        <div>
+          <svg
+            fill="currentColor"
+            height="32"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+            />
+          </svg>
+        </div>
+        <div>
+          <span>
+            Please ensure you have uploaded all required rejected documents. If you still need to add documents use the upload link below.
+          </span>
+        </div>
+      </div>
+      <h4>
+        Do you have additional documents to upload? 
+        <span
+          class="file-href"
+          data-test-id="upload-link"
+          role="button"
+          tabindex="0"
+        >
+          Upload them now.
+        </span>
+      </h4>
+      <br />
+      <div
+        class="bcgov-row"
+        data-testid="rushRadioOpts"
+      >
+        <span>
+          Do you want to request that this submission be processed on a 
+          <b>
+            rush basis?
+          </b>
+        </span>
+        <label
+          class="bcgov-radio"
+          for="No"
+        >
+          No
+          <input
+            checked=""
+            id="No"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+        <label
+          class="bcgov-radio"
+          for="Yes"
+        >
+          Yes
+          <input
+            id="Yes"
+            name="rush"
+            type="radio"
+          />
+          <span
+            class="bcgov-dot"
+          />
+        </label>
+      </div>
+      <br />
+      <h2>
+        Summary
+      </h2>
+      <p />
+      <div
+        class="near-half-width"
+      >
+        <div
+          class="bcgov-table "
+        >
+          <b />
+          <div
+            class="bcgov-table-body"
+          >
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Rush Processing:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  <span>
+                    <b>
+                      No
+                    </b>
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Number of Documents in Package:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  2
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Statutory Fees:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $40.00
+                </b>
+              </div>
+            </div>
+            <div
+              class="bcgov-row "
+            >
+              <div
+                class="bcgov-fill-width"
+              >
+                Submission Fee:
+              </div>
+              <div
+                class="bcgov-table-value "
+              >
+                <b>
+                  $25.50
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid="main-cancel-btn"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button bcgov-normal-blue btn"
+          data-testid="continue-btn"
+          type="button"
+        >
+          Continue
+        </button>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="rejectedDocumentsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Rejected Documents
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
+                </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <p>
+                  <span
+                    class="file-href"
+                  >
+                    Learn more about rejected documents.
+                  </span>
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

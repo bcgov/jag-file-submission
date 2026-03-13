@@ -1,0 +1,2464 @@
+swagger: "2.0"
+info:
+  title: Bambora Payment APIs
+  description: "https://api.na.bambora.com/v1"
+  version: 1.0.5
+host: api.na.bambora.com
+schemes:
+  - https
+basePath: /v1
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Passcode:
+    type: apiKey
+    in: header
+    name: Authorization
+    description: 'Pass the authorization header in your request as "Authorization: Passcode Base64Encoded(merchant_id:passcode)"'
+  Sub-Merchant-Id:
+    type: apiKey
+    in: header
+    name: Sub-Merchant-Id
+    description: 'OPTIONAL: Only used by partners to make an API call on behalf of their subMerchant. Pass the header in your request as "Sub-Merchant-Id: sub_merchant_id"'
+security:
+  - Passcode: []
+  - Sub-Merchant-Id: []
+paths:
+  /payments:
+    post:
+      summary: Make payment
+      description: |
+        Make a payment using credit card, cash, cheque, profile, token, Apple Pay or Android Pay. Each payment type has its own json definition passed in the
+        body. For all payments you have the standard Billing, Shipping, Comments, etc. fields that are optional. Only the amount is required along with the
+        payment data for card, cash, cheque, profile, and token. You must change the payment&#95;method for each payment type. Credit Card - "card",
+        Payment Profile - "payment&#95;profile", Legato Token - "token", Cash - "cash", Cheque - "cheque", Interac - "interac", Apple Pay - "apple&#95;pay",
+        Android Pay - "android&#95;pay".
+      tags:
+        - Payments
+      operationId: makePayment
+      parameters:
+        - name: payment_request
+          in: body
+          schema:
+            $ref: "#/definitions/PaymentRequest"
+      responses:
+        200:
+          description: Payment response containing the payment details as well as if the payment was approved or declined.
+          schema:
+            $ref: "#/definitions/PaymentResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/payments/{transId}/returns":
+    post:
+      summary: Return payment
+      description: Return payment.
+      tags:
+        - Payments
+      operationId: returnPayment
+      parameters:
+        - name: transId
+          in: path
+          description: The transaction id.
+          required: true
+          type: number
+          format: double
+        - name: return
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Return"
+      responses:
+        200:
+          description: Payment response containing the payment details as well as if the transaction was approved or declined.
+          schema:
+            $ref: "#/definitions/PaymentResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/payments/{transId}/void":
+    post:
+      summary: Void transaction
+      description: "Void a transaction. You can void payments, returns, pre-auths, and completions. It will cancel that transaction."
+      tags:
+        - Payments
+      operationId: voidPayment
+      parameters:
+        - name: transId
+          in: path
+          description: The transaction id to void.
+          required: true
+          type: number
+          format: integer
+        - name: void
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Void"
+      responses:
+        200:
+          description: Payment response containing the payment details as well as if the transaction was approved or declined.
+          schema:
+            $ref: "#/definitions/PaymentResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/payments/{transId}/completions":
+    post:
+      summary: Complete pre-auth
+      description: Complete a pre-authorized payment. The amount of the transaction to complete must be less than or equal to the original pre-auth amount. Complete must be set to true.
+      tags:
+        - Payments
+      operationId: completePayment
+      parameters:
+        - name: transId
+          in: path
+          description: The transaction id.
+          required: true
+          type: number
+          format: double
+        - name: payment_request
+          in: body
+          schema:
+            $ref: "#/definitions/PaymentRequest"
+      responses:
+        200:
+          description: Payment response containing the payment details as well as if the transaction was approved or declined.
+          schema:
+            $ref: "#/definitions/PaymentResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/payments/{transId}":
+    get:
+      summary: Get payment
+      description: Get a previous payment (transaction).
+      tags:
+        - Payments
+      operationId: getPayment
+      parameters:
+        - name: transId
+          in: path
+          description: The transaction id.
+          required: true
+          type: number
+          format: integer
+      responses:
+        200:
+          description: A transaction object.
+          schema:
+            $ref: "#/definitions/Transaction"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/payments/{merchant_data}/continue":
+    post:
+      summary: 3D Secure or Interac Online payments
+      description: Continues 3D Secure or Interac Online payment processing.
+      tags:
+        - Payments
+      operationId: continuePayment
+      parameters:
+        - name: merchant_data
+          in: path
+          description: "The merchant_data attribute value returned from the initiating Payments API request. The value represents a unique payment ID."
+          required: true
+          type: string
+        - name: continue_request
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ContinueRequest"
+      responses:
+        200:
+          description: Payment response containing the payment details as well as if the transaction was approved or declined.
+          schema:
+            $ref: "#/definitions/PaymentResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  /reports:
+    post:
+      summary: Search Query
+      description: "Query for transactions using a date range and optional search criteria. This method allows you to page your search results if you are expecting a lot of results to be returned. The page start value begins at 1. If no records are found the API will return a 200 response message with an empty array. For details on the parameters and allowed values for Criteria please visit the documentation http://dev.na.bambora.com"
+      tags:
+        - Reporting
+      operationId: getReport
+      parameters:
+        - name: search_query
+          in: body
+          schema:
+            $ref: "#/definitions/SearchQuery"
+      responses:
+        200:
+          description: A transaction object.
+          schema:
+            $ref: "#/definitions/SearchResult"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  /profiles:
+    post:
+      summary: Create Profile
+      description: Create a new Payment Profile using either a card, a single-use token, a transaction id, or bank credentials. You must supply one of them. You may store a card and bank credentials on the same profile.
+      tags:
+        - Profiles
+      operationId: createProfile
+      parameters:
+        - name: createProfileBody
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ProfileBody"
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/profiles/{profileId}":
+    get:
+      summary: Get profile
+      description: "Get a Payment Profile using the profile ID, also known as the Customer Code."
+      tags:
+        - Profiles
+      operationId: getProfile
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/PaymentProfileResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+    put:
+      summary: Update Profile
+      description: |
+        Update an existing Payment Profile. For a single card profile supplying token or
+        card data will work. For multi-card profiles you have to update the card data with
+        the update and delete card endpoints.
+      tags:
+        - Profiles
+      operationId: updateProfile
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+        - name: updateProfileBody
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ProfileBody"
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+    delete:
+      summary: Delete profile
+      description: "Delete a Payment Profile using the profile ID, also known as the Customer Code."
+      tags:
+        - Profiles
+      operationId: deleteProfile
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/profiles/{profileId}/cards":
+    get:
+      summary: Get cards
+      description: Get all of the cards on the profile.
+      tags:
+        - Profiles
+      operationId: getAllCards
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileGetCards"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+    post:
+      summary: Add card
+      description: Add a card to the profile. Note that there is a default limit of 1 card per profile. You can change this in your Profiles settings in the back office.
+      tags:
+        - Profiles
+      operationId: addCard
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: The card information that will be added to the profile.
+          required: true
+          schema:
+            $ref: "#/definitions/ProfileBodyCard"
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  "/profiles/{profileId}/cards/{cardId}":
+    get:
+      summary: Get card
+      description: Get the details of a card on the profile.
+      tags:
+        - Profiles
+      operationId: getCard
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: The card id.
+          required: true
+          type: number
+          format: integer
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileCardResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+    put:
+      summary: Update card
+      description: Update the details of a card on the profile. A card number can only be updated when an account is configured to only allow 1 card per profile.
+      tags:
+        - Profiles
+      operationId: updateCard
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: The card id.
+          required: true
+          type: number
+          format: integer
+        - name: body
+          in: body
+          description: The card information that will be updated on the profile.
+          required: true
+          schema:
+            $ref: "#/definitions/ProfileBodyCard"
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+    delete:
+      summary: Delete card
+      description: Delete a card on the profile.
+      tags:
+        - Profiles
+      operationId: deleteCard
+      parameters:
+        - name: profileId
+          in: path
+          description: The profile id. (aka CustomerCode)
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: The card id.
+          required: true
+          type: number
+          format: integer
+      responses:
+        200:
+          description: The Profile.
+          schema:
+            $ref: "#/definitions/ProfileResponse"
+        400:
+          $ref: "#/responses/BadRequest"
+        401:
+          $ref: "#/responses/Unauthorized"
+        402:
+          $ref: "#/responses/PaymentRequired"
+        403:
+          $ref: "#/responses/Forbidden"
+        405:
+          $ref: "#/responses/MethodNotAllowed"
+        500:
+          $ref: "#/responses/InternalServerError"
+  /scripts/tokenization/tokens:
+    post:
+      summary: Tokenize credit card
+      description: "NOTE that the full URL for this API call is https://api.na.bambora.com/scripts/tokenization/tokens. Turn a credit card into a token using this service. This helps lessen your PCI scope by not passing the credit card information to your server. Instead you turn the card number into a token in the client app, then send the token to the server. When you send the token to Bambora to make a payment, Bambora then looks up the card number from that token and makes the payment. Tokens can also be used to create payment profiles."
+      tags:
+        - Tokenization
+      operationId: tokenizeCard
+      parameters:
+        - name: token_request
+          in: body
+          schema:
+            $ref: "#/definitions/TokenRequest"
+      responses:
+        200:
+          description: Token response object. One will always be returned even if the data or card is invalid. The validity of the card is not checked with this API call.
+          schema:
+            $ref: "#/definitions/TokenResponse"
+responses:
+  BadRequest:
+    description: Bad Request
+    schema:
+      $ref: "#/definitions/ErrorResponse"
+  Unauthorized:
+    description: Authentication Failure
+    schema:
+      $ref: "#/definitions/ErrorResponse"
+  PaymentRequired:
+    description: Business Rule Violation or Decline
+    schema:
+      $ref: "#/definitions/ErrorResponse"
+  Forbidden:
+    description: Authorization Failure
+    schema:
+      $ref: "#/definitions/ErrorResponse"
+  MethodNotAllowed:
+    description: Invalid Request Method
+    schema:
+      $ref: "#/definitions/ErrorResponse"
+  InternalServerError:
+    description: Internal Server Error
+    schema:
+      $ref: "#/definitions/ErrorResponse"
+definitions:
+  PaymentRequest:
+    required:
+      - amount
+      - payment_method
+    properties:
+      order_number:
+        type: string
+        maxLength: 30
+        description: "A unique order number."
+      amount:
+        type: number
+        format: double
+        description: "A decimal value in dollars. Uses up to two decimal places. Max value is account specific. Default max value is 1000."
+      payment_method:
+        type: string
+        description: "The desired method of payment."
+        enum:
+          [
+            "card",
+            "token",
+            "payment_profile",
+            "cash",
+            "cheque",
+            "interac",
+            "apple_pay",
+            "android_pay",
+          ]
+      language:
+        type: string
+        maxLength: 3
+        description: characters
+      customer_ip:
+        type: string
+        maxLength: 30
+        description: IP Address of the api consumer. Required if calculating risk score.
+      term_url:
+        type: string
+        maxLength: 256
+        description: "Callback URL used with 3D Secure payment processing."
+      comments:
+        type: string
+        maxLength: 256
+        description: alphanumeric
+      billing:
+        $ref: "#/definitions/RequestBillingAddress"
+      shipping:
+        $ref: "#/definitions/Address"
+      custom:
+        $ref: "#/definitions/Custom"
+      card:
+        $ref: "#/definitions/Card"
+      apple_pay:
+        $ref: "#/definitions/ApplePay"
+      android_pay:
+        $ref: "#/definitions/AndroidPay"
+      payment_profile:
+        $ref: "#/definitions/ProfilePurchase"
+      token:
+        $ref: "#/definitions/TokenPurchase"
+      recurring_payment:
+        type: boolean
+        description: |
+          A recurring transaction is a transaction where a cardholder had provided permission to a merchant to
+          periodically charge his/her account number for recurring goods or services. The recurring payment
+          indicator may be set for credit card based pre-auth, capture and purchase transactions.
+      level2:
+        $ref: "#/definitions/Level2"
+      card_on_file:
+        $ref: "#/definitions/CardOnFile"
+  Card:
+    description: "Payment with a credit card. The payment_method must be 'card'"
+    required:
+      - name
+      - number
+      - expiry_month
+      - expiry_year
+    properties:
+      number:
+        type: string
+        maxLength: 20
+        description: Credit card number (PAN).
+        default: "5100000010001004"
+      name:
+        type: string
+        minLength: 1
+        maxLength: 64
+        description: Card holder name.
+      expiry_month:
+        type: string
+        maxLength: 2
+        default: "02"
+        description: eg. 02 for February.
+      expiry_year:
+        type: string
+        maxLength: 2
+        default: "18"
+        description: eg. 15 for 2015.
+      cvd:
+        type: string
+        minLength: 3
+        maxLength: 4
+        default: "123"
+        description: Security code on the back of the credit card. This can be set to mandatory in the back office.
+      3d_secure:
+        $ref: "#/definitions/3DSecure"
+      masterpass_wallet_id:
+        type: string
+        maxLength: 3
+        description: "The Masterpass code related to the wallet that the card information was sent from."
+      visa_checkout_call_id:
+        type: string
+        maxLength: 20
+        description: "The Visa Checkout payment request ID."
+      complete:
+        type: boolean
+        default: true
+        description: "set to false for Pre-Authorize, and true to complete a payment"
+      is_accord_d:
+        type: boolean
+        default: false
+        description: "required flag for desjardin visa cards that want to make Accord D financing transactions. Accord D transactions require billing information as well"
+      accord_d:
+        $ref: "#/definitions/AccordD"
+  AccordD:
+    description: "Desjardin Visa Only - required for a complete Accord D financing transaction"
+    required:
+      - financing_type
+      - plan_number
+      - grace_period
+      - term
+    properties:
+      financing_type:
+        description: "Deferred(D) or Equal(E) payment"
+        default: "E"
+        type: string
+        maxLength: 1
+        enum: ["D", "E"]
+      plan_number:
+        type: string
+        maxLength: 3
+        description: "Must be a value between 000 - ZZZ"
+      grace_period:
+        type: integer
+        default: 00
+        description: "Must be 0 if financing_type is not a deferred payment"
+      term:
+        type: integer
+        description: "Number of months. Must be 00 is financing_type is not a deferred payment"
+  ApplePay:
+    description: |
+      Apple Pay Only - required when attempting to process apple_pay transactions.
+      Note that the 'card' object returned in a successful response will have a 'last_four' property value that is based on the source Apple Pay Wallet and its Device Account Number.
+    required:
+      - apple_pay_merchant_id
+      - payment_token
+    properties:
+      apple_pay_merchant_id:
+        type: string
+        description: The Apple Pay merchant ID.
+      payment_token:
+        type: string
+        description: The encrypted token provided by Apple Pay that you then Base64 encode.
+      complete:
+        type: boolean
+        default: true
+        description: set to false for Pre-Authorize, and true to complete a payment
+  AndroidPay:
+    description: |
+      Android Pay Only - required when attempting to process android_pay transactions.
+      Note that the 'card' object returned in a successful response will have a 'last_four' property value that is based on the source Android Pay Wallet and its Device Account Number.
+    required:
+      - android_pay_merchant_id
+      - payment_token
+    properties:
+      android_pay_merchant_id:
+        type: string
+        description: The Android Pay merchant ID.
+      payment_token:
+        type: string
+        description: The encrypted token provided by Android Pay that you then Base64 encode.
+      complete:
+        type: boolean
+        default: true
+        description: set to false for Pre-Authorize, and true to complete a payment
+  ProfilePurchase:
+    description: "Payment with a Payment Profile. The payment_method must be 'payment_profile'"
+    required:
+      - customer_code
+      - card_id
+    properties:
+      complete:
+        type: boolean
+        default: true
+        description: "set to false for Pre-Authorize, and true to complete a payment"
+      customer_code:
+        type: string
+        maxLength: 32
+        description: The payment profile ID.
+      card_id:
+        type: integer
+        maxLength: 1
+        description: Which credit card to use. Starts at 1 for the first card. You must configure how many cards can be stored by visiting the profile options in the back office.
+  TokenPurchase:
+    description: "Payment with a single-use token. The payment_method must be 'token'"
+    required:
+      - code
+      - name
+    properties:
+      complete:
+        type: boolean
+        default: false
+        description: "set to false for Pre-Authorize, and true to complete a payment"
+      code:
+        type: string
+        maxLength: 36
+        description: the payment token you retrieved from the Legato service.
+      name:
+        type: string
+        minLength: 4
+        maxLength: 64
+        description: Card holder name.
+      3d_secure:
+        $ref: "#/definitions/3DSecure"
+      masterpass_wallet_id:
+        type: string
+        maxLength: 3
+        description: "The Masterpass code related to the wallet that the card information was sent from."
+      visa_checkout_call_id:
+        type: string
+        maxLength: 20
+        description: "The Visa Checkout payment request ID."
+  RequestBillingAddress:
+    properties:
+      name:
+        type: string
+        maxLength: 64
+        description: Name of the person/business
+      address_line1:
+        type: string
+        maxLength: 64
+        description: Street address. Impacts risk score.
+      address_line2:
+        type: string
+        maxLength: 64
+        description: Additional address information(eg; suite number, apartment number, etc)
+      city:
+        type: string
+        maxLength: 32
+        description: The city. Impacts risk score.
+      province:
+        type: string
+        description: 2 characters. Set to -- for any countries except for US and Canada. Impacts risk score.
+      country:
+        type: string
+        maxLength: 2
+        description: "Valid ISO 3166-1 country code. Impacts risk score."
+        enum:
+          [
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AO",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CA",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "CZ",
+            "DE",
+            "DJ",
+            "DK",
+            "DM",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ES",
+            "ET",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "GA",
+            "GB",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IM",
+            "IN",
+            "IO",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JE",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SE",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TC",
+            "TD",
+            "TF",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TR",
+            "TT",
+            "TV",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "UM",
+            "US",
+            "UY",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "YT",
+            "ZA",
+            "ZM",
+            "ZW",
+          ]
+      postal_code:
+        type: string
+        maxLength: 16
+        description: "Postal/Zip code. Impacts risk score."
+      phone_number:
+        type: string
+        description: "Phone number"
+        pattern: '^\d{1,20}$'
+      email_address:
+        type: string
+        maxLength: 64
+        description: Email Address. Impacts risk score.
+  Address:
+    properties:
+      name:
+        type: string
+        maxLength: 64
+        description: Name of the person/business
+      address_line1:
+        type: string
+        maxLength: 64
+        description: Street address
+      address_line2:
+        type: string
+        maxLength: 64
+        description: Additional address information(eg; suite number, apartment number, etc)
+      city:
+        type: string
+        maxLength: 32
+        description: The city
+      province:
+        type: string
+        description: characters (2)
+      country:
+        type: string
+        maxLength: 2
+        description: "Valid ISO 3166-1 country code"
+        enum:
+          [
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AO",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CA",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "CZ",
+            "DE",
+            "DJ",
+            "DK",
+            "DM",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ES",
+            "ET",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "GA",
+            "GB",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IM",
+            "IN",
+            "IO",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JE",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SE",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TC",
+            "TD",
+            "TF",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TR",
+            "TT",
+            "TV",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "UM",
+            "US",
+            "UY",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "YT",
+            "ZA",
+            "ZM",
+            "ZW",
+          ]
+      postal_code:
+        type: string
+        maxLength: 16
+        description: "Postal/Zip code"
+      phone_number:
+        type: string
+        description: "Phone number"
+        pattern: '^\d{1,20}$'
+      email_address:
+        type: string
+        maxLength: 64
+        description: Email Address
+  Custom:
+    properties:
+      ref1:
+        type: string
+        maxLength: 256
+        description: "custom reference field 1"
+      ref2:
+        type: string
+        maxLength: 256
+        description: "custom reference field 2"
+      ref3:
+        type: string
+        maxLength: 256
+        description: "custom reference field 3"
+      ref4:
+        type: string
+        maxLength: 256
+        description: "custom reference field 4"
+      ref5:
+        type: string
+        maxLength: 256
+        description: "custom reference field 5"
+  PaymentResponse:
+    properties:
+      id:
+        type: string
+        maxLength: 9
+        description: "transaction Id"
+      authorizing_merchant_id:
+        type: number
+        description: "The id of the merchant that authorized the transaction."
+      approved:
+        type: string
+        description: "Approval status of payment transaction. 0 if the transaction is not approved. 1 if the transaction is approved."
+      message_id:
+        type: string
+        maxLength: 3
+        description: "Payment response code"
+      message:
+        type: string
+        maxLength: 256
+        description: "Message containing information about the transactions status"
+      auth_code:
+        type: string
+        maxLength: 32
+        description: "Auth Code"
+      created:
+        type: string
+        format: date-time
+        description: "Time stamp of when the transaction occurred"
+      order_number:
+        type: string
+        maxLength: 32
+        default: "Transaction Id"
+        description: "Order number"
+      type:
+        type: string
+        maxLength: 16
+        description: "Payment transaction type"
+        enum: ["P", "R", "VP", "VR", "PA", "PAC"]
+      risk_score:
+        type: number
+        format: double
+        description: The risk score represents the percentage of probability that the transaction is fraudulent. For example, a score of 10 represents a 10% possibility that the transaction is fraudulent.
+      amount:
+        type: number
+        format: double
+        maxLength: 9
+        description: "A decimal value in dollars. Uses up to two decimal places."
+      payment_method:
+        type: string
+        description: "Payment method"
+      custom:
+        $ref: "#/definitions/Custom"
+      card:
+        $ref: "#/definitions/CardPurchaseResponse"
+      merchant_data:
+        type: string
+        maxLength: 32
+        description: "Returned only for 'interac' or 3D Secure payment requests. This value can be used as the {id} value when creating your 'continue' endpoint URL."
+      contents:
+        type: string
+        description: "Returned only for 'interac' or 3D Secure payment requests. This should be embedded in the user's browser client and this needs to be displayed to the customer to redirect them to the Interac login or 3D Secure processing page."
+      interac_online:
+        $ref: "#/definitions/InteracOnlineResponse"
+      links:
+        type: object
+      card_on_file:
+        $ref: "#/definitions/CardOnFileResponse"
+  CardPurchaseResponse:
+    properties:
+      card_type:
+        type: string
+        maxLength: 2
+        description: "The type of card used in the transaction. AM = American Express, DI = Diners, JB = JCB, MC = MasterCard, NN = Discover, VI = Visa"
+        enum: ["AM", "DI", "JB", "MC", "NN", "VI", "PV", "MD", "IO"]
+      last_four:
+        type: string
+        maxLength: 4
+        description: "The last 4 digits of the credit card used in the transaction"
+      address_match:
+        type: integer
+      postal_result:
+        type: integer
+      avs_result:
+        type: string
+      cvd_result:
+        type: string
+      card_bin:
+        type: string
+      avs:
+        $ref: "#/definitions/AvsResponse"
+  AvsResponse:
+    properties:
+      id:
+        type: string
+        description: "A unique avs response code. For a description of each code see http://dev.na.bambora.com."
+        enum:
+          [
+            "0",
+            "5",
+            "9",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "G",
+            "I",
+            "M",
+            "N",
+            "P",
+            "R",
+            "S",
+            "U",
+            "W",
+            "X",
+            "Y",
+            "Z",
+          ]
+      message:
+        type: string
+        description: 'Message containing details of the avs status. Corresponding to each avs\_id, there is an avs_message describing the status of address verification service. For example If avs\_id = 5 then avs\_message = Invalid AVS Response.'
+      processed:
+        type: boolean
+        description: "Is true if the issuing bank has successfully processed an AVS check on the transaction. Is false if no AVS check was performed."
+  InteracOnlineResponse:
+    description: "Returned only in the final response from the 'continue' endpoint."
+    properties:
+      idebit_issconf:
+        type: string
+        description: "A numeric confirmation code of the payment"
+      idebit_issname:
+        type: string
+        description: "Name of the account holder's financial institution"
+  CardGetTransactionResponse:
+    properties:
+      card_type:
+        type: string
+        maxLength: 2
+        description: "The type of card used in the transaction. AM = American Express, DI = Diners, JB = JCB, MC = MasterCard, NN = Discover, VI = Visa"
+        enum: ["AM", "DI", "JB", "MC", "NN", "VI"]
+      last_four:
+        type: string
+        maxLength: 4
+        description: "The last 4 digits of the credit card used in the transaction"
+      cvd_result:
+        $ref: "#/definitions/CvdResult"
+      address_match:
+        type: integer
+        description: "Result of Address verification. 0 if Adddress Verification Service(AVS) is disabled or AVS fails. 1 if AVS is enabled and address and postal/zip code match."
+      avs_result:
+        type: integer
+        description: "Result of street address and Postal/Zip match/mismatch. 0 in case of mismatch. 1 in case of match."
+      expiry_month:
+        type: string
+        maxLength: 2
+        description: "a 2 digit representation of the expiry month. For example March is 03."
+      expiry_year:
+        type: string
+        maxLength: 2
+        description: "a 2 digit representation of the expiry year. For example 2016 is 16."
+      cavv_result:
+        $ref: "#/definitions/CavvResult"
+  Link:
+    type: object
+    properties:
+      ref:
+        type: string
+      href:
+        type: string
+      method:
+        type: string
+  Return:
+    required:
+      - amount
+    properties:
+      order_number:
+        type: string
+        maxLength: 30
+        description: A unique order number.
+      amount:
+        type: number
+        format: double
+        description: "A decimal value in dollars. Must be less than or equal to the original purchase amount."
+  Void:
+    required:
+      - amount
+    properties:
+      amount:
+        type: number
+        format: double
+        description: "A decimal value in dollars. Must be equal to the original purchase amount. You can void purchases as well as pre-auths and returns."
+      order_number:
+        type: string
+        maxLength: 30
+        description: A unique order number.
+  Transaction:
+    properties:
+      id:
+        type: number
+        format: integer
+      authorizing_merchant_id:
+        type: integer
+        description: "The id of the merchant that authorized the transaction."
+      approved:
+        type: boolean
+      message_id:
+        type: number
+        format: integer
+      message:
+        type: string
+      auth_code:
+        type: string
+      created:
+        type: string
+        format: date-time
+        description: "Time stamp of when the transaction occurred"
+      amount:
+        type: number
+        format: double
+        description: "A decimal value in dollars. Uses up to two decimal places."
+      order_number:
+        type: string
+      type:
+        type: string
+      comments:
+        type: string
+      batch_number:
+        type: string
+      total_refunds:
+        type: number
+        format: double
+      total_completions:
+        type: number
+        format: double
+      payment_method:
+        type: string
+      card:
+        $ref: "#/definitions/CardGetTransactionResponse"
+      billing:
+        $ref: "#/definitions/Address"
+      shipping:
+        $ref: "#/definitions/Address"
+      custom:
+        $ref: "#/definitions/Custom"
+      adjusted_by:
+        type: array
+        items:
+          $ref: "#/definitions/Adjustment"
+      links:
+        type: array
+        items:
+          $ref: "#/definitions/Link"
+  Adjustment:
+    properties:
+      id:
+        type: number
+        format: integer
+      type:
+        type: string
+      approval:
+        type: number
+        format: integer
+      message:
+        type: string
+      amount:
+        type: number
+        format: double
+        description: "A decimal value in dollars. Uses up to two decimal places."
+      created:
+        type: string
+        description: "The date it was created '2015-04-22T10:03:19.323-07:00'"
+      url:
+        type: string
+  SearchQuery:
+    required:
+      - name
+      - start_date
+      - end_date
+      - start_row
+      - end_row
+    properties:
+      name:
+        type: string
+        description: "Can be either 'Search' for all fields or 'TransHistoryMinimal' for a subset of the fields returned in the results."
+        enum: ["Search", "TransHistoryMinimal"]
+      start_date:
+        type: string
+        description: "The start date (inclusive) '2015-04-22T10:03:19' in the timezone of your merchant account."
+      end_date:
+        type: string
+        description: "The end date (inclusive) '2015-04-22T10:03:19' in the timezone of your merchant account."
+      start_row:
+        type: number
+        format: integer
+        description: Used to page the results. 1-based
+        default: 1
+      end_row:
+        type: number
+        format: integer
+        description: Used to page the results. 1-based. This should always be 1 larger than start_row.
+        default: 2
+      criteria:
+        description: Optional search criteria. All criteria are ANDed together.
+        type: array
+        items:
+          $ref: "#/definitions/Criteria"
+  Criteria:
+    properties:
+      field:
+        type: number
+        format: integer
+        description: "Refer to the table on this page for the searchable fields http://dev.na.bambora.com"
+      operator:
+        type: string
+        description: "URL encoded comparators such as less than, greater than, equals... Refer to the table on this page for the full list of comparators http://dev.na.bambora.com"
+        enum: ["%3D", "%3C", "%3E", "%3C%3D", "%3E%3D", "START%20WITH"]
+      value:
+        type: string
+        description: The value you want to match against.
+  SearchResult:
+    properties:
+      records:
+        type: array
+        items:
+          $ref: "#/definitions/SearchRecord"
+  SearchRecord:
+    properties:
+      row_id:
+        type: number
+        format: integer
+      trn_id:
+        type: number
+        format: integer
+      trn_date_time:
+        type: string
+        description: "2015-04-22T10:03:19.323-07:00"
+      trn_type:
+        type: string
+      trn_order_number:
+        type: string
+      trn_payment_method:
+        type: string
+      trn_comments:
+        type: string
+      trn_masked_card:
+        type: string
+        description: "The credit card with the middle digits redacted with X's"
+      trn_amount:
+        type: number
+        format: float32
+      trn_returns:
+        type: number
+        format: float32
+      trn_completions:
+        type: number
+        format: float32
+      trn_voided:
+        type: number
+        format: integer
+      trn_response:
+        type: number
+        format: integer
+      trn_card_type:
+        type: string
+        description: MC VI etc
+      trn_batch_no:
+        type: number
+        format: integer
+      trn_avs_result:
+        type: string
+        description: Address Verification Service
+      trn_cvd_result:
+        type: number
+        format: integer
+      trn_cavv_result:
+        type: string
+        description: 3D Secure Code Result
+      trn_card_expiry:
+        type: string
+      message_id:
+        type: number
+        format: integer
+      message_text:
+        type: string
+      trn_card_owner:
+        type: string
+      trn_ip:
+        type: string
+      trn_approval_code:
+        type: string
+      trn_reference:
+        type: number
+        format: integer
+      b_name:
+        type: string
+      b_email:
+        type: string
+      b_phone:
+        type: string
+      b_address1:
+        type: string
+      b_address2:
+        type: string
+      b_city:
+        type: string
+      b_province:
+        type: string
+      b_postal:
+        type: string
+      b_country:
+        type: string
+      s_name:
+        type: string
+      s_email:
+        type: string
+      s_phone:
+        type: string
+      s_address1:
+        type: string
+      s_address2:
+        type: string
+      s_city:
+        type: string
+      s_province:
+        type: string
+      s_postal:
+        type: string
+      s_country:
+        type: string
+      ref1:
+        type: string
+      ref2:
+        type: string
+      ref3:
+        type: string
+      ref4:
+        type: string
+      ref5:
+        type: string
+      product_name:
+        type: string
+      product_id:
+        type: string
+      customer_code:
+        type: string
+        description: "The Payment Profile ID used in this transaction, if appropriate."
+      currency_abbr:
+        type: string
+        maxLength: 3
+        description: "The currency for this transaction."
+      merchant_id:
+        type: integer
+        description: "The id of the merchant for this transaction."
+      merchant_name:
+        type: string
+        description: "The name of the merchant for this transaction."
+      entry_method:
+        type: string
+        maxLength: 1
+        description: "How the transaction was initiated. N = Standard Entry, A = Apple Pay, G = Android Pay, M = MasterPass, S = EMV Swipe, V = Visa Checkout, Y = Unimag Card Swiper, T = EMV Chip Tap, E = EMV Chip Dip"
+        enum: ["N", "A", "G", "M", "S", "V", "Y", "T", "E"]
+      authorizing_merchant_id:
+        type: integer
+        description: "The id of the merchant that authorized this transaction."
+  PaymentProfileResponse:
+    properties:
+      code:
+        type: integer
+        format: int32
+        maxLength: 2
+        description: "Code"
+      message:
+        type: string
+        maxLength: 64
+        description: "Message containing contextual information about the response"
+      customer_code:
+        type: string
+        maxLength: 32
+        description: "Unique payment profile ID"
+      status:
+        type: string
+        description: characters(1)
+      last_transaction:
+        type: string
+        maxLength: 24
+        format: date-time
+        description: date and time of last transaction
+      modified_date:
+        type: string
+        maxLength: 24
+        format: date-time
+        description: date and time the profile was last modified
+      language:
+        type: string
+        maxLength: 3
+        description: Language
+      velocity_group:
+        type: string
+      profile_group:
+        type: string
+      account_ref:
+        type: string
+      card:
+        $ref: "#/definitions/GetProfileDefaultCard"
+      billing:
+        $ref: "#/definitions/Address"
+      custom:
+        $ref: "#/definitions/Custom"
+  GetProfileDefaultCard:
+    properties:
+      name:
+        type: string
+        maxLength: 64
+        description: cardholder name
+      number:
+        type: string
+        maxLength: 20
+        description: masked credit card number
+      expiry_month:
+        type: string
+        maxLength: 2
+        default: "02"
+        description: eg. 02 for February.
+      expiry_year:
+        type: string
+        maxLength: 2
+        default: "17"
+        description: eg. 17 for 2017.
+      card_type:
+        type: string
+        maxLength: 2
+        description: "The type of card associated with the profile. AM = American Express, DI = Diners, JB = JCB, MC = MasterCard, NN = Discover, VI = Visa"
+        enum: ["AM", "DI", "JB", "MC", "NN", "VI"]
+  ProfileGetCards:
+    properties:
+      code:
+        type: number
+        format: integer
+        maxLength: 2
+        description: "code"
+      message:
+        type: string
+        maxLength: 64
+        description: "Message containing details of the request status"
+      customer_code:
+        type: string
+        maxLength: 32
+        description: "Unique payment profile ID"
+      card:
+        type: array
+        items:
+          $ref: "#/definitions/ProfileCards"
+  ProfileCards:
+    properties:
+      card_id:
+        type: string
+        description: 1-indexed card ID. Total number of cards allowed is configured in your merchant account.
+      function:
+        type: string
+        description: Will say DEF for the default card
+      name:
+        type: string
+        maxLength: 64
+        description: Card holder name.
+      number:
+        type: string
+        maxLength: 20
+        description: Credit card number (PAN).
+        default: "5100000010001004"
+      expiry_month:
+        type: string
+        maxLength: 2
+        default: "02"
+        description: eg. 02 for February.
+      expiry_year:
+        type: string
+        maxLength: 2
+        default: "17"
+        description: eg. 17 for 2017.
+      card_type:
+        type: string
+        maxLength: 2
+        description: "The type of card associated with the profile. AM: American Express, DI: Diners, JB: JCB, MC: MasterCard, NN: Discover, VI = Visa"
+        enum: ["AM", "DI", "JB", "MC", "NN'VI"]
+  ProfileBody:
+    properties:
+      card:
+        $ref: "#/definitions/ProfileFromCard"
+      bank_account:
+        $ref: "#/definitions/ProfileFromBankAccount"
+      create_from_id:
+        $ref: "#/definitions/ProfileFromTransactionId"
+      token:
+        $ref: "#/definitions/ProfileFromToken"
+      billing:
+        $ref: "#/definitions/Address"
+      custom:
+        $ref: "#/definitions/Custom"
+      language:
+        type: string
+        maxLength: 3
+        description: characters
+      customer_code:
+        type: string
+      comment:
+        type: string
+        maxLength: 256
+        description: "Any comments that a user would like to attach to the Payment Profile"
+      validate:
+        type: boolean
+        default: false
+        description: "Set to true to automatically process a pre-auth transaction for validation purposes"
+  ProfileBodyCard:
+    properties:
+      card:
+        $ref: "#/definitions/ProfileFromCard"
+      token:
+        $ref: "#/definitions/ProfileFromToken"
+      comment:
+        type: string
+        maxLength: 256
+        description: "Any comments that a user would like to attach to the Payment Profile"
+      customer_code:
+        type: string
+      validate:
+        type: boolean
+        default: false
+        description: "Set to true to automatically process a pre-auth transaction for validation purposes"
+  ProfileFromCard:
+    required:
+      - name
+      - number
+      - expiry_month
+      - expiry_year
+    properties:
+      name:
+        type: string
+        maxLength: 64
+        description: Card holder name.
+      number:
+        type: string
+        maxLength: 20
+        description: Credit card number (PAN)
+      expiry_month:
+        type: string
+        maxLength: 2
+        default: "02"
+        description: eg. 02 for February.
+      expiry_year:
+        type: string
+        maxLength: 2
+        default: "17"
+        description: eg. 17 for 2017.
+      cvd:
+        type: string
+        default: "123"
+        maxLength: 4
+        description: Security code on the back of the credit card. This can be set to mandatory in the back office.
+  ProfileFromBankAccount:
+    required:
+      - account_number
+      - bank_account_holder
+      - bank_account_type
+    properties:
+      account_number:
+        type: string
+        maxLength: 17
+        description: For U.S. and Canadian bank accounts. Specify the customer’s bank account number. Account number may vary in length.
+      bank_account_holder:
+        type: string
+        maxLength: 20
+        description: Account holder name.
+      bank_account_type:
+        type: string
+        minLength: 2
+        maxLength: 2
+        description: PC=U.S. Personal Checking account.
+
+          PS=U.S. Personal Saving account.
+
+          CC=U.S. Corporate Checking account.
+
+          CS=U.S. Corporate Savings account.
+
+          CA=Canadian account.
+      branch_number:
+        type: string
+        minLength: 5
+        maxLength: 5
+        description: For Canadian bank accounts only. Specify the customer’s bank branch number.
+      institution_number:
+        type: string
+        minLength: 3
+        maxLength: 3
+        description: For Canadian bank accounts only. Specify the institution number of the customer’s financial institution.
+      routing_number:
+        type: string
+        minLength: 9
+        maxLength: 9
+        description: For U.S. bank accounts only. Specify the customer’s routing number.
+  ProfileFromTransactionId:
+    required:
+      - create_from_id
+    properties:
+      create_from_id:
+        type: number
+        format: integer
+        minLength: 8
+        maxLength: 8
+        description: The id of the transaction the user wishes to create a profile from.
+  ProfileFromToken:
+    required:
+      - name
+      - code
+    properties:
+      name:
+        type: string
+        maxLength: 64
+        description: Card holder name.
+      code:
+        type: string
+        maxLength: 64
+        description: The token received from the client-side tokenization service.
+  ProfileResponse:
+    properties:
+      code:
+        type: number
+        format: integer
+      message:
+        type: string
+      customer_code:
+        type: string
+        description: the ID of the payment profile. You need to keep track of this value.
+      validation:
+        $ref: "#/definitions/CardValidation"
+      limited_use_card_token:
+        type: string
+  ProfileCardResponse:
+    properties:
+      code:
+        type: number
+        format: integer
+      message:
+        type: string
+      customer_code:
+        type: string
+        description: the ID of the payment profile. You need to keep track of this value.
+      card:
+        $ref: "#/definitions/ProfileCards"
+  ErrorResponse:
+    properties:
+      code:
+        type: integer
+        format: int32
+      category:
+        type: integer
+        format: int32
+      message:
+        type: string
+      reference:
+        type: string
+        description: Not used. Always returns an empty string.
+      details:
+        type: array
+        items:
+          $ref: "#/definitions/Detail"
+      validation:
+        $ref: "#/definitions/CardValidation"
+  CardValidation:
+    properties:
+      id:
+        type: string
+        maxLength: 9
+        description: Transaction ID
+      approved:
+        type: string
+        description: "Approval status of payment transaction. 0 if the transaction is not approved. 1 if the transaction is approved."
+      message_id:
+        type: string
+        maxLength: 3
+        description: "Payment response code"
+      message:
+        type: string
+        maxLength: 256
+        description: "Message containing information about the transactions status"
+      auth_code:
+        type: string
+        maxLength: 32
+        description: "Auth Code"
+      trans_date:
+        type: string
+        description: "The date it was created '2015-04-22T10:03:19.323-07:00'"
+      order_number:
+        type: string
+        maxLength: 32
+        default: "Transaction Id"
+        description: "Order number"
+      type:
+        type: string
+        description: "Payment transaction type"
+        enum: ["P", "R", "VP", "VR", "PA", "PAC"]
+      amount:
+        type: string
+        description: "A decimal value in dollars. Uses up to two decimal places."
+      cvd_id:
+        type: string
+        description: "CVD Response ID"
+  Detail:
+    properties:
+      field:
+        type: string
+      message:
+        type: string
+  TokenRequest:
+    required:
+      - number
+      - expiry_month
+      - expiry_year
+      - cvd
+    properties:
+      number:
+        type: string
+        description: "The credit card number"
+      expiry_month:
+        type: string
+        maxLength: 2
+        default: "02"
+        description: eg. 02 for February.
+      expiry_year:
+        type: string
+        maxLength: 2
+        default: "17"
+        description: eg. 17 for 2017.
+      cvd:
+        type: string
+        default: "123"
+        maxLength: 4
+        description: Security code on the back of the credit card.
+  TokenResponse:
+    required:
+      - token
+    properties:
+      token:
+        type: string
+        description: "The token representing the credit card number that you will send for purchases. You will always receive a token, even if the request data is wrong or the card is invalid."
+      code:
+        type: string
+        description: "Response code for the message. It can be ignored."
+      version:
+        type: integer
+        description: "Message version number. Can be ignored."
+      message:
+        type: string
+        description: "Response message with any hints as to what might have gone wrong, if something went wrong."
+  CvdResult:
+    type: integer
+    description: "Result of CVD verification. 1=CVD Match, 2=CVD Mismatch, 3=CVD Not Verified, 4=CVD Should have been present, 5=CVD Issuer unable to process request, 6=CVD Not Provided"
+  CavvResult:
+    type: string
+    description: "Result code returned back from performing the 3D Secure Code validation."
+  Level2:
+    description: "Level 2 processing is for B2B customers. Additional information can be provided, to the benefit of corporate/government/industrial customers, that includes a customer code & tax amounts."
+    required:
+      - customer_code
+      - order_tax1_price
+      - order_tax2_price
+    properties:
+      customer_code:
+        type: string
+        maxLength: 17
+        description: |
+          * Visa - Used by merchant to identify the purchase (i.e. SKU number).
+          * Master Card - Code the cardholder supplied to the merchant.
+          * American Express - Customer reference number.
+      order_tax1_price:
+        type: number
+        format: double
+        maxLength: 12
+        description: |
+          * Visa - Amount of state or provincial tax included in the transaction amount - Must between 0.1% and 22% of the transaction amount.
+          * Master Card - Sales tax/VAT on the total purchase - Must be between 0.1% and 30% of the transaction amount.
+          * American Express - Transaction tax amount (calculated or entered).
+      order_tax2_price:
+        type: number
+        format: double
+        maxLength: 12
+        description: |
+          * Visa - Amount of state or provincial tax included in the transaction amount - Must between 0.1% and 22% of the transaction amount.
+          * Master Card - Sales tax/VAT on the total purchase - Must be between 0.1% and 30% of the transaction amount.
+          * American Express - Transaction tax amount (calculated or entered).
+  CardOnFile:
+    description: "When processing a transaction where the credit card information is stored on file, you must pass along an indicator showing the type of credential-on-file transaction that is being processed."
+    required:
+      - type
+    properties:
+      type:
+        type: string
+        description: |
+          * not\_card\_on_file - A transaction where the credit card information is not stored on file.
+          * first_installment - The first payment in a series of installment payments.  (Eg. Initial installment payment when purchasing a fridge.)
+          * subsequent_installment - A subsequent payment (ie. not the first) in a series of installment payments.  (Eg. Next installment payment when purchasing a fridge.)
+          * first_recurring - The first payment in a series of scheduled payments with no expected end date.  (Eg. Initial payment for a subscription service.)
+          * subsequent_recurring - A subsequent payment (ie. not the first) in a series of scheduled payments with no expected end date.  (Eg. Next payment for a subscription service.)
+          * subsequent\_customer_initiated - A recurring transaction that is initiated by the customer.  (Eg. Customer reloads a prepaid cash card.)
+          * subsequent_unscheduled - An unscheduled recurring transaction that is initiated by the merchant. (Eg. Merchant auto-reloads a prepaid cash card for the customer when the balance on the card reaches a predetermined threshold.)
+        enum:
+          [
+            "not_card_on_file",
+            "first_installment",
+            "subsequent_installment",
+            "first_recurring",
+            "subsequent_recurring",
+            "subsequent_customer_initiated",
+            "subsequent_unscheduled",
+          ]
+      series_id:
+        type: number
+        format: integer
+        description: 'The identifier for the set of transactions that this transaction belongs to.  This field is required for "subsequent\_installment", "subsequent\_recurring", and "subsequent\_unscheduled" credential-on-file transaction types.'
+  ContinueRequest:
+    required:
+      - payment_method
+    properties:
+      payment_method:
+        type: string
+        description: "For a 3D Secure payment process the value for this property will always be 'card'. For an Interac Online process the value for this property will always be 'interac'."
+      card_response:
+        $ref: "#/definitions/CardResponse"
+      interac_response:
+        $ref: "#/definitions/InteracResponse"
+  CardResponse:
+    description: "For a 3D Secure payment process."
+    required:
+      - pa_res
+    properties:
+      pa_res:
+        type: string
+        description: "For a 3D Secure payment process this stores the Authentication Code (PaRes)."
+  3DSecure:
+    description: |
+      Payment with 3D Secure (Verified by Visa, Mastercard SecureCode, American Express SafeKey).
+      Note that 3D Secure must be enabled on the merchant account in order to process transactions with 3D Secure.
+    required:
+      - enabled
+    properties:
+      enabled:
+        type: boolean
+        default: true
+        description: "If 3D Secure is enabled on the merchant account, set to false to process transactions without 3D Secure.  Otherwise, set to true to process transactions with 3D Secure."
+      xid:
+        type: string
+        description: "The transaction ID (XID) used for processing transactions with 3D Secure."
+      cavv:
+        type: string
+        description: "The cardholder authentication verification value (CAVV/UCAF/AEVV) used for processing transactions with 3D Secure."
+      eci:
+        type: integer
+        description: "The electronic commerce indicator (ECI) used for processing transactions with 3D Secure."
+  InteracResponse:
+    description: "For an Interac Online payment process."
+    required:
+      - idebit_track2
+      - idebit_isslang
+      - idebit_version
+      - idebit_issconf
+      - idebit_issname
+      - idebit_amount
+      - idebit_invoice
+    properties:
+      idebit_track2:
+        type: string
+        maxLength: 256
+        description: "Assigned by financial institution. Contains PAN, Expiry Date, and Transaction ID."
+      idebit_isslang:
+        type: string
+        maxLength: 2
+        description: "The payments language code that is en or fr."
+      idebit_version:
+        type: number
+        format: integer
+        description: "Always 1. This value is in the redirect Bambora initially sends."
+      idebit_issconf:
+        type: string
+        maxLength: 32
+        description: "Issuer Confirmation Number from online banking to be displayed on the merchant's confirmation page. Must be URL decoded."
+      idebit_issname:
+        type: string
+        maxLength: 32
+        description: "Financial institution's name to be displayed on the merchant's confirmation page. Must be URL decoded."
+      idebit_amount:
+        type: number
+        format: integer
+        description: "This is the amount of the transaction, in cents. For example, $13.25 would be represented by 1325."
+      idebit_invoice:
+        type: string
+        maxLength: 32
+        description: "The original trnOrderNumber you submitted to Bambora."
+  CardOnFileResponse:
+    properties:
+      type:
+        type: string
+        description: |
+          * not\_card\_on\_file - A transaction where the credit card information is not stored on file.
+          * first_installment - The first payment in a series of installment payments.  (Eg. Initial installment payment when purchasing a fridge.)
+          * subsequent_installment - A subsequent payment (ie. not the first) in a series of installment payments.  (Eg. Next installment payment when purchasing a fridge.)
+          * first_recurring - The first payment in a series of scheduled payments with no expected end date.  (Eg. Initial payment for a subscription service.)
+          * subsequent_recurring - A subsequent payment (ie. not the first) in a series of scheduled payments with no expected end date.  (Eg. Next payment for a subscription service.)
+          * subsequent\_customer_initiated - A recurring transaction that is initiated by the customer.  (Eg. Customer reloads a prepaid cash card.)
+          * subsequent_unscheduled - An unscheduled recurring transaction that is initiated by the merchant. (Eg. Merchant auto-reloads a prepaid cash card for the customer when the balance on the card reaches a predetermined threshold.)
+        enum:
+          [
+            "not_card_on_file",
+            "first_installment",
+            "subsequent_installment",
+            "first_recurring",
+            "subsequent_recurring",
+            "subsequent_customer_initiated",
+            "subsequent_unscheduled",
+          ]
+      series_id:
+        type: number
+        format: integer
+        description: "The identifier for the set of transactions that this transaction belongs to."

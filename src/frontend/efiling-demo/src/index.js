@@ -9,11 +9,9 @@ import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-if (window.REACT_APP_API_BASE_URL) {
-  axios.defaults.baseURL = window.REACT_APP_API_BASE_URL;
-} else if (process.env.REACT_APP_API_BASE_URL) {
-  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-}
+axios.defaults.baseURL = window.env
+  ? window.env.REACT_APP_API_BASE_URL
+  : process.env.REACT_APP_API_BASE_URL;
 
 ReactDOM.render(
   <BrowserRouter>
