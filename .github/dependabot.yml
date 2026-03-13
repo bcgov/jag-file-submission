@@ -3,24 +3,18 @@ updates:
   # Mvn dependencies
   - package-ecosystem: "maven"
     directory: "/src/backend"
-    open-pull-requests-limit: 3
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "05:00"
   # npm dependencies - frontend
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-frontend"
-    open-pull-requests-limit: 4
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "05:00"
   # npm dependencies - demo
   - package-ecosystem: "npm"
     directory: "/src/frontend/efiling-demo"
-    open-pull-requests-limit: 4
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "daily"
       time: "05:00"
