@@ -10,7 +10,7 @@ public interface EfilingLookupService {
 
     ServiceFees getServiceFee(SubmissionFeeRequest submissionFeeRequest);
 
-    List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes);
+    List<String> getValidPartyRoles(String courtLevel, String courtClass, String documentTypes, String division);
 
     /**
      * Get countries code table lookup

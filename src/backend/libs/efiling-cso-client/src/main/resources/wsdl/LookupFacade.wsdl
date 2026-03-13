@@ -47,6 +47,8 @@
             <xs:element name="getLanguagesResponse" type="tns:getLanguagesResponse"/>
             <xs:element name="getLegalRepTypes" type="tns:getLegalRepTypes"/>
             <xs:element name="getLegalRepTypesResponse" type="tns:getLegalRepTypesResponse"/>
+            <xs:element name="getParticipantTypes" type="tns:getParticipantTypes"/>
+            <xs:element name="getParticipantTypesResponse" type="tns:getParticipantTypesResponse"/>
             <xs:element name="getPaymentMethods" type="tns:getPaymentMethods"/>
             <xs:element name="getPaymentMethodsResponse" type="tns:getPaymentMethodsResponse"/>
             <xs:element name="getProvinces" type="tns:getProvinces"/>
@@ -180,6 +182,7 @@
                     <xs:element minOccurs="0" name="arg0" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg1" type="xs:string"/>
                     <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getEfilingPartyRolesResponse">
@@ -440,6 +443,14 @@
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
                 </xs:sequence>
             </xs:complexType>
+            <xs:complexType name="getParticipantTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getParticipantTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeValue"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="createApplicationPreference">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="tns:applicationPreference"/>
@@ -530,6 +541,9 @@
     </wsdl:message>
     <wsdl:message name="removeApplicationPreferenceResponse">
         <wsdl:part element="tns:removeApplicationPreferenceResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getParticipantTypesResponse">
+        <wsdl:part element="tns:getParticipantTypesResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getServiceFee">
         <wsdl:part element="tns:getServiceFee" name="parameters"></wsdl:part>
@@ -677,6 +691,9 @@
     </wsdl:message>
     <wsdl:message name="getRefundReasonsResponse">
         <wsdl:part element="tns:getRefundReasonsResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getParticipantTypes">
+        <wsdl:part element="tns:getParticipantTypes" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="NestedEjbException">
         <wsdl:part element="tns:NestedEjbException" name="NestedEjbException"></wsdl:part>
@@ -846,6 +863,11 @@
         <wsdl:operation name="getApplicationRecordTypes">
             <wsdl:input message="tns:getApplicationRecordTypes" name="getApplicationRecordTypes"></wsdl:input>
             <wsdl:output message="tns:getApplicationRecordTypesResponse" name="getApplicationRecordTypesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getParticipantTypes">
+            <wsdl:input message="tns:getParticipantTypes" name="getParticipantTypes"></wsdl:input>
+            <wsdl:output message="tns:getParticipantTypesResponse" name="getParticipantTypesResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="createApplicationPreference">
@@ -1244,6 +1266,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="getApplicationRecordTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getParticipantTypes">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getParticipantTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getParticipantTypesResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
