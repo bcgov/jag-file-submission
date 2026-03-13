@@ -18,7 +18,8 @@ RUN yarn build --production=true
 #############################################################################################
 FROM nginx:alpine
 
-RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt
+RUN apk -U upgrade
+RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt curl
 
 RUN rm -rf /usr/share/nginx/html/
 COPY --from=build /app/build /usr/share/nginx/html
