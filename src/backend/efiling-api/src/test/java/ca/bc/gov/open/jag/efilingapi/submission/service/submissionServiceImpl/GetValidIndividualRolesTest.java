@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GetValidIndividualRolesTest {
 
@@ -61,7 +63,8 @@ public class GetValidIndividualRolesTest {
         Mockito.when(efilingLookupService.getValidPartyRoles(
                 Mockito.eq("A"),
                 Mockito.eq("B"),
-                Mockito.eq("POR,ACMW"))).thenReturn(Arrays.asList(ROLE_TYPES));
+                Mockito.eq("POR,ACMW"),
+                any())).thenReturn(Arrays.asList(ROLE_TYPES));
         NavigationProperties navigationProperties = new NavigationProperties();
         sut = new SubmissionServiceImpl(submissionStoreMock, cachePropertiesMock, null, new PartyMapperImpl(), efilingLookupService, efilingCourtService, efilingSubmissionServiceMock, null, documentStoreMock, paymentAdapterMock, sftpServiceMock, navigationProperties);
     }

@@ -66,4 +66,6 @@ public class Keys {
 
     public static final String OTHER_DOCUMENT_TYPE = "OTH";
 
+    public static final String DEFAULT_DIVISION = "I";
+
 }

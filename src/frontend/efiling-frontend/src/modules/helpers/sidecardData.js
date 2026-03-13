@@ -31,13 +31,17 @@ const aboutCso = () => ({
 });
 
 const csoAccountDetails = () => {
-  let username = getJWTData().preferred_username;
-  username = username.substring(0, username.indexOf("@"));
+  const jwtData = getJWTData();
+  const preferredUsername = jwtData?.preferred_username || "";
+  let username = preferredUsername;
+  if (preferredUsername.includes("@")) {
+    username = preferredUsername.substring(0, preferredUsername.indexOf("@"));
+  }
 
   let idp = "";
-  if (getJWTData().identityProviderAlias === "bcsc") {
+  if (jwtData?.identityProviderAlias === "bcsc") {
     idp = "BC Services Card";
-  } else {
+  } else if (jwtData) {
     idp = "Basic BCeID";
   }
 

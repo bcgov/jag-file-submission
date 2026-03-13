@@ -66,7 +66,7 @@ public class FilingPackageServiceImpl implements FilingPackageService {
         if (!filingPackage.isPresent()) return Optional.empty();
 
         filingPackage.get().getDocuments().forEach(
-                reviewDocument -> reviewDocument.setRushRequired(efilingDocumentService.getDocumentTypeDetails(filingPackage.get().getCourt().getLevel(),filingPackage.get().getCourt().getCourtClass(), reviewDocument.getDocumentTypeCd()).isRushRequired())
+                reviewDocument -> reviewDocument.setRushRequired(efilingDocumentService.getDocumentTypeDetails(filingPackage.get().getCourt().getLevel(),filingPackage.get().getCourt().getCourtClass(), reviewDocument.getDocumentTypeCd(), Keys.DEFAULT_DIVISION).isRushRequired())
         );
 
         return filingPackage.map(filingPackageMapper::toResponseFilingPackage);
