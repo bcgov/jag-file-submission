@@ -1,13 +1,13 @@
 package ca.bc.gov.open.jag.bambora;
 
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.PaymentsApi;
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.ProfilesApi;
 import ca.bc.gov.open.jag.efilingbamboraapiclient.api.handler.ApiException;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.Custom;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentRequest;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.PaymentResponse;
-import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.ProfilePurchase;
+import ca.bc.gov.open.jag.efilingbamboraapiclient.api.model.*;
 import ca.bc.gov.open.jag.efilingcommons.exceptions.EfilingPaymentException;
 import ca.bc.gov.open.jag.efilingcommons.model.EfilingPayment;
+import ca.bc.gov.open.jag.efilingcommons.model.EfilingPaymentProfile;
+import ca.bc.gov.open.jag.efilingcommons.model.PaymentProfile;
 import ca.bc.gov.open.jag.efilingcommons.model.PaymentTransaction;
 import ca.bc.gov.open.jag.efilingcommons.payment.PaymentAdapter;
 import org.joda.time.DateTime;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 
 public class BamboraPaymentAdapter implements PaymentAdapter {
 
@@ -23,11 +24,15 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
 
     private final PaymentsApi paymentsApi;
 
-    public BamboraPaymentAdapter(PaymentsApi paymentsApi) {
+    private final ProfilesApi profilesApi;
+
+    public BamboraPaymentAdapter(PaymentsApi paymentsApi, ProfilesApi profilesApi) {
         this.paymentsApi = paymentsApi;
+        this.profilesApi = profilesApi;
     }
 
     public PaymentTransaction makePayment(EfilingPayment efilingPayment) {
+
         PaymentTransaction result = new PaymentTransaction();
 
         logger.info("Making payment call");
@@ -66,6 +71,55 @@ public class BamboraPaymentAdapter implements PaymentAdapter {
         }
 
     }
+
+    @Override
+    public PaymentProfile createProfile(EfilingPaymentProfile efilingPaymentProfile) {
+
+        try {
+
+            ProfileBody createProfileBody = new ProfileBody();
+            createProfileBody.setValidate(true);
+            ProfileFromToken profileFromToken = new ProfileFromToken();
+            profileFromToken.setCode(efilingPaymentProfile.getCode());
+            profileFromToken.setName(efilingPaymentProfile.getName());
+            createProfileBody.setToken(profileFromToken);
+            ProfileResponse response = profilesApi.createProfile(createProfileBody);
+
+            return new PaymentProfile(response.getCode(), 1, response.getMessage(), response.getCustomerCode());
+
+        } catch (ApiException e) {
+
+            logger.error("Bambora create payment profile exception", e);
+            throw new EfilingPaymentException(MessageFormat.format("Card setup error: {0}", e.getResponseBody()), e.getCause());
+
+        }
+
+    }
+
+    @Override
+    public PaymentProfile updateProfile(EfilingPaymentProfile efilingPaymentProfile) {
+
+        try {
+
+            ProfileBody createProfileBody = new ProfileBody();
+            createProfileBody.setValidate(true);
+            ProfileFromToken profileFromToken = new ProfileFromToken();
+            profileFromToken.setCode(efilingPaymentProfile.getCode());
+            profileFromToken.setName(efilingPaymentProfile.getName());
+            createProfileBody.setToken(profileFromToken);
+            ProfileResponse response = profilesApi.updateProfile(efilingPaymentProfile.getProfileId(), createProfileBody);
+
+            return new PaymentProfile(response.getCode(), 1, response.getMessage(), response.getValidation().getId());
+
+        } catch (ApiException e) {
+
+            logger.error("Bambora update payment profile exception", e);
+            throw new EfilingPaymentException(MessageFormat.format("Card setup error: {0}", e.getResponseBody()), e.getCause());
+
+        }
+
+    }
+
 
     private PaymentRequest buildPaymentRequest(EfilingPayment efilingPayment) {
 

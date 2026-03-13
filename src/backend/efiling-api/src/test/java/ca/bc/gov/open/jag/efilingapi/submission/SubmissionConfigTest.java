@@ -201,6 +201,16 @@ public class SubmissionConfigTest {
             return null;
         }
 
+        @Override
+        public PaymentProfile createProfile(EfilingPaymentProfile efilingPaymentProfile) {
+            return null;
+        }
+
+        @Override
+        public PaymentProfile updateProfile(EfilingPaymentProfile efilingPaymentProfile) {
+            return null;
+        }
+
     }
 
     public static class FilingPackageServiceTest implements FilingPackageService {
