@@ -1,5 +1,6 @@
 package ca.bc.gov.open.jag.efilingcsoclient;
 
+import ca.bc.gov.ag.csows.filing.Document;
 import ca.bc.gov.ag.csows.filing.NestedEjbException_Exception;
 import ca.bc.gov.ag.csows.filing.ProcessItemStatus;
 import ca.bc.gov.ag.csows.filing.*;
@@ -171,9 +172,9 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
     }
 
 
-    private List<CivilDocument> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar computedSubmittedDate) {
+    private List<Document> buildCivilDocuments(AccountDetails accountDetails, FilingPackage efilingPackage, XMLGregorianCalendar computedSubmittedDate) {
 
-        List<CivilDocument> documents = new ArrayList<>();
+        List<Document> documents = new ArrayList<>();
 
         for (int i = 0; i < efilingPackage.getDocuments().size(); i++) {
             List<DocumentPayments> payments = Collections.singletonList(documentMapper.toEfilingDocumentPayment(efilingPackage.getDocuments().get(i), accountDetails,
@@ -242,7 +243,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private List<ProcessSupportDocument> buildSupportingDocuments(AccountDetails accountDetails, List<Document> documents) {
+    private List<ProcessSupportDocument> buildSupportingDocuments(AccountDetails accountDetails, List<ca.bc.gov.open.jag.efilingcommons.model.Document> documents) {
 
         List<ProcessSupportDocument> supportDocuments = new ArrayList<>();
         for (int i = 0; i < documents.size(); i++) {
@@ -383,10 +384,10 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
         String courtClass = efilingPackage.getCourt().getCourtClass();
         String courtLevel = efilingPackage.getCourt().getLevel();
-        List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass);
+        List<DocumentTypeDetails> documentTypeDetailsList = efilingDocumentService.getDocumentTypes(courtLevel, courtClass, Keys.DEFAULT_DIVISION);
 
-        List<CivilDocument> documents = csoFilingPackage.getDocuments();
-        for(CivilDocument document : documents) {
+        List<Document> documents = csoFilingPackage.getDocuments();
+        for(Document document : documents) {
             String documentTypeCd = document.getDocumentTypeCd();
             for(DocumentTypeDetails documentTypeDetail : documentTypeDetailsList) {
                 if(documentTypeDetail.getType().equals(documentTypeCd) && documentTypeDetail.isAutoProcessing()) {
@@ -402,7 +403,7 @@ public class CsoSubmissionServiceImpl implements EfilingSubmissionService {
 
     }
 
-    private Boolean determineDelayProcessing(CivilDocument document) {
+    private Boolean determineDelayProcessing(Document document) {
 
         List<Milestones> milestones = document.getMilestones();
         Calendar actualSubmittedCalendar = Calendar.getInstance();
