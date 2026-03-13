@@ -45,10 +45,10 @@ public class GetDocumentDetailsTest {
         documentType.setAutoProcessYn(false);
 
 
-        Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
-        Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
+        Mockito.when(filingStatusFacadeBean.getDocumentTypes(any(), Mockito.eq(COURT_LEVEL),any())).thenReturn(Arrays.asList(documentType));
+        Mockito.when(filingStatusFacadeBean.getDocumentTypes(any(), Mockito.eq(NODOC),any())).thenReturn(new ArrayList<>());
 
-        Mockito.when(filingStatusFacadeBean.getDocumentTypes(Mockito.eq(EXCEPTION),any())).thenThrow(NestedEjbException_Exception.class);
+        Mockito.when(filingStatusFacadeBean.getDocumentTypes(any(), Mockito.eq(EXCEPTION),any())).thenThrow(NestedEjbException_Exception.class);
 
         sut = new CsoDocumentServiceImpl(filingStatusFacadeBean);
     }
@@ -56,7 +56,7 @@ public class GetDocumentDetailsTest {
     @DisplayName("OK: test returns document ")
     @Test
     public void testWithFoundResult() {
-        DocumentTypeDetails result = sut.getDocumentTypeDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD);
+        DocumentTypeDetails result = sut.getDocumentTypeDetails(COURT_LEVEL, COURT_CLASS, DOCUMENT_TYPE_CD, "");
         Assertions.assertEquals(DESCRIPTION, result.getDescription());
         Assertions.assertEquals(BigDecimal.TEN, result.getStatutoryFeeAmount());
         Assertions.assertTrue(result.isOrderDocument());
@@ -68,23 +68,23 @@ public class GetDocumentDetailsTest {
     @Test
     public void whenNotFindingDocumentsShouldThrowError() {
 
-        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentTypeDetails(NODOC, COURT_CLASS, NODOC));
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentTypeDetails(NODOC, COURT_CLASS, NODOC, ""));
     }
 
     @DisplayName("Failure: when SOAP service throws NestedEjbException_Exception, service should throw EfilingDocumentServiceException")
     @Test
     public void testThrowException() throws NestedEjbException_Exception {
 
-        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentTypeDetails(EXCEPTION, COURT_CLASS,"type"));
+        Assertions.assertThrows(EfilingDocumentServiceException.class, () -> sut.getDocumentTypeDetails(EXCEPTION, COURT_CLASS,"type", ""));
     }
 
     @DisplayName("Exception: courtLevel is required")
     @Test
     public void whenCourtLevelIsBlankShouldThrowIllegalArgumentException() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails(null, "class", "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("", "class", "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails(" ", "class", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails(null, "class", "type", ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("", "class", "type", ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails(" ", "class", "type", ""));
 
     }
 
@@ -92,9 +92,9 @@ public class GetDocumentDetailsTest {
     @Test
     public void whenCourtClassIsBlankShouldThrowIllegalArgumentException() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", null, "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "", "type"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", " ", "type"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", null, "type", ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "", "type", ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", " ", "type", ""));
 
     }
 
@@ -103,9 +103,9 @@ public class GetDocumentDetailsTest {
     @Test
     public void whenDocumentTypeIsBlankShouldThrowIllegalArgumentException() {
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", null));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", ""));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", " "));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", null, ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", "", ""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> sut.getDocumentTypeDetails("level", "class", " ", ""));
 
     }
 

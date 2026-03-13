@@ -13,10 +13,10 @@
             <xs:element name="findChecklistImagesResponse" type="tns:findChecklistImagesResponse"/>
             <xs:element name="findCivilAppearancesByFileNumberDate" type="tns:findCivilAppearancesByFileNumberDate"/>
             <xs:element name="findCivilAppearancesByFileNumberDateResponse" type="tns:findCivilAppearancesByFileNumberDateResponse"/>
-            <xs:element name="findCivilDocumentById" type="tns:findCivilDocumentById"/>
-            <xs:element name="findCivilDocumentByIdResponse" type="tns:findCivilDocumentByIdResponse"/>
             <xs:element name="findCivilFilingsForPackage" type="tns:findCivilFilingsForPackage"/>
             <xs:element name="findCivilFilingsForPackageResponse" type="tns:findCivilFilingsForPackageResponse"/>
+            <xs:element name="findCriminalCaseFiles" type="tns:findCriminalCaseFiles"/>
+            <xs:element name="findCriminalCaseFilesResponse" type="tns:findCriminalCaseFilesResponse"/>
             <xs:element name="findCurrProcTimesByParams" type="tns:findCurrProcTimesByParams"/>
             <xs:element name="findCurrProcTimesByParamsResponse" type="tns:findCurrProcTimesByParamsResponse"/>
             <xs:element name="findDocumentById" type="tns:findDocumentById"/>
@@ -61,8 +61,8 @@
             <xs:element name="testPutDocumentResponse" type="tns:testPutDocumentResponse"/>
             <xs:element name="testSaveClob" type="tns:testSaveClob"/>
             <xs:element name="testSaveClobResponse" type="tns:testSaveClobResponse"/>
-            <xs:element name="updateCivilDocsLargeFileCorrection" type="tns:updateCivilDocsLargeFileCorrection"/>
-            <xs:element name="updateCivilDocsLargeFileCorrectionResponse" type="tns:updateCivilDocsLargeFileCorrectionResponse"/>
+            <xs:element name="updateDocsLargeFileCorrection" type="tns:updateDocsLargeFileCorrection"/>
+            <xs:element name="updateDocsLargeFileCorrectionResponse" type="tns:updateDocsLargeFileCorrectionResponse"/>
             <xs:element name="updateDocumentStatus" type="tns:updateDocumentStatus"/>
             <xs:element name="updateDocumentStatusResponse" type="tns:updateDocumentStatusResponse"/>
             <xs:complexType name="submitFiling">
@@ -85,7 +85,7 @@
                     <xs:element minOccurs="0" name="clientFileNo" type="xs:string"/>
                     <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
                     <xs:element minOccurs="0" name="delayProcessing" type="xs:boolean"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="documents" nillable="true" type="tns:civilDocument"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="documents" nillable="true" type="tns:document"/>
                     <xs:element minOccurs="0" name="entDtm" type="xs:dateTime"/>
                     <xs:element minOccurs="0" name="entUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="existingCourtFileYn" type="xs:boolean"/>
@@ -116,7 +116,7 @@
                     <xs:element minOccurs="0" name="userAccessTxt" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="civilDocument">
+            <xs:complexType name="document">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="amendsAnotherDocumentYn" type="xs:boolean"/>
                     <xs:element minOccurs="0" name="appearanceDt" type="xs:dateTime"/>
@@ -580,6 +580,38 @@
             <xs:complexType name="saveReferenceFileResponse">
                 <xs:sequence/>
             </xs:complexType>
+            <xs:complexType name="findCriminalCaseFiles">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg4" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg5" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg6" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findCriminalCaseFilesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:criminalCaseFile"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="criminalCaseFile">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ccasCaseNo" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="courtClassCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtClassDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtDivisionCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtFileNo" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courtLevelDesc" type="xs:string"/>
+                    <xs:element minOccurs="0" name="locationId" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="locationIdentifierCd" type="xs:string"/>
+                    <xs:element minOccurs="0" name="locationNm" type="xs:string"/>
+                    <xs:element minOccurs="0" name="phys_id" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="ticketSeries" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="updateDocumentStatus">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="tns:documentStatuses"/>
@@ -600,6 +632,16 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="return" type="xs:string"/>
                 </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateDocsLargeFileCorrection">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateDocsLargeFileCorrectionResponse">
+                <xs:sequence/>
             </xs:complexType>
             <xs:complexType name="findFilingPackageByID">
                 <xs:sequence>
@@ -700,26 +742,6 @@
             <xs:complexType name="removeFilingResponse">
                 <xs:sequence/>
             </xs:complexType>
-            <xs:complexType name="updateCivilDocsLargeFileCorrection">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
-                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
-                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="updateCivilDocsLargeFileCorrectionResponse">
-                <xs:sequence/>
-            </xs:complexType>
-            <xs:complexType name="findCivilDocumentById">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="findCivilDocumentByIdResponse">
-                <xs:sequence>
-                    <xs:element minOccurs="0" name="return" type="tns:civilDocument"/>
-                </xs:sequence>
-            </xs:complexType>
             <xs:complexType name="putDocumentAsync">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="arg0" type="xs:decimal"/>
@@ -779,7 +801,7 @@
             </xs:complexType>
             <xs:complexType name="getCivilFilings">
                 <xs:sequence>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg0" type="tns:civilDocument"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg0" type="tns:document"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="getCivilFilingsResponse">
@@ -920,7 +942,7 @@
             </xs:complexType>
             <xs:complexType name="findDocumentByIdResponse">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="return" type="tns:civilDocument"/>
+                    <xs:element minOccurs="0" name="return" type="tns:document"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="initiateFiling">
@@ -992,7 +1014,7 @@
                     <xs:element minOccurs="0" name="documentStatusTypeCd" type="xs:string"/>
                     <xs:element minOccurs="0" name="feeAmt" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="largeFile" type="xs:boolean"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="omittedDocuments" nillable="true" type="tns:civilDocument"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="omittedDocuments" nillable="true" type="tns:document"/>
                     <xs:element minOccurs="0" name="packageId" type="xs:decimal"/>
                     <xs:element minOccurs="0" name="server" type="xs:string"/>
                     <xs:element minOccurs="0" name="serviceId" type="xs:decimal"/>
@@ -1001,7 +1023,7 @@
                     <xs:element minOccurs="0" name="updUserId" type="xs:string"/>
                     <xs:element minOccurs="0" name="updateFilingsForPackage" type="xs:boolean"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="updatedParties" nillable="true" type="tns:csoParty"/>
-                    <xs:element minOccurs="0" name="updatedXmlDocument" type="tns:civilDocument"/>
+                    <xs:element minOccurs="0" name="updatedXmlDocument" type="tns:document"/>
                     <xs:element minOccurs="0" name="uploadedFileName" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
@@ -1031,6 +1053,9 @@
     <wsdl:message name="findDocumentByIdResponse">
         <wsdl:part element="tns:findDocumentByIdResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="findCriminalCaseFiles">
+        <wsdl:part element="tns:findCriminalCaseFiles" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="findFilingPackageByIDResponse">
         <wsdl:part element="tns:findFilingPackageByIDResponse" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -1039,6 +1064,9 @@
     </wsdl:message>
     <wsdl:message name="testPutDocument">
         <wsdl:part element="tns:testPutDocument" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateDocsLargeFileCorrection">
+        <wsdl:part element="tns:updateDocsLargeFileCorrection" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findFilingPackageByID">
         <wsdl:part element="tns:findFilingPackageByID" name="parameters"></wsdl:part>
@@ -1061,9 +1089,6 @@
     <wsdl:message name="saveReferenceFileResponse">
         <wsdl:part element="tns:saveReferenceFileResponse" name="parameters"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="findCivilDocumentById">
-        <wsdl:part element="tns:findCivilDocumentById" name="parameters"></wsdl:part>
-    </wsdl:message>
     <wsdl:message name="putDocumentAsync">
         <wsdl:part element="tns:putDocumentAsync" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -1075,9 +1100,6 @@
     </wsdl:message>
     <wsdl:message name="courtesyCorrectionResponse">
         <wsdl:part element="tns:courtesyCorrectionResponse" name="parameters"></wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="findCivilDocumentByIdResponse">
-        <wsdl:part element="tns:findCivilDocumentByIdResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getCivilFilings">
         <wsdl:part element="tns:getCivilFilings" name="parameters"></wsdl:part>
@@ -1124,9 +1146,6 @@
     <wsdl:message name="removeFilingResponse">
         <wsdl:part element="tns:removeFilingResponse" name="parameters"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="updateCivilDocsLargeFileCorrectionResponse">
-        <wsdl:part element="tns:updateCivilDocsLargeFileCorrectionResponse" name="parameters"></wsdl:part>
-    </wsdl:message>
     <wsdl:message name="updateDocumentStatus">
         <wsdl:part element="tns:updateDocumentStatus" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -1151,14 +1170,14 @@
     <wsdl:message name="removeFiling">
         <wsdl:part element="tns:removeFiling" name="parameters"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="updateCivilDocsLargeFileCorrection">
-        <wsdl:part element="tns:updateCivilDocsLargeFileCorrection" name="parameters"></wsdl:part>
-    </wsdl:message>
     <wsdl:message name="putDocumentAsyncResponse">
         <wsdl:part element="tns:putDocumentAsyncResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="getActiveDocumentImageResponse">
         <wsdl:part element="tns:getActiveDocumentImageResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="updateDocsLargeFileCorrectionResponse">
+        <wsdl:part element="tns:updateDocsLargeFileCorrectionResponse" name="parameters"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="findChecklistImages">
         <wsdl:part element="tns:findChecklistImages" name="parameters"></wsdl:part>
@@ -1193,6 +1212,9 @@
     <wsdl:message name="getActiveSuppDocImageResponse">
         <wsdl:part element="tns:getActiveSuppDocImageResponse" name="parameters"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="findCriminalCaseFilesResponse">
+        <wsdl:part element="tns:findCriminalCaseFilesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="getDocument">
         <wsdl:part element="tns:getDocument" name="parameters"></wsdl:part>
     </wsdl:message>
@@ -1226,6 +1248,11 @@
             <wsdl:output message="tns:saveReferenceFileResponse" name="saveReferenceFileResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="findCriminalCaseFiles">
+            <wsdl:input message="tns:findCriminalCaseFiles" name="findCriminalCaseFiles"></wsdl:input>
+            <wsdl:output message="tns:findCriminalCaseFilesResponse" name="findCriminalCaseFilesResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="updateDocumentStatus">
             <wsdl:input message="tns:updateDocumentStatus" name="updateDocumentStatus"></wsdl:input>
             <wsdl:output message="tns:updateDocumentStatusResponse" name="updateDocumentStatusResponse"></wsdl:output>
@@ -1234,6 +1261,11 @@
         <wsdl:operation name="testPutDocument">
             <wsdl:input message="tns:testPutDocument" name="testPutDocument"></wsdl:input>
             <wsdl:output message="tns:testPutDocumentResponse" name="testPutDocumentResponse"></wsdl:output>
+            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateDocsLargeFileCorrection">
+            <wsdl:input message="tns:updateDocsLargeFileCorrection" name="updateDocsLargeFileCorrection"></wsdl:input>
+            <wsdl:output message="tns:updateDocsLargeFileCorrectionResponse" name="updateDocsLargeFileCorrectionResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="findFilingPackageByID">
@@ -1264,16 +1296,6 @@
         <wsdl:operation name="removeFiling">
             <wsdl:input message="tns:removeFiling" name="removeFiling"></wsdl:input>
             <wsdl:output message="tns:removeFilingResponse" name="removeFilingResponse"></wsdl:output>
-            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
-        </wsdl:operation>
-        <wsdl:operation name="updateCivilDocsLargeFileCorrection">
-            <wsdl:input message="tns:updateCivilDocsLargeFileCorrection" name="updateCivilDocsLargeFileCorrection"></wsdl:input>
-            <wsdl:output message="tns:updateCivilDocsLargeFileCorrectionResponse" name="updateCivilDocsLargeFileCorrectionResponse"></wsdl:output>
-            <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
-        </wsdl:operation>
-        <wsdl:operation name="findCivilDocumentById">
-            <wsdl:input message="tns:findCivilDocumentById" name="findCivilDocumentById"></wsdl:input>
-            <wsdl:output message="tns:findCivilDocumentByIdResponse" name="findCivilDocumentByIdResponse"></wsdl:output>
             <wsdl:fault message="tns:NestedEjbException" name="NestedEjbException"></wsdl:fault>
         </wsdl:operation>
         <wsdl:operation name="putDocumentAsync">
@@ -1405,6 +1427,18 @@
                 <soap:fault name="NestedEjbException" use="literal"/>
             </wsdl:fault>
         </wsdl:operation>
+        <wsdl:operation name="findCriminalCaseFiles">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findCriminalCaseFiles">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findCriminalCaseFilesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
         <wsdl:operation name="updateDocumentStatus">
             <soap:operation soapAction="" style="document"/>
             <wsdl:input name="updateDocumentStatus">
@@ -1423,6 +1457,18 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="testPutDocumentResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NestedEjbException">
+                <soap:fault name="NestedEjbException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateDocsLargeFileCorrection">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="updateDocsLargeFileCorrection">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="updateDocsLargeFileCorrectionResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
@@ -1495,30 +1541,6 @@
                 <soap:body use="literal"/>
             </wsdl:input>
             <wsdl:output name="removeFilingResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-            <wsdl:fault name="NestedEjbException">
-                <soap:fault name="NestedEjbException" use="literal"/>
-            </wsdl:fault>
-        </wsdl:operation>
-        <wsdl:operation name="updateCivilDocsLargeFileCorrection">
-            <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="updateCivilDocsLargeFileCorrection">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="updateCivilDocsLargeFileCorrectionResponse">
-                <soap:body use="literal"/>
-            </wsdl:output>
-            <wsdl:fault name="NestedEjbException">
-                <soap:fault name="NestedEjbException" use="literal"/>
-            </wsdl:fault>
-        </wsdl:operation>
-        <wsdl:operation name="findCivilDocumentById">
-            <soap:operation soapAction="" style="document"/>
-            <wsdl:input name="findCivilDocumentById">
-                <soap:body use="literal"/>
-            </wsdl:input>
-            <wsdl:output name="findCivilDocumentByIdResponse">
                 <soap:body use="literal"/>
             </wsdl:output>
             <wsdl:fault name="NestedEjbException">
