@@ -1,6 +1,6 @@
 {
   "name": "efiling-frontend",
-  "version": "2.0.13",
+  "version": "2.2.1",
   "private": true,
   "homepage": "/efilinghub",
   "dependencies": {
@@ -127,7 +127,7 @@
     "nth-check": "^2.0.1",
     "terser": "^5.14.2",
     "json5": "^2.2.2",
-    "minimatch": "^3.0.5",
+    "minimatch": "^3.1.3",
     "webpack": "^5.76.0",
     "braces": "^3.0.3",
     "webpack-dev-middleware": "^5.3.4",
@@ -140,7 +140,8 @@
     "cross-spawn": "^7.0.5",
     "path-to-regexp": "^0.1.12",
     "elliptic": "^6.6.1",
-    "semver": "^7.5.2"
+    "semver": "^7.5.2",
+    "svgo": "2.8.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
