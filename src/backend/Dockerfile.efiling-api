@@ -41,6 +41,7 @@ RUN mvn -B clean install \
 #############################################################################################
 FROM eclipse-temurin:17-jre-alpine
 
+#CVE Fixes
 RUN apk -U upgrade
 RUN apk update && apk add --upgrade --no-cache libexpat libpng gnupg # CVE fixes
 RUN apk del --force libpng ttf-dejavu
