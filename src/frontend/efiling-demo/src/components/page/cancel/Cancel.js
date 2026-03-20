@@ -14,9 +14,10 @@ export default function Cancel({ page: { header } }) {
             go back home.
           </p>
           <Button
-            onClick={() => header.history.push("/")}
+            onClick={() => header.navigate("/")}
             label="Return home"
-            styling="normal-white btn"
+            styling="bcgov-normal-white btn"
+            testId="return-home-btn"
           />
         </div>
       </div>
@@ -27,6 +28,6 @@ export default function Cancel({ page: { header } }) {
 
 Cancel.propTypes = {
   page: PropTypes.shape({
-    header: propTypes.header
-  }).isRequired
+    header: propTypes.header,
+  }).isRequired,
 };

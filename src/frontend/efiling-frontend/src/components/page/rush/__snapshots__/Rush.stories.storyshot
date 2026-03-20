@@ -1,0 +1,633 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Rush Default 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-rush page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Rush Details
+      </h1>
+      <h2>
+        Submitting on a rush basis
+      </h2>
+      <br />
+      <p>
+        If you wish to request that this package be submitted on an urgent (rush) basis, 
+        <br />
+        you must provide a reason and contact information for your request to be considered.
+      </p>
+      <br />
+      <h3>
+        My reason for requesting urgent (rush) filing is:
+      </h3>
+      <br />
+      <label
+        class="bcgov-radio"
+        for="rule-85"
+      >
+        The attached application is made under Rule 8-5 (1) SCR.
+        <input
+          id="rule-85"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <label
+        class="bcgov-radio"
+        for="court-directed"
+      >
+        The court directed that the order be processed on an urgent basis.
+        <input
+          id="court-directed"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <label
+        class="bcgov-radio"
+        for="other"
+      >
+        Other (please explain).
+        <input
+          id="other"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid=""
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button bcgov-normal-blue btn"
+          data-testid=""
+          disabled=""
+          type="button"
+        >
+          Continue
+        </button>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="rushSubmissionCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About Rush Documents
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
+                </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Storyshots Rush Mobile 1`] = `
+<DocumentFragment>
+  <div
+    class="ct-rush page"
+  >
+    <div
+      class="content col-md-8"
+    >
+      <h1>
+        Rush Details
+      </h1>
+      <h2>
+        Submitting on a rush basis
+      </h2>
+      <br />
+      <p>
+        If you wish to request that this package be submitted on an urgent (rush) basis, 
+        <br />
+        you must provide a reason and contact information for your request to be considered.
+      </p>
+      <br />
+      <h3>
+        My reason for requesting urgent (rush) filing is:
+      </h3>
+      <br />
+      <label
+        class="bcgov-radio"
+        for="rule-85"
+      >
+        The attached application is made under Rule 8-5 (1) SCR.
+        <input
+          id="rule-85"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <label
+        class="bcgov-radio"
+        for="court-directed"
+      >
+        The court directed that the order be processed on an urgent basis.
+        <input
+          id="court-directed"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <label
+        class="bcgov-radio"
+        for="other"
+      >
+        Other (please explain).
+        <input
+          id="other"
+          name="rush-reason"
+          type="radio"
+        />
+        <span
+          class="bcgov-dot"
+        />
+      </label>
+      <br />
+      <section
+        class="buttons pt-2"
+      >
+        <button
+          class="bcgov-button bcgov-normal-white btn"
+          data-testid=""
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          class="bcgov-button bcgov-normal-blue btn"
+          data-testid=""
+          disabled=""
+          type="button"
+        >
+          Continue
+        </button>
+      </section>
+    </div>
+    <div
+      class="sidecard"
+    >
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="rushSubmissionCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About Rush Documents
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  When directed by the court, an order will be processed on an urgent(rush) basis. The registry will consider specific reasons for processing an order on an urgent(rush) basis.
+                </p>
+                <p>
+                  <b>
+                    Only request processing on an urgent(rush) basis in exceptional circumstances.
+                  </b>
+                </p>
+                <span
+                  class="file-href"
+                >
+                  Learn more about rush processing.
+                </span>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="csoAccountDetailsCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    Your CSO Account
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  CSO account 
+                  <strong>
+                    123
+                  </strong>
+                   is linked to your Basic BCeID account 
+                  <strong>
+                    username
+                  </strong>
+                   and will be used to file documents. 
+                  <a
+                    href="undefined/accounts/editProfile.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    View your CSO account details
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div
+        class="bcgov-wide-dashboard-spacing"
+        style="position: relative;"
+      >
+        <div
+          class="col-12 pt-2"
+          style="position: relative;"
+        >
+          <p />
+          <section
+            class="bcgov-bluegrey-container"
+            id="aboutCsoCard"
+          >
+            <div
+              class="bcgov-container-background bcgov-bluegrey-heading"
+            >
+              <h2
+                class="bcgov-heading-style"
+              >
+                <div
+                  class="bcgov-side-card-row"
+                >
+                  <div
+                    class="bcgov-round-icon-wrapper"
+                  >
+                    <svg
+                      class="bcgov-side-card-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="bcgov-side-card-title"
+                  >
+                    About E-File Submission
+                  </div>
+                </div>
+              </h2>
+            </div>
+            <div
+              class="bcgov-bluegrey-content"
+            >
+              <span
+                class="bcgov-content-style"
+              >
+                <p>
+                  E-File Submission is a service to help you securely and electronically file documents with the Courts of British Columbia via Court Services Online. 
+                  <a
+                    href="undefined/about/index.do"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Learn more about CSO
+                  </a>
+                  .
+                </p>
+              </span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
