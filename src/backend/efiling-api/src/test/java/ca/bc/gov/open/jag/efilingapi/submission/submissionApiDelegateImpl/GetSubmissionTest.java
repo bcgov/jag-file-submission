@@ -1,46 +1,53 @@
 package ca.bc.gov.open.jag.efilingapi.submission.submissionApiDelegateImpl;
 
+import ca.bc.gov.open.clamav.starter.ClamAvService;
 import ca.bc.gov.open.jag.efilingapi.TestHelpers;
-import ca.bc.gov.open.jag.efilingapi.api.model.Account;
-import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionResponse;
+import ca.bc.gov.open.jag.efilingapi.account.service.AccountService;
+import ca.bc.gov.open.jag.efilingapi.api.model.GetSubmissionConfigResponse;
 import ca.bc.gov.open.jag.efilingapi.config.NavigationProperties;
+import ca.bc.gov.open.jag.efilingapi.document.DocumentStore;
+import ca.bc.gov.open.jag.efilingapi.error.ErrorCode;
+import ca.bc.gov.open.jag.efilingapi.error.MissingUniversalIdException;
 import ca.bc.gov.open.jag.efilingapi.submission.SubmissionApiDelegateImpl;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapper;
+import ca.bc.gov.open.jag.efilingapi.submission.mappers.FilingPackageMapperImpl;
 import ca.bc.gov.open.jag.efilingapi.submission.mappers.GenerateUrlResponseMapper;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionService;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStore;
+import ca.bc.gov.open.jag.efilingapi.submission.validator.GenerateUrlRequestValidator;
 import ca.bc.gov.open.jag.efilingcommons.model.AccountDetails;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
+import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static ca.bc.gov.open.jag.efilingapi.Keys.IDENTITY_PROVIDER_CLAIM_KEY;
+import static ca.bc.gov.open.jag.efilingapi.Keys.UNIVERSAL_ID_CLAIM_KEY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SubmissionApiDelegateImpl test suite")
 public class GetSubmissionTest {
 
-    private static final String SUCCESSURL = "http://success";
-    private static final String CANCELURL = "http://cancel";
-    private static final String ERRORURL = "http://error";
-    private static final UUID CASE_1 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fe");
-    private static final UUID CASE_2 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fa");
-    private static final UUID CASE_3 = UUID.fromString("77da92db-0791-491e-8c58-1a969e67d2fb");
-    private static final String EMAIL = "email";
-    private static final String FIRST_NAME = "firstName";
-    private static final String LAST_NAME = "lastName";
-    private static final String MIDDLE_NAME = "middleName";
+    private static final String SERVICE_TYPE_CD = "DCFL";
+    private static final String SERVICE_TYPE_CD1 = "NOTDCFL";
+    private static final String INTERNAL_CLIENT_NUMBER = "123";
+    private static final String IDENTITY_PROVIDER = "identity_provider_alias";
 
     private SubmissionApiDelegateImpl sut;
 
@@ -53,45 +60,92 @@ public class GetSubmissionTest {
     @Mock
     private SubmissionStore submissionStoreMock;
 
-    @BeforeAll
-    public void setUp() {
+    @Mock
+    private DocumentStore documentStoreMock;
 
-        MockitoAnnotations.initMocks(this);
+    @Mock
+    private SecurityContext securityContextMock;
+
+    @Mock
+    private Authentication authenticationMock;
+
+    @Mock
+    private Jwt jwtMock;
+
+    @Mock
+    private AccountService accountServiceMock;
+
+    @Mock
+    private ClamAvService clamAvServiceMock;
+
+    @Mock
+    private GenerateUrlRequestValidator generateUrlRequestValidator;
+
+    @BeforeAll
+    public void beforeAll() {
+
+        MockitoAnnotations.openMocks(this);
+
+        Mockito.when(securityContextMock.getAuthentication()).thenReturn(authenticationMock);
+
+        SecurityContextHolder.setContext(securityContextMock);
 
         NavigationProperties navigationProperties = new NavigationProperties();
         navigationProperties.setBaseUrl("http://localhost");
-
         Submission submissionWithCsoAccount = Submission
                 .builder()
-                .accountDetails(
-                        AccountDetails
-                                .builder()
-                                .accountId(BigDecimal.TEN)
-                                .firstName(FIRST_NAME + CASE_2)
-                                .lastName(LAST_NAME + CASE_2)
-                                .middleName(MIDDLE_NAME + CASE_2)
-                                .fileRolePresent(true)
-                                .email(EMAIL + CASE_2).create())
-                .navigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL))
+                .clientAppName(TestHelpers.DESCRIPTION)
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
-        Mockito.when(submissionStoreMock.getByKey(CASE_2)).thenReturn(Optional.of(submissionWithCsoAccount));
+        Mockito
+                .doReturn(Optional.of(submissionWithCsoAccount))
+                .when(submissionStoreMock)
+                .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_2)));
 
         Submission submissionWithoutCsoAccount = Submission
                 .builder()
-                .navigation(TestHelpers.createNavigation(SUCCESSURL, CANCELURL, ERRORURL))
+                .navigationUrls(TestHelpers.createNavigation(TestHelpers.SUCCESS_URL, TestHelpers.CANCEL_URL, TestHelpers.ERROR_URL))
                 .create();
 
-        Mockito.when(submissionStoreMock.getByKey(CASE_3)).thenReturn(Optional.of(submissionWithoutCsoAccount));
+        Mockito
+                .doReturn(Optional.of(submissionWithoutCsoAccount))
+                .when(submissionStoreMock)
+                .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_3)));
 
-        sut = new SubmissionApiDelegateImpl(submissionServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock);
+        Mockito
+                .doReturn(Optional.of(submissionWithoutCsoAccount))
+                .when(submissionStoreMock)
+                .get(ArgumentMatchers.argThat(x -> x.getSubmissionId().equals(TestHelpers.CASE_4)));
+
+
+        Mockito.when(accountServiceMock.getCsoAccountDetails(Mockito.eq(TestHelpers.CASE_2_STRING)))
+                .thenReturn(AccountDetails
+                        .builder()
+                        .clientId(BigDecimal.TEN)
+                        .internalClientNumber(INTERNAL_CLIENT_NUMBER)
+                        .universalId(TestHelpers.CASE_2_STRING)
+                        .accountId(BigDecimal.TEN)
+                        .fileRolePresent(true)
+                        .cardRegistered(true)
+                        .create());
+
+        FilingPackageMapper filingPackageMapper = new FilingPackageMapperImpl();
+        sut = new SubmissionApiDelegateImpl(submissionServiceMock, accountServiceMock, generateUrlResponseMapperMock, navigationProperties, submissionStoreMock, documentStoreMock, clamAvServiceMock, filingPackageMapper, generateUrlRequestValidator, null);
 
     }
 
     @Test
     @DisplayName("404: With null redis storage response return NotFound")
     public void withNullRedisStorageResponseReturnNotFound() {
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(CASE_1);
+
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
+
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
+                UUID.randomUUID(),
+                TestHelpers.CASE_1);
         assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
     }
 
@@ -99,34 +153,72 @@ public class GetSubmissionTest {
     @DisplayName("200: With user having cso account and efiling role return submission details")
     public void withUserHavingCsoAccountShouldReturnUserDetailsAndAccount() {
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(CASE_2);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(TestHelpers.CASE_2.toString());
+        Mockito.when(jwtMock.getClaim(Mockito.eq(IDENTITY_PROVIDER_CLAIM_KEY))).thenReturn(IDENTITY_PROVIDER);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
+
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(UUID.fromString(
+                TestHelpers.CASE_2_STRING),
+                TestHelpers.CASE_2);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(EMAIL + CASE_2, actual.getBody().getUserDetails().getEmail());
-        assertEquals(FIRST_NAME + CASE_2, actual.getBody().getUserDetails().getFirstName());
-        assertEquals(LAST_NAME + CASE_2, actual.getBody().getUserDetails().getLastName());
-        assertEquals(MIDDLE_NAME + CASE_2, actual.getBody().getUserDetails().getMiddleName());
-        assertEquals(1, actual.getBody().getUserDetails().getAccounts().size());
-        assertEquals(Account.TypeEnum.CSO, actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getType());
-        assertEquals("10", actual.getBody().getUserDetails().getAccounts().stream().findFirst().get().getIdentifier());
-        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
+        assertEquals(TestHelpers.DESCRIPTION, actual.getBody().getClientAppName());
+
     }
 
     @Test
     @DisplayName("200: With user not having cso account")
     public void withUserHavingNoCsoAccountShouldReturnUserDetailsButNoAccount() {
 
-        ResponseEntity<GetSubmissionResponse> actual = sut.getSubmission(CASE_3);
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
+                TestHelpers.CASE_3,
+                UUID.randomUUID());
         assertEquals(HttpStatus.OK, actual.getStatusCode());
-        assertEquals(EMAIL, actual.getBody().getUserDetails().getEmail());
-        assertEquals(FIRST_NAME, actual.getBody().getUserDetails().getFirstName());
-        assertEquals(LAST_NAME, actual.getBody().getUserDetails().getLastName());
-        assertEquals(MIDDLE_NAME, actual.getBody().getUserDetails().getMiddleName());
-        assertNull(actual.getBody().getUserDetails().getAccounts());
-        assertEquals(SUCCESSURL, actual.getBody().getNavigation().getSuccess().getUrl());
-        assertEquals(CANCELURL, actual.getBody().getNavigation().getCancel().getUrl());
-        assertEquals(ERRORURL, actual.getBody().getNavigation().getError().getUrl());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
+
+    }
+
+    @Test
+    @DisplayName("200: With user not having account details present")
+    public void withUserHavingNoAccountDetailsShouldReturnUserDetailsButNoAccount() {
+
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(UUID.randomUUID().toString());
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
+        ResponseEntity<GetSubmissionConfigResponse> actual = sut.getSubmissionConfig(
+                TestHelpers.CASE_4,
+                UUID.randomUUID());
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(TestHelpers.SUCCESS_URL, actual.getBody().getNavigationUrls().getSuccess());
+        assertEquals(TestHelpers.CANCEL_URL, actual.getBody().getNavigationUrls().getCancel());
+        assertEquals(TestHelpers.ERROR_URL, actual.getBody().getNavigationUrls().getError());
+
+    }
+
+    @Test
+    @DisplayName("403: With user not having universal id claim should throw MissingUniversalIdException")
+    public void withUserNotHavingUniversalIdShouldThrowMissingUniversalIdException() {
+
+        Mockito.when(jwtMock.getClaim(Mockito.eq(UNIVERSAL_ID_CLAIM_KEY))).thenReturn(null);
+        Mockito.when(authenticationMock.getPrincipal()).thenReturn(jwtMock);
+
+        MissingUniversalIdException exception = Assertions.assertThrows(MissingUniversalIdException.class, () -> sut.getSubmissionConfig(UUID.randomUUID(), TestHelpers.CASE_5));
+        Assertions.assertEquals(ErrorCode.MISSING_UNIVERSAL_ID.toString(), exception.getErrorCode());
+        Assertions.assertEquals("universal-id claim missing in jwt token.", exception.getMessage());
+    }
+
+    private List<ServiceFees> createFees() {
+        ServiceFees fee1 = new ServiceFees(BigDecimal.TEN, SERVICE_TYPE_CD);
+        ServiceFees fee2 = new ServiceFees(BigDecimal.ONE, SERVICE_TYPE_CD1);
+        return Arrays.asList(fee1, fee2);
     }
 
 }

@@ -1,20 +1,45 @@
 server:
   port: ${SERVER_PORT:8080}
+  tomcat:
+    max-part-count: ${MAX_FILE_COUNT:15}
+    max-part-header-size: ${MAX_HEADER_SIZE:2048}
 spring:
-  redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:admin}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8081/auth/realms/Efiling-Hub}
+          jwk-set-uri: ${KEYCLOAK_JWK_SERVER_URL:http://localhost:8081/auth/realms/Efiling-Hub}/protocol/openid-connect/certs
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:admin}
   cache:
     redis:
       time-to-live: ${CACHE_TTL:600000}
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:100MB}
+
+jwt:
+  auth:
+    converter:
+      resource-id: ${KEYCLOAK_RESOURCE:efiling-api}
+
 jag:
   efiling:
     global:
       demo: ${DEMO_MODE:false}
     navigation:
-      baseUrl: ${NAVIGATION_BASE_URL:https://httpbin.org/}
+      baseUrl: ${NAVIGATION_BASE_URL:http://localhost:3000/efilinghub}
+      csoBaseUrl: ${CSO_BASE_URL:http://localhost/cso}
     soap:
+      proxy:
+        basePath: ${CSO_BASEPATH}
+        username: ${CSO_USERNAME}
+        password: ${CSO_PASSWORD}
       clients:
         - client: ACCOUNT
           userName: ${CSO_ACCOUNTFACADE_USERNAME}
@@ -28,19 +53,103 @@ jag:
           userName: ${CSO_LOOKUPFACADE_USERNAME}
           password: ${CSO_LOOKUPFACADE_PASSWORD}
           uri: ${CSO_LOOKUPFACADE_URI:http://localhost:8091}
-        - client: BCEID
-          userName: ${BCEID_LOOKUP_USERNAME}
-          password: ${BCEID_LOOKUP_PASSWORD}
-          uri: ${BCEID_LOOKUP_URI:http://localhost:8091}
+        - client: STATUS
+          userName: ${CSO_FILINGSTATSFACADE_USERNAME}
+          password: ${CSO_FILINGSTATSFACADE_PASSWORD}
+          uri: ${CSO_FILINGSTATSFACADE_URI:http://localhost:8091}
+        - client: CSOWS
+          userName: ${CSOWS_USERNAME}
+          password: ${CSOWS_PASSWORD}
+          uri: ${CSOWS_URI:http://localhost:8091}
+        - client: FILING
+          userName: ${CSO_FILINGFACADE_USERNAME}
+          password: ${CSO_FILINGFACADE_PASSWORD}
+          uri: ${CSO_FILINGFACADE_URI:http://localhost:8091}
+        - client: SERVICE
+          userName: ${CSO_SERVICEFACADE_USERNAME}
+          password: ${CSO_SERVICEFACADE_PASSWORD}
+          uri: ${CSO_SERVICEFACADE_URI:http://localhost:8091}
+        - client: REPORT
+          userName: ${CSO_REPORTSERVICE_USERNAME}
+          password: ${CSO_REPORTSERVICE_PASSWORD}
+          uri: ${CSO_REPORTSERVICE_URI:http://localhost:8091}
+        - client: SEARCH
+          userName: ${CSO_SEARCH_USERNAME}
+          password: ${CSO_SEARCH_PASSWORD}
+          uri: ${CSO_SEARCH_URI:http://localhost:8091}
 
+ceis:
+  ceisBasePath: ${CEIS_BASE_PATH}
+  ceisUsername: ${CEIS_USERNAME}
+  ceisPassword: ${CEIS_PASSWORD}
+
+cso:
+  fileServerHost: ${CSO_FILE_SERVER_HOST}
+  csoBasePath: ${CSO_BASE_URL:http://localhost/cso}
+  csoPackagePath: ${CSO_PACKAGE_PATH:/accounts/bceidNotification.do?packageNo=}
+  debugEnabled: ${CSO_DEBUG_ENABLED:false}
+
+bambora:
+  apiBasePath: ${BAMBORA_APIBASEPATH:http://localhost:8080}
+  apiPasscode: ${BAMBORA_APIPASSCODE}
+  apiPaymentPasscode: ${BAMBORA_APIPAYMENTPASSCODE}
+  merchantId: ${BAMBORA_MERCHANTID}
+  hostedProfileUrl: ${BAMBORA_PROFILE_URL}
+  hostedProfileServiceVersion: ${BAMBORA_PROFILE_SERVICE_VERSION}
+  hashKey: ${BAMBORA_HASHKEY}
+  minutesToExpiry: ${BAMBORA_URL_EXPIRY:10}
+bcgov:
+  sftp:
+    host: ${SFTP_HOST:localhost}
+    port: ${SFTP_PORT:23}
+    username: ${SFTP_USERNAME:admin}
+    password: ${SFTP_PASSWORD:admin}
+    remoteLocation: ${SFTP_REMOTELOCATION}
+    knownHostsFileName: ${SFTP_KNOWNHOSTS}
+    allowUnknownKeys: ${SFTP_ALLOWUNKNOWN:true}
+    sshPrivateKey: ${SFTP_PRIVATE_KEY}
+  bceid:
+    service:
+      uri: ${BCEID_SERVICE_URI}
+      username: ${BCEID_SERVICE_USERNAME}
+      password: ${BCEID_SERVICE_PASSWORD}
+      onlineServiceId: ${BCEID_SERVICE_ONLINE_SERVICE_ID}
+
+  clamav:
+    host: ${CLAMAV_HOST:localhost}
+    port: ${CLAMAV_PORT:3310}
+    timeout: ${CLAMAV_TIMEOUT:50000}
 info:
   app:
-    name: @project.name@
-    description: @project.description@
-    version: @project.version@
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
+
+mailsend:
+  baseUrl: ${MAIL_SEND_BASE_URL:http://localhost:8090}
+
+parents:
+  - application: EFILING_ADMIN
+    returnUrl: ${EFILING_ADMIN_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${EFILING_ADMIN_REJECTED_DOCUMENT:false}
+  - application: FLA
+    returnUrl: ${FLA_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${FLA_REJECTED_DOCUMENT:false}
+  - application: BCCOA
+    returnUrl: ${BCCOA_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${BCCOA_REJECTED_DOCUMENT:false}
+  - application: EDIVORCE
+    returnUrl: ${EDIVORCE_RETURN_URL:http://localhost:8080/rejected}
+    rejectedDocuments: ${EDIVORCE_REJECTED_DOCUMENT:false}
+
 opentracing:
   jaeger:
     service-name: efilingApi
     enabled: TRUE
     udp-sender:
       host: localhost
+
+logging:
+  level:
+    root: INFO
+    ca.bc.gov.open.jag.aireviewerapi: ${LOGGING_LEVEL:INFO}
