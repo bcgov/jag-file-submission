@@ -42,7 +42,7 @@
         <logback.access.common.version>2.0.6</logback.access.common.version>
         <org.apache.tomcat.embed.version>11.0.18</org.apache.tomcat.embed.version>
         <org.json.version>20250517</org.json.version>
-        <org.springframework.security.version>6.5.4</org.springframework.security.version>
+        <org.springframework.security.version>6.5.10</org.springframework.security.version>
         <org.springframework.version>6.2.12</org.springframework.version>
     </properties>
 
