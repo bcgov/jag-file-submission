@@ -10,7 +10,7 @@
     "axios": "^0.30.3",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "bootstrap": "^4.5.3",
-    "browserslist": "^4.19.1",
+    "browserslist": "^4.28.7",
     "eslint-plugin-airbnb": "^0.0.1-security",
     "history": "^5.0.0",
     "install-peerdeps": "^3.0.3",
