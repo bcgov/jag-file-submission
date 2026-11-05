@@ -1,0 +1,130 @@
+name: Build and Test Apps
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  yarn:
+    env:
+      FILE_COUNTER: 0
+      ACTION_DEBUG: true
+
+    name: Build and Test React Apps
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Printing node and yarn versions
+        run: node --version && yarn --version
+      # Figure out where yarn is caching things
+      - name: Yarn Cache
+        run: yarn cache dir
+
+      # Run Yarn Install - eFiling Frontend
+      - name: Run Yarn Install - eFiling Frontend
+        run: yarn --cwd src/frontend/efiling-frontend install
+
+      #Disable for now
+      # Check lint version
+      #- name: Check lint - eFiling Frontend
+      #  run: yarn --cwd src/frontend/efiling-frontend run lint -v
+
+      # Run lint - eFiling Frontend
+      #- name: Run lint - eFiling Frontend
+      #  run: yarn --cwd src/frontend/efiling-frontend run lint
+
+      # Yarn Coverage - eFiling Frontend
+      - name: Run Yarn Coverage - eFiling Frontend
+        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
+
+      # Run Yarn Install - eFiling Demo
+      - name: Run Yarn Install - eFiling Demo
+        run: yarn --cwd src/frontend/efiling-demo install
+
+      # Run lint - eFiling Demo
+      - name: Run lint - eFiling Demo
+        run: yarn --cwd src/frontend/efiling-demo run lint
+
+      # Yarn Coverage - eFiling Demo
+      - name: Run Yarn Coverage - eFiling Demo
+        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-demo coverage
+
+      # Formatting the FRONTEND DEMO coverage report
+      #- name: Format the FRONTEND DEMO coverage report
+      #  run: |          
+      #    pushd .
+      #    cd ${{github.workspace}}/src/frontend/efiling-demo/
+      #    ${{github.workspace}}/cc-test-reporter format-coverage -t lcov -o ${{github.workspace}}/coverage/frontend-demo-codeclimate.json coverage/lcov.info
+      #    popd
+      # Implement Caching Action for Yarn Project
+      - name: Cache node modules
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-node-modules
+        with:
+          # YARN cache files are stored in `/home/runner/.cache/yarn/v6` on git actions
+          path: /home/runner/.cache/yarn/v6
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+
+
+
+  spring-boot:
+    name: Build and Test Java
+    runs-on: ubuntu-latest
+    env:
+      FILE_COUNTER: 0
+      ACTION_DEBUG: true
+
+    steps:
+      - name: Checkout Spring Starters Repository
+        uses: actions/checkout@v4
+        with:
+          repository: bcgov/spring-boot-starters
+          path: spring-boot-starters
+          ref: v1.0.5
+          
+      # Setup Java Environment
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      # TODO REMOVE AFTER SFTP IS IN MAVEN CENTRAL
+      - name: Build Spring Starters
+        run: mvn install -P all --file ./spring-boot-starters/src/pom.xml
+
+      - name: Checkout File Submission Repository
+        uses: actions/checkout@v2
+
+
+      # Trimming the ref to master in order to publish correct report (paambaati)
+      - name: Set ref/head/master to master
+        run: |
+          echo "GIT_BRANCH=master" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::master"
+        if: env.GIT_BRANCH == 'refs/heads/master'
+
+      #- uses: actions/cache@v1
+      #  with:
+      #    path: ~/.m2/repository
+      #    key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+      #    restore-keys: |
+      #      ${{ runner.os }}-maven-
+
+      #Set env again??
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+     # Run Maven Verify to generate all jacoco reports        
+      - name: Build with Maven
+        run: mvn -B verify -P all --file src/backend/pom.xml

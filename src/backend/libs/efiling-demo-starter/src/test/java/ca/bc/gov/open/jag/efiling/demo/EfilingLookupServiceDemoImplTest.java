@@ -1,13 +1,15 @@
 package ca.bc.gov.open.jag.efiling.demo;
 
 import ca.bc.gov.open.jag.efilingcommons.model.ServiceFees;
-import org.joda.time.DateTime;
+import ca.bc.gov.open.jag.efilingcommons.model.SubmissionFeeRequest;
+import ca.bc.gov.open.jag.efilingcommons.submission.models.LookupItem;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -20,18 +22,31 @@ public class EfilingLookupServiceDemoImplTest {
 
         EfilingLookupServiceDemoImpl service = new EfilingLookupServiceDemoImpl();
 
-        String serviceId = "TestServiceId";
-        ServiceFees actual = service.getServiceFee(serviceId);
+        ServiceFees actual = service.getServiceFee(SubmissionFeeRequest.builder().create());
 
-        Assertions.assertEquals(BigDecimal.valueOf(7), actual.getFeeAmt());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), actual.getEffectiveDt().getDayOfMonth());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), actual.getEntDtm().getDayOfMonth());
-        Assertions.assertEquals("entUserId", actual.getEntUserId());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), actual.getExpiryDt().getDayOfMonth());
+        Assertions.assertEquals(BigDecimal.valueOf(7), actual.getFeeAmount());
         Assertions.assertEquals("serviceTypeCd", actual.getServiceTypeCd());
-        Assertions.assertEquals("updUserId", actual.getUpdUserId());
-        Assertions.assertEquals(DateTime.now().getDayOfMonth(), actual.getUdpDtm().getDayOfMonth());
 
+    }
+
+    @DisplayName("CASE 2: Testing Demo getCountries")
+    @Test
+    public void testDemoLookupServiceCountriesTest() {
+
+        EfilingLookupServiceDemoImpl service = new EfilingLookupServiceDemoImpl();
+
+        List<LookupItem> actual = service.getCountries();
+
+        Assertions.assertEquals(3, actual.size());
+
+        Assertions.assertEquals("1", actual.get(0).getCode());
+        Assertions.assertEquals("Canada", actual.get(0).getDescription());
+
+        Assertions.assertEquals("1", actual.get(1).getCode());
+        Assertions.assertEquals("United States", actual.get(1).getDescription());
+
+        Assertions.assertEquals("34", actual.get(2).getCode());
+        Assertions.assertEquals("Spain", actual.get(2).getDescription());
 
     }
 

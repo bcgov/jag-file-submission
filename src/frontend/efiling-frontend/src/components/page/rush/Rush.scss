@@ -1,0 +1,59 @@
+.ct-rush {
+  .form-parent {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+  }
+
+  .form-child {
+    width: 45%;
+  }
+
+  #detailed-reason {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 40px;
+  }
+
+  .dropzone-outer {
+    border: 1px dashed #707070;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .bcgov-dropdown-wrapper {
+    width: 100%;
+  }
+
+  .bcgov-dropdown {
+    border-radius: 4px;
+    border-color: darkgrey;
+  }
+
+  .bcgov-dropdown-label {
+    font-weight: bold;
+    margin-bottom: 8px !important;
+  }
+
+  .bcgov-editable-white {
+    height: 45px;
+    border-style: solid;
+    border-color: darkgrey;
+    border-radius: 4px;
+  }
+
+  .red {
+    color: red;
+    font-weight: 200;
+  }
+
+  @media (max-width: 576px) {
+    .dropzone-outer {
+      border: 1px dashed #707070;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

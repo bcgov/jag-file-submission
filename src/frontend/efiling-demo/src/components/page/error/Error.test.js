@@ -1,16 +1,18 @@
 import React from "react";
-import { createMemoryHistory } from "history";
 import { render, getByText, fireEvent } from "@testing-library/react";
+import { createMemoryHistory } from "history";
 import Error from "./Error";
 
 const header = {
   name: "eFiling Demo Client",
-  history: createMemoryHistory()
+  history: {},
+  navigate: createMemoryHistory,
 };
 
-const error = "Could not communicate with CSO.";
+const status = "400";
+const message = "Could not communicate with CSO.";
 
-const page = { header, error };
+const page = { header, status, message };
 
 describe("Error", () => {
   test("Component matches the snapshot", () => {
@@ -24,6 +26,6 @@ describe("Error", () => {
 
     fireEvent.click(getByText(container, "Return home"));
 
-    expect(header.history.location.pathname).toEqual("/");
+    expect(window.location.pathname).toEqual("/");
   });
 });

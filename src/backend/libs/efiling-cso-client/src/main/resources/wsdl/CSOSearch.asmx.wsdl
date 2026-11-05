@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:tns="http://services.ws.appeal.courts.gov.bc.ca"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  targetNamespace="http://services.ws.appeal.courts.gov.bc.ca"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://services.ws.appeal.courts.gov.bc.ca">
+      <s:element name="GetHearingList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strLocation" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="dteDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetHearingListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetHearingListResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLookupItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strLookupType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLookupItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLookupItemsResult" type="tns:ArrayOfLookupItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfLookupItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LookupItem" nillable="true" type="tns:LookupItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LookupItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="LookupItemID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="HearingListExists">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strLocation" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="dteDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HearingListExistsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="HearingListExistsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByCaseNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strCaseNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByCaseNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchByCaseNumberResult" type="tns:COACase" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="COACase">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CaseId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaseNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaseStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaseType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FilingDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="StyleOfCauseA" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="StyleOfCauseAppellantA" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="StyleOfCauseB" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SearchByPartyIndividual">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strLastName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="strFirstName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseTypeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intPartyRoleId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseStatusId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intResultPage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intRecordsPerPage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intMaxResultRecords" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByPartyIndividualResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchByPartyIndividualResult" type="tns:SearchPartyResults" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SearchPartyResults">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentResultPageNumber" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResultsCollection" type="tns:ArrayOfSearchParty" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalNumberOfResultPages" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalNumberOfResults" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSearchParty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SearchParty" nillable="true" type="tns:SearchParty" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SearchParty">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:COACase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Organization" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PartyRole" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SearchByPartyIndividualResultCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strLastName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="strFirstName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseTypeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intPartyRoleId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseStatusId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intMaxResultRecords" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByPartyIndividualResultCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SearchByPartyIndividualResultCountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByPartyOrganization">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strOrganization" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseTypeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intPartyRoleId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseStatusId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intResultPage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intRecordsPerPage" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intMaxResultRecords" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByPartyOrganizationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchByPartyOrganizationResult" type="tns:SearchPartyResults" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByPartyOrganizationResultCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strOrganization" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseTypeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intPartyRoleId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseStatusId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="intMaxResultRecords" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByPartyOrganizationResultCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SearchByPartyOrganizationResultCountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewCaseBasics">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewCaseBasicsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewCaseBasicsResult" type="tns:ViewBasics" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ViewBasics">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:COACase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="AppealType" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CloseDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Disposition" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="HighLevelCategory" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="InitiatingDocuments" type="tns:ArrayOfInitiatingDocument" />
+              <s:element minOccurs="0" maxOccurs="1" name="PreviousCourts" type="tns:ArrayOfPreviousCourt" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReasonForReopen" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReopenDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="SecurityFlags" type="tns:ArrayOfSecurityFlag" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfInitiatingDocument">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="InitiatingDocument" nillable="true" type="tns:InitiatingDocument" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="InitiatingDocument">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DateFiled" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPreviousCourt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PreviousCourt" nillable="true" type="tns:PreviousCourt" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PreviousCourt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AppealFrom" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BoardTribunalName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Charge" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ConvictionAcquittalDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgeFirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgeLastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgeSalutation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgmentDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Jury" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Level" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LocationID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sentence" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SentenceDate" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSecurityFlag">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SecurityFlag" nillable="true" type="tns:SecurityFlag" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SecurityFlag">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ViewCaseChambersHearing">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewCaseChambersHearingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewCaseChambersHearingResult" type="tns:ViewChambersHearing" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ViewChambersHearing">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:COACase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Hearings" type="tns:ArrayOfChambersHearing" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfChambersHearing">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ChambersHearing" nillable="true" type="tns:ChambersHearing" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ChambersHearing">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ActualRoom" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ChambersHearingID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CitationNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Decision" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HearingType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="JudgeChiefJustice" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgeFirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgeLastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgeSalutation" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="JudgeSupernumerary" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgmentDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgmentType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MethodName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReleaseDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReserveDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ScheduleDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="TimeOfCall" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ViewCaseCourtHearing">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewCaseCourtHearingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewCaseCourtHearingResult" type="tns:ViewCourtHearing" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ViewCourtHearing">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:COACase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Hearings" type="tns:ArrayOfCourtHearing" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfCourtHearing">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CourtHearing" nillable="true" type="tns:CourtHearing" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CourtHearing">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CitationNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CourtHearingID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Decision" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HearingType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Judges" type="tns:ArrayOfJudge" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgmentDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="JudgmentType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReleaseDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReserveDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfJudge">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Judge" nillable="true" type="tns:Judge" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Judge">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ChiefJustice" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Dissenting" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Salutation" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Seniority" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Supernumerary" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSchedule">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Schedule" nillable="true" type="tns:Schedule" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Schedule">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ActualRoom" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ScheduleDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ViewCaseFiling">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewCaseFilingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewCaseFilingResult" type="tns:ViewFiling" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ViewFiling">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:COACase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Filings" type="tns:ArrayOfFiling" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfFiling">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Filing" nillable="true" type="tns:Filing" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Filing">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Copies" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateFiled" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FiledBy" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FilingFormats" type="tns:ArrayOfFilingFormat" />
+          <s:element minOccurs="1" maxOccurs="1" name="FilingID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Volumes" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ObjectRepositoryGUID" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfFilingFormat">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FilingFormat" nillable="true" type="tns:FilingFormat" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FilingFormat">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="LongName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ShortName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ViewCaseParty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewCasePartyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewCasePartyResult" type="tns:ViewParty" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ViewParty">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:COACase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Parties" type="tns:ArrayOfParty" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfParty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Party" nillable="true" type="tns:Party" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Party">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="InPerson" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LegalRepresentation" type="tns:ArrayOfLawyer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Organization" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PartyID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PartyRole" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RoleInPreviousCourt" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfLawyer">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Lawyer" nillable="true" type="tns:Lawyer" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Lawyer">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Cell" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Firm" type="tns:Firm" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="QueensCounsel" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Firm">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirmName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Province" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ViewCaseSummary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="intCaseId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ViewCaseSummaryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ViewCaseSummaryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchEFileCaseNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strCaseNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchEFileCaseNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchEFileCaseNumberResult" type="tns:COACaseForEFling" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="COACaseForEFling">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CaseId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaseNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StyleOfCause" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaseTypeID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaseType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecurityType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserAccess" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetHearingListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetHearingList" />
+  </wsdl:message>
+  <wsdl:message name="GetHearingListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetHearingListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLookupItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLookupItems" />
+  </wsdl:message>
+  <wsdl:message name="GetLookupItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLookupItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="HearingListExistsSoapIn">
+    <wsdl:part name="parameters" element="tns:HearingListExists" />
+  </wsdl:message>
+  <wsdl:message name="HearingListExistsSoapOut">
+    <wsdl:part name="parameters" element="tns:HearingListExistsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchByCaseNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchByCaseNumber" />
+  </wsdl:message>
+  <wsdl:message name="SearchByCaseNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchByCaseNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyIndividualSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchByPartyIndividual" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyIndividualSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchByPartyIndividualResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyIndividualResultCountSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchByPartyIndividualResultCount" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyIndividualResultCountSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchByPartyIndividualResultCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyOrganizationSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchByPartyOrganization" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyOrganizationSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchByPartyOrganizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyOrganizationResultCountSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchByPartyOrganizationResultCount" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartyOrganizationResultCountSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchByPartyOrganizationResultCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseBasicsSoapIn">
+    <wsdl:part name="parameters" element="tns:ViewCaseBasics" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseBasicsSoapOut">
+    <wsdl:part name="parameters" element="tns:ViewCaseBasicsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseChambersHearingSoapIn">
+    <wsdl:part name="parameters" element="tns:ViewCaseChambersHearing" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseChambersHearingSoapOut">
+    <wsdl:part name="parameters" element="tns:ViewCaseChambersHearingResponse" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseCourtHearingSoapIn">
+    <wsdl:part name="parameters" element="tns:ViewCaseCourtHearing" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseCourtHearingSoapOut">
+    <wsdl:part name="parameters" element="tns:ViewCaseCourtHearingResponse" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseFilingSoapIn">
+    <wsdl:part name="parameters" element="tns:ViewCaseFiling" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseFilingSoapOut">
+    <wsdl:part name="parameters" element="tns:ViewCaseFilingResponse" />
+  </wsdl:message>
+  <wsdl:message name="ViewCasePartySoapIn">
+    <wsdl:part name="parameters" element="tns:ViewCaseParty" />
+  </wsdl:message>
+  <wsdl:message name="ViewCasePartySoapOut">
+    <wsdl:part name="parameters" element="tns:ViewCasePartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseSummarySoapIn">
+    <wsdl:part name="parameters" element="tns:ViewCaseSummary" />
+  </wsdl:message>
+  <wsdl:message name="ViewCaseSummarySoapOut">
+    <wsdl:part name="parameters" element="tns:ViewCaseSummaryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchEFileCaseNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchEFileCaseNumber" />
+  </wsdl:message>
+  <wsdl:message name="SearchEFileCaseNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchEFileCaseNumberResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CSOSearchSoap">
+    <wsdl:operation name="GetHearingList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the hearing list for the specified location and hearing day.</wsdl:documentation>
+      <wsdl:input message="tns:GetHearingListSoapIn" />
+      <wsdl:output message="tns:GetHearingListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLookupItems">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get a list of lookup items based on type. Types include: Appeal From Civil, Appeal From Criminal, Appeal Type, Bookset Type, Case Status, Case Type, Chambers Decision, Chambers Hearing Method, City, Court Decision, Disposition, File Location, Filing Format, Hearing Location, Hearing Type, Judgment Type, Party Type, Previous Court Level, Previous Court Location, Prompt Type, Province, Representation, Role in Previous Court, Salutation, Security Flags, User Location, User Role.</wsdl:documentation>
+      <wsdl:input message="tns:GetLookupItemsSoapIn" />
+      <wsdl:output message="tns:GetLookupItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="HearingListExists">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Determines whether the hearing list for the specified location and hearing day exists.</wsdl:documentation>
+      <wsdl:input message="tns:HearingListExistsSoapIn" />
+      <wsdl:output message="tns:HearingListExistsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchByCaseNumber">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search for a case by case number.</wsdl:documentation>
+      <wsdl:input message="tns:SearchByCaseNumberSoapIn" />
+      <wsdl:output message="tns:SearchByCaseNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyIndividual">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search for cases based on a party as individual (first name and/or last name), intCaseTypeId (where 0 = any case type), intPartyRoleId (where 0 = any party role), intCaseStatusId (where -1 = Active and Inactive, 0 = any case status), intResultPage, intRecordsPerPage and intMaxResultRecords. If a page is requested that is beyond the intMaxResultRecords range, or outside the search results, the last search result will be returned.</wsdl:documentation>
+      <wsdl:input message="tns:SearchByPartyIndividualSoapIn" />
+      <wsdl:output message="tns:SearchByPartyIndividualSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyIndividualResultCount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search for cases based on a party as individual (first name and/or last name), intCaseTypeId (where 0 = any case type), intPartyRoleId (where 0 = any party role), and intCaseStatusId (where -1 = Active and Inactive, 0 = any case status) and and intMaxResultRecords. Return result count.</wsdl:documentation>
+      <wsdl:input message="tns:SearchByPartyIndividualResultCountSoapIn" />
+      <wsdl:output message="tns:SearchByPartyIndividualResultCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyOrganization">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search for cases based on a party as organization, intCaseTypeId (where 0 = any case type), intPartyRoleId (where 0 = any party role), intCaseStatusId (where -1 = Active and Inactive, 0 = any case status), intResultPage, intRecordsPerPage and intMaxResultRecords. If a page is requested that is beyond the intMaxResultRecords range, or outside the search results, the last search result will be returned.</wsdl:documentation>
+      <wsdl:input message="tns:SearchByPartyOrganizationSoapIn" />
+      <wsdl:output message="tns:SearchByPartyOrganizationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyOrganizationResultCount">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search for cases based on a party as organization, intCaseTypeId (where 0 = any case type), intPartyRoleId (where 0 = any party role), intCaseStatusId (where -1 = Active and Inactive, 0 = any case status) and and intMaxResultRecords. Return result count.</wsdl:documentation>
+      <wsdl:input message="tns:SearchByPartyOrganizationResultCountSoapIn" />
+      <wsdl:output message="tns:SearchByPartyOrganizationResultCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseBasics">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">View the basics of a case.</wsdl:documentation>
+      <wsdl:input message="tns:ViewCaseBasicsSoapIn" />
+      <wsdl:output message="tns:ViewCaseBasicsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseChambersHearing">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">View a case with chambers hearing information.</wsdl:documentation>
+      <wsdl:input message="tns:ViewCaseChambersHearingSoapIn" />
+      <wsdl:output message="tns:ViewCaseChambersHearingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseCourtHearing">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">View a case with court hearing information.</wsdl:documentation>
+      <wsdl:input message="tns:ViewCaseCourtHearingSoapIn" />
+      <wsdl:output message="tns:ViewCaseCourtHearingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseFiling">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">View a case with filing information.</wsdl:documentation>
+      <wsdl:input message="tns:ViewCaseFilingSoapIn" />
+      <wsdl:output message="tns:ViewCaseFilingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseParty">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">View a case with party information.</wsdl:documentation>
+      <wsdl:input message="tns:ViewCasePartySoapIn" />
+      <wsdl:output message="tns:ViewCasePartySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseSummary">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">View a case summary.</wsdl:documentation>
+      <wsdl:input message="tns:ViewCaseSummarySoapIn" />
+      <wsdl:output message="tns:ViewCaseSummarySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchEFileCaseNumber">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search for a case by case number for use with eFiling. Limited information will be displayed for purposes of verification only. Note: Security Type and User Access should never be displayed on public servers</wsdl:documentation>
+      <wsdl:input message="tns:SearchEFileCaseNumberSoapIn" />
+      <wsdl:output message="tns:SearchEFileCaseNumberSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CSOSearchSoap" type="tns:CSOSearchSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetHearingList">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/GetHearingList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLookupItems">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/GetLookupItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HearingListExists">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/HearingListExists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByCaseNumber">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByCaseNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyIndividual">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyIndividual" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyIndividualResultCount">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyIndividualResultCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyOrganization">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyOrganization" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyOrganizationResultCount">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyOrganizationResultCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseBasics">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseBasics" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseChambersHearing">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseChambersHearing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseCourtHearing">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseCourtHearing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseFiling">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseFiling" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseParty">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseParty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseSummary">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseSummary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchEFileCaseNumber">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchEFileCaseNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CSOSearchSoap12" type="tns:CSOSearchSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetHearingList">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/GetHearingList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLookupItems">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/GetLookupItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HearingListExists">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/HearingListExists" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByCaseNumber">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByCaseNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyIndividual">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyIndividual" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyIndividualResultCount">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyIndividualResultCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyOrganization">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyOrganization" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartyOrganizationResultCount">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchByPartyOrganizationResultCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseBasics">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseBasics" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseChambersHearing">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseChambersHearing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseCourtHearing">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseCourtHearing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseFiling">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseFiling" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseParty">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ViewCaseSummary">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ViewCaseSummary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchEFileCaseNumber">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchEFileCaseNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CSOSearch">
+    <wsdl:port name="CSOSearchSoap" binding="tns:CSOSearchSoap">
+      <soap:address location="https://localhost:8889/CSOSearch.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CSOSearchSoap12" binding="tns:CSOSearchSoap12">
+      <soap12:address location="https://localhost:8889/CSOSearch.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

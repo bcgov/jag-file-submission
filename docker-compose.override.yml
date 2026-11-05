@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+
+  #############################################################################################
+  ###                                 EFILING FRONTEND                                      ###
+  #############################################################################################
+  efiling-frontend:
+    build:
+      context: ./src/frontend/efiling-frontend
+
+  #############################################################################################
+  ###                           Efiling api backend app                                     ###
+  #############################################################################################
+  efiling-api:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.efiling-api
+      args:
+        - MVN_PROFILE=${MVN_PROFILE:-efiling-api-demo}
+        - SKIP_TESTS=true
+        - STARTERS_V=v1.0.5
+
+  # #############################################################################################
+  # ###                                        KEYCLOAK Config                                ###
+  # #############################################################################################
+  keycloak-config:
+    build:
+      context: ./infrastructure/keycloak
+      args:
+        - KEYCLOAK_URL=http://keycloak:8080

@@ -8,3 +8,55 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.file-href {
+  cursor: pointer;
+  color: #1a5a96;
+  text-decoration: underline;
+}
+
+.file-href:focus {
+  outline: 1px dashed grey;
+}
+
+/* Fix for react Modal not totally compatible with BC Gov Bootstrap theme.
+ *  - missing 100% width/height of backdrop at the 768 breakpoint
+ *  - modal-xl breaks the layout
+ */
+@media (min-width: 576px) {
+  .modal-backdrop {
+      width: 100%;
+      height: 100%;
+  }
+  /* reset max-width, should be applied to modal-dialog instead.*/
+  .modal-xl { 
+    max-width: inherit;
+  }
+  .modal-xl > .modal-dialog {
+    max-width: 500px;
+  }
+}
+@media (min-width: 768px) {
+  /* .modal-xl {
+    max-width: inherit;
+  } */
+  .modal-xl > .modal-dialog {
+    max-width: 650px;
+  }
+}
+@media (min-width: 992px) {
+  /* .modal-xl {
+    max-width: inherit;
+  } */
+  .modal-xl > .modal-dialog {
+    max-width: 800px;
+  }
+}
+@media (min-width: 1200px) {
+  /* .modal-xl {
+    max-width: inherit;
+  } */
+  .modal-xl > .modal-dialog {
+    max-width: 1140px;
+  }
+}

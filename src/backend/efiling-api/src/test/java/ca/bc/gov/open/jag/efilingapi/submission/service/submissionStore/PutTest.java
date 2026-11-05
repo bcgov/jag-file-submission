@@ -1,6 +1,5 @@
 package ca.bc.gov.open.jag.efilingapi.submission.service.submissionStore;
 
-import ca.bc.gov.open.jag.efilingapi.api.model.DocumentProperties;
 import ca.bc.gov.open.jag.efilingapi.submission.models.Submission;
 import ca.bc.gov.open.jag.efilingapi.submission.service.SubmissionStoreImpl;
 import org.junit.jupiter.api.*;
@@ -12,6 +11,8 @@ import java.util.Optional;
 @DisplayName("Submission Service: Put test suite")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PutTest {
+
+    private static final String CLIENT_APP_NAME = "appName";
 
     @InjectMocks
     private SubmissionStoreImpl sut;
@@ -26,13 +27,12 @@ public class PutTest {
     @DisplayName("CASE 1: with valid submission should store submission")
     public void withValidObjectShouldPut() {
 
-        DocumentProperties documentMetadata = new DocumentProperties();
-        documentMetadata.setType("type");
-        Submission submission = new Submission.Builder().documentProperties(documentMetadata).create();
+
+        Submission submission = new Submission.Builder().clientAppName(CLIENT_APP_NAME).create();
         Optional<Submission> actual = sut.put(submission);
 
         Assertions.assertTrue(actual.isPresent());
-        Assertions.assertEquals("type", actual.get().getDocumentProperties().getType());
+        Assertions.assertEquals(CLIENT_APP_NAME, actual.get().getClientAppName());
 
     }
 

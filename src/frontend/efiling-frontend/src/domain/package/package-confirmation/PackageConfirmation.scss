@@ -1,0 +1,35 @@
+.ct-package-confirmation {
+  .inline-block {
+    display: inline-block;
+  }
+
+  .push-margin-left {
+    margin-left: 15px;
+  }
+
+  .bcgov-radio {
+    margin-left: 10px;
+  }
+
+  .hidden {
+    visibility: hidden !important;
+  }
+
+  .rejectedMsg {
+    margin-bottom: 20px;
+    svg {
+      color: #A84441;
+    }
+    div {
+      display: table-cell;
+      vertical-align: middle;
+      padding: 10px 10px 10px 0px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .near-half-width {
+      width: 60% !important;
+    }
+  }
+}

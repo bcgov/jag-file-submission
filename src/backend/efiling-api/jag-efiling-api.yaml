@@ -1,100 +1,918 @@
 openapi: 3.0.0
 info:
-  version: 0.3.0
+  version: 0.7.0
   title: jag-efiling-api
   description: Efiling api
 servers:
-  - url: 'http://localhost:8080'
+  - url: "http://localhost:8080"
 tags:
+  - name: clientEndpoints
+    description: Endpoints that are exposed to external client
   - name: submission
     description: Submission Api
+  - name: courts
+    description: Courts
+  - name: filingPackages
+    description: File Packages
+security:
+  - bearerAuth: []
 paths:
-  '/submission/generateUrl':
+  "/submission/documents":
+    post:
+      summary: Initial documents upload
+      operationId: UploadSubmissionDocuments
+      tags:
+        - submission
+        - clientEndpoints
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/xUserId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+  "/submission/{submissionId}":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
+    delete:
+      summary: Delete a submission by id
+      operationId: DeleteSubmission
+      tags:
+        - submission
+      responses:
+        "200":
+          description: submission deleted
+  "/submission/{submissionId}/documents":
+    post:
+      summary: Additional documents upload
+      operationId: UploadAdditionalSubmissionDocuments
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}/rushDocuments":
+    post:
+      summary: Rush documents upload
+      operationId: UploadRushDocuments
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: File successfully received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSubmissionDocumentsResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}/update-documents":
+    post:
+      summary: Additional documents properties
+      operationId: UpdateDocumentProperties
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/submissionId"
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDocumentRequest"
+      responses:
+        "200":
+          description: Document properties updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateDocumentResponse"
+        "404":
+          description: Submission not found
+  "/submission/{submissionId}/config":
+    parameters:
+      - $ref: "#/components/parameters/submissionId"
+      - $ref: "#/components/parameters/xTransactionId"
+    get:
+      summary: Get configuration for a given submission
+      operationId: GetSubmissionConfig
+      tags:
+        - submission
+      responses:
+        "200":
+          description: Config found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSubmissionConfigResponse"
+        "404":
+          description: Config not found
+  "/submission/{submissionId}/generateUrl":
     post:
       summary: Generates a secure URL for e-filing submission
       operationId: GenerateUrl
       tags:
         - submission
+        - clientEndpoints
       parameters:
-        - in: header
-          name: X-Auth-UserId
-          schema:
-            type: string
-            format: uuid
-          required: true
-          description: Authenticated user id
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/xUserId"
+        - $ref: "#/components/parameters/submissionId"
       requestBody:
         description: requested parameters to generate a url
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GenerateUrlRequest'
+              $ref: "#/components/schemas/GenerateUrlRequest"
       responses:
-        '200':
+        "200":
           description: File successfully received
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenerateUrlResponse'
-        '403':
+                $ref: "#/components/schemas/GenerateUrlResponse"
+        "403":
           description: Request does not meet the required criteria
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EfilingError'
-  '/submission/{id}':
-    get:
-      summary: Get user detail for a given submission
-      operationId: GetSubmission
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/submit":
+    post:
+      summary: Create service for payment processing
+      operationId: submit
       tags:
         - submission
       parameters:
-        - name: id
-          in: path
-          description: A submission id
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: filing submit parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitRequest"
       responses:
-        '200':
-          description: Config found
+        "201":
+          description: Service created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSubmissionResponse'
-        '404':
-          description: Config not found
+                $ref: "#/components/schemas/SubmitResponse"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/submission/{submissionId}/filing-package":
+    get:
+      summary: Get filing package information
+      operationId: GetSubmissionFilingPackage
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      responses:
+        "200":
+          description: Filing Package Information found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionFilingPackage"
+        "404":
+          description: Filing Package Information not found
+  "/submission/{submissionId}/document/{filename}":
+    get:
+      summary: Get document by name
+      operationId: GetSubmissionDocument
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+        - name: filename
+          in: path
+          description: A document name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Filing Package Information found
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Document not found
+  "/submission/{submissionId}/rushProcessing":
+    post:
+      summary: add rush processing to package
+      operationId: PostRushProcessing
+      tags:
+        - submission
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/submissionId"
+      requestBody:
+        description: filing submit parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rush"
+      responses:
+        "201":
+          description: Rush created
+        "404":
+          description: Submission not found
+  "/csoAccount":
+    post:
+      summary: Create a CSO account
+      operationId: CreateAccount
+      description: In order to create an account, an item with type BCeID is required in the accounts field.
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: cso account details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCsoAccountRequest"
+      responses:
+        "201":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+    get:
+      summary: Get user CSO account
+      operationId: GetCsoAccount
+      description: Get a user cso account.
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: A CSO Account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+        "404":
+          description: Cso Account not found
+    put:
+      summary: Update CSO account internal client number
+      operationId: updateCsoAccount
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: update client details parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CsoAccountUpdateRequest"
+      responses:
+        "200":
+          description: Client updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CsoAccount"
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/bceidAccount":
+    get:
+      summary: Get a BCeID account
+      operationId: GetBceidAccount
+      description: Retrieve BCeID user account information
+      tags:
+        - account
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      responses:
+        "200":
+          description: Account Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BceidAccount"
+        "404":
+          description: Account not found
+  "/documents/types":
+    get:
+      summary: Get document types
+      operationId: GetDocumentTypes
+      description: A list of document types
+      tags:
+        - lookup
+        - clientEndpoints
+      parameters:
+        - name: courtLevel
+          in: query
+          description: court level
+          required: true
+          schema:
+            $ref: "#/components/schemas/CourtLevel"
+        - name: courtClassification
+          in: query
+          description: court classification
+          required: true
+          schema:
+            $ref: "#/components/schemas/CourtClassification"
+      responses:
+        "200":
+          description: List of document types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentTypes"
+  "/countries":
+    get:
+      summary: Get countries
+      operationId: GetCountries
+      description: A list of countries
+      tags:
+        - lookup
+      responses:
+        "200":
+          description: List of countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CountryCode"
+  "/courts":
+    get:
+      summary: Get court locations
+      operationId: GetCourtLocations
+      description: get court information by court name
+      tags:
+        - courts
+      parameters:
+        - name: courtLevel
+          in: query
+          description: court type filter
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Information of a court
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourtLocations"
+  "/payment/generate-update-card":
+    post:
+      deprecated: true
+      summary: Update card on bambora
+      operationId: UpdateCreditCard
+      description: For expired credit card get url to update
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+      requestBody:
+        description: card update params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateCardUrlRequest"
+      responses:
+        "200":
+          description: Card url generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateCardUrlResponse"
+  "/payment/{clientId}/profile":
+    post:
+      summary: Update card on bambora
+      operationId: CreateCreditCardProfile
+      description: For setting up a payment profile
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/clientId"
+      requestBody:
+        description: card setup params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetupCardRequest"
+      responses:
+        "200":
+          description: Card Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SetupCardResponse"
+  "/payment/{clientId}/profile/{paymentProfileId}":
+    put:
+      summary: Update card on bambora
+      operationId: UpdateCreditCardProfile
+      description: For updates to a payment profile
+      tags:
+        - payment
+      parameters:
+        - $ref: "#/components/parameters/xTransactionId"
+        - $ref: "#/components/parameters/paymentProfileId"
+        - $ref: "#/components/parameters/clientId"
+      requestBody:
+        description: card setup params
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetupCardRequest"
+      responses:
+        "200":
+          description: Card Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SetupCardResponse"
+  "/filingpackages":
+    get:
+      summary: Get filing packages
+      operationId: GetFilingPackages
+      description: get filing packages from cso
+      tags:
+        - filingPackages
+      parameters:
+        - name: parentApplication
+          in: query
+          description: parent application
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: All filing package details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FilingPackage"
+  "/filingpackages/{packageIdentifier}":
+    get:
+      summary: Get filing package
+      operationId: GetFilingPackage
+      description: get filing package details from cso
+      tags:
+        - filingPackages
+        - clientEndpoints
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: All filing package details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FilingPackage"
+  "/filingpackages/{packageIdentifier}/actionRequiredDetails":
+    get:
+      summary: Get details for documents that require action
+      operationId: GetActionRequiredDetails
+      description: get action required details from cso
+      tags:
+        - filingPackages
+        - clientEndpoints
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: All filing package details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionRequiredDetails"
+        "404":
+          description: Package not found
+        "403":
+          description: Request does not meet the required criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EfilingError"
+  "/filingpackages/{packageIdentifier}/submissionSheet":
+    get:
+      summary: Get submission sheet for package
+      operationId: GetSubmissionSheet
+      description: get submission sheet file from cso
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+  "/filingpackages/{packageIdentifier}/paymentReceipt":
+    get:
+      summary: Get submission payment receipt
+      operationId: GetPaymentReceipt
+      description: get payment receipt file from cso
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+  "/filingpackages/{packageIdentifier}/registryNotice":
+    get:
+      summary: Get submission registry notice
+      operationId: GetRegistryNotice
+      description: get registry notice file from cso
+      tags:
+        - filingPackages
+        - clientEndpoints
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+  "/filingpackages/{packageIdentifier}/document/{documentIdentifier}":
+    get:
+      summary: Get submitted document
+      operationId: GetSubmittedDocument
+      description: get submitted document
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: number
+            format: int
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+    delete:
+      summary: delete(withdraw) submitted document
+      operationId: DeleteSubmittedDocument
+      description: Delete submitted document
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+        - name: documentIdentifier
+          in: path
+          description: document identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Document was deleted
+  "/filingpackages/{packageIdentifier}/rushDocument/{fileName}":
+    get:
+      summary: Get rush document
+      operationId: GetRushDocument
+      description: get rush document
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+        - name: fileName
+          in: path
+          description: document file name
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File was returned
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: file not found
+  "/filingpackages/{packageIdentifier}/parentDetails":
+    get:
+      summary: Get rush document
+      operationId: GetParentDetails
+      description: get parent app details for package
+      tags:
+        - filingPackages
+      parameters:
+        - $ref: "#/components/parameters/packageIdentifier"
+      responses:
+        "200":
+          description: parent app details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParentAppDetails"
+        "404":
+          description: Package not found
 components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    xTransactionId:
+      name: X-Transaction-Id
+      in: header
+      schema:
+        type: string
+        format: uuid
+      required: true
+      description: A unique Transaction Id generated by FilingHub clients
+    xUserId:
+      name: X-User-Id
+      in: header
+      schema:
+        type: string
+        format: string
+      required: true
+      description: A unique BCeID universal id passed to initial calls
+    submissionId:
+      name: submissionId
+      in: path
+      description: A submission id
+      required: true
+      schema:
+        type: string
+        format: uuid
+    packageIdentifier:
+      name: packageIdentifier
+      in: path
+      description: package identifier
+      required: true
+      schema:
+        type: number
+    paymentProfileId:
+      name: paymentProfileId
+      in: path
+      description: payment profile identifier
+      required: true
+      schema:
+        type: string
+    clientId:
+      name: clientId
+      in: path
+      description: cso internal client number
+      required: true
+      schema:
+        type: string
   schemas:
-    Account:
+    BceidAccount:
       type: object
-      description: represents a user account
+      description: BCeID account details
       properties:
-        type:
+        firstName:
           type: string
-          enum: [BCEID, CSO]
-          description: the account type
-        identifier:
+        lastName:
           type: string
-          description: the account identifier
-    DocumentProperties:
+        middleName:
+          type: string
+    CourtClassification:
+      type: string
+      enum: [B, C, D, E, F, H, L, M, N, O, P, S, V]
+      description: >
+        court classification:
+          * `B` - Bankruptcy
+          * `C` - Small Claims
+          * `D` - Divorce
+          * `E` - Family Law Proceedings
+          * `F` - Family
+          * `H` - Foreclosure
+          * `L` - Enforcement/Legislated Statute
+          * `M` - Motor Vehicle Accidents
+          * `N` - Adoption
+          * `O` - Appeal Civil
+          * `P` - Probate
+          * `S` - Supreme Civil (General)
+          * `V` - Caveat
+    CourtLevel:
+      type: string
+      enum: [A, P, S]
+      description: >
+        court level:
+          * `A` - Appeal
+          * `P` - Provincial
+          * `S` - Supreme
+    InitialDocument:
       type: object
       description: Submission Metadata used to describe the submission that will be e-filled
       required:
         - type
-        - subType
-        - documentAccess
+        - name
+        - isAmendment
+        - isSupremeCourtScheduling
+        - data
+        - md5
       properties:
+        name:
+          type: string
+          description: the name of the document
         type:
           type: string
-          description: the submission type
-        subType:
+          description: cso document type
+        isAmendment:
+          type: boolean
+          description: is the document an amendment to another
+        isSupremeCourtScheduling:
+          type: boolean
+          description: supreme court scheduling required
+        data:
+          type: object
+          description: store additional details
+        documentId:
           type: string
-          description: the submission sub type
-        submissionAccess:
-          $ref: '#/components/schemas/EndpointAccess'
+          description: identifier of document from parent application
+        md5:
+          type: string
+          description: Computed hash value of the document content, it is used as a checksum to validate the document integrity.
+        actionDocument:
+          $ref: "#/components/schemas/ActionDocument"
+    Document:
+      required:
+        - identifier
+        - description
+        - status
+        - paymentProcessed
+        - filingDate
+      type: object
+      description: A Efiling Document
+      properties:
+        identifier:
+          type: string
+          description: document identifier
+        filingDate:
+          type: string
+          description: date of document filing
+        description:
+          type: string
+          description: document description
+        paymentProcessed:
+          type: boolean
+          description: Has the payment been processed
+        rushRequired:
+          type: boolean
+          description: Does the document require rush
+        documentId:
+          type: string
+          description: identifier of document from parent application
+        documentProperties:
+          $ref: "#/components/schemas/DocumentProperties"
+        status:
+          $ref: "#/components/schemas/Status"
+    DocumentProperties:
+      required:
+        - name
+        - type
+      description: common document properties.
+      properties:
+        name:
+          type: string
+          description: the name of the document
+        type:
+          type: string
+          description: Court Service Online document type
+        isAmendment:
+          type: boolean
+          description: is the document an amendment to another
+        isSupremeCourtScheduling:
+          type: boolean
+          description: supreme court scheduling required
+    SubmissionDocument:
+      required:
+        - description
+        - statutoryFeeAmount
+      type: object
+      description: A Efiling Document
+      allOf:
+        - $ref: "#/components/schemas/InitialDocument"
+      properties:
+        documentProperties:
+          $ref: "#/components/schemas/DocumentProperties"
+        description:
+          type: string
+          description: the description of the document
+        statutoryFeeAmount:
+          type: number
+          description: statutory fee amount
+        mimeType:
+          type: string
+          description: File mime type
+        status:
+          $ref: "#/components/schemas/Status"
+        paymentProcessed:
+          type: boolean
+          description: Has the payment been processed
+        rushRequired:
+          type: boolean
+          description: Does the document require rush
     EfilingError:
       required:
         - error
@@ -104,29 +922,24 @@ components:
           type: string
         message:
           type: string
-    EndpointAccess:
-      type: object
-      description: Represent an http endpoint
-      properties:
-        url:
-          type: string
-        verb:
-          type: string
-          enum: [GET, POST]
-        headers:
-          type: object
-          additionalProperties:
+        details:
+          type: array
+          items:
             type: string
     GenerateUrlRequest:
       description: details about the required transaction
       required:
-        - navigation
-        - documentProperties
+        - clientApplication
+        - filingPackage
+        - navigationUrls
       properties:
-        documentProperties:
-          $ref: '#/components/schemas/DocumentProperties'
-        navigation:
-          $ref: '#/components/schemas/Navigation'
+        clientAppName:
+          type: string
+          description: Name of the application to be displayed
+        filingPackage:
+          $ref: "#/components/schemas/InitialPackage"
+        navigationUrls:
+          $ref: "#/components/schemas/NavigationUrls"
     GenerateUrlResponse:
       description: A temporary url for uploading submission
       properties:
@@ -135,37 +948,489 @@ components:
           format: int64
         efilingUrl:
           type: string
-    GetSubmissionResponse:
+    GetSubmissionConfigResponse:
       type: object
       required:
-        - userDetails
         - navigation
+        - clientAppName
+        - csoBaseUrl
       properties:
-        userDetails:
-          $ref: '#/components/schemas/UserDetails'
-        navigation:
-          $ref: '#/components/schemas/Navigation'
-    Navigation:
+        navigationUrls:
+          $ref: "#/components/schemas/NavigationUrls"
+        clientAppName:
+          type: string
+          description: the client app name
+        csoBaseUrl:
+          type: string
+          description: the CSO base Url
+    NavigationUrls:
       required:
         - success
         - error
         - cancel
       properties:
         success:
-          $ref: '#/components/schemas/Redirect'
-        error:
-          $ref: '#/components/schemas/Redirect'
-        cancel:
-          $ref: '#/components/schemas/Redirect'
-    Redirect:
-      required:
-        - url
-      properties:
-        url:
           type: string
-    UserDetails:
-      description: represents a user submitting a package
+          description: where user should be redirected on success
+        error:
+          type: string
+          description: where user should be redirected on error
+        cancel:
+          type: string
+          description: where user should be redirected on cancel
+    InitialPackage:
       type: object
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - documents
+        - court
+      properties:
+        packageNumber:
+          type: number
+          description: Identifer of package that is being modified
+        court:
+          $ref: "#/components/schemas/CourtBase"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/InitialDocument"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Individual"
+        organizationParties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Organization"
+    FilingPackage:
+      type: object
+      description: A filing package can contain one or multiple documents that have or are being submitted electronically for new or existing court file.
+      required:
+        - packageNumber
+        - documents
+        - submittedBy
+        - submittedDate
+        - links
+        - court
+        - hasRegistryNotice
+      properties:
+        packageNumber:
+          type: number
+          description: Submitted package number
+        status:
+          type: string
+          description: Calculated status of package
+        filingComments:
+          type: string
+          description: Filing comments
+        submittedBy:
+          $ref: "#/components/schemas/Account"
+        submittedDate:
+          type: string
+          description: Submitted date
+        court:
+          $ref: "#/components/schemas/Court"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Individual"
+        organizationParties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Organization"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+        links:
+          type: object
+          properties:
+            packageHistoryUrl:
+              type: string
+              description: a link to view all submitted package
+        hasRegistryNotice:
+          type: boolean
+          description: this filing package has a registry notice
+        rush:
+          $ref: "#/components/schemas/Rush"
+    SubmissionFilingPackage:
+      type: object
+      description: Submitted
+      required:
+        - submissionFeeAmount
+        - documents
+      properties:
+        submissionFeeAmount:
+          type: number
+          description: Package submission fee.
+        packageNumber:
+          type: number
+          description: Submitted package number
+        filingComments:
+          type: string
+          description: Filing comments
+        submittedBy:
+          $ref: "#/components/schemas/Account"
+        submittedDate:
+          type: string
+          description: Submitted date
+        court:
+          $ref: "#/components/schemas/Court"
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionDocument"
+        parties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Individual"
+        organizationParties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Organization"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+        rush:
+          $ref: "#/components/schemas/Rush"
+    CourtBase:
+      type: object
+      description: "Court related information"
+      required:
+        - location
+        - level
+        - courtClass
+        - division
+      properties:
+        location:
+          type: string
+          description: the court location
+        level:
+          type: string
+          description: the court level
+        courtClass:
+          type: string
+          description: the court class
+        division:
+          type: string
+          description: the court division
+        fileNumber:
+          type: string
+          description: the file number if case already exists
+        participatingClass:
+          type: string
+    Court:
+      type: object
+      description: "Court related information"
+      allOf:
+        - $ref: "#/components/schemas/CourtBase"
+      required:
+        - locationDescription
+      properties:
+        agencyId:
+          type: number
+          description: the agancy identifier
+        locationDescription:
+          type: string
+          description: the court location description
+        levelDescription:
+          type: string
+          description: the court location description
+        classDescription:
+          type: string
+          description: the court location description
+    Rush:
+      type: object
+      required:
+        - rushType
+        - firstName
+        - lastName
+      properties:
+        rushType:
+          type: string
+          description: >
+            rush type code
+               * `rule` - Application is made under rule 8-5 (1) SCR
+               * `court` - The court directed that the order be processeed on an urgent basis
+               * `pro` - This is based on a document type
+               * `other` - Other
+          enum:
+            [
+              rule,
+              court,
+              pro,
+              other
+            ]
+        firstName:
+          type: string
+          description: first name of rush party
+        lastName:
+          type: string
+          description: last name of rush party
+        organization:
+          type: string
+          description: organization
+        phoneNumber:
+          type: string
+          description: phone number
+        email:
+          type: string
+          description: email address
+        courtDate:
+          type: string
+          description: court directed date
+        country:
+          type: string
+          description: country
+        countryCode:
+          type: string
+          description: code value for country
+        reason:
+          type: string
+          description: clear and detailed reason
+        status:
+          type: string
+          description: current status of the rush request
+        statusReason:
+          type: string
+          description: current registry reason text
+        supportingDocuments:
+          type: array
+          items:
+            $ref: "#/components/schemas/RushDocument"
+    RushDocument:
+      type: object
+      properties:
+        fileName:
+          type: string
+          description: file name of document
+        identifier:
+          type: string
+          description: guid of file
+    CsoAccount:
+      type: object
+      description: a CsoAccount
+      required:
+        - clientId
+        - accountId
+        - internalClientNumber
+        - fileRolePresent
+      properties:
+        clientId:
+          type: string
+          description: the user cso clientId
+        accountId:
+          type: string
+          description: the user cso accountId
+        internalClientNumber:
+          type: string
+          description: the user cso internal client number
+        fileRolePresent:
+          type: boolean
+          description: if the user as file role
+    DocumentType:
+      type: object
+      required:
+        - type
+        - description
+      properties:
+        type:
+          type: string
+          description: code value
+        description:
+          type: string
+          description: human readable value
+    DocumentTypes:
+      type: array
+      items:
+        $ref: "#/components/schemas/DocumentType"
+    UploadSubmissionDocumentsResponse:
+      description: represents upload document response
+      type: object
+      required:
+        - submissionId
+      properties:
+        submissionId:
+          type: string
+          format: uuid
+          description: a unique identifier for the submission
+        received:
+          type: number
+          description: the number of document received
+    Party:
+      description: party related to filing package
+      required:
+        - roleType
+      properties:
+        roleType:
+          type: string
+          description: >
+            role type code
+               * `ABC` - Aboriginal Community
+               * `ADJ` - Adjudicator
+               * `ADP` - Adoptee
+               * `APL` - Appellant
+               * `APP` - Applicant
+               * `ANT` - Aunt
+               * `AUT` - Authority
+               * `BKP` - Bankrupt
+               * `BKS` - Bankrupts (Spouse)
+               * `CAV` - Caveator
+               * `CHD` - Child
+               * `COF` - Child on File
+               * `CIT` - Citator
+               * `CLA` - Claimant
+               * `CLA1` - Claimant 1
+               * `CLA2` - Claimant 2
+               * `CLI` - Client
+               * `CI` - Court Issued
+               * `CRD` - Creditor
+               * `DBT` - Debtor
+               * `DEC` - Deceased
+               * `DEF` - Defendant
+               * `DEO` - Defendant by Counterclaim
+               * `DIS` - Disputant
+               * `FTH` - Father
+               * `FNA` - First Nation
+               * `GRF` - Grandfather
+               * `GRM` - Grandmother
+               * `GUA` - Guardian
+               * `HSB` - Husband - Divorce
+               * `INB` - Indian Band
+               * `INC` - Indigenous Community
+               * `ITV` - Intervener
+               * `MOT` - Mother
+               * `NIS` - Nisga'a Lisims Government
+               * `OPAR` - Other Party
+               * `PAR` - Party
+               * `PAR1` - Party 1
+               * `PA1` - Party 1 Joint Divorce Form127A
+               * `PAR2` - Party 2
+               * `PA2` - Party 2 Joint Divorce Form127A
+               * `PAR3` - Party 3
+               * `PAR4` - Party 4
+               * `PAR5` - Party 5
+               * `PET` - Petitioner
+               * `PLA` - Plaintiff
+               * `RES` - Respondent
+               * `REO` - Respondent by way of Counterclaim
+               * `SOL` - Solicitor
+               * `SP1` - Spouse 1- Divorce
+               * `SP2` - Spouse 2 - Divorce
+               * `SFH` - Step-Father
+               * `SMH` - Step-Mother
+               * `TST` - Testator
+               * `TSX` - Testatrix
+               * `THR` - Third Party
+               * `TFN` - Treaty First Nation
+               * `TRU` - Trustee
+               * `UNC` - Uncle
+               * `WIF` - Wife - Divorce
+               * `WIT` - Witness
+          enum:
+            [
+              ABC,
+              ADJ,
+              ADP,
+              APL,
+              APP,
+              ANT,
+              AUT,
+              BKP,
+              BKS,
+              CAV,
+              CHD,
+              COF,
+              CIT,
+              CLA,
+              CLA1,
+              CLA2,
+              CLI,
+              CI,
+              CRD,
+              DBT,
+              DEC,
+              DEF,
+              DEO,
+              DIS,
+              FTH,
+              FNA,
+              GRF,
+              GRM,
+              GUA,
+              HSB,
+              INB,
+              INC,
+              ITV,
+              MOT,
+              NIS,
+              OPAR,
+              PAR,
+              PAR1,
+              PA1,
+              PAR2,
+              PA2,
+              PAR3,
+              PAR4,
+              PAR5,
+              PET,
+              PLA,
+              RES,
+              REO,
+              SOL,
+              SP1,
+              SP2,
+              SFH,
+              SMH,
+              TST,
+              TSX,
+              THR,
+              TFN,
+              TRU,
+              UNC,
+              WIF,
+              WIT,
+            ]
+        roleDescription:
+          type: string
+          description: description of role
+        partyDescription:
+          type: string
+          description: description of party
+    Individual:
+      description: Individual party type
+      allOf:
+        - $ref: "#/components/schemas/Party"
+      required:
+        - firstName
+        - lastName
+      properties:
+        firstName:
+          type: string
+          description: first name
+        middleName:
+          type: string
+          description: middle name
+        lastName:
+          type: string
+          description: last name
+    Organization:
+      description: Organization party type
+      allOf:
+        - $ref: "#/components/schemas/Party"
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: organization name
+    CreateCsoAccountRequest:
+      description: represents a request to create a user
       required:
         - firstName
         - lastName
@@ -184,7 +1449,261 @@ components:
         email:
           type: string
           description: the user email address
-        accounts:
+    UpdateDocumentRequest:
+      description: request body for update documents
+      type: object
+      properties:
+        documents:
           type: array
           items:
-            $ref: '#/components/schemas/Account'
+            $ref: "#/components/schemas/DocumentProperties"
+    UpdateDocumentResponse:
+      description: response body for update documents
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmissionDocument"
+    SubmitRequest:
+      description: create service request
+      type: object
+    SubmitResponse:
+      description: result of submit filing package
+      type: object
+      required:
+        - packageRef
+      properties:
+        packageRef:
+          type: string
+          description: base64 encoded package reference url
+    GenerateCardUrlRequest:
+      description: create service request
+      type: object
+      required:
+        - internalClientNumber
+        - redirectUrl
+      properties:
+        internalClientNumber:
+          type: string
+          description: client id for request to bambora
+        redirectUrl:
+          type: string
+          description: url bambora return from
+    GenerateCardUrlResponse:
+      description: result generate url
+      type: object
+      required:
+        - bamboraUrl
+      properties:
+        bamboraUrl:
+          type: string
+          description: redirect url
+    CsoAccountUpdateRequest:
+      description: update client details
+      type: object
+      required:
+        - internalClientNumber
+      properties:
+        internalClientNumber:
+          type: string
+          description: internal client number for request to bambora
+    CourtLocation:
+      type: object
+      description: "Court related information"
+      required:
+        - id
+        - name
+        - code
+        - identifierCode
+        - isSupremeCourt
+        - address
+      properties:
+        id:
+          type: number
+          description: the court id
+        identifierCode:
+          type: string
+          description: the court id code
+        name:
+          type: string
+          description: the court name
+        code:
+          type: string
+          description: the court code
+        isSupremeCourt:
+          type: boolean
+          description: the court supreme
+        address:
+          $ref: "#/components/schemas/Address"
+    CourtLocations:
+      description: resposne body for courtlocations
+      type: object
+      properties:
+        courts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourtLocation"
+    Address:
+      description: address object
+      type: object
+      required:
+        - addressLine1
+        - cityName
+        - provinceName
+        - countryName
+      properties:
+        addressLine1:
+          type: string
+          description: the court address line one
+        addressLine2:
+          type: string
+          description: the court address line two
+        addressLine3:
+          type: string
+          description: the court address line three
+        postalCode:
+          type: string
+          description: the court postal code
+        cityName:
+          description: the court city name
+          type: string
+        provinceName:
+          type: string
+          description: the court province name
+        countryName:
+          description: the address country name
+          type: string
+    Payment:
+      description: payment object
+      type: object
+      properties:
+        feeExempt:
+          type: boolean
+          description: Is the fee exempt
+        paymentCategory:
+          type: number
+          description: Category for fee
+        paymentDescription:
+          type: string
+          description: a description of the payment
+        processedAmount:
+          type: number
+          description: Amount
+        submittedAmount:
+          type: number
+          description: Amount
+        serviceIdentifier:
+          type: number
+          description: Id of payment
+        transactionDate:
+          type: string
+          description: date time of transaction
+    Status:
+      description: document status
+      type: object
+      properties:
+        description:
+          type: string
+          description: description of status
+        code:
+          type: string
+          description: status identifier
+        changeDate:
+          type: string
+          description: date changed
+    Account:
+      description: account object
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: first name
+        lastName:
+          type: string
+          description: last name
+    CountryCode:
+      description: Country Code Table Entry
+      type: object
+      properties:
+        code:
+          type: string
+          description: code value
+        description:
+          type: string
+          description: country name
+    ActionRequiredDetails:
+      description: Action required details
+      type: object
+      properties:
+        clientId:
+          type: number
+          description: user identifier
+        packageIdentifier:
+          type: number
+          description: package identifier
+        documents:
+          type: array
+          description: any document that requires action
+          items:
+            $ref: "#/components/schemas/ActionDocument"
+    ActionDocument:
+      description: Document that requires action
+      type: object
+      properties:
+        id:
+          type: number
+          description: document identifier
+        status:
+          type: string
+          description:  >
+            document status:
+              * `SUB` - Submitted
+              * `RSUB` - Resubmitted
+              * `REF` - Referred
+              * `REJ` - Reject
+              * `CCOR` - Courtesy Correction
+          enum:
+            [
+              SUB,
+              RSUB,
+              REF,
+              REJ,
+              CCOR
+            ]
+        type:
+          type: string
+          description: document type
+    ParentAppDetails:
+      description: Action required details
+      type: object
+      properties:
+        returnUrl:
+          type: string
+          description: the url that users will return to
+        rejectedDocumentFeature:
+          type: boolean
+          description: the feature is enabled or disabled for this parent
+    SetupCardRequest:
+      description: Setup a payment profile
+      type: object
+      properties:
+        tokenCode:
+          type: string
+          description: card token Code
+        name:
+          type: string
+          description: name on card
+    SetupCardResponse:
+      description: Setup a payment profile response
+      type: object
+      properties:
+        paymentProfileId:
+          type: string
+          description: bambora profile id
+        responseCode:
+          type: string
+          description: bambora response code
+        responseDescription:
+          type: string
+          description: response reason description
