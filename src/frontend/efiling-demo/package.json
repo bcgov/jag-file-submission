@@ -4,47 +4,89 @@
   "homepage": ".",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.16.0",
     "@babel/preset-react": "^7.13.13",
     "@bcgov/bootstrap-theme": "github:bcgov/bootstrap-theme",
     "@csstools/normalize.css": "csstools/normalize.css",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@svgr/webpack": "^5.5.0",
     "axios": "^0.30.3",
+    "babel-jest": "^27.4.2",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-named-asset-import": "^0.3.8",
     "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-react-app": "^10.0.1",
+    "bfj": "^7.0.2",
     "bootstrap": "^4.5.3",
-    "browserslist": "^4.19.1",
+    "browserslist": "^4.18.1",
+    "camelcase": "^6.2.1",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.2.0",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
+    "eslint": "^8.3.0",
+    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-airbnb": "^0.0.1-security",
+    "eslint-webpack-plugin": "^3.1.1",
+    "file-loader": "^6.2.0",
+    "fs-extra": "^10.0.0",
     "history": "^5.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "identity-obj-proxy": "^3.0.0",
     "install-peerdeps": "^3.0.3",
+    "jest": "^27.4.3",
     "jest-canvas-mock": "^2.5.0",
+    "jest-resolve": "^27.4.2",
+    "jest-watch-typeahead": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
     "keycloak-js": "^25.0.6",
+    "mini-css-extract-plugin": "^2.4.5",
     "node": "^17.3.0",
     "object-path": "^0.11.8",
+    "postcss": "^8.4.4",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^6.2.1",
     "postcss-normalize": "^10.0.1",
+    "postcss-preset-env": "^7.0.1",
+    "prompts": "^2.4.2",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.6",
     "react": "^17.0.2",
     "react-app-polyfill": "^3.0.0",
+    "react-dev-utils": "^12.0.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.3.2",
+    "react-refresh": "^0.11.0",
     "react-router-dom": "^6.1.1",
-    "react-scripts": "^5.0.1",
     "regenerator-runtime": "^0.13.5",
+    "resolve": "^1.20.0",
+    "resolve-url-loader": "^4.0.0",
+    "sass-loader": "^12.3.0",
+    "semver": "^7.3.5",
     "shared-components": "https://github.com/bcgov/react-shared-components/releases/download/v1.3.1/shared-components-1.3.1.tgz",
-    "uuid": "^8.3.1"
+    "source-map-loader": "^3.0.0",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.2",
+    "terser-webpack-plugin": "^5.2.5",
+    "uuid": "^8.3.1",
+    "webpack": "^5.64.4",
+    "webpack-dev-server": "^4.6.0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "jest --env='jsdom'",
-    "eject": "react-app-rewired eject",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "coverage": "jest --coverage --env='jsdom'",
+    "coverage": "node scripts/test.js --coverage",
     "precommit": "pretty-quick --staged"
   },
-  "resolutions": {
+  "overrides": {
     "form-data": "4.0.4",
     "immer": "9.0.6",
     "trim": "0.0.3",
@@ -54,7 +96,6 @@
     "terser": "^5.14.2",
     "json5": "^2.2.2",
     "minimatch": "^3.1.3",
-    "webpack": "^5.76.0",
     "braces": "^3.0.3",
     "webpack-dev-middleware": "^5.3.4",
     "browserify-sign": "4.2.2",
@@ -65,7 +106,6 @@
     "http-proxy-middleware": "^2.0.7",
     "elliptic": "^6.6.1",
     "cross-spawn": "^7.0.5",
-    "semver": "^7.5.2",
     "svgo": "2.8.1"
   },
   "eslintConfig": {
@@ -119,15 +159,14 @@
     "prettier": "2.8.0",
     "pretty-quick": "^3.1.0",
     "process": "^0.11.10",
-    "react-app-rewired": "^2.2.1",
     "react-test-renderer": "^18.2.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "url": "^0.11.0"
   },
   "jest": {
-    "watchPathIgnorePatterns": [
-      "<rootDir>/node_modules/"
+    "roots": [
+      "<rootDir>/src"
     ],
     "collectCoverageFrom": [
       "src/**/*.js",
@@ -136,21 +175,67 @@
       "!**/node_modules/**",
       "!**/vendor/**"
     ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jsdom",
     "transform": {
+      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js",
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
     "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
       "\\.(jpg|jpeg|png|PNG|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|pdf)$": "<rootDir>/src/AssetsTransformer.js",
       "\\.(css|less)$": "<rootDir>/src/AssetsTransformer.js"
     },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "resetMocks": true,
     "coverageReporters": [
       "text",
       "lcov"
+    ],
+    "watchPathIgnorePatterns": [
+      "<rootDir>/node_modules/"
     ]
   },
   "jestSonar": {
     "reportPath": "coverage",
     "reportFile": "test-report.xml",
     "indent": 4
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
   }
 }
