@@ -7,6 +7,8 @@ export default function UpdateCardPage() {
   const header = {
     name: "eFiling Demo Client",
     navigate: router.push.bind(router),
+    // shared-components' Header reads header.history.push for the logo click
+    history: { push: router.push.bind(router) },
   };
 
   return <UpdateCreditCard page={{ header }} />;

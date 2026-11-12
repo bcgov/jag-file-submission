@@ -109,9 +109,6 @@
     "cross-spawn": "^7.0.5",
     "svgo": "2.8.1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
