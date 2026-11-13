@@ -4,7 +4,12 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  extends: ["plugin:react/recommended", "airbnb", "prettier"],
+  extends: [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "airbnb",
+    "prettier",
+  ],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
@@ -23,6 +28,9 @@ module.exports = {
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-curly-brace-presence": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "warn",
     "import/no-extraneous-dependencies": "off",
     "import/prefer-default-export": "off",
     "no-param-reassign": "off",
