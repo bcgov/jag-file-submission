@@ -2,7 +2,7 @@ name: Build Efiling Frontend Image and Push to Openshift Registry
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - "src/frontend/efiling-frontend/**"
       - ".github/workflows/dev-efiling-frontend-build.yaml"
