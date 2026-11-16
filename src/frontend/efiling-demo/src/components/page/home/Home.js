@@ -20,8 +20,6 @@ import actionStatusList from "../../../actionStatusList.json";
 import { getJWTData } from "../../../modules/authentication-helper/authenticationHelper";
 
 import { propTypes } from "../../../types/propTypes";
-import "../page.css";
-import "./Home.css";
 
 const defaultJson = {
   packageNumber: null,

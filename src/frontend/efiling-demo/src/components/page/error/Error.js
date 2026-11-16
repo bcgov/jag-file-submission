@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Header, Footer, Button } from "shared-components";
 import { propTypes } from "../../../types/propTypes";
-import "./Error.css";
 
 export default function Error({ page: { header, status, message } }) {
   return (

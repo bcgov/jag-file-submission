@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Footer, Header, Button, Table } from "shared-components";
-import { useLocation } from "react-router-dom";
-import queryString from "query-string";
+import { useRouter } from "next/router";
 
 import { propTypes } from "../../../../types/propTypes";
 
@@ -12,7 +11,7 @@ export default function UpdateCreditCard({ page: { header } }) {
 
   const [queryParams, setqueryParams] = useState([]);
   const [redirectUrl, setRedirectUrl] = useState(null);
-  const location = useLocation();
+  const router = useRouter();
 
   const redirect = (code) => {
     window.open(`${redirectUrl}?responseCode=${code}`, "_self");
@@ -21,7 +20,7 @@ export default function UpdateCreditCard({ page: { header } }) {
   useEffect(() => {
     const paramters = [];
 
-    const queryStrings = queryString.parse(location.search);
+    const queryStrings = router.query;
 
     Object.keys(queryStrings).forEach((key) => {
       paramters.push({
@@ -33,7 +32,7 @@ export default function UpdateCreditCard({ page: { header } }) {
 
     setRedirectUrl(queryStrings.trnReturnURL);
     setqueryParams(paramters);
-  }, []);
+  }, [router.query]);
 
   return (
     <main>
