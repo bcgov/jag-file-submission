@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
-                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
-                  xmlns:tns="http://services.ws.appeal.courts.gov.bc.ca"
-                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  targetNamespace="http://services.ws.appeal.courts.gov.bc.ca"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://services.ws.appeal.courts.gov.bc.ca" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://services.ws.appeal.courts.gov.bc.ca" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://services.ws.appeal.courts.gov.bc.ca">
       <s:element name="GetHearingList">
@@ -87,6 +82,9 @@
           <s:element minOccurs="0" maxOccurs="1" name="StyleOfCauseA" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="StyleOfCauseAppellantA" type="s:boolean" />
           <s:element minOccurs="0" maxOccurs="1" name="StyleOfCauseB" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PrimaryCaseId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryCaseNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubCasesString" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="SearchByPartyIndividual">
@@ -317,6 +315,13 @@
           <s:element minOccurs="0" maxOccurs="1" name="ScheduleDate" type="s:dateTime" />
           <s:element minOccurs="0" maxOccurs="1" name="StartTime" type="s:dateTime" />
           <s:element minOccurs="0" maxOccurs="1" name="TimeOfCall" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryCaseHearing" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubCaseHearings" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="ViewCaseCourtHearing">
@@ -360,6 +365,8 @@
           <s:element minOccurs="0" maxOccurs="1" name="ReleaseDate" type="s:dateTime" />
           <s:element minOccurs="0" maxOccurs="1" name="ReserveDate" type="s:dateTime" />
           <s:element minOccurs="0" maxOccurs="1" name="Schedules" type="tns:ArrayOfSchedule" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryCaseHearing" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubCaseHearings" type="tns:ArrayOfString" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfJudge">
@@ -428,6 +435,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="FullName" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="Volumes" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="ObjectRepositoryGUID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryCaseNumber" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:complexType name="ArrayOfFilingFormat">
@@ -548,6 +556,16 @@
           <s:element minOccurs="0" maxOccurs="1" name="UserAccess" type="s:string" />
         </s:sequence>
       </s:complexType>
+      <s:element name="ListCOAJudges">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListCOAJudgesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListCOAJudgesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="GetHearingListSoapIn">
@@ -640,6 +658,12 @@
   <wsdl:message name="SearchEFileCaseNumberSoapOut">
     <wsdl:part name="parameters" element="tns:SearchEFileCaseNumberResponse" />
   </wsdl:message>
+  <wsdl:message name="ListCOAJudgesSoapIn">
+    <wsdl:part name="parameters" element="tns:ListCOAJudges" />
+  </wsdl:message>
+  <wsdl:message name="ListCOAJudgesSoapOut">
+    <wsdl:part name="parameters" element="tns:ListCOAJudgesResponse" />
+  </wsdl:message>
   <wsdl:portType name="CSOSearchSoap">
     <wsdl:operation name="GetHearingList">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns the hearing list for the specified location and hearing day.</wsdl:documentation>
@@ -715,6 +739,11 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search for a case by case number for use with eFiling. Limited information will be displayed for purposes of verification only. Note: Security Type and User Access should never be displayed on public servers</wsdl:documentation>
       <wsdl:input message="tns:SearchEFileCaseNumberSoapIn" />
       <wsdl:output message="tns:SearchEFileCaseNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListCOAJudges">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">List of active Judges for the Court of Appeal</wsdl:documentation>
+      <wsdl:input message="tns:ListCOAJudgesSoapIn" />
+      <wsdl:output message="tns:ListCOAJudgesSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CSOSearchSoap" type="tns:CSOSearchSoap">
@@ -854,6 +883,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ListCOAJudges">
+      <soap:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ListCOAJudges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="CSOSearchSoap12" type="tns:CSOSearchSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -985,6 +1023,15 @@
     </wsdl:operation>
     <wsdl:operation name="SearchEFileCaseNumber">
       <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/SearchEFileCaseNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListCOAJudges">
+      <soap12:operation soapAction="http://services.ws.appeal.courts.gov.bc.ca/ListCOAJudges" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
