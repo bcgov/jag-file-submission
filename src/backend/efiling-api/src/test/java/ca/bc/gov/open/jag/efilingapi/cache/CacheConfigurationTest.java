@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.data.redis.cache.RedisCacheManager;
 
@@ -22,7 +22,7 @@ public class CacheConfigurationTest {
                     "spring.redis.password=admin",
                     "spring.cache.redis.time-to-live=600000"
             )
-            .withUserConfiguration(RedisProperties.class)
+            .withUserConfiguration(DataRedisProperties.class)
             .withUserConfiguration(CacheConfiguration.class);
 
     @Test

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.cache.autoconfigure.CacheProperties;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.math.BigDecimal;

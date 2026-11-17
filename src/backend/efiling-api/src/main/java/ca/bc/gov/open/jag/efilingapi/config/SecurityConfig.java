@@ -16,8 +16,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -37,7 +35,7 @@ class SecurityConfig {
 		http.csrf(AbstractHttpConfigurer::disable);
 
 		http.authorizeHttpRequests(requests -> requests
-						.requestMatchers(antMatcher("/actuator/**")).permitAll()
+						.requestMatchers("/actuator/**").permitAll()
 						.anyRequest().authenticated());
 
 		http.oauth2ResourceServer((oauth2) -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(keycloakJwtAuthConverter)));

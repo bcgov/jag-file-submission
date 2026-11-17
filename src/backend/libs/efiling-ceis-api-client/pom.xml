@@ -15,8 +15,6 @@
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<log4j2.version>2.17.1</log4j2.version>
-		<jackson-bom.version>2.21.7</jackson-bom.version>
-		<tomcat.version>10.1.59</tomcat.version>
 
 		<!-- automatically run annotation processors within the incremental compilation (Eclipse) -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
@@ -70,6 +68,10 @@
 			<artifactId>jackson-datatype-joda</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.brsanthu</groupId>
 			<artifactId>migbase64</artifactId>
 		</dependency>
@@ -80,7 +82,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -134,31 +136,9 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.fasterxml.jackson</groupId>
-				<artifactId>jackson-bom</artifactId>
-				<version>${jackson-bom.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.tomcat.embed</groupId>
-				<artifactId>tomcat-embed-core</artifactId>
-				<version>${tomcat.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.tomcat.embed</groupId>
-				<artifactId>tomcat-embed-el</artifactId>
-				<version>${tomcat.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.tomcat.embed</groupId>
-				<artifactId>tomcat-embed-websocket</artifactId>
-				<version>${tomcat.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>3.5.16</version>
+				<version>4.0.9</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
