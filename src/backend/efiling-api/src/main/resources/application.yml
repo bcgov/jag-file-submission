@@ -4,6 +4,9 @@ server:
     max-part-count: ${MAX_FILE_COUNT:15}
     max-part-header-size: ${MAX_HEADER_SIZE:2048}
 spring:
+  http:
+    converters:
+      preferred-json-mapper: jackson2
   security:
     oauth2:
       resourceserver:
