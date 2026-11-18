@@ -33,7 +33,7 @@ public class CacheConfigurationTest {
             assertThat(it).hasBean("submissionSerializer");
             RedisCacheManager actualCacheManager = ((RedisCacheManager)it.getBean("submissionCacheManager"));
             actualCacheManager.getCache("redis");
-            Assertions.assertEquals(Duration.ofSeconds(600), actualCacheManager.getCacheConfigurations().get("redis").getTtl());
+            Assertions.assertEquals(Duration.ofSeconds(600), actualCacheManager.getCacheConfigurations().get("redis").getTtlFunction().getTimeToLive("redis", null));
 
         });
     }
@@ -45,7 +45,7 @@ public class CacheConfigurationTest {
             assertThat(it).hasBean("documentCacheManager");
             RedisCacheManager actualCacheManager = ((RedisCacheManager)it.getBean("documentCacheManager"));
             actualCacheManager.getCache("redis");
-            Assertions.assertEquals(Duration.ofHours(24), actualCacheManager.getCacheConfigurations().get("redis").getTtl());
+            Assertions.assertEquals(Duration.ofHours(24), actualCacheManager.getCacheConfigurations().get("redis").getTtlFunction().getTimeToLive("redis", null));
         });
     }
 
@@ -57,7 +57,7 @@ public class CacheConfigurationTest {
             assertThat(it).hasBean("documentTypeDetailsSerializer");
             RedisCacheManager actualCacheManager = ((RedisCacheManager)it.getBean("documentTypeDetailsCacheManager"));
             actualCacheManager.getCache("redis");
-            Assertions.assertEquals(Duration.ofHours(24), actualCacheManager.getCacheConfigurations().get("redis").getTtl());
+            Assertions.assertEquals(Duration.ofHours(24), actualCacheManager.getCacheConfigurations().get("redis").getTtlFunction().getTimeToLive("redis", null));
         });
     }
 
@@ -69,7 +69,7 @@ public class CacheConfigurationTest {
             assertThat(it).hasBean("accountDetailsSerializer");
             RedisCacheManager actualCacheManager = ((RedisCacheManager)it.getBean("accountDetailsCacheManager"));
             actualCacheManager.getCache("redis");
-            Assertions.assertEquals(Duration.ofMinutes(15), actualCacheManager.getCacheConfigurations().get("redis").getTtl());
+            Assertions.assertEquals(Duration.ofMinutes(15), actualCacheManager.getCacheConfigurations().get("redis").getTtlFunction().getTimeToLive("redis", null));
         });
     }
 
