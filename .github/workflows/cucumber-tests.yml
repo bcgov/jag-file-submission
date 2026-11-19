@@ -96,7 +96,7 @@ jobs:
 
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
-        run: docker compose pull -q --parallel redis clamav keycloak 
+        run: docker compose pull -q redis clamav keycloak 
 
       - name: Standup Infra
         run: docker compose up -d redis clamav keycloak 
@@ -118,7 +118,7 @@ jobs:
 
       - name: Pull images (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d -q efiling-api efiling-frontend keycloak-config
+        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend keycloak-config
 
       #- name: Standup Docker Pods (Local REPO only)
       #  if: github.event.pull_request.head.repo.full_name == github.repository
