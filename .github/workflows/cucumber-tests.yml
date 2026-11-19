@@ -18,6 +18,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+      packages: write
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
@@ -72,6 +73,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+      packages: write
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
@@ -115,6 +117,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+      packages: write
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
@@ -145,6 +148,7 @@ jobs:
     permissions:
       contents: read
       issues: write
+      packages: write
     needs: [ efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr ]
     steps:
       - name: Pull Git repo.
