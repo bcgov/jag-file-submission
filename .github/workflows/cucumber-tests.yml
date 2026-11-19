@@ -118,7 +118,7 @@ jobs:
 
       - name: Pull images (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d --parallel -q efiling-api efiling-frontend keycloak-config
+        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d -q efiling-api efiling-frontend keycloak-config
 
       #- name: Standup Docker Pods (Local REPO only)
       #  if: github.event.pull_request.head.repo.full_name == github.repository
