@@ -15,6 +15,9 @@ jobs:
   efiling-api-gcr:
     name: Efiling Api GCR
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
@@ -66,6 +69,9 @@ jobs:
   efiling-frontend-gcr:
     name: Efiling Frontend GCR
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
@@ -106,6 +112,9 @@ jobs:
   keycloak-config-gcr:
     name: Keycloack Config GCR
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
@@ -133,6 +142,9 @@ jobs:
   cucumber-tests:
     name: Runs cucumber-tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     needs: [ efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr ]
     steps:
       - name: Pull Git repo.
