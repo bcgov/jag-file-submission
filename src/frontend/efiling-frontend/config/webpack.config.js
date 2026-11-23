@@ -309,6 +309,17 @@ module.exports = function (webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
+      // Node core module polyfills (webpack 5 no longer provides them).
+      // Ported from the former config-overrides.js (react-app-rewired).
+      fallback: {
+        crypto: require.resolve('crypto-browserify'),
+        stream: require.resolve('stream-browserify'),
+        assert: require.resolve('assert'),
+        http: require.resolve('stream-http'),
+        https: require.resolve('https-browserify'),
+        os: require.resolve('os-browserify'),
+        url: require.resolve('url'),
+      },
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -563,6 +574,12 @@ module.exports = function (webpackEnv) {
       ].filter(Boolean),
     },
     plugins: [
+      // Makes `process` and `Buffer` available as globals for browser polyfills.
+      // Ported from the former config-overrides.js (react-app-rewired).
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
