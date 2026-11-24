@@ -1,12 +1,7 @@
 {
+  "presets": ["next/babel"],
   "env": {
     "test": {
-      "presets": [
-        "@babel/preset-react",
-        "@babel/preset-env",
-        "@babel/preset-typescript"
-        
-      ],
       "plugins": [
         "@babel/plugin-syntax-jsx",
         "transform-export-extensions"
