@@ -65,8 +65,8 @@ const determineIfProtectionOrder = (documents) => {
 
 export default function PackageReview() {
   const rushTabFeatureFlag = window.env
-    ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
-    : process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG;
+    ? window.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG
+    : process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG;
 
   const params = useParams();
   const packageId = Number(params.packageId);

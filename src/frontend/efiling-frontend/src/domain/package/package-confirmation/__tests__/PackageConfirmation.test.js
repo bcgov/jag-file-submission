@@ -47,7 +47,7 @@ describe("PackageConfirmation Component", () => {
 
   let mock;
   beforeEach(() => {
-    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+    process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "true";
     mock = new MockAdapter(axios);
     window.open = jest.fn();
     FileSaver.saveAs = jest.fn();
@@ -473,7 +473,7 @@ describe("PackageConfirmation Component", () => {
     mock
       .onGet(apiRequest)
       .reply(200, { documents, court, submissionFeeAmount });
-    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "false";
+    process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "false";
 
     const { queryByText } = render(
       <PackageConfirmation

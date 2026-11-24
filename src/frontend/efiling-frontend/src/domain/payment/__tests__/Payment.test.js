@@ -47,7 +47,7 @@ describe("Payment Component", () => {
   localStorage.setItem("jwt", token);
   window.scrollTo = jest.fn();
 
-  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+  process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "true";
 
   let mock;
   beforeEach(() => {

@@ -7,7 +7,7 @@ import { createSerializer } from "enzyme-to-json";
 
 const converter = new Stories2SnapsConverter();
 
-process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "true";
 
 const runTest = async (story, context) => {
   const filename = converter.getSnapshotFileName(context);

@@ -8,13 +8,13 @@ services:
     ports:
       - 3000:8080
     environment:
-      - REACT_APP_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
-      - REACT_APP_KEYCLOAK_CLIENT_ID=efiling-frontend
-      - REACT_APP_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
-      - REACT_APP_API_BASE_URL=http://localhost:8080
-      - REACT_APP_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
-      - REACT_APP_CSO_BASE_URL=http://localhost/cso
-      - REACT_APP_RUSH_TAB_FEATURE_FLAG=true
+      - NEXT_PUBLIC_KEYCLOAK_REALM=${KEYCLOAK_REALM:-Efiling-Hub}
+      - NEXT_PUBLIC_KEYCLOAK_CLIENT_ID=efiling-frontend
+      - NEXT_PUBLIC_KEYCLOAK_URL=${KEYCLOAK_URL:-http://localhost:8081/auth}
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+      - NEXT_PUBLIC_BAMBORA_REDIRECT_URL=http://localhost:3000/efilinghub
+      - NEXT_PUBLIC_CSO_BASE_URL=http://localhost/cso
+      - NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG=true
 
   #############################################################################################
   ###                                 EFILING DEMO                                          ###

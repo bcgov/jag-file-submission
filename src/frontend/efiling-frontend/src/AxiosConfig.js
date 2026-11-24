@@ -1,8 +1,8 @@
 import axios from "axios";
-import { REACT_APP_API_BASE_URL } from "./EnvConfig";
+import { NEXT_PUBLIC_API_BASE_URL } from "./EnvConfig";
 
 const api = axios.create({
-  baseURL: `${REACT_APP_API_BASE_URL}`,
+  baseURL: `${NEXT_PUBLIC_API_BASE_URL}`,
   timeout: 750000,
 });
 

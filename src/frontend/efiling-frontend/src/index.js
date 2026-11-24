@@ -11,8 +11,8 @@ import * as serviceWorker from "./serviceWorker";
 import { BAMBORA_REDIRECT_URL } from "./EnvConfig";
 
 axios.defaults.baseURL = window.env
-  ? window.env.REACT_APP_API_BASE_URL
-  : process.env.REACT_APP_API_BASE_URL;
+  ? window.env.NEXT_PUBLIC_API_BASE_URL
+  : process.env.NEXT_PUBLIC_API_BASE_URL;
 
 sessionStorage.setItem("bamboraRedirectUrl", BAMBORA_REDIRECT_URL);
 

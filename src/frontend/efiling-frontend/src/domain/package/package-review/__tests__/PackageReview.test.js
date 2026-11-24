@@ -96,7 +96,7 @@ describe("PackageReview Component", () => {
 
   let mock;
   beforeEach(() => {
-    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+    process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "true";
     routerDom.useParams = jest.fn().mockReturnValue({ packageId: 1 });
     routerDom.useLocation = jest
       .fn()
@@ -703,7 +703,7 @@ describe("PackageReview Component", () => {
   test("Rush processing flag is false ", async () => {
     const promise = Promise.resolve();
     mock.onGet(apiRequest).reply(200, csoRedirectResponse);
-    process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "false";
+    process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "false";
 
     const { queryByText } = render(<PackageReview />);
 
