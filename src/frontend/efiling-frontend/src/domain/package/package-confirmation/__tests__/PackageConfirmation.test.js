@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow, import/no-named-as-default, import/no-named-as-default-member */
+import { flushPromises } from "../../../../TestHelper";
 import React from "react";
 import axios from "axios";
 import FileSaver from "file-saver";
@@ -75,7 +76,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -92,7 +93,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -159,7 +160,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(
       queryByText(
@@ -183,6 +184,7 @@ describe("PackageConfirmation Component", () => {
     );
 
     await waitFor(() => expect(mock.history.get.length).toBe(1));
+    await flushPromises();
 
     expect(getByText(container, "Continue")).toBeDisabled();
     expect(
@@ -202,7 +204,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText(container, "Continue"));
 
@@ -221,7 +223,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText(container, "Upload them now."));
 
@@ -240,7 +242,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(getByText(container, "Upload them now."));
 
@@ -268,11 +270,11 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     const fileLink = getByText(container, file.documentProperties.name);
     fireEvent.click(fileLink);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
@@ -298,12 +300,12 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     const fileLink = getByText(container, file.documentProperties.name);
     fireEvent.click(fileLink);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(
       queryByText("Something went wrong while trying to download your file.")
@@ -327,18 +329,22 @@ describe("PackageConfirmation Component", () => {
         csoAccountStatus={csoAccountStatus}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText(container, "Upload them now."));
-    await waitFor(() => {});
+    await flushPromises();
 
-    // here the [6] of calls denotes the popstate call of the mock
-    // the [0] denotes the index of arguments passed to that call (popstate function)
-    expect(mockAddEventListener.mock.calls[6][0]).toBe("popstate");
+    // find the popstate registration instead of relying on its position in the
+    // list of calls (the number of window listeners differs between React versions)
+    const popstateCall = mockAddEventListener.mock.calls.find(
+      ([eventName]) => eventName === "popstate"
+    );
+    expect(popstateCall).toBeDefined();
 
-    await waitFor(() => {
-      // trigger our callback by calling [1] index
-      mockAddEventListener.mock.calls[6][1](event);
+    // trigger our callback by calling [1] index; wrapped in act so React
+    // renders the resulting state update before we assert on it
+    await act(async () => {
+      popstateCall[1](event);
     });
 
     // assert here what was being done in callback
@@ -397,7 +403,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(getByText("Yes")).toBeInTheDocument();
 
@@ -458,7 +464,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -476,7 +482,7 @@ describe("PackageConfirmation Component", () => {
       />
     );
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(queryByText("Rush")).not.toBeInTheDocument();
   });

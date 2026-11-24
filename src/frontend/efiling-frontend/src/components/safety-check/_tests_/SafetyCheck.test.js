@@ -1,3 +1,4 @@
+import { flushPromises } from "../../../TestHelper";
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SafetyCheck from "../SafetyCheck";
@@ -16,7 +17,7 @@ describe("SafefyCheck Component Testsuite", () => {
     const modalLink = screen.getByTestId("help-link");
     expect(modalLink).toBeInTheDocument();
     fireEvent.click(modalLink);
-    await waitFor(() => {});
+    await flushPromises();
 
     // assert the popup is open
     let modalTitle = screen.getByTestId("help-title");
@@ -26,7 +27,7 @@ describe("SafefyCheck Component Testsuite", () => {
     const modalClose = screen.getByTestId("close-btn");
     expect(modalClose).toBeInTheDocument();
     fireEvent.click(modalClose);
-    await waitFor(() => {});
+    await flushPromises();
 
     // assert the popup is closed
     modalTitle = screen.queryByTestId("help-title");

@@ -1,3 +1,4 @@
+import { flushPromises } from "./TestHelper";
 import initStoryshots, {
   Stories2SnapsConverter,
 } from "@storybook/addon-storyshots";
@@ -20,7 +21,7 @@ const runTest = async (story, context) => {
 
   const { asFragment } = render(storyElement);
 
-  await waitFor(() => {});
+  await flushPromises();
 
   expect(asFragment()).toMatchSpecificSnapshot(filename);
 };

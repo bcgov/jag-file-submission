@@ -230,7 +230,9 @@ describe("Rush Component", () => {
     dispatchEvt(dropzone, "drop", tooManyData);
 
     await waitFor(() =>
-      expect(getByText(numDocumentsError)).toBeInTheDocument()
+      expect(
+        getByText(numDocumentsError, { exact: false })
+      ).toBeInTheDocument()
     );
   });
 

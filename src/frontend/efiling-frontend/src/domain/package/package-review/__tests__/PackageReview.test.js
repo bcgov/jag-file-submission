@@ -1,6 +1,7 @@
+import { flushPromises } from "../../../../TestHelper";
 import React from "react";
 import FileSaver from "file-saver";
-import { render, waitFor, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 
 import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
@@ -134,7 +135,7 @@ describe("PackageReview Component", () => {
     });
 
     const { asFragment } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
 
@@ -153,7 +154,7 @@ describe("PackageReview Component", () => {
       .mockReturnValue({ search: `?returnUrl=${url}` });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText("Return to Parent App"));
 
@@ -173,7 +174,7 @@ describe("PackageReview Component", () => {
       .mockReturnValue({ search: `?returnUrl=${encodedUrlWithParams}` });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText("Return to Parent App"));
 
@@ -190,7 +191,7 @@ describe("PackageReview Component", () => {
       .mockReturnValue({ search: `?returnUrl=${invalidUrl}` });
 
     const { queryByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(queryByText("Return to Parent App")).toBeNull();
   });
@@ -205,7 +206,7 @@ describe("PackageReview Component", () => {
     const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(spy).toHaveBeenCalled();
   });
@@ -220,7 +221,7 @@ describe("PackageReview Component", () => {
     const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(spy).toHaveBeenCalled();
   });
@@ -235,7 +236,7 @@ describe("PackageReview Component", () => {
     const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(spy).toHaveBeenCalled();
   });
@@ -249,7 +250,7 @@ describe("PackageReview Component", () => {
     const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(spy).toHaveBeenCalled();
   });
@@ -260,7 +261,7 @@ describe("PackageReview Component", () => {
     const spy = jest.spyOn(api, "get");
 
     render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(spy).toHaveBeenCalled();
   });
@@ -283,10 +284,10 @@ describe("PackageReview Component", () => {
       .reply(200, { blob });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText("Print Submission Sheet"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
@@ -295,12 +296,12 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponse);
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("view all your previously submitted packages.");
 
     fireEvent.click(button);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalled();
   });
@@ -309,7 +310,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponse);
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("view all your previously submitted packages.");
 
@@ -317,7 +318,7 @@ describe("PackageReview Component", () => {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalled();
   });
@@ -326,7 +327,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponse);
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("view all your previously submitted packages.");
 
@@ -334,7 +335,7 @@ describe("PackageReview Component", () => {
       key: "Enter",
       keyCode: "9",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).not.toHaveBeenCalled();
   });
@@ -351,18 +352,18 @@ describe("PackageReview Component", () => {
     });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("view all your previously submitted packages.");
 
     fireEvent.click(button);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(button, {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).not.toHaveBeenCalled();
   });
@@ -385,13 +386,13 @@ describe("PackageReview Component", () => {
       .reply(200, { blob });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(getByText("Print Submission Sheet"), {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
@@ -411,10 +412,10 @@ describe("PackageReview Component", () => {
       .reply(400, { message: "There was an error." });
 
     const { getByText, queryByText, getByTestId } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText("Print Submission Sheet"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(
       queryByText(
@@ -423,7 +424,7 @@ describe("PackageReview Component", () => {
     ).toBeInTheDocument();
 
     fireEvent.click(getByTestId("toast-close"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(
       queryByText(
@@ -447,13 +448,13 @@ describe("PackageReview Component", () => {
       .reply(400, { message: "There was an error." });
 
     const { getByText, queryByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(getByText("Print Submission Sheet"), {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(
       queryByText(
@@ -477,13 +478,13 @@ describe("PackageReview Component", () => {
       .reply(400, { message: "There was an error." });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(getByText("Print Submission Sheet"), {
       key: "Tab",
       keyCode: "9",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).not.toHaveBeenCalled();
   });
@@ -502,23 +503,23 @@ describe("PackageReview Component", () => {
     const noop = jest.spyOn(mockHelper, "noop");
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     const withdrawnLink = getByText("withdraw");
     fireEvent.click(withdrawnLink);
-    await waitFor(() => {});
+    await flushPromises();
 
     // there should now be a modal popup
     const { asFragment } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
     expect(asFragment()).toMatchSnapshot();
     const confirmBtn = getByText("Confirm");
     expect(confirmBtn).toBeInTheDocument();
 
     // click Confirm
     fireEvent.click(confirmBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(noop).toHaveBeenCalled();
   });
@@ -537,23 +538,23 @@ describe("PackageReview Component", () => {
     const noop = jest.spyOn(mockHelper, "noop");
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     const withdrawnLink = getByText("withdraw");
     fireEvent.click(withdrawnLink);
-    await waitFor(() => {});
+    await flushPromises();
 
     // there should now be a modal popup
     const { asFragment } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
     expect(asFragment()).toMatchSnapshot();
     const confirmBtn = getByText("Confirm");
     expect(confirmBtn).toBeInTheDocument();
 
     // click Confirm
     fireEvent.click(confirmBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(noop).not.toHaveBeenCalled();
   });
@@ -570,12 +571,12 @@ describe("PackageReview Component", () => {
       .reply(200, { blob });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("View Registry Notice");
 
     fireEvent.click(button);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
@@ -592,12 +593,12 @@ describe("PackageReview Component", () => {
       .reply(200, { blob });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("View Registry Notice");
 
     fireEvent.keyDown(button, { key: "Enter", keyCode: "13" });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
@@ -614,12 +615,12 @@ describe("PackageReview Component", () => {
       .reply(200, { blob });
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("View Registry Notice");
 
     fireEvent.keyDown(button, { key: "Enter", keyCode: "9" });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
@@ -629,12 +630,12 @@ describe("PackageReview Component", () => {
     mock.onGet(`/filingpackages/${packageId}/registryNotice`).reply(400);
 
     const { getByText } = render(<PackageReview />);
-    await waitFor(() => {});
+    await flushPromises();
 
     const button = getByText("View Registry Notice");
 
     fireEvent.click(button);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });

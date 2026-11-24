@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 
+import { flushPromises } from "../../../TestHelper";
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
@@ -8,7 +9,6 @@ import {
   fireEvent,
   getByText,
   getByRole,
-  waitFor,
   screen,
 } from "@testing-library/react";
 import { getTestData } from "../../../modules/test-data/confirmationPopupTestData";
@@ -119,7 +119,7 @@ describe("Payment Component", () => {
       keyCode: "9",
     });
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(screen.queryByText("Register a Credit Card")).toBeNull();
   });
@@ -160,7 +160,7 @@ describe("Payment Component", () => {
       keyCode: "9",
     });
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(screen.queryByText("Register a Credit Card")).toBeNull();
   });
@@ -201,7 +201,7 @@ describe("Payment Component", () => {
       keyCode: "9",
     });
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(screen.queryByText("Register a Credit Card")).toBeNull();
   });
@@ -241,7 +241,7 @@ describe("Payment Component", () => {
 
     fireEvent.click(getByText(container, "< Back"));
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -260,7 +260,7 @@ describe("Payment Component", () => {
     fireEvent.click(getByText(container, "Submit"));
 
     // Why did splitting this fix the test?
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalledWith(
       "success.com?packageRef=packageRef",
@@ -295,7 +295,7 @@ describe("Payment Component", () => {
     fireEvent.click(getByRole(container, "checkbox"));
     fireEvent.click(getByText(container, "Submit"));
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(
       queryByText("Something went wrong while trying to submit your package.")
@@ -310,7 +310,7 @@ describe("Payment Component", () => {
 
     render(<Payment payment={payment} />);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(sessionStorage.getItem("paymentProfileId")).toEqual("1234");
   });
@@ -326,7 +326,7 @@ describe("Payment Component", () => {
 
     render(<Payment payment={payment} />);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalledWith(
       "error.com?status=400&message=There was an error.",
