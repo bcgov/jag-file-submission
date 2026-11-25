@@ -4,20 +4,26 @@ import axios from "axios";
 import { render, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import MockAdapter from "axios-mock-adapter";
+import queryString from "query-string";
 import SubmissionHistory from "../SubmissionHistory";
 import { submissions } from "../../../../modules/test-data/submissionHistoryTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
-const routerDom = require("react-router-dom");
+const nextRouter = require("next/router");
 
-jest.mock("react-router-dom");
+jest.mock("next/router", () => ({ useRouter: jest.fn() }));
+
+// next/router replaces react-router: the query string lives in router.query
+const mockRouterQuery = (search = "") => {
+  nextRouter.useRouter = jest
+    .fn()
+    .mockReturnValue({ query: queryString.parse(search) });
+};
 
 describe("Submission History Component", () => {
   let mock;
   beforeEach(() => {
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: "?applicationCode=FLA" });
+    mockRouterQuery("?applicationCode=FLA");
 
     const token = generateJWTToken({
       preferred_username: "username@bceid",

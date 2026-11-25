@@ -7,15 +7,23 @@ import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
 import { act } from "react-dom/test-utils";
 import api from "../../../../AxiosConfig";
+import queryString from "query-string";
 import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import * as packageReviewTestData from "../../../../modules/test-data/packageReviewTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
-const routerDom = require("react-router-dom");
+const nextRouter = require("next/router");
 const mockHelper = require("../../../../modules/helpers/mockHelper");
 
-jest.mock("react-router-dom");
+jest.mock("next/router", () => ({ useRouter: jest.fn() }));
+
+// next/router replaces react-router: route param + query string live in router.query
+const mockRouterQuery = (search = "") => {
+  nextRouter.useRouter = jest.fn().mockReturnValue({
+    query: { packageId: 1, ...queryString.parse(search) },
+  });
+};
 
 // hack fix to force GitHub to run tests in BC timezone
 moment.tz.setDefault("America/Vancouver");
@@ -97,10 +105,7 @@ describe("PackageReview Component", () => {
   let mock;
   beforeEach(() => {
     process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "true";
-    routerDom.useParams = jest.fn().mockReturnValue({ packageId: 1 });
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: "?returnUrl=http://www.google.ca" });
+    mockRouterQuery("?returnUrl=http://www.google.ca");
 
     // IDP is set in the session
     const token = generateJWTToken({
@@ -149,9 +154,7 @@ describe("PackageReview Component", () => {
   test("Clicking cancel takes user back to parent app", async () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponse);
     const url = "http://www.google.ca";
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: `?returnUrl=${url}` });
+    mockRouterQuery(`?returnUrl=${url}`);
 
     const { getByText } = render(<PackageReview />);
     await flushPromises();
@@ -169,9 +172,7 @@ describe("PackageReview Component", () => {
     expect(encodedUrlWithParams).toEqual(
       "https%3A%2F%2Fwww.google.ca%2Fsearch%3Fq%3Dbob%2Bross%26tbm%3Disch"
     );
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: `?returnUrl=${encodedUrlWithParams}` });
+    mockRouterQuery(`?returnUrl=${encodedUrlWithParams}`);
 
     const { getByText } = render(<PackageReview />);
     await flushPromises();
@@ -186,9 +187,7 @@ describe("PackageReview Component", () => {
 
   test("Clicking cancel takes user back to parent app, invalid URL", async () => {
     const invalidUrl = encodeURIComponent("abcdefg");
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: `?returnUrl=${invalidUrl}` });
+    mockRouterQuery(`?returnUrl=${invalidUrl}`);
 
     const { queryByText } = render(<PackageReview />);
     await flushPromises();
@@ -645,9 +644,7 @@ describe("PackageReview Component", () => {
     mock.onGet(apiRequest).reply(200, csoRedirectResponseWithRush);
 
     const { getByText } = render(<PackageReview />);
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: "?defaultTab=rush" });
+    mockRouterQuery("?defaultTab=rush");
 
     await act(() => promise);
 
@@ -690,9 +687,7 @@ describe("PackageReview Component", () => {
 
     const { getByText } = render(<PackageReview />);
 
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: "?defaultTab=rush" });
+    mockRouterQuery("?defaultTab=rush");
 
     await act(() => promise);
 

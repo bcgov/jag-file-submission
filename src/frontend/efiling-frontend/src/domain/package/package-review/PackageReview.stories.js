@@ -4,12 +4,10 @@
 import React from "react";
 import PackageReview from "./PackageReview";
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useParams: jest.fn().mockReturnValue({ packageId: 1 }),
-  useLocation: jest
-    .fn()
-    .mockReturnValue({ search: "?returnUrl=http://www.google.com" }),
+jest.mock("next/router", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    query: { packageId: 1, returnUrl: "http://www.google.com" },
+  }),
 }));
 
 export default {

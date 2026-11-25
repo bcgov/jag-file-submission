@@ -8,11 +8,6 @@ import PaymentList from "../PaymentList";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 import { payments } from "../../../../modules/test-data/paymentListData";
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useParams: jest.fn().mockReturnValue({ packageId: 1 }),
-}));
-
 describe("PaymentList Component", () => {
   const packageId = 1;
 
