@@ -7,8 +7,7 @@ import Tab from "react-bootstrap/Tab"; /* TODO: replace with shared-components *
 import { Alert, Button, Sidecard, Table, Loader } from "shared-components";
 import { BsEyeFill } from "react-icons/bs";
 import { MdCancel, MdError } from "react-icons/md";
-import { useLocation, useParams } from "react-router-dom";
-import queryString from "query-string";
+import { useRouter } from "next/router";
 import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SafefyCheck from "../../../components/safety-check/SafetyCheck";
@@ -67,11 +66,9 @@ export default function PackageReview() {
     ? window.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG
     : process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG;
 
-  const params = useParams();
-  const packageId = Number(params.packageId);
-
-  const location = useLocation();
-  const queryParams = queryString.parse(location.search);
+  // router.query holds both the [packageId] route param and the ?query string
+  const { query: queryParams } = useRouter();
+  const packageId = Number(queryParams.packageId);
   const { returnUrl, returnAppName, defaultTab } = queryParams;
   const returnButtonName = `Return to ${returnAppName || "Parent App"}`;
   const defaultTabKey = defaultTab || "documents"; // TODO: Remove when removing rushTabFeatureFlag
