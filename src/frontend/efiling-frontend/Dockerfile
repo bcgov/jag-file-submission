@@ -7,7 +7,8 @@ COPY ./package.json ./package-lock.json ./.npmrc ./
 
 ENV NODE_ENV=production
 
-RUN npm ci
+# --include=dev: NODE_ENV=production above would skip devDependencies (sass, @types/*) that next build needs
+RUN npm ci --include=dev
 COPY . .
 
 RUN npm run build
@@ -21,7 +22,7 @@ RUN apk -U upgrade
 RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt curl
 
 RUN rm -rf /usr/share/nginx/html/
-COPY --from=build /app/build /etc/nginx/html/efilinghub
+COPY --from=build /app/out /etc/nginx/html/efilinghub
 
 WORKDIR /etc/nginx/html/efilinghub
 

@@ -31,6 +31,10 @@ jobs:
       - name: Run npm Coverage - eFiling Frontend
         run: npm run coverage --prefix src/frontend/efiling-frontend
 
+      # Next.js static export build - eFiling Frontend
+      - name: Run npm build - eFiling Frontend
+        run: npm run build --prefix src/frontend/efiling-frontend
+
       # Run Yarn Install - eFiling Demo
       - name: Run Yarn Install - eFiling Demo
         run: yarn --cwd src/frontend/efiling-demo install

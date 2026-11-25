@@ -51,27 +51,30 @@ Installs all the required dependencies to get the application up and running.
 npm start
 ```
 
-Runs the app in the development mode.
+Runs the Next.js dev server (`npm run dev` is an alias).
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000/efilinghub](http://localhost:3000/efilinghub) to view it in the browser
+(the app is served under the `/efilinghub` base path).
 
 The page will reload if you make edits.
-
-You will also see any lint errors in the console.
 
 ```bash
 npm run build
 ```
 
-Builds the app for production to the `build` folder.
-
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production as a static export (`output: "export"`) to the `out` folder,
+which the Dockerfile serves with nginx under `/efilinghub`.
 
 The build is minified and the filenames include the hashes.
 
 Your app is ready to be deployed!
 
-This app has been ejected from Create React App. The webpack and Jest configuration lives in `config/` and `scripts/` and can be edited directly.
+This app is a Next.js (pages router) app. Pages live in `pages/`; the shared layout and Keycloak
+guard are in `src/AppShell.js`. Environment variables use the `NEXT_PUBLIC_` prefix, and
+`env.sh` injects them at container start through `env-config.js` (`window.env`).
+
+`/efilinghub/packagereview/<id>` is a single exported page (`packagereview/[packageId].html`);
+`nginx.conf` rewrites any id to it and the id is read in the browser.
 
 ## ESLint and Prettier
 

@@ -22,7 +22,7 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "prettier"],
-  ignorePatterns: ["node_modules/", "build/"],
+  ignorePatterns: ["node_modules/", "build/", ".next/", "out/"],
   rules: {
     "import/no-unresolved": "off",
     "react/jsx-filename-extension": "off",
