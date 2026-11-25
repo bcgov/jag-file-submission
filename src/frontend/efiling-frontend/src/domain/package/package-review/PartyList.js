@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { MdPermIdentity } from "react-icons/md";
 import { FcOrganization } from "react-icons/fc";
 import { formatFullName } from "../../../modules/helpers/StringUtil";
-import "./PartyList.scss";
 
 const hash = require("object-hash");
 

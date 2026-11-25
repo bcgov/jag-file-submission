@@ -3,7 +3,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 
-import "./RushConfirmation.scss";
 
 export default function RushConfirmation({ show, setShow, setShowRush }) {
   const handleOnHide = () => {

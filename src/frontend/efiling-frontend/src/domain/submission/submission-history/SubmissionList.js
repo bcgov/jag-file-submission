@@ -2,7 +2,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
-import "./SubmissionList.scss";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
 export default function SubmissionList({ submissions }) {

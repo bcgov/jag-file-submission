@@ -15,7 +15,6 @@ import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { errorRedirect } from "../../../modules/helpers/errorRedirect";
 import { propTypes } from "../../../types/propTypes";
 
-import "./Upload.scss";
 import { getDocumentTypes } from "../../../domain/documents/DocumentService";
 
 let filesToUpload = {

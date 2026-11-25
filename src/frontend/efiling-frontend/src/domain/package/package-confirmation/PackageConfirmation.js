@@ -17,7 +17,6 @@ import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
-import "./PackageConfirmation.scss";
 import Payment from "../../payment/Payment";
 import Upload from "../../../components/page/upload/Upload";
 import FileList from "./FileList";

@@ -20,7 +20,6 @@ import {
 } from "./PackageReviewService";
 import { noop } from "../../../modules/helpers/mockHelper";
 
-import "./PackageReview.scss";
 import DocumentList from "./DocumentList";
 import PartyList from "./PartyList";
 import PaymentList from "./PaymentList";

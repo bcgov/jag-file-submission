@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import "./RegisterPaymentCard.scss";
 import Modal from "react-bootstrap/Modal";
 import { BsExclamationTriangle } from "react-icons/bs";
 

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Dinero from "dinero.js";
 import { MdPrint } from "react-icons/md";
-import "./PaymentList.scss";
 import { downloadPaymentReceipt } from "./PaymentListService";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 import { formatCurrency } from "../../../modules/helpers/CurrencyUtil";

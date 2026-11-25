@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "shared-components";
 
-import "./SafetyCheckHelp.scss";
 
 /** Opens up a modal popup with help content */
 export default function SafetyCheckHelp({ showModal, onHide }) {

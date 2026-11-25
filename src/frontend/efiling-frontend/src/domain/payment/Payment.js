@@ -20,7 +20,6 @@ import RushConfirmation from "../package/package-confirmation/RushConfirmation";
 import { generateFileSummaryData } from "../../modules/helpers/generateFileSummaryData";
 import { createPaymentProfile } from "./PaymentService";
 
-import "./Payment.scss";
 
 const baseCalloutText = `I have reviewed the information and the documents in this filing
 package and am prepared to submit them for filing.`;

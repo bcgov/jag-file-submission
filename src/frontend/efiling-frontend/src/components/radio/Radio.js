@@ -4,7 +4,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./Radio.scss";
 
 export var Radio = function ({ id, name, label, onSelect, defaultChecked }) {
   return (

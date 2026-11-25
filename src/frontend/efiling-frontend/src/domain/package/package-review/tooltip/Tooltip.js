@@ -2,7 +2,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { UncontrolledTooltip } from "reactstrap";
-import "./Tooltip.scss";
 
 export default function BcGovTooltip({ content, styling, target }) {
   return (
