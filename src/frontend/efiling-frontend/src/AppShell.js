@@ -2,7 +2,6 @@
 import "./clientInit";
 import React from "react";
 import PropTypes from "prop-types";
-import queryString from "query-string";
 import { useRouter } from "next/router";
 import { Header, Footer } from "shared-components";
 import AuthenticationGuard from "./domain/authentication/AuthenticationGuard";
@@ -17,7 +16,9 @@ export default function AppShell({ children }) {
 
   // window.location (not router.query) on purpose: router.query is empty until
   // the router is ready, which would wrongly clear isBamboraRedirect below.
-  const queryParams = queryString.parse(window.location.search);
+  const queryParams = Object.fromEntries(
+    new URLSearchParams(window.location.search)
+  );
   const { submissionId, transactionId, responseCode, customerCode } =
     queryParams;
 

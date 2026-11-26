@@ -7,7 +7,6 @@ import MockAdapter from "axios-mock-adapter";
 import moment from "moment-timezone";
 import { act } from "react-dom/test-utils";
 import api from "../../../../AxiosConfig";
-import queryString from "query-string";
 import PackageReview from "../PackageReview";
 import { getCourtData } from "../../../../modules/test-data/courtTestData";
 import * as packageReviewTestData from "../../../../modules/test-data/packageReviewTestData";
@@ -21,7 +20,10 @@ jest.mock("next/router", () => ({ useRouter: jest.fn() }));
 // next/router replaces react-router: route param + query string live in router.query
 const mockRouterQuery = (search = "") => {
   nextRouter.useRouter = jest.fn().mockReturnValue({
-    query: { packageId: 1, ...queryString.parse(search) },
+    query: {
+      packageId: 1,
+      ...Object.fromEntries(new URLSearchParams(search)),
+    },
   });
 };
 
