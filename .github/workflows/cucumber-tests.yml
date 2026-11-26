@@ -11,9 +11,8 @@ permissions:
     packages: write
 
 jobs:
-
-  efiling-api-gcr:
-    name: Efiling Api GCR
+  cucumber-tests:
+    name: Runs cucumber-tests
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,13 +20,6 @@ jobs:
     steps:
       - name: Pull Git repo.
         uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v4
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull efiling-api-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder || true
@@ -43,9 +35,9 @@ jobs:
           --build-arg STARTERS_V=v1.0.5
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
-      - name: tag & push efiling-api to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
+      #- name: tag & push efiling-api to git container registry
+      #  if: github.event.pull_request.head.repo.full_name == github.repository
+      #  run: docker tag efiling-api:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:builder
 
       - name: Pull efiling-api-demo
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo || true
@@ -62,26 +54,9 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
       # Optional only for branch on repo
-      - name: tag & push efiling-api to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
-
-  efiling-frontend-gcr:
-    name: Efiling Frontend GCR
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    steps:
-      - name: Pull Git repo.
-        uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v4
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      #- name: tag & push efiling-api to git container registry
+      #  if: github.event.pull_request.head.repo.full_name == github.repository
+      #  run: docker tag efiling-api:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-api:demo
 
       - name: Pull efiling-frontend-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder || true
@@ -92,9 +67,9 @@ jobs:
           -t efiling-frontend:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
 
-      - name: tag & push efiling-frontend to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-frontend:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
+      #- name: tag & push efiling-frontend to git container registry
+      #  if: github.event.pull_request.head.repo.full_name == github.repository
+      #  run: docker tag efiling-frontend:builder docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
 
       - name: Pull efiling-frontend-demo
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo || true
@@ -105,26 +80,10 @@ jobs:
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:builder
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
 
-      - name: tag & push efiling-frontend to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag efiling-frontend:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
+      #- name: tag & push efiling-frontend to git container registry
+      #  if: github.event.pull_request.head.repo.full_name == github.repository
+      #  run: docker tag efiling-frontend:demo docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/efiling-frontend:demo
 
-  keycloak-config-gcr:
-    name: Keycloack Config GCR
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    steps:
-      - name: Pull Git repo.
-        uses: actions/checkout@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v4
-        with:
-          registry: docker.pkg.github.com
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull efiling-frontend-builder
         run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo || true
@@ -135,24 +94,9 @@ jobs:
           --build-arg KEYCLOAK_URL=http://keycloak:8080
           --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
 
-      - name: tag & push keycloak-config to git container registry
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker tag keycloak-config:demo docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/keycloak-config:demo
-
-  cucumber-tests:
-    name: Runs cucumber-tests
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    needs: [ efiling-api-gcr, efiling-frontend-gcr, keycloak-config-gcr ]
-    steps:
-      - name: Pull Git repo.
-        uses: actions/checkout@v2
-
       # pulling images is faster than caching in most of the case
       - name: pull available docker images first
-        run: docker compose pull -q --parallel redis clamav keycloak 
+        run: docker compose pull -q redis clamav keycloak 
 
       - name: Standup Infra
         run: docker compose up -d redis clamav keycloak 
@@ -174,11 +118,11 @@ jobs:
 
       - name: Pull images (Local REPO only)
         if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml pull --parallel -q efiling-api efiling-frontend keycloak-config
+        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend keycloak-config
 
-      - name: Standup Docker Pods (Local REPO only)
-        if: github.event.pull_request.head.repo.full_name == github.repository
-        run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
+      #- name: Standup Docker Pods (Local REPO only)
+      #  if: github.event.pull_request.head.repo.full_name == github.repository
+      #  run: docker compose -f docker-compose.yml  -f tests/docker-compose-integration.yml up -d efiling-api efiling-frontend
 
 
       - name: Standup Docker Pods (FORK only)
