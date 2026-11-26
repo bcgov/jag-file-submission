@@ -1,7 +1,7 @@
+import { flushPromises } from "../../../../TestHelper";
 import React from "react";
 import {
   render,
-  waitFor,
   getByText,
   getByRole,
   fireEvent,
@@ -109,13 +109,13 @@ describe("CSOAccount Component", () => {
     // click on the acceptTerms checkbox
     fireEvent.click(getByRole(container, "checkbox"));
 
-    await waitFor(() => {});
+    await flushPromises();
 
     const emailInput = getByTestId(container, "email");
 
     fireEvent.change(emailInput, { target: { value: "not-an-email" } });
 
-    await waitFor(() => {});
+    await flushPromises();
 
     const emailError = getByTestId(container, "email-error");
     expect(emailError.innerHTML).toEqual("Must be a valid email.");
@@ -141,9 +141,9 @@ describe("CSOAccount Component", () => {
 
     // Assert confirmation email must match
     fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
+    await flushPromises();
     fireEvent.change(confEmailInput, { target: { value: "other@cso.com" } });
-    await waitFor(() => {});
+    await flushPromises();
     const confEmailError = getByTestId(container, "conf-email-error");
     expect(confEmailError.innerHTML).toEqual(
       "Email and confirmation email must match."
@@ -171,9 +171,9 @@ describe("CSOAccount Component", () => {
 
     // happy path, both valid emails, both match
     fireEvent.change(emailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
+    await flushPromises();
     fireEvent.change(confEmailInput, { target: { value: "cso@cso.com" } });
-    await waitFor(() => {});
+    await flushPromises();
 
     const emailError = getByTestId(container, "email-error");
     expect(emailError.innerHTML).toEqual("");
@@ -206,12 +206,12 @@ describe("CSOAccount Component", () => {
     );
 
     fireEvent.click(getByRole(container, "checkbox"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(setCsoAccountStatus).toHaveBeenCalled();
     expect(sessionStorage.getItem("csoAccountId")).toEqual("123");
@@ -242,7 +242,7 @@ describe("CSOAccount Component", () => {
     expect(getByText(container, "Create CSO Account").disabled).toBeFalsy();
 
     fireEvent.click(getByText(container, "Create CSO Account"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(
       queryByText(

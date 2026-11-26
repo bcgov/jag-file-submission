@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { MdHelp } from "react-icons/md";
 import SafetyCheckHelp from "./SafetyCheckHelp";
 
-import "./SafetyCheck.scss";
 
 export default function SafetyCheck() {
   const [showModal, setShowModal] = useState(false);

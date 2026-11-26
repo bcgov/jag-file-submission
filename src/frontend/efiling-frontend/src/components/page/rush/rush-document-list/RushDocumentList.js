@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import RushDocumentListItem from "./RushDocumentListItem";
 import { propTypes } from "../../../../types/propTypes";
 
-import "./RushDocumentList.scss";
 
 const hash = require("object-hash");
 

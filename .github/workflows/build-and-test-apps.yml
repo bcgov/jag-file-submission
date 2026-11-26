@@ -18,18 +18,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Printing node and yarn versions
-        run: node --version && yarn --version
+        run: node --version && npm --version && yarn --version
       # Figure out where yarn is caching things
       - name: Yarn Cache
         run: yarn cache dir
 
-      # Run Yarn Install - eFiling Frontend
-      - name: Run Yarn Install - eFiling Frontend
-        run: yarn --cwd src/frontend/efiling-frontend install
+      # Run npm ci - eFiling Frontend
+      - name: Run npm ci - eFiling Frontend
+        run: npm ci --prefix src/frontend/efiling-frontend
 
-      # Yarn Coverage - eFiling Frontend
-      - name: Run Yarn Coverage - eFiling Frontend
-        run: yarn --cwd /home/runner/work/jag-file-submission/jag-file-submission/src/frontend/efiling-frontend coverage
+      # npm Coverage - eFiling Frontend
+      - name: Run npm Coverage - eFiling Frontend
+        run: npm run coverage --prefix src/frontend/efiling-frontend
+
+      # Next.js static export build - eFiling Frontend
+      - name: Run npm build - eFiling Frontend
+        run: npm run build --prefix src/frontend/efiling-frontend
 
       # Run Yarn Install - eFiling Demo
       - name: Run Yarn Install - eFiling Demo

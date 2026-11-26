@@ -1,0 +1,7 @@
+# Trivy config (auto-loaded when running `trivy fs .` from this directory).
+scan:
+  skip-files:
+    # Ruby lockfile of the Jekyll docs site inside the @bcgov/bootstrap-theme tarball.
+    # It is never installed or shipped (the image only contains the static `out/` export),
+    # and it can't be fixed from this repo.
+    - "**/node_modules/@bcgov/bootstrap-theme/Gemfile.lock"

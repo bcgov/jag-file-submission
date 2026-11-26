@@ -3,16 +3,15 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 
-COPY ./package.json ./yarn.lock ./
+COPY ./package.json ./package-lock.json ./.npmrc ./
 
 ENV NODE_ENV=production
 
-RUN yarn install \
-    && yarn add --dev react-app-rewired # this line makes sure that react-app-rewired scripts will be in the PATH. It can  
-                                              # be removed when the react-app-rewired module is no longer required to the project.
+# --include=dev: NODE_ENV=production above would skip devDependencies (sass, @types/*) that next build needs
+RUN npm ci --include=dev
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 #############################################################################################
 ###                                 PRODUCTION IMAGE                                      ###
@@ -23,7 +22,7 @@ RUN apk -U upgrade
 RUN apk update && apk add --upgrade --no-cache libexpat libxml2 libxslt curl
 
 RUN rm -rf /usr/share/nginx/html/
-COPY --from=build /app/build /etc/nginx/html/efilinghub
+COPY --from=build /app/out /etc/nginx/html/efilinghub
 
 WORKDIR /etc/nginx/html/efilinghub
 

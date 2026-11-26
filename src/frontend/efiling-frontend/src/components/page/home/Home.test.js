@@ -1,6 +1,7 @@
+import { flushPromises } from "../../../TestHelper";
 import React from "react";
 import axios from "axios";
-import { render, waitFor, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
 
 import Home, { saveUrlsToSessionStorage } from "./Home";
@@ -35,7 +36,7 @@ describe("Home", () => {
   });
   localStorage.setItem("jwt", token);
 
-  process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG = "true";
+  process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG = "true";
 
   let mock;
   beforeEach(() => {
@@ -63,7 +64,7 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
@@ -79,7 +80,7 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
     expect(sessionStorage.getItem("cancelUrl")).toEqual("cancelurl.com");
@@ -90,7 +91,7 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
     expect(sessionStorage.getItem("cancelUrl")).toBeFalsy();
@@ -103,7 +104,7 @@ describe("Home", () => {
 
     const { asFragment } = render(component);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
     expect(window.open).toHaveBeenCalledWith(
@@ -149,7 +150,7 @@ describe("Home", () => {
 
     render(component);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalledWith(
       "error.com?status=400&message=There was an error.",
@@ -166,7 +167,7 @@ describe("Home", () => {
 
     render(component);
 
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalledWith(
       "error.com?status=400&message=There was an error.",
@@ -187,19 +188,19 @@ describe("Home", () => {
     mock.onDelete(`/submission/${submissionId}`).reply(200);
 
     const { getByText } = render(<Home />);
-    await waitFor(() => {});
+    await flushPromises();
     const cancelBtn = getByText("Cancel");
     expect(cancelBtn).toBeInTheDocument();
     fireEvent.click(cancelBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     // there should now be a modal popup
     render(<Home />);
-    await waitFor(() => {});
+    await flushPromises();
     const confirmBtn = getByText("Yes, cancel E-File Submission");
     expect(confirmBtn).toBeInTheDocument();
     fireEvent.click(confirmBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(sessionStorage.getItem("validExit")).toEqual("true");
   });
@@ -225,19 +226,19 @@ describe("Home", () => {
     mock.onDelete(`/submission/${submissionId}`).reply(200);
 
     const { getByText } = render(<Home />);
-    await waitFor(() => {});
+    await flushPromises();
     const cancelBtn = getByText("Cancel");
     expect(cancelBtn).toBeInTheDocument();
     fireEvent.click(cancelBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     // there should now be a modal popup
     render(<Home />);
-    await waitFor(() => {});
+    await flushPromises();
     const confirmBtn = getByText("Yes, cancel E-File Submission");
     expect(confirmBtn).toBeInTheDocument();
     fireEvent.click(confirmBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(sessionStorage.getItem("validExit")).toEqual("true");
   });
@@ -255,19 +256,19 @@ describe("Home", () => {
     mock.onDelete(`/submission/${submissionId}`).reply(404);
 
     const { getByText } = render(<Home />);
-    await waitFor(() => {});
+    await flushPromises();
     const cancelBtn = getByText("Cancel");
     expect(cancelBtn).toBeInTheDocument();
     fireEvent.click(cancelBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     // there should now be a modal popup
     render(<Home />);
-    await waitFor(() => {});
+    await flushPromises();
     const confirmBtn = getByText("Yes, cancel E-File Submission");
     expect(confirmBtn).toBeInTheDocument();
     fireEvent.click(confirmBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(sessionStorage.getItem("validExit")).toEqual("true");
   });
@@ -293,7 +294,7 @@ describe("Home", () => {
     );
 
     const { asFragment } = render(component);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -316,7 +317,7 @@ describe("Home", () => {
       .mockImplementation(() => Promise.reject(new Error("API is down")));
 
     const { asFragment } = render(component);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -336,7 +337,7 @@ describe("Home", () => {
     mock.onGet("csoAccount").reply(404);
 
     render(component);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalledWith(
       "error.com?status=400&message=There was an error.",

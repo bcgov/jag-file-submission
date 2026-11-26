@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Input.scss";
 
 export const Input = function ({
   input: {

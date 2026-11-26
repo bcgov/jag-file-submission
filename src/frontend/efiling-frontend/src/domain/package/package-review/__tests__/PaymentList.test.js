@@ -1,3 +1,4 @@
+import { flushPromises } from "../../../../TestHelper";
 import React from "react";
 import { render, waitFor, fireEvent } from "@testing-library/react";
 import MockAdapter from "axios-mock-adapter";
@@ -6,11 +7,6 @@ import FileSaver from "file-saver";
 import PaymentList from "../PaymentList";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 import { payments } from "../../../../modules/test-data/paymentListData";
-
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useParams: jest.fn().mockReturnValue({ packageId: 1 }),
-}));
 
 describe("PaymentList Component", () => {
   const packageId = 1;
@@ -54,10 +50,10 @@ describe("PaymentList Component", () => {
     const { getByText } = render(
       <PaymentList payments={payments} packageId={packageId} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText("View Receipt"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
@@ -75,13 +71,13 @@ describe("PaymentList Component", () => {
     const { getByText } = render(
       <PaymentList payments={payments} packageId={packageId} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(getByText("View Receipt"), {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).toHaveBeenCalled();
   });
@@ -99,13 +95,13 @@ describe("PaymentList Component", () => {
     const { getByText } = render(
       <PaymentList payments={payments} packageId={packageId} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(getByText("View Receipt"), {
       key: "Enter",
       keyCode: "9",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
@@ -120,13 +116,13 @@ describe("PaymentList Component", () => {
     const { getByText } = render(
       <PaymentList payments={payments} packageId={packageId} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.keyDown(getByText("View Receipt"), {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });
@@ -141,10 +137,10 @@ describe("PaymentList Component", () => {
     const { getByText } = render(
       <PaymentList payments={payments} packageId={packageId} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(getByText("View Receipt"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(FileSaver.saveAs).not.toHaveBeenCalled();
   });

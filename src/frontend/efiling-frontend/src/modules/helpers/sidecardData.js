@@ -13,8 +13,8 @@ const aboutCso = () => ({
       <a
         href={`${
           window.env
-            ? window.env.REACT_APP_CSO_BASE_URL
-            : process.env.REACT_APP_CSO_BASE_URL
+            ? window.env.NEXT_PUBLIC_CSO_BASE_URL
+            : process.env.NEXT_PUBLIC_CSO_BASE_URL
         }/about/index.do`}
         target="_blank"
         rel="noopener noreferrer"
@@ -56,8 +56,8 @@ const csoAccountDetails = () => {
         <a
           href={`${
             window.env
-              ? window.env.REACT_APP_CSO_BASE_URL
-              : process.env.REACT_APP_CSO_BASE_URL
+              ? window.env.NEXT_PUBLIC_CSO_BASE_URL
+              : process.env.NEXT_PUBLIC_CSO_BASE_URL
           }/accounts/editProfile.do`}
           target="_blank"
           rel="noopener noreferrer"

@@ -1,4 +1,5 @@
 /* eslint-disable no-promise-executor-return, import/no-named-as-default, import/no-named-as-default-member */
+import { flushPromises as flushAllPromises } from "../../../TestHelper";
 import React from "react";
 import axios from "axios";
 import { setImmediate } from "timers";
@@ -7,7 +8,6 @@ import {
   render,
   fireEvent,
   getByText,
-  waitFor,
   getByTestId,
   getAllByRole,
   queryByText,
@@ -86,7 +86,7 @@ describe("Upload Component", () => {
   test("Matches the snapshot", async () => {
     const { asFragment } = render(<Upload upload={upload} />);
 
-    await waitFor(() => {});
+    await flushAllPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -146,7 +146,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     // test opening file link in new tab on click
@@ -175,7 +175,7 @@ describe("Upload Component", () => {
 
     fireEvent.click(button);
 
-    await waitFor(() => {});
+    await flushAllPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -189,7 +189,7 @@ describe("Upload Component", () => {
 
     fireEvent.click(getByText(container, "Cancel Upload"));
 
-    await waitFor(() => {});
+    await flushAllPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -206,7 +206,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     // test opening file link in new tab on keydown
@@ -235,7 +235,7 @@ describe("Upload Component", () => {
 
     render(<Upload upload={upload2} />);
 
-    await waitFor(() => {});
+    await flushAllPromises();
 
     expect(window.open).toHaveBeenCalledWith(
       "errorexample.com?status=400&message=There was an error.",
@@ -250,7 +250,7 @@ describe("Upload Component", () => {
 
     uploadDocuments(submissionId, [], jest.fn(), setShowLoader, jest.fn());
 
-    await waitFor(() => {});
+    await flushAllPromises();
 
     expect(setShowLoader).toHaveBeenCalledWith(false);
     expect(window.open).toHaveBeenCalledWith(
@@ -268,7 +268,7 @@ describe("Upload Component", () => {
 
     uploadDocuments(submissionId, [], jest.fn(), setShowLoader, jest.fn());
 
-    await waitFor(() => {});
+    await flushAllPromises();
 
     expect(setShowLoader).toHaveBeenCalledWith(false);
     expect(window.open).toHaveBeenCalledWith(
@@ -332,7 +332,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     // test opening file link in new tab on click
@@ -357,7 +357,7 @@ describe("Upload Component", () => {
 
     fireEvent.click(button);
 
-    await waitFor(() => {});
+    await flushAllPromises();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -374,7 +374,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     expect(getByText(container, "ping.json")).toBeInTheDocument();
@@ -396,7 +396,7 @@ describe("Upload Component", () => {
     });
     const data = mockData([file]);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     const button = getByText(container, "Continue");
@@ -405,7 +405,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     expect(button).toBeEnabled();
@@ -429,7 +429,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     expect(
@@ -441,7 +441,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     expect(
@@ -458,7 +458,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", newData);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     expect(
@@ -481,7 +481,7 @@ describe("Upload Component", () => {
 
     dispatchEvt(dropzone, "drop", data);
 
-    await waitFor(() => {});
+    await flushAllPromises();
     await flushPromises(ui, container);
 
     expect(

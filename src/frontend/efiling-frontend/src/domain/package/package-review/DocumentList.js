@@ -14,7 +14,6 @@ import {
   downloadSubmittedDocument,
   withdrawSubmittedDocument,
 } from "./PackageReviewService";
-import "./DocumentList.scss";
 import BcGovTooltip from "./tooltip/Tooltip";
 
 export default function DocumentList({

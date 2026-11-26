@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import FileListItem from "./FileListItem";
 import { propTypes } from "../../../types/propTypes";
 
-import "./FileList.scss";
 
 const hash = require("object-hash");
 

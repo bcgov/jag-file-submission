@@ -107,7 +107,6 @@ exports[`Input Component when not mandatory and with label matches the snapshot 
     >
       Submission ID
     </div>
-    
      
     <span
       className="bcgov-note"

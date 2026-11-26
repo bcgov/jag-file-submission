@@ -17,7 +17,6 @@ import { onBackButtonEvent } from "../../../modules/helpers/handleBackEvent";
 import { generateFileSummaryData } from "../../../modules/helpers/generateFileSummaryData";
 import { isClick, isEnter } from "../../../modules/helpers/eventUtil";
 
-import "./PackageConfirmation.scss";
 import Payment from "../../payment/Payment";
 import Upload from "../../../components/page/upload/Upload";
 import FileList from "./FileList";
@@ -140,8 +139,8 @@ export default function PackageConfirmation({
   const [hasRejectedDocuments, setHasRejectedDocuments] = useState(false);
 
   const rushFeatureFlag = window.env
-    ? window.env.REACT_APP_RUSH_TAB_FEATURE_FLAG
-    : process.env.REACT_APP_RUSH_TAB_FEATURE_FLAG;
+    ? window.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG
+    : process.env.NEXT_PUBLIC_RUSH_TAB_FEATURE_FLAG;
 
   const resetState = () => {
     setShowUpload(false);

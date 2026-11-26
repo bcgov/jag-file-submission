@@ -1,5 +1,6 @@
+import { flushPromises } from "../../../../TestHelper";
 import React from "react";
-import { render, waitFor, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import FileListItem from "../FileListItem";
 import { getDocumentsData } from "../../../../modules/test-data/documentTestData";
 
@@ -23,11 +24,11 @@ describe("FileListItem Testsuite", () => {
     const { getByText, queryByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.click(fileLink);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(service.downloadFileByName).toHaveBeenCalled();
     expect(queryByText(toastMessage)).not.toBeInTheDocument();
@@ -40,11 +41,11 @@ describe("FileListItem Testsuite", () => {
     const { getByText, queryByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.click(fileLink);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(service.downloadFileByName).toHaveBeenCalled();
     expect(queryByText(toastMessage)).toBeInTheDocument();
@@ -57,14 +58,14 @@ describe("FileListItem Testsuite", () => {
     const { getByText, queryByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.keyDown(fileLink, {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(service.downloadFileByName).toHaveBeenCalled();
     expect(queryByText(toastMessage)).not.toBeInTheDocument();
@@ -77,14 +78,14 @@ describe("FileListItem Testsuite", () => {
     const { getByText, queryByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.keyDown(fileLink, {
       key: "Enter",
       keyCode: "9",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(service.downloadFileByName).not.toHaveBeenCalled();
     expect(queryByText(toastMessage)).not.toBeInTheDocument();
@@ -97,14 +98,14 @@ describe("FileListItem Testsuite", () => {
     const { getByText, queryByText } = render(
       <FileListItem submissionId={submissionId} file={files[0]} />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     const fileLink = getByText(files[0].documentProperties.name);
     fireEvent.keyDown(fileLink, {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(service.downloadFileByName).toHaveBeenCalled();
     expect(queryByText(toastMessage)).toBeInTheDocument();

@@ -15,7 +15,6 @@ import validator from "validator";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import RushConfirmation from "../../../domain/package/package-confirmation/RushConfirmation";
 
-import "./Rush.scss";
 import { getCountries, submitRush, submitRushDocuments } from "./RushService";
 import RushDocumentList from "./rush-document-list/RushDocumentList";
 import { Toast } from "../../toast/Toast";

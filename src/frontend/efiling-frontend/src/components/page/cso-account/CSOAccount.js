@@ -17,7 +17,6 @@ import { getContent } from "../../../modules/helpers/csoAccountAgreementContent"
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import { translateApplicantInfo } from "../../../modules/helpers/translateApplicantInfo";
 import { propTypes } from "../../../types/propTypes";
-import "./CSOAccount.scss";
 
 const content = getContent();
 

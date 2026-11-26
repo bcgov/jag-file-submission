@@ -1,5 +1,6 @@
+import { flushPromises } from "../../../../TestHelper";
 import React from "react";
-import { render, waitFor, fireEvent, getByText } from "@testing-library/react";
+import { render, fireEvent, getByText } from "@testing-library/react";
 import DocumentList from "../DocumentList";
 
 const pkgRvwService = require("../PackageReviewService");
@@ -34,7 +35,7 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -49,13 +50,13 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.click(
       getByText(container, `${documents[0].documentProperties.name}`)
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.downloadSubmittedDocument()).resolves.not.toThrow();
@@ -75,13 +76,13 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.click(
       getByText(container, `${documents[0].documentProperties.name}`)
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.downloadSubmittedDocument()).rejects.toThrow(
@@ -100,7 +101,7 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.keyDown(
@@ -110,7 +111,7 @@ describe("DocumentList Component Testsuite", () => {
         keyCode: "13",
       }
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.downloadSubmittedDocument()).resolves.not.toThrow();
@@ -127,7 +128,7 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.keyDown(
@@ -137,7 +138,7 @@ describe("DocumentList Component Testsuite", () => {
         keyCode: "32",
       }
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.downloadSubmittedDocument).not.toHaveBeenCalled();
@@ -157,7 +158,7 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.keyDown(
@@ -167,7 +168,7 @@ describe("DocumentList Component Testsuite", () => {
         keyCode: "13",
       }
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.downloadSubmittedDocument()).rejects.toThrow(
@@ -186,11 +187,11 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.click(getByText(container, "withdraw"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.withdrawSubmittedDocument()).resolves.not.toThrow();
@@ -210,11 +211,11 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.click(getByText(container, "withdraw"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.withdrawSubmittedDocument()).rejects.toThrow(
@@ -233,21 +234,21 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.keyDown(getByText(container, "withdraw"), {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.withdrawSubmittedDocument()).resolves.not.toThrow();
 
     // get the span wrapping the file link, click it.
     fireEvent.keyDown(getByText(container, "withdraw"));
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(2);
     expect(pkgRvwService.withdrawSubmittedDocument()).resolves.not.toThrow();
@@ -267,14 +268,14 @@ describe("DocumentList Component Testsuite", () => {
         reloadDocumentList={reloadDocumentList}
       />
     );
-    await waitFor(() => {});
+    await flushPromises();
 
     // get the span wrapping the file link, click it.
     fireEvent.keyDown(getByText(container, "withdraw"), {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect.assertions(1);
     expect(pkgRvwService.withdrawSubmittedDocument()).rejects.toThrow(

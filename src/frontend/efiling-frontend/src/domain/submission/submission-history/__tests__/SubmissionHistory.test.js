@@ -1,3 +1,4 @@
+import { flushPromises } from "../../../../TestHelper";
 import React from "react";
 import axios from "axios";
 import { render, waitFor, fireEvent } from "@testing-library/react";
@@ -7,16 +8,21 @@ import SubmissionHistory from "../SubmissionHistory";
 import { submissions } from "../../../../modules/test-data/submissionHistoryTestData";
 import { generateJWTToken } from "../../../../modules/helpers/authentication-helper/authenticationHelper";
 
-const routerDom = require("react-router-dom");
+const nextRouter = require("next/router");
 
-jest.mock("react-router-dom");
+jest.mock("next/router", () => ({ useRouter: jest.fn() }));
+
+// next/router replaces react-router: the query string lives in router.query
+const mockRouterQuery = (search = "") => {
+  nextRouter.useRouter = jest.fn().mockReturnValue({
+    query: Object.fromEntries(new URLSearchParams(search)),
+  });
+};
 
 describe("Submission History Component", () => {
   let mock;
   beforeEach(() => {
-    routerDom.useLocation = jest
-      .fn()
-      .mockReturnValue({ search: "?applicationCode=FLA" });
+    mockRouterQuery("?applicationCode=FLA");
 
     const token = generateJWTToken({
       preferred_username: "username@bceid",
@@ -54,10 +60,10 @@ describe("Submission History Component", () => {
     const searchBar = getByTestId("package-search");
 
     userEvent.type(searchBar, "123");
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(searchBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(queryByText("7654321")).not.toBeInTheDocument();
   });
@@ -74,10 +80,10 @@ describe("Submission History Component", () => {
     const searchBar = getByTestId("package-search");
 
     userEvent.type(searchBar, "");
-    await waitFor(() => {});
+    await flushPromises();
 
     fireEvent.click(searchBtn);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(queryByText("1234567")).toBeInTheDocument();
     expect(queryByText("7654321")).toBeInTheDocument();
@@ -91,7 +97,7 @@ describe("Submission History Component", () => {
 
     const packageNumber = getByText("1234567");
     fireEvent.click(packageNumber);
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalled();
   });
@@ -108,7 +114,7 @@ describe("Submission History Component", () => {
       key: "Enter",
       keyCode: "13",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).toHaveBeenCalled();
   });
@@ -125,7 +131,7 @@ describe("Submission History Component", () => {
       key: "Enter",
       keyCode: "9",
     });
-    await waitFor(() => {});
+    await flushPromises();
 
     expect(window.open).not.toHaveBeenCalled();
   });
@@ -140,7 +146,7 @@ describe("Submission History Component", () => {
     localStorage.setItem("jwt", token);
 
     const { queryByText } = render(<SubmissionHistory />);
-    await waitFor(() => {});
+    await flushPromises();
     expect(queryByText(/SAFETY CHECK/i)).toBeInTheDocument();
   });
 
@@ -154,7 +160,7 @@ describe("Submission History Component", () => {
     localStorage.setItem("jwt", token);
 
     const { queryByText } = render(<SubmissionHistory />);
-    await waitFor(() => {});
+    await flushPromises();
     expect(queryByText(/SAFETY CHECK/i)).not.toBeInTheDocument();
   });
 });

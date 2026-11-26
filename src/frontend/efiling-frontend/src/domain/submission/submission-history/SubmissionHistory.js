@@ -1,14 +1,12 @@
 /* eslint-disable react/function-component-definition, import/no-named-as-default, import/no-named-as-default-member, react/jsx-no-bind */
 import React, { useState, useEffect } from "react";
 import { Sidecard, Button } from "shared-components";
-import { useLocation } from "react-router-dom";
-import queryString from "query-string";
+import { useRouter } from "next/router";
 import { getSidecardData } from "../../../modules/helpers/sidecardData";
 import SubmissionList from "./SubmissionList";
 import SafefyCheck from "../../../components/safety-check/SafetyCheck";
 import { getSubmissionHistory } from "./SubmissionHistoryService";
 import { isParentAppFLA } from "../../../modules/helpers/authentication-helper/authenticationHelper";
-import "./SubmissionHistory.scss";
 import { Toast } from "../../../components/toast/Toast";
 
 export default function SubmissionHistory() {
@@ -19,8 +17,7 @@ export default function SubmissionHistory() {
   const aboutCsoSidecard = getSidecardData().aboutCso;
   const csoAccountDetailsSidecard = getSidecardData().csoAccountDetails;
 
-  const location = useLocation();
-  const queryParams = queryString.parse(location.search);
+  const { query: queryParams } = useRouter();
   const { applicationCode } = queryParams;
 
   useEffect(() => {
