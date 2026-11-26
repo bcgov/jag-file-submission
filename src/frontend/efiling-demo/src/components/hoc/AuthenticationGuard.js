@@ -5,14 +5,14 @@ import Home from "../page/home/Home";
 import { propTypes } from "../../types/propTypes";
 
 const url = window.env
-  ? window.env.REACT_APP_KEYCLOAK_URL
-  : process.env.REACT_APP_KEYCLOAK_URL;
+  ? window.env.NEXT_PUBLIC_KEYCLOAK_URL
+  : process.env.NEXT_PUBLIC_KEYCLOAK_URL;
 const realm = window.env
-  ? window.env.REACT_APP_KEYCLOAK_REALM
-  : process.env.REACT_APP_KEYCLOAK_REALM;
+  ? window.env.NEXT_PUBLIC_KEYCLOAK_REALM
+  : process.env.NEXT_PUBLIC_KEYCLOAK_REALM;
 const clientId = window.env
-  ? window.env.REACT_APP_KEYCLOAK_CLIENT_ID
-  : process.env.REACT_APP_KEYCLOAK_CLIENT_ID;
+  ? window.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID
+  : process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID;
 
 const KEYCLOAK = {
   realm,
