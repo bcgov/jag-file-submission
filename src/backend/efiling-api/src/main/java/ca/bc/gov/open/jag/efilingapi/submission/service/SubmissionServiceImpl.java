@@ -27,7 +27,7 @@ import ca.bc.gov.open.sftp.starter.SftpService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.cache.autoconfigure.CacheProperties;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
